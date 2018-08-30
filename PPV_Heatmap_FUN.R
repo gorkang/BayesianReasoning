@@ -1,6 +1,9 @@
+# PPV_Heatmap_FUN(2000, 100, 1, Language = "en", overlay = F) 
+
+# TODO --------------------------------------------------------------------
+# Add parameter to save
+
 PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en", overlay = F) {
-  
-  
   
   # Libraries ---------------------------------------------------------------
   
@@ -135,8 +138,10 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
         scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
         theme(text = element_text(size = 20), axis.title.y = element_text(margin = margin(0,10,0,0)), axis.title.x = element_text(margin = margin(10,0,0,0)))
       
-      if (overlay == T) {
-        p
+      if (overlay == TRUE) {
+        print(p)
+        ggsave(paste0("outputs/", Max_Prevalence, "_", Sensitivity, "_", Max_FP, "_", Language, ".png"), p, dpi = 300, width = 14, height = 10)
+        
       # p + annotate("segment", x = 14, xend = 14, y = 1667, yend = 227 , color = "red", alpha = .1, size=3) + 
       #   annotate("segment", x = 14, xend = 12, y = 227, yend = 69 , color = "red", alpha = .1, size=3) + 
       #   
@@ -148,11 +153,15 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
       #            ymin = Min_Prevalence_desired_in_overlay, 
       #            ymax = Max_Prevalence_desired_in_overlay, fill = "red", alpha = .2)
       } else {
-        p
+        print(p)
+        ggsave(paste0("outputs/PPV_heatmap/", Max_Prevalence, "_", Sensitivity, "_", Max_FP, "_", Language, ".png"), p, dpi = 300, width = 14, height = 10)
       }
       
       
 }
+
+PPV_Heatmap_FUN(1000, 100, .2, Language = "en", overlay = F) 
+
 
 # OVERLAY -----------------------------------------------------------------
 
