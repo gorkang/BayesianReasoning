@@ -4,7 +4,7 @@
 
 
 library(tidyverse)
-PPV_Study_vs_Real(10, 90, 25, 2)
+# PPV_Study_vs_Real(10, 90, 25, 2)
 #AD, Prevalence at 65 yo = ~10%
 
 PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 100,  Prevalence_Study = 2) {
@@ -48,28 +48,27 @@ PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 
   
 # Plot --------------------------------------------------------------------
   
-  Labels_plot = c(paste0("Real: ", (1/Prevalence_Real)*100, "%"), paste0("Study: ", (1/(Prevalence_Study)*100), "%"))
-  
-  apatheme = theme_bw() +
-    theme(panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          panel.border = element_blank(),
-          axis.line = element_line(),
-          text = element_text(family = 'Times'))
+  Labels_plot = c(paste0("Real: ", (1/Prevalence_Real) * 100, "%"), paste0("Study: ", (1/(Prevalence_Study) * 100), "%"))
   
   Plot_PPV = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = Prevalence)) + 
     geom_line(size = 1) + 
     scale_colour_hue(l = 50, labels = Labels_plot) +
     theme(legend.position = "top") +
     scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100)) +
-    labs(x = "False Positive rate (%)") + apatheme
-    # ggtitle("")
+    labs(x = "False Positive rate (%)") + #apatheme
+    theme_minimal() +
+    theme(text = element_text(size = 20)) +
+    ggtitle(paste0("Sensitivity = ", Sensitivity, "%" ))
     # guides(color=guide_legend("Prevalence of the "))
   print(Plot_PPV)
   
   Parameters = paste0("FP", Max_FP, "_Sens", Sensitivity, "_PReal", Prevalence_Real, "_PStudy", Prevalence_Study)
-  ggsave(paste0("Plots/", Parameters, ".svg"), Plot_PPV, width = 10, height = 10)
-  ggsave(paste0("Plots/", Parameters, ".png"), Plot_PPV, width = 10, height = 10)
+  ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".svg"), Plot_PPV, dpi = 300, width = 14, height = 10)
+  ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".png"), Plot_PPV, dpi = 300, width = 14, height = 10)
   
   cat("Sensitivity of test = ", Sensitivity)
 }
+
+# EXAMPLE
+PPV_Study_vs_Real(Max_FP = 5, Sensitivity = 100, Prevalence_Real = 25, Prevalence_Study = 2)
+
