@@ -1,0 +1,10 @@
+Package: BayesianReasoning
+Title: Plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
+Version: 0.1
+Authors@R: person("Gorka", "Navarrete", email = "gorkang@gmail.com",
+                  role = c("aut", "cre"))
+Description: This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.
+Depends: R (>= 3.4.0)
+License: GNU GENERAL PUBLIC LICENSE 3.0
+LazyData: true
+RoxygenNote: 6.1.0
