@@ -1,15 +1,13 @@
 # TODO ---------------------
-
-# Add poiints where the real and study PPV are base on a parameter for the actual FP (include number!)
-
-
-library(tidyverse)
-# PPV_Study_vs_Real(10, 90, 25, 2)
-#AD, Prevalence at 65 yo = ~10%
-
-PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 100,  Prevalence_Study = 2) {
-# Prevalences (1 out of x)  
   
+  # Add points where the real and study PPV are base on a parameter for the actual FP (include number!)
+
+
+PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 100,  Prevalence_Study = 2, labels_prevalence = c("Real", "Study")) {
+# Prevalences (1 out of x)  
+
+  library(tidyverse)
+    
 # PARAMETERS --------------------------------------------------------------
   # Max_FP = 10
   # Sensitivity = 100
@@ -48,17 +46,24 @@ PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 
   
 # Plot --------------------------------------------------------------------
   
-  Labels_plot = c(paste0("Real: ", (1/Prevalence_Real) * 100, "%"), paste0("Study: ", (1/(Prevalence_Study) * 100), "%"))
+  # Labels_plot = c(paste0("Real: ", (1/Prevalence_Real) * 100, "%"), paste0("Study: ", (1/(Prevalence_Study) * 100), "%"))
+  Labels_plot = c(paste0(labels_prevalence[1], " prevalence: 1 out of ", Prevalence_Real), paste0(labels_prevalence[2], " prevalence: 1 out of ", Prevalence_Study))
   
   Plot_PPV = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = Prevalence)) + 
-    geom_line(size = 1) + 
+    geom_line(size = 1.5) + 
     scale_colour_hue(l = 50, labels = Labels_plot) +
-    theme(legend.position = "top") +
-    scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100)) +
-    labs(x = "False Positive rate (%)") + #apatheme
     theme_minimal() +
     theme(text = element_text(size = 20)) +
-    ggtitle(paste0("Sensitivity = ", Sensitivity, "%" ))
+    scale_x_continuous(labels = function(x) paste0(x, "%")) +
+    scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100), labels = function(x) paste0(x, "%")) +
+    theme(legend.position = "bottom") +  
+    labs(title = "",
+         subtitle = paste0("Sensitivity = ", Sensitivity, "%" ), 
+         x = "False Positive rate", 
+         color = "") 
+    # labs(caption = "(based on data from ...)") + 
+    # theme(plot.caption = element_text(size = 10))
+  
     # guides(color=guide_legend("Prevalence of the "))
   print(Plot_PPV)
   
@@ -66,9 +71,9 @@ PPV_Study_vs_Real <- function(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 
   ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".svg"), Plot_PPV, dpi = 300, width = 14, height = 10)
   ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".png"), Plot_PPV, dpi = 300, width = 14, height = 10)
   
-  cat("Sensitivity of test = ", Sensitivity)
 }
 
 # EXAMPLE
-PPV_Study_vs_Real(Max_FP = 5, Sensitivity = 100, Prevalence_Real = 25, Prevalence_Study = 2)
+# PPV_Study_vs_Real(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 1667, Prevalence_Study = 44, labels_prevalence = c("20 y.o.", "50 y.o."))
 
+PPV_Study_vs_Real(Max_FP = 10, Sensitivity = 100, Prevalence_Real = 1000, Prevalence_Study = 3)
