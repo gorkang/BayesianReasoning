@@ -3,7 +3,7 @@
 # TODO --------------------------------------------------------------------
 # Add parameter to save
 
-PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en", overlay = F) {
+PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en", overlay = F, PPV_NPV = "PPV") {
   
   # Libraries ---------------------------------------------------------------
   
@@ -30,16 +30,16 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
   overlay = overlay # F # If you activate the overlay, you have to set its parameters in the section # "OVERLAY INFO ABOUT A SPECIFIC TEST"
   
   #Language: (sp / en)
-  Language = Language #"en"
+  Language = Language 
   
   #Sensitivity: (0-100)
-  Sensitivity = Sensitivity #80 # CHANGE ME
+  Sensitivity = Sensitivity 
   
   #FP (1-Specificity): (0-100)
-  Max_FP = Max_FP #5 # CHANGE ME
+  Max_FP = Max_FP 
   
   # Prevalence (1 out of X): (1-Inf?)
-  Max_Prevalence = Max_Prevalence #2000 # CHANGE ME
+  Max_Prevalence = Max_Prevalence 
   
   
   # SYSTEM parameters (Do not modify) -------------------------------------------------
@@ -91,9 +91,8 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
   # Calculation -------------------------------------------------------------
   
       # We calculate the 100x100 PPV matrix
-      # REMEMBER: Check the calculation ####
       PPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
-      
+      # NPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
       
       #Label columns and rows of matrix
       colnames(PPV) = FP
@@ -114,13 +113,6 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
       breaks_DV = c(0, 0.25, 0.5, 0.75, 1)
       labels_DV = c(0, 25, 50, 75, 100)
         
-      #OLD
-      # breaks_x = seq(0,100,10)
-      # labels_x = paste0(seq(Min_FP, Max_FP, Step_size_FP*10), "%")
-      # 
-      # breaks_y = seq(0,100,10)
-      # labels_y = paste(prevalence_label, seq(Min_Prevalence-1, Max_Prevalence, Step_size_Prevalence*10))
-      
       # NEW
       breaks_x = seq(0, Max_FP, Step_size_FP * 10)
       labels_x = paste0(seq(Min_FP, Max_FP, Step_size_FP * 10), "%")
@@ -129,10 +121,11 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
       labels_y = paste(prevalence_label, seq(Min_Prevalence - 1, Max_Prevalence, Step_size_Prevalence * 10))[-1]
       labels_y = c(paste(prevalence_label, "1"), labels_y) #We want the legend to start on 1 out of 1
       
-      
       # PLOT
-      p <<- ggplot(PPV_melted, aes(melted_FP, melted_Prevalence)) + geom_tile(aes(fill = melted_PPV), colour = "white") +
-        ggtitle(Title_label) +  labs(x = x_axis_label, y = y_axis_label) + 
+      p <<- ggplot(PPV_melted, aes(melted_FP, melted_Prevalence)) + 
+        geom_tile(aes(fill = melted_PPV), colour = "white") +
+        ggtitle(Title_label) +  
+        labs(x = x_axis_label, y = y_axis_label) + 
         scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) + 
         scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) +
         scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
@@ -160,8 +153,4 @@ PPV_Heatmap_FUN <- function(Max_Prevalence, Sensitivity, Max_FP, Language = "en"
       
 }
 
-PPV_Heatmap_FUN(1000, 100, .2, Language = "en", overlay = F) 
-
-
-# OVERLAY -----------------------------------------------------------------
-
+PPV_Heatmap_FUN(Max_Prevalence = 2000, Sensitivity = 90, Max_FP = 10, Language = "en", overlay = F) 
