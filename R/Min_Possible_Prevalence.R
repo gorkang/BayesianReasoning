@@ -1,13 +1,9 @@
-
-# Libraries ---------------------------------------------------------------
-
-if (!require('pacman')) install.packages('pacman'); library('pacman')
-p_load(tidyverse, reshape2)
-
-
 # FUNCTION : Given a FP and a desired PPV, what is the Maximum Prevalence of a Condition ####
 Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
+  if (!require('pacman')) install.packages('pacman'); library('pacman')
+  p_load(tidyverse, reshape2)
+  
   #TEST Parameters **************
     
     #Sensitivity
@@ -53,5 +49,5 @@ Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 }      
 
 #EXAMPLE
-Min_Possible_Prevalence(100, 1, 0.75)
+Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
 # Min_Possible_Prevalence(100, 0.1, 0.98)

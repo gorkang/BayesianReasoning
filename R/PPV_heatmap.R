@@ -23,13 +23,22 @@
 #' PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15, Language = "en", overlay = FALSE)
 #' 
 #' # Show a plot with an overlay
-#' PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
-#'                label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-#'                save_plot = TRUE, Language = "en", 
-#'                 overlay = TRUE, 
-#'                 overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-#'                 overlay_position_FP = c(7, 8, 9, 12, 14, 14),
-#'                 overlay_position_Prevalence = c(26, 29, 44, 69, 227, 1667))
+#' PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
+#'             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
+#'             save_plot = TRUE, Language = "en",
+#'             overlay = TRUE,
+#'             overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
+#'             overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+#'             overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
+#'
+#' # Another plot with an overlay
+#' PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+#'             label_subtitle = "Prenatal screening for Down Syndrome by Age",
+#'             save_plot = TRUE, Language = "en",
+#'             overlay = TRUE,
+#'             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
+#'             overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
+#'             overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
 PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP, 
                             overlay = FALSE, overlay_labels, overlay_position_FP, overlay_position_Prevalence, 
                             label_title = "", label_subtitle = "",
@@ -51,15 +60,15 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
     # label_subtitle = "PPV of Mammogram for Breast Cancer by Age"
     # overlay = TRUE
     # overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o.")
-    # overlay_position_FP = c(7, 8, 9, 12, 14, 14)
-    # overlay_position_Prevalence = c(26, 29, 44, 69, 227, 1667)
+    # overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14)
+    # overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667)
 
 
   # SYSTEM parameters -------------------------------------------------------
       
       #GRAPHIC Parameters *************
-      
-      modifier_text_overlay_position = 10
+
+      modifier_text_overlay_position = (Max_Prevalence/75)
   
       #Labels 
       if (Language == "sp") {
@@ -97,8 +106,8 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
           warning("\n\n  * One of the overlay_position_FP values is bigger than Max_FP. We use the max(overlay_position_FP) value to plot.")
         }
         
-        if (Max_Prevalence < max(overlay_position_Prevalence)) {
-          Max_Prevalence = (max(overlay_position_Prevalence) +  (modifier_text_overlay_position + 10))
+        if (Max_Prevalence <= max(overlay_position_Prevalence)) {
+          Max_Prevalence = (max(overlay_position_Prevalence) +  (modifier_text_overlay_position))
           warning("\n\n  * One of the overlay_position_Prevalence is bigger than Max_Prevalence. We use the max(overlay_position_Prevalence) value to plot.")
         }
       }
@@ -124,7 +133,7 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
 
   # Calculation -------------------------------------------------------------
   
-      # We calculate the 100x100 PPV matrix
+      # We calculate the 100x100 PPV matrix using %o% (outer)
       PPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
       # NPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
       
@@ -144,6 +153,7 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
   
       #HEATMAP
       Paleta_DV = c( "white", "grey", "gray30", "yellowgreen", "chartreuse4")
+
       breaks_DV = c(0, 0.25, 0.5, 0.75, 1)
       labels_DV = c(0, 25, 50, 75, 100)
         
@@ -174,10 +184,7 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
           # overlay_position_FP = c(7, 8, 9, 12, 14)
           # overlay_position_Prevalence = c(26, 29, 44, 69, 227)
         
-          overlay_position_FP = c(overlay_position_FP[1] - 0.5, overlay_position_FP)
           overlay_position_x_end = c(overlay_position_FP[1], overlay_position_FP[-length(overlay_position_FP)])
-          
-          overlay_position_Prevalence = c(overlay_position_Prevalence[1] - 0.5, overlay_position_Prevalence)
           overlay_position_y_end = c(overlay_position_Prevalence[1], overlay_position_Prevalence[-length(overlay_position_Prevalence)])
           
           p = p + annotate("segment", x = overlay_position_FP, xend = overlay_position_x_end, 
@@ -204,16 +211,3 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
       }
       
 }
-
-# No overlay example
-# PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15, Language = "en", overlay = FALSE) 
-
-
-# Overlay example
-# PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
-#                 label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-#                 save_plot = TRUE, Language = "en", 
-#                 overlay = TRUE, 
-#                 overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-#                 overlay_position_FP = c(7, 8, 9, 12, 14, 14),
-#                 overlay_position_Prevalence = c(26, 29, 44, 69, 227, 1667))

@@ -44,11 +44,20 @@ Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a ra
 PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15, Language = "en", overlay = FALSE)
 
 # Show a plot with an overlay
-PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
-               label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-               save_plot = TRUE, Language = "en", 
-                overlay = TRUE, 
-                overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-                overlay_position_FP = c(7, 8, 9, 12, 14, 14),
-                overlay_position_Prevalence = c(26, 29, 44, 69, 227, 1667))
+PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
+            label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
+            save_plot = TRUE, Language = "en",
+            overlay = TRUE,
+            overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
+            overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+            overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
+
+# Another plot with an overlay
+PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+            label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            save_plot = TRUE, Language = "en",
+            overlay = TRUE,
+            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
+            overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
+            overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
 }

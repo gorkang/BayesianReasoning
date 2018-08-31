@@ -37,8 +37,8 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
                 save_plot = TRUE, Language = "en", 
                 overlay = TRUE, 
                 overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-                overlay_position_FP = c(7, 8, 9, 12, 14, 14),
-                overlay_position_Prevalence = c(26, 29, 44, 69, 227, 1667))
+                overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+                overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
                 
 ```
 
