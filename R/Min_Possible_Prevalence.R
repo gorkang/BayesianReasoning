@@ -49,5 +49,5 @@ Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 }      
 
 #EXAMPLE
-Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
+# Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
 # Min_Possible_Prevalence(100, 0.1, 0.98)

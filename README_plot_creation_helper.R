@@ -3,6 +3,12 @@
     # 1. Add Roxygen skeleton to the functions
     # 2. RUN: roxygen2::roxygenise()
 
+# To build bundle package:devtools::build()
+
+# To install from Github: devtools::install_github("gorkang/R_PPV_Plot") 
+
+
+# MAN: # http://r-pkgs.had.co.nz/package.html
 
 # README plot creation helper
 

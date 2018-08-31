@@ -1,6 +1,8 @@
 # Bayesian reasoning in medical contexts
 
-This repository includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
+This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
+
+To install it you can do: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).
 
 
 ## PPV_heatmap()
@@ -46,6 +48,23 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
 
 ---   
 
+Another example. In this case, the FP is constant across age:
+
+``` r 
+
+PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+           label_subtitle = "Prenatal screening for Down Syndrome by Age",
+           save_plot = TRUE, Language = "en",
+           overlay = TRUE,
+           overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
+           overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
+           overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
+                
+```
+
+![](outputs/PPV_heatmap/1200_81_5_en_overlay.png)  
+
+---   
 
 ## PPV_diagnostic_vs_screening
 
