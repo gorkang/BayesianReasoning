@@ -12,10 +12,12 @@
 #' @examples
 #' 
 #' # Example 1
-#' Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
-#'
+#' min_possible_prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
+#' > To get a PPV of 0.9 with a test with 99.9 % Sensitivity and 0.2 % False Positive Rate, you need a prevalence of at least 1 out of 56
+#' 
 #' # Example 2
-#' Min_Possible_Prevalence(100, 0.1, 0.98)
+#' min_possible_prevalence(100, 0.1, 0.98)
+#' > To get a PPV of 0.98 with a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
 min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
   if (!require('pacman')) install.packages('pacman'); library('pacman')
@@ -56,5 +58,4 @@ min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
     # Function output!
     cat("To get a PPV of", min_PPV_desired, "with a test with", Sensitivity, "% Sensitivity and", FP_test, "% False Positive Rate, you need a prevalence of at least 1 out of", max(PPV_melted$melted_Prevalence[PPV_melted$melted_PPV > min_PPV_desired & PPV_melted$melted_FP == FP_test]))
 
-}      
-
+}
