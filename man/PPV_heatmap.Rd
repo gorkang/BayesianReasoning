@@ -30,7 +30,7 @@ PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = FALSE,
 
 \item{Language}{Language for the plot labels: "sp" / "en"}
 
-\item{save_plot}{Should save the plot as .png or just show it?}
+\item{save_plot}{Should save the plot as .png or just show it?  [TRUE/FALSE]}
 }
 \value{
 A .png plot in the /output folder, or shows a plot

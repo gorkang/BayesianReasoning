@@ -12,7 +12,7 @@
 #' @param label_title Title for the plot
 #' @param label_subtitle Subtitle for the plot
 #' @param Language Language for the plot labels: "sp" / "en"
-#' @param save_plot Should save the plot as .png or just show it?
+#' @param save_plot Should save the plot as .png or just show it?  [TRUE/FALSE]
 #'
 #' @return A .png plot in the /output folder, or shows a plot
 #' @export

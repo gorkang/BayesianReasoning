@@ -1,3 +1,5 @@
+# MAN: # http://r-pkgs.had.co.nz/package.html
+
 # To create man pages:
 
     # 1. Add Roxygen skeleton to the functions
@@ -8,7 +10,7 @@
 # To install from Github: devtools::install_github("gorkang/R_PPV_Plot") 
 
 
-# MAN: # http://r-pkgs.had.co.nz/package.html
+
 
 # README plot creation helper
 

@@ -1,8 +1,29 @@
-# TODO ---------------------
-
-# Add points where the real and study PPV are base on a parameter for the actual FP (include number!)
-
-
+#' Plot PPV for a diagnostic and a screening group
+#'
+#'Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups. 
+#'
+#' @param Max_FP False positive rate (1-Specificity) [0-100].
+#' @param Sensitivity Sensitivity of the test [0-100].
+#' @param prevalence_screening_group Prevalence of the screening group, 1 out of x [1-Inf].
+#' @param prevalence_diagnostic_group Prevalence of the diagnostic group, 1 out of x [1-Inf].
+#' @param labels_prevalence Labels to use for both groups.
+#' @param save_plot Should save the plot as .png or just show it? [TRUE/FALSE]
+#'
+#' @return A .png plot in the /output folder, or shows a plot
+#' @export
+#'
+#' @examples
+#' 
+#' # Example 1
+#' PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
+#'                             prevalence_screening_group = 1500, 
+#'                             prevalence_diagnostic_group = 3)
+#' 
+#' # Example 2. QWith custom labels
+#' PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
+#'                             prevalence_screening_group = 1667, 
+#'                             prevalence_diagnostic_group = 44, 
+# '                            labels_prevalence = c("20 y.o.", "50 y.o."))
 PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2, 
                                         labels_prevalence = c("Screening", "Diagnostic"),
                                         save_plot = TRUE) {
@@ -87,8 +108,3 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   }
    
 }
-
-# EXAMPLE
-# PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 1667, prevalence_diagnostic_group = 44, labels_prevalence = c("20 y.o.", "50 y.o."))
-
-# PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 1000, prevalence_diagnostic_group = 3)

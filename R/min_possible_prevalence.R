@@ -1,22 +1,33 @@
-# FUNCTION : Given a FP and a desired PPV, what is the Maximum Prevalence of a Condition ####
-Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
+#' Show minimum possible prevalence
+#'
+#'Given a FP and a desired PPV, what is the Minimum Prevalence of a Condition 
+#'
+#' @param Sensitivity Sensitivity of the test.
+#' @param FP_test False positive rate (1-Specificity) [0-100].
+#' @param min_PPV_desired Which PPV is what you consider the minimum to trust a positive result in the test.
+#'
+#' @return A description showing the minimum necessary prevalence.
+#' @export
+#'
+#' @examples
+#' 
+#' # Example 1
+#' Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
+#'
+#' # Example 2
+#' Min_Possible_Prevalence(100, 0.1, 0.98)
+min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
   if (!require('pacman')) install.packages('pacman'); library('pacman')
   p_load(tidyverse, reshape2)
   
   #TEST Parameters **************
-    
-    #Sensitivity
-    # Sensitivity = 100 # CHANGE ME
-    
     #FP
-    Max_FP = 100 # CHANGE ME
-    
+    Max_FP = 100 
     Steps_FP = 1000
     Step_size_FP = Max_FP/Steps_FP
-    Min_FP = 0 #Step_size_FP #0
-    #Step_size_FP = (Max_FP - Min_FP) / Steps_FP
-    FP = seq(Min_FP, Max_FP, Step_size_FP) #With (Max_FP-Step_size_FP) we get 100 FPs. If we use Max_FP instead we have 101 (because we start at 0!)
+    Min_FP = 0
+    FP = seq(Min_FP, Max_FP, Step_size_FP) 
     
     #CONDITION Parameters ***********
     
@@ -27,7 +38,6 @@ Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
     Max_Prevalence = 10000 # CHANGE ME
     Steps_Prevalence = 10000
     Step_size_Prevalence = Max_Prevalence/Steps_Prevalence
-    #Step_size_Prevalence = round((Max_Prevalence - Min_Prevalence) / Steps_Prevalence)
     Prevalence = seq(Min_Prevalence, (1 + Max_Prevalence), Step_size_Prevalence) #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
     
     # ****************************************************************************************
@@ -48,6 +58,3 @@ Min_Possible_Prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
 }      
 
-#EXAMPLE
-# Min_Possible_Prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
-# Min_Possible_Prevalence(100, 0.1, 0.98)
