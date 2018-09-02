@@ -23,13 +23,16 @@
 #' PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
 #'                             prevalence_screening_group = 1667, 
 #'                             prevalence_diagnostic_group = 44, 
-# '                            labels_prevalence = c("20 y.o.", "50 y.o."))
+#'                            labels_prevalence = c("20 y.o.", "50 y.o."))
 PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2, 
                                         labels_prevalence = c("Screening", "Diagnostic"),
                                         save_plot = TRUE) {
-  # Prevalences (1 out of x)  
   
-  library(tidyverse)
+  # Libraries ---------------------------------------------------------------
+  if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
+  if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
+  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
+  
   
   # PARAMETERS --------------------------------------------------------------
   # Max_FP = 10
