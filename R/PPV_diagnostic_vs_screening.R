@@ -26,7 +26,7 @@
 #'                            labels_prevalence = c("20 y.o.", "50 y.o."))
 PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2, 
                                         labels_prevalence = c("Screening", "Diagnostic"),
-                                        save_plot = TRUE) {
+                                        save_plot = FALSE) {
   
   # Libraries ---------------------------------------------------------------
   if (!require('dplyr')) install.packages('dplyr'); library('dplyr')

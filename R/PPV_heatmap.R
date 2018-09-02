@@ -42,7 +42,7 @@
 PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
                             overlay = FALSE, overlay_labels, overlay_position_FP, overlay_position_Prevalence, 
                             label_title = "", label_subtitle = "",
-                            Language = "en", save_plot = TRUE,
+                            Language = "en", save_plot = FALSE,
                             PPV_NPV = "PPV") {
   
   # Libraries ---------------------------------------------------------------
