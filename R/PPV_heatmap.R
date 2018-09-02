@@ -114,42 +114,11 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
         }
       }
   
-  
-      #TEST Parameters **************
       
-          # False Positives (x axis) 
-          Steps_FP = 100
-          Step_size_FP = Max_FP/Steps_FP
-          Min_FP = 0 
-          FP = seq(Min_FP, Max_FP, Step_size_FP) #With (Max_FP-Step_size_FP) we get 100 FPs. If we use Max_FP instead we have 101 (because we start at 0!)
-          
-      #CONDITION Parameters ***********
-          
-          #Prevalence_y - x out of y
-          Prevalence_x = 1
-          Min_Prevalence = 1
-          Steps_Prevalence = 100
-          Step_size_Prevalence = Max_Prevalence/Steps_Prevalence
-          Prevalence = seq(Min_Prevalence, (1 + Max_Prevalence), Step_size_Prevalence) #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
-          
 
-  # Calculation -------------------------------------------------------------
+  # Create PPV matrix -------------------------------------------------------
+    .createPPVmatrix(Max_Prevalence, Sensitivity, Max_FP)
   
-      # We calculate the 100x100 PPV matrix using %o% (outer)
-      PPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
-      # NPV = (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
-      
-      #Label columns and rows of matrix
-      colnames(PPV) = FP
-      rownames(PPV) = Prevalence
-      
-      # Long format para ggplot Heatmap
-      PPV_melted = melt(PPV)
-      
-      # Give names to variables
-      names(PPV_melted) = c("melted_Prevalence", "melted_FP", "melted_PPV") 
-      
-      
   
   # PLOT --------------------------------------------------------------------
   
@@ -162,7 +131,7 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
       breaks_x = seq(0, Max_FP, Step_size_FP * 10)
       labels_x = paste0(seq(Min_FP, Max_FP, Step_size_FP * 10), "%")
       breaks_y = seq(0, Max_Prevalence, Step_size_Prevalence * 10)
-      labels_y = paste(prevalence_label, round(seq(Min_Prevalence - 1, Max_Prevalence, Step_size_Prevalence * 10), 0))[-1]
+      labels_y = paste(prevalence_label, round(seq(Min_Prevalence - 1, Max_Prevalence, Step_size_Prevalence * 10),0))[-1]
       labels_y = c(paste(prevalence_label, "1"), labels_y) #We want the legend to start on 1 out of 1
       
       
