@@ -2,16 +2,16 @@
 % Please edit documentation in R/min_possible_prevalence.R
 \name{min_possible_prevalence}
 \alias{min_possible_prevalence}
-\title{Show minimum possible prevalence}
+\title{Show minimum possible prevalence given the test characteristics}
 \usage{
 min_possible_prevalence(Sensitivity, FP_test, min_PPV_desired)
 }
 \arguments{
-\item{Sensitivity}{Sensitivity of the test.}
+\item{Sensitivity}{Sensitivity of the test: [0-100]}
 
-\item{FP_test}{False positive rate (1-Specificity) [0-100].}
+\item{FP_test}{False positive rate (1-Specificity): [0-100]}
 
-\item{min_PPV_desired}{Which PPV is what you consider the minimum to trust a positive result in the test.}
+\item{min_PPV_desired}{Which PPV is what you consider the minimum to trust a positive result in the test: [0-100]}
 }
 \value{
 A description showing the minimum necessary prevalence.
@@ -22,10 +22,10 @@ Given a FP and a desired PPV, what is the Minimum Prevalence of a Condition
 \examples{
 
 # Example 1
-min_possible_prevalence(Sensitivity = 99.9, FP_test = 0.2, min_PPV_desired = 0.9)
-> To get a PPV of 0.9 with a test with 99.9 \% Sensitivity and 0.2 \% False Positive Rate, you need a prevalence of at least 1 out of 56
+> min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
+To reach a PPV of 70 when using a test with 99.9 \% Sensitivity and 0.1 \% False Positive Rate, you need a prevalence of at least 1 out of 429
 
 # Example 2
-min_possible_prevalence(100, 0.1, 0.98)
-> To get a PPV of 0.98 with a test with 100 \% Sensitivity and 0.1 \% False Positive Rate, you need a prevalence of at least 1 out of 21
+> min_possible_prevalence(100, 0.1, 98)
+To reach a PPV of 98 when using a test with 100 \% Sensitivity and 0.1 \% False Positive Rate, you need a prevalence of at least 1 out of 21
 }

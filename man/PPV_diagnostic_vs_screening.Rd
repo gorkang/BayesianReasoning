@@ -38,4 +38,5 @@ PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100,
 PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
                             prevalence_screening_group = 1667, 
                             prevalence_diagnostic_group = 44, 
+                           labels_prevalence = c("20 y.o.", "50 y.o."))
 }

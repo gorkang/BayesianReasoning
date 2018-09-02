@@ -7,7 +7,7 @@
 PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = FALSE,
   overlay_labels, overlay_position_FP, overlay_position_Prevalence,
   label_title = "", label_subtitle = "", Language = "en",
-  save_plot = TRUE)
+  save_plot = TRUE, PPV_NPV = "PPV")
 }
 \arguments{
 \item{Max_Prevalence}{Maximum prevalence to show in plot (y-axis): 1-Inf}
