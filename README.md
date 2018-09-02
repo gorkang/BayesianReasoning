@@ -82,3 +82,27 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
 ![](outputs/diagnostic_vs_screening/FP_10_sens_100_screening_1000_diagnostic_3.png)
 
 
+---   
+
+
+## min_possible_prevalence
+
+Imagine you would like to use a test in a population and have a 98% PPV, that is, *if* a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
+
+``` r 
+min_possible_prevalence(100, 0.1, 98)
+```
+
+`To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21`
+
+--- 
+
+Another example, with a very good test, and lower expectations:  
+
+``` r 
+min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
+```
+
+$ To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429  
+
+--- 
