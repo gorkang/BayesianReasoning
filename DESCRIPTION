@@ -1,5 +1,5 @@
 Package: BayesianReasoning
-Title: Plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
+Title: Plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 Version: 0.1
 Authors@R: person("Gorka", "Navarrete", email = "gorkang@gmail.com",
                   role = c("aut", "cre"))
