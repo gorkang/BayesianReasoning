@@ -1,6 +1,6 @@
 #' Plot PPV for a diagnostic and a screening group
 #'
-#'Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups. 
+#' Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups. 
 #'
 #' @param Max_FP False positive rate (1-Specificity) [0-100].
 #' @param Sensitivity Sensitivity of the test [0-100].
@@ -72,42 +72,38 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   
   # Plot --------------------------------------------------------------------
   
-  # Labels_plot = c(paste0("Real: ", (1/prevalence_screening_group) * 100, "%"), paste0("Study: ", (1/(prevalence_diagnostic_group) * 100), "%"))
-  Labels_plot = c(paste0(labels_prevalence[1], " prevalence: 1 out of ", prevalence_screening_group), paste0(labels_prevalence[2], " prevalence: 1 out of ", prevalence_diagnostic_group))
-  
-  p = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = Prevalence)) + 
-    geom_line(size = 1.5) + 
-    scale_colour_hue(l = 50, labels = Labels_plot) +
-    theme_minimal() +
-    theme(text = element_text(size = 20)) +
-    scale_x_continuous(labels = function(x) paste0(x, "%")) +
-    scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100), labels = function(x) paste0(x, "%")) +
-    theme(legend.position = "bottom") +  
-    labs(title = "",
-         subtitle = paste0("Sensitivity = ", Sensitivity, "%" ), 
-         x = "False Positive rate", 
-         color = "") 
-  # labs(caption = "(based on data from ...)") + 
-  # theme(plot.caption = element_text(size = 10))
-  # guides(color=guide_legend("Prevalence of the "))
-  
-  print(p)
-  
-  # Parameters = paste0("FP", Max_FP, "_Sens", Sensitivity, "_PReal", prevalence_screening_group, "_PStudy", prevalence_diagnostic_group)
-  # ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".svg"), Plot_PPV, dpi = 300, width = 14, height = 10)
-  # ggsave(paste0("outputs/diagnostic_vs_screening/", Parameters, ".png"), Plot_PPV, dpi = 300, width = 14, height = 10)
- 
-  if (save_plot == TRUE) {
+    Labels_plot = c(paste0(labels_prevalence[1], " prevalence: 1 out of ", prevalence_screening_group), paste0(labels_prevalence[2], " prevalence: 1 out of ", prevalence_diagnostic_group))
     
-    print(p)
-    plot_name = paste0("outputs/diagnostic_vs_screening/", "FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
-    ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
-    cat("\n Plot created in: ", plot_name, "\n")
-    
-  } else {
+    p = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = Prevalence)) + 
+      geom_line(size = 1.5) + 
+      scale_colour_hue(l = 50, labels = Labels_plot) +
+      theme_minimal() +
+      theme(text = element_text(size = 20)) +
+      scale_x_continuous(labels = function(x) paste0(x, "%")) +
+      scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100), labels = function(x) paste0(x, "%")) +
+      theme(legend.position = "bottom") +  
+      labs(title = "",
+           subtitle = paste0("Sensitivity = ", Sensitivity, "%" ), 
+           x = "False Positive rate", 
+           color = "") 
+    # labs(caption = "(based on data from ...)") + 
+    # theme(plot.caption = element_text(size = 10))
+    # guides(color=guide_legend("Prevalence of the "))
     
     print(p)
     
-  }
+   
+    if (save_plot == TRUE) {
+      
+      print(p)
+      plot_name = paste0("outputs/diagnostic_vs_screening/", "FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
+      ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
+      cat("\n Plot created in: ", plot_name, "\n")
+      
+    } else {
+      
+      print(p)
+      
+    }
    
 }
