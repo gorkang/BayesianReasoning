@@ -20,9 +20,10 @@
 #' > To get a PPV of 0.98 with a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
 min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
-  if (!require('pacman')) install.packages('pacman'); library('pacman')
-  p_load(tidyverse, reshape2)
-  
+  # Libraries ---------------------------------------------------------------
+  # if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
+  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
+
   #TEST Parameters **************
     #FP
     Max_FP = 100 

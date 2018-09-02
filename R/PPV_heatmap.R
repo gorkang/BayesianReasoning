@@ -39,24 +39,26 @@
 #'             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
 #'             overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
 #'             overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
-PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP, 
+PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
                             overlay = FALSE, overlay_labels, overlay_position_FP, overlay_position_Prevalence, 
                             label_title = "", label_subtitle = "",
-                            Language = "en", save_plot = TRUE) {
+                            Language = "en", save_plot = TRUE,
+                            PPV_NPV = "PPV") {
   
   # Libraries ---------------------------------------------------------------
-  
-  if (!require('pacman')) install.packages('pacman'); library('pacman')
-  p_load(tidyverse, reshape2)
-  
+  # if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
+  if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
+  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
+  source("R/.createPPVmatrix.R", local = TRUE)
 
+  
   # DEBUG -------------------------------------------------
     
     # overlay = TRUE # TRUE / FALSE
     # Language = "en" # "sp" / "en"
-    # Sensitivity = 99 # [0-100]
-    # Max_FP = 10 # FP (1-Specificity): [0-100]
-    # Max_Prevalence = 1667.5 # Prevalence (1 out of X): [1-Inf?]
+    # Max_Prevalence = 4 # Prevalence (1 out of X): [1-Inf?]
+    # Sensitivity = 90 # [0-100]
+    # Max_FP = 5 # FP (1-Specificity): [0-100]
     # label_subtitle = "PPV of Mammogram for Breast Cancer by Age"
     # overlay = TRUE
     # overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o.")
