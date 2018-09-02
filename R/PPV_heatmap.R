@@ -16,6 +16,8 @@
 #'
 #' @return A .png plot in the /output folder, or shows a plot
 #' @export
+#' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin annotate
+#' @importFrom reshape2 melt
 #'
 #' @examples
 #' 
@@ -46,9 +48,6 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
                             PPV_NPV = "PPV") {
   
   # Libraries ---------------------------------------------------------------
-  # if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
-  if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
-  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
   source("R/.createPPVmatrix.R", local = TRUE)
 
   
