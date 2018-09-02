@@ -1,9 +1,15 @@
+#' Title
+#'
+#' @param Max_Prevalence 
+#' @param Sensitivity 
+#' @param Max_FP 
+#'
+#' @return
+#' @export
+#' @importFrom reshape2 melt
+#'
+#' @examples
 .createPPVmatrix <- function(Max_Prevalence, Sensitivity, Max_FP) {
-    
-  # Libraries ---------------------------------------------------------------
-  # if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
-  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
-    
     
     # DEBUG -------------------------------------------------------------------
   
@@ -69,5 +75,4 @@
         if (PPV_NPV == "NPV") {
           PPV_melted = NPV_melted
         }
-    
 }

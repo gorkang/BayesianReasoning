@@ -6,7 +6,7 @@
 \usage{
 PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100,
   prevalence_screening_group = 100, prevalence_diagnostic_group = 2,
-  labels_prevalence = c("Screening", "Diagnostic"), save_plot = TRUE)
+  labels_prevalence = c("Screening", "Diagnostic"), save_plot = FALSE)
 }
 \arguments{
 \item{Max_FP}{False positive rate (1-Specificity) [0-100].}

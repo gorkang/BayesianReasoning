@@ -2,7 +2,7 @@
 
 This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 
-To install it you can do: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).
+Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).  
 
 
 ## PPV_heatmap()
@@ -66,7 +66,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 
 ---   
 
-## PPV_diagnostic_vs_screening
+## PPV_diagnostic_vs_screening()
 
 To show a plot with the difference between the PPV of a diagnostic context (or a common study sample ~50%) versus that of a screening context:  
 
@@ -85,7 +85,7 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
 ---   
 
 
-## min_possible_prevalence
+## min_possible_prevalence()
 
 Imagine you would like to use a test in a population and have a 98% PPV, that is, *if* a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
 
@@ -103,6 +103,6 @@ Another example, with a very good test, and lower expectations:
 min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
 ```
 
-$ To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429  
+`To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429`
 
 --- 
