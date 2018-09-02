@@ -30,6 +30,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   
   # Libraries ---------------------------------------------------------------
   if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
+  if (!require('tidyr')) install.packages('tidyr'); library('tidyr')
   if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
   if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
   
