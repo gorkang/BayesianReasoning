@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "Bayesian reasoning in medical contexts"
+author: "Gorka Navarrete <gorkang@gmail.com>"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -8,11 +8,15 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-# Bayesian reasoning in medical contexts
 
 This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 
 Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).  
+
+```{r message=FALSE, warning=FALSE, include=FALSE}
+  devtools::load_all()
+  # library(BayesianReasoning)
+```
 
 
 ## PPV_heatmap()
@@ -24,24 +28,40 @@ Plot heatmaps with PPV values for a given specificity and a range of Prevalences
 * Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP
 * Language: "es" for Spanish or "en" for English  
 
-
-``` r 
-
+```{r fig.height=8, fig.width=10}
 PPV_heatmap(Max_Prevalence = 1000, 
             Sensitivity = 100, 
             Max_FP = 2, 
             Language = "en")
-            
-```  
+```
 
 
 
 
 --- 
 
-You can add an overlay to the plots. For example:
+You can add different types of overlay to the plots. For example:  
 
-``` r 
+
+### Area overlay
+
+```{r fig.height=8, fig.width=10}
+
+PPV_heatmap(Max_Prevalence = 100, Sensitivity = 99, Max_FP = 5,
+            label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            overlay = "area", uncertainty_prevalence = "high",
+            overlay_labels = "40 y.o.",
+            overlay_position_FP = 4.8,
+            overlay_position_Prevalence = 68)
+        
+
+```
+
+
+
+### Line overlay
+
+```{r fig.height=8, fig.width=10}
 
 PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
                 label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
@@ -58,7 +78,7 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
 
 Another example. In this case, the FP is constant across age:
 
-``` r 
+```{r fig.height=8, fig.width=10}
 
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
            label_subtitle = "Prenatal screening for Down Syndrome by Age",
@@ -77,7 +97,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 
 To show a plot with the difference between the PPV of a diagnostic context (or a common study sample ~50%) versus that of a screening context:  
 
-``` r 
+```{r fig.height=8, fig.width=10}
 
 PPV_diagnostic_vs_screening(Max_FP = 10, 
                             Sensitivity = 100, 
@@ -87,29 +107,22 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
 ```  
 
 
-
 ---   
-
 
 ## min_possible_prevalence()
 
 Imagine you would like to use a test in a population and have a 98% PPV, that is, *if* a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
 
-``` r 
+```{r fig.height=8, fig.width=10}
 min_possible_prevalence(100, 0.1, 98)
 ```
-
-> To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
 
 --- 
 
 Another example, with a very good test, and lower expectations:  
 
-``` r 
+```{r fig.height=8, fig.width=10}
 min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
 ```
 
-> To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429
-
 --- 
-
