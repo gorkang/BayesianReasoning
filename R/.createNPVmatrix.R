@@ -5,13 +5,12 @@
 #' @param Max_FP 
 #'
 #' @return
-#' @export
 #' @importFrom reshape2 melt
 #'
 #' @examples
 .createPPVmatrix <- function(Max_Prevalence, Sensitivity, Max_FP) {
     
-  library(reshape2)
+  # library(reshape2)
   
     # DEBUG -------------------------------------------------------------------
   
@@ -47,7 +46,7 @@
         rownames(NPV) = Prevalence
         
         # Long format para ggplot Heatmap
-        NPV_melted = melt(NPV)
+        NPV_melted = reshape2::melt(NPV)
         
         # Give names to variables
         names(NPV_melted) = c("melted_Prevalence", "melted_FP", "melted_NPV") 
