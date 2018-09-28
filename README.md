@@ -15,7 +15,7 @@ Plot heatmaps with PPV values for a given specificity and a range of Prevalences
 * Language: "es" for Spanish or "en" for English  
 
 
-``` r 
+```r 
 
 PPV_heatmap(Max_Prevalence = 1000, 
             Sensitivity = 100, 
@@ -30,13 +30,34 @@ PPV_heatmap(Max_Prevalence = 1000,
 
 --- 
 
-You can add an overlay to the plots. For example:
+You can add different types of overlay to the plots. For example:  
 
-``` r 
+
+### Area overlay
+
+```r 
+
+PPV_heatmap(Max_Prevalence = 100, Sensitivity = 99, Max_FP = 5,
+            label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            overlay = "area", uncertainty_prevalence = "high",
+            overlay_labels = "40 y.o.",
+            overlay_position_FP = 4.8,
+            overlay_position_Prevalence = 68)
+        
+
+```
+
+![](outputs/PPV_heatmap/1200_81_5_en_overlay.png)  
+
+
+
+### Line overlay
+
+```r 
 
 PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
                 label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-                save_plot = TRUE, Language = "en", 
+                save_plot = FALSE, Language = "en", 
                 overlay = TRUE, 
                 overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
                 overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
@@ -44,17 +65,17 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
                 
 ```
 
-![](outputs/PPV_heatmap/1800_90_15_en_overlay.png)  
+![](outputs/PPV_heatmap/1800_90_15_en_overlay.png)
 
 ---   
 
 Another example. In this case, the FP is constant across age:
 
-``` r 
+```r 
 
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-           save_plot = TRUE, Language = "en",
+           save_plot = FALSE, Language = "en",
            overlay = TRUE,
            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
            overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
@@ -70,7 +91,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 
 To show a plot with the difference between the PPV of a diagnostic context (or a common study sample ~50%) versus that of a screening context:  
 
-``` r 
+```r 
 
 PPV_diagnostic_vs_screening(Max_FP = 10, 
                             Sensitivity = 100, 
@@ -89,20 +110,20 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
 
 Imagine you would like to use a test in a population and have a 98% PPV, that is, *if* a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
 
-``` r 
+```r 
 min_possible_prevalence(100, 0.1, 98)
 ```
 
-`To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21`
+> To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
 
 --- 
 
 Another example, with a very good test, and lower expectations:  
 
-``` r 
+```r 
 min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
 ```
 
-`To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429`
+> To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429
 
 --- 
