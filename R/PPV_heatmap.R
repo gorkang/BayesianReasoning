@@ -115,7 +115,7 @@ PPV_heatmap <- function(Max_Prevalence, Sensitivity, Max_FP,
       }
   
       if (overlay != "no") {
-        filename_overlay = "_overlay"
+        filename_overlay = paste0("_", overlay)#"_overlay"
       } else {
         filename_overlay = ""
       }
