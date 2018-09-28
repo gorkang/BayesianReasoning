@@ -47,7 +47,7 @@ PPV_heatmap(Max_Prevalence = 100, Sensitivity = 99, Max_FP = 5,
 
 ```
 
-![](outputs/PPV_heatmap/1200_81_5_en_overlay.png)  
+![](outputs/PPV_heatmap/1200_81_5.3_en_area.png)  
 
 
 
@@ -65,7 +65,7 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
                 
 ```
 
-![](outputs/PPV_heatmap/1800_90_15_en_overlay.png)
+![](outputs/PPV_heatmap/1800_90_15_en_line.png)
 
 ---   
 
@@ -83,7 +83,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
                 
 ```
 
-![](outputs/PPV_heatmap/1200_81_5_en_overlay.png)  
+![](outputs/PPV_heatmap/1200_81_5_en_line.png)  
 
 ---   
 
