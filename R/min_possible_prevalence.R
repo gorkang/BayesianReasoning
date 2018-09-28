@@ -13,12 +13,12 @@
 #' @examples
 #' 
 #' # Example 1
-#' > min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
-#' To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429
+#' min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
+#' "To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429"
 #' 
 #' # Example 2
-#' > min_possible_prevalence(100, 0.1, 98)
-#' To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
+#' min_possible_prevalence(100, 0.1, 98)
+#' "To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21"
 min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
   #TEST Parameters **************
@@ -48,7 +48,7 @@ min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
     rownames(PPV) = Prevalence
     
     # Long format para ggplot Heatmap
-    PPV_melted = melt(PPV)
+    PPV_melted = reshape2::melt(PPV)
     #Por algun motivo, melt a veces cambia nombres de variables. De este modo los fijamos
     names(PPV_melted) = c("melted_Prevalence", "melted_FP", "melted_PPV") 
     

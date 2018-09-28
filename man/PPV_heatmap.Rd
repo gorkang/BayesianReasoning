@@ -4,10 +4,11 @@
 \alias{PPV_heatmap}
 \title{Plot PPV heatmaps}
 \usage{
-PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = FALSE,
+PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = "no",
   overlay_labels, overlay_position_FP, overlay_position_Prevalence,
-  label_title = "", label_subtitle = "", Language = "en",
-  save_plot = FALSE, PPV_NPV = "PPV")
+  uncertainty_prevalence = "high", label_title = "",
+  label_subtitle = "", Language = "en", save_plot = FALSE,
+  PPV_NPV = "PPV")
 }
 \arguments{
 \item{Max_Prevalence}{Maximum prevalence to show in plot (y-axis): 1-Inf}
@@ -24,6 +25,8 @@ PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = FALSE,
 
 \item{overlay_position_Prevalence}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)}
 
+\item{uncertainty_prevalence}{How much certainty we have about the prevalence ["high"/"low"]}
+
 \item{label_title}{Title for the plot}
 
 \item{label_subtitle}{Subtitle for the plot}
@@ -31,6 +34,8 @@ PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = FALSE,
 \item{Language}{Language for the plot labels: "sp" / "en"}
 
 \item{save_plot}{Should save the plot as .png or just show it?  [TRUE/FALSE]}
+
+\item{PPV_NPV}{Should show PPV or NPV [PPV/NPV]}
 }
 \value{
 A .png plot in the /output folder, or shows a plot
@@ -41,13 +46,13 @@ Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a ra
 \examples{
 
 # Simple plot
-PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15, Language = "en", overlay = FALSE)
+PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15)
 
 # Show a plot with an overlay
 PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-            save_plot = TRUE, Language = "en",
-            overlay = TRUE,
+            save_plot = FALSE, Language = "en",
+            overlay = "line",
             overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
             overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
             overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
@@ -55,9 +60,17 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
 # Another plot with an overlay
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = TRUE, Language = "en",
-            overlay = TRUE,
+            save_plot = FALSE, Language = "en",
+            overlay = "line",
             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
             overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
             overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
+# A plot with a point overlay
+PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+            label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            save_plot = FALSE, Language = "en",
+            overlay = "area",
+            overlay_labels = c("40 y.o."),
+            overlay_position_FP = c(1.2),
+            overlay_position_Prevalence = c(76))
 }
