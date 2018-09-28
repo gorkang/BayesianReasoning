@@ -3,12 +3,12 @@
 library(tidyverse)
 # source("R/.createPPVmatrix.R")
 
-# Max_Prevalence = 9
-# Sensitivity = 90
-# Max_FP = 10
+Max_Prevalence = 9
+Sensitivity = 90
+Max_FP = 10
 
-.createPPVmatrix(Max_Prevalence = 9, Sensitivity = 90, Max_FP = 10)
-# round_decimals = 10 # If round_decimals == 4,5,6... there is 1 or 2 fake FALSEs  
+.createPPVmatrix(Max_Prevalence, Sensitivity, Max_FP)
+round_decimals = 10 # If round_decimals == 4,5,6... there is 1 or 2 fake FALSEs
 
 
 # PPV ---------------------------------------------------------------------
