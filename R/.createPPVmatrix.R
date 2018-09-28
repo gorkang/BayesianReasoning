@@ -1,17 +1,20 @@
-#' Title
+#' .createPPVmatrix
 #'
-#' @param Max_Prevalence 
-#' @param Sensitivity 
-#' @param Max_FP 
+#' Create a PPV matrix helper function
+#' 
+#' @param Max_Prevalence Max prevalence of disease
+#' @param Sensitivity Sensitivity of test
+#' @param Max_FP Maximum False Positives ratio
 #'
-#' @return
+#' @return A DF called PPV
 #' @export
 #' @importFrom reshape2 melt
 #'
 #' @examples
+#' .createPPVmatrix(1000, 100, 2)
 .createPPVmatrix <- function(Max_Prevalence, Sensitivity, Max_FP) {
     
-  library(reshape2)
+  # library(reshape2)
   
     # DEBUG -------------------------------------------------------------------
   
@@ -48,7 +51,7 @@
         rownames(PPV) = Prevalence
         
         # Long format para ggplot Heatmap
-        PPV_melted = melt(PPV)
+        PPV_melted = reshape2::melt(PPV)
         
         # Give names to variables
         names(PPV_melted) = c("melted_Prevalence", "melted_FP", "melted_PPV") 
