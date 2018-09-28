@@ -68,9 +68,8 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 # A plot with a point overlay
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = FALSE, Language = "en",
             overlay = "area",
-            overlay_labels = c("40 y.o."),
-            overlay_position_FP = c(1.2),
-            overlay_position_Prevalence = c(76))
+            overlay_labels = "40 y.o.",
+            overlay_position_FP = 4.8,
+            overlay_position_Prevalence = 68
 }
