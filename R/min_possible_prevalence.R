@@ -8,6 +8,7 @@
 #'
 #' @return A description showing the minimum necessary prevalence.
 #' @export
+#' @importFrom reshape2 melt
 #'
 #' @examples
 #' 
@@ -19,10 +20,6 @@
 #' > min_possible_prevalence(100, 0.1, 98)
 #' To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21
 min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
-
-  # Libraries ---------------------------------------------------------------
-  # if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
-  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
 
   #TEST Parameters **************
     #FP

@@ -37,21 +37,21 @@
     Step_size_Prevalence <<- Max_Prevalence/Steps_Prevalence
     Prevalence = seq(Min_Prevalence, (1 + Max_Prevalence), Step_size_Prevalence) #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
     
+    # NPV Calculation -------------------------------------------------------------
+        
+        # As NPV is more dependent on Sensitivity, the x axis should show Sensitivity, and FP should be fixed
+        NPV <<- ((Prevalence - 1) %o% (100 - FP)) / (((Prevalence - 1) %o% (100 - FP)) + (Prevalence_x * (100 - Sensitivity)))
     
-    # PPV Calculation -------------------------------------------------------------
-        
-        # We calculate the 100x100 PPV matrix using %o% (outer)
-        PPV <<- (Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP) )
-        
         #Label columns and rows of matrix
-        colnames(PPV) = FP
-        rownames(PPV) = Prevalence
+        colnames(NPV) = FP
+        rownames(NPV) = Prevalence
         
         # Long format para ggplot Heatmap
-        PPV_melted = melt(PPV)
+        NPV_melted = melt(NPV)
         
         # Give names to variables
-        names(PPV_melted) = c("melted_Prevalence", "melted_FP", "melted_PPV") 
-        
-        PPV_melted <<- PPV_melted
+        names(NPV_melted) = c("melted_Prevalence", "melted_FP", "melted_NPV") 
+  
+        NPV_melted <<- NPV_melted
+
 }

@@ -11,6 +11,12 @@
 #'
 #' @return A .png plot in the /output folder, or shows a plot
 #' @export
+#' @importFrom reshape2 melt
+#' @importFrom ggplot2 ggplot aes geom_line scale_colour_hue theme_minimal theme element_text scale_x_continuous scale_y_continuous labs
+#' @importFrom tidyr gather
+#' @importFrom magrittr %>%
+#' @importFrom dplyr mutate rename
+#' @importFrom tibble as_tibble
 #'
 #' @examples
 #' 
@@ -27,13 +33,6 @@
 PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2, 
                                         labels_prevalence = c("Screening", "Diagnostic"),
                                         save_plot = FALSE) {
-  
-  # Libraries ---------------------------------------------------------------
-  if (!require('dplyr')) install.packages('dplyr'); library('dplyr')
-  if (!require('tidyr')) install.packages('tidyr'); library('tidyr')
-  if (!require('ggplot2')) install.packages('ggplot2'); library('ggplot2')
-  if (!require('reshape2')) install.packages('reshape2'); library('reshape2')
-  
   
   # PARAMETERS --------------------------------------------------------------
   # Max_FP = 10
