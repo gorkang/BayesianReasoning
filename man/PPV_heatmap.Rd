@@ -4,14 +4,16 @@
 \alias{PPV_heatmap}
 \title{Plot PPV heatmaps}
 \usage{
-PPV_heatmap(Max_Prevalence, Sensitivity, Max_FP, overlay = "no",
-  overlay_labels, overlay_position_FP, overlay_position_Prevalence,
-  uncertainty_prevalence = "high", label_title = "",
-  label_subtitle = "", Language = "en", save_plot = FALSE,
-  PPV_NPV = "PPV")
+PPV_heatmap(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
+  overlay = "no", overlay_labels = "", overlay_position_FP,
+  overlay_position_Prevalence, uncertainty_prevalence = "high",
+  label_title = "", label_subtitle = "", Language = "en",
+  save_plot = FALSE, PPV_NPV = "PPV")
 }
 \arguments{
-\item{Max_Prevalence}{Maximum prevalence to show in plot (y-axis): 1-Inf}
+\item{Min_Prevalence}{x in the "x out of y" prevalence (y-axis): 1-Inf}
+
+\item{Max_Prevalence}{y in the "x out of y" prevalence (y-axis): 1-Inf}
 
 \item{Sensitivity}{Sensitivity of the test: 0-100}
 
@@ -71,5 +73,5 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
-            overlay_position_Prevalence = 68
+            overlay_position_Prevalence = "1 out of 68")
 }
