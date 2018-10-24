@@ -1,3 +1,15 @@
+#' Title
+#'
+#' @param PPV_melted 
+#' @param uncertainty_prevalence 
+#' @param overlay_labels 
+#' @param PPV_NPV 
+#' @param overlay_position_FP 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 .plot_overlay_area <- function(PPV_melted, uncertainty_prevalence = "high", overlay_labels = "", PPV_NPV = "PPV", overlay_position_FP) {
   
   

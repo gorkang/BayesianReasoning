@@ -14,8 +14,8 @@ This package includes a few functions to plot and help understand Positive Predi
 Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).  
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-  devtools::load_all()
-  # library(BayesianReasoning)
+  # devtools::load_all()
+  library(BayesianReasoning)
 ```
 
 
@@ -52,7 +52,7 @@ PPV_heatmap(Max_Prevalence = 100, Sensitivity = 99, Max_FP = 5,
             overlay = "area", uncertainty_prevalence = "high",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
-            overlay_position_Prevalence = 68)
+            overlay_position_Prevalence = "68 out of 100")
         
 
 ```

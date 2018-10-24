@@ -37,12 +37,13 @@ You can add different types of overlay to the plots. For example:
 
 ```r 
 
-PPV_heatmap(Max_Prevalence = 100, Sensitivity = 99, Max_FP = 5,
+PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            overlay = "area", uncertainty_prevalence = "high",
+            save_plot = TRUE,
+            overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
-            overlay_position_Prevalence = 68)
+            overlay_position_Prevalence = "1 out of 68")
         
 
 ```
