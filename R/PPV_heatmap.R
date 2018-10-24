@@ -2,7 +2,8 @@
   #' 
   #' Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP
   #' 
-  #' @param Max_Prevalence Maximum prevalence to show in plot (y-axis): 1-Inf
+  #' @param Min_Prevalence x in the "x out of y" prevalence (y-axis): 1-Inf
+  #' @param Max_Prevalence y in the "x out of y" prevalence (y-axis): 1-Inf
   #' @param Sensitivity Sensitivity of the test: 0-100
   #' @param Max_FP Maximum False Positives ratio to show in plot (x-axis): 1-100
   #' @param overlay Show overlay: TRUE / FALSE
@@ -18,9 +19,9 @@
   #'
   #' @return A .png plot in the /output folder, or shows a plot
   #' @export
-  # @importFrom BayesianReasoning .createPPVmatrix
   #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin annotate ggsave
   #' @importFrom reshape2 melt
+  #' @importFrom magrittr "%>%"
   #'
   #' @examples
   #' 
@@ -51,7 +52,7 @@
   #'             overlay = "area",
   #'             overlay_labels = "40 y.o.",
   #'             overlay_position_FP = 4.8,
-  #'             overlay_position_Prevalence = 68
+  #'             overlay_position_Prevalence = "1 out of 68")
   PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
                               overlay = "no", overlay_labels = "", overlay_position_FP, overlay_position_Prevalence, uncertainty_prevalence = "high",
                               label_title = "", label_subtitle = "",
