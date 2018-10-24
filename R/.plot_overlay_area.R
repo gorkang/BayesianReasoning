@@ -18,7 +18,6 @@
   # uncertainty_prevalence = "high"
   # overlay_labels = ""
   
-  if (exists("p") == TRUE) {remove(p)}
   
   # Calculate Overlay Coordinates x & y -------------------------------------.
   

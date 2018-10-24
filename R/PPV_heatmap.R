@@ -61,8 +61,6 @@
                               PPV_NPV = "PPV") {
     
   
-    if (exists("p") == TRUE) {remove(p)}
-    
     # DEBUG -------------------------------------------------
       
       # overlay = FALSE # TRUE / FALSE

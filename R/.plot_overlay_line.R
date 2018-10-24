@@ -1,7 +1,5 @@
 .plot_overlay_line <- function(PPV_melted) {
   
-  if (exists("p") == TRUE) {remove(p)}
-  
     # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
     if (exists("size_uncertainty_area") == FALSE) {size_uncertainty_area = 0}
   
