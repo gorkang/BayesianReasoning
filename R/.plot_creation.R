@@ -72,7 +72,7 @@
       breaks_x = round(seq(Min_FP, Max_FP, Step_size_FP * 10), decimals_x)
       labels_x = paste0(breaks_x, "%")
       
-      breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], decimals_y)
+      breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
       # labels_y = paste(Min_Prevalence, prevalence_label, round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], 0))
       
@@ -112,7 +112,7 @@
       breaks_x = round(seq(Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
       labels_x = paste0(breaks_x, "%")
 
-      breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], decimals_y)
+      breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
       # labels_y = paste(Min_Prevalence, prevalence_label, round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], 0))
       

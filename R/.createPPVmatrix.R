@@ -28,15 +28,17 @@
   
   #TEST Parameters **************
   
+  steps_matrix <<- 100
+  
   # False Positives (x axis) 
-  Steps_FP <<- 100
+  Steps_FP <<- steps_matrix
   Step_size_FP <<- Max_FP/Steps_FP
   Min_FP <<- 0 
   FP = seq(Min_FP, Max_FP, Step_size_FP) #With (Max_FP-Step_size_FP) we get 100 FPs. If we use Max_FP instead we have 101 (because we start at 0!)
   
   # Sentisitivy
   Max_FN <<- (100 - Sensitivity)
-  Steps_FN <<- 100
+  Steps_FN <<- steps_matrix
   Step_size_FN <<- Max_FN/Steps_FN
   Min_FN <<- 0
   
@@ -48,7 +50,7 @@
   Min_Prevalence <<- Min_Prevalence
   Prevalence_x <<- Min_Prevalence
   Max_Prevalence <<- Max_Prevalence
-  Steps_Prevalence <<- 100
+  Steps_Prevalence <<- steps_matrix
   Step_size_Prevalence <<- (Max_Prevalence - Min_Prevalence)/Steps_Prevalence
   Prevalence <<- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 0)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
   
