@@ -6,9 +6,9 @@
 #'
 #' @return
 #' @export
-#' @importFrom magrittr "%>%"
 #' @importFrom dplyr mutate filter pull
-#'
+#' @importFrom magrittr %>%
+#' 
 #' @examples
 .get_point_ppv_npv <- function(PPV_melted, PPV_NPV = "PPV", overlay_position_FP) {
     
@@ -37,7 +37,9 @@
         "\n FP = ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%"),
         "\n PPV = ", paste0(round(DF_point_PPV_NPV$PPV, 2) * 100, "%"))
       
-      point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
+      point_PPV_NPV = DF_point_PPV_NPV %>% 
+        dplyr::mutate(PPV = round(PPV * 100, 2)) %>%
+        dplyr::pull(PPV)
       
     } else if (PPV_NPV == "NPV")  {
       
@@ -54,7 +56,9 @@
         "\n FN = ", paste0(round(DF_point_PPV_NPV$FN, decimals_x), "%"),
         "\n NPV = ", paste0(round(DF_point_PPV_NPV$NPV, 2) * 100, "%"))
       
-      point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(NPV = round(NPV * 100, 2))  %>% dplyr::pull(NPV)
+      point_PPV_NPV = DF_point_PPV_NPV %>% 
+        dplyr::mutate(NPV = round(NPV * 100, 2)) %>%
+        dplyr::pull(NPV)
       
     } else {
       
@@ -71,7 +75,9 @@
         "\n FP = ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%"),
         "\n PPV = ", paste0(round(DF_point_PPV_NPV$PPV, 2) * 100, "%"))
       
-      point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
+      point_PPV_NPV = DF_point_PPV_NPV %>% 
+        dplyr::mutate(PPV = round(PPV * 100, 2)) %>% 
+        dplyr::pull(PPV)
       
     }
   

@@ -1,3 +1,19 @@
+#' Title
+#'
+#' @param uncertainty_prevalence 
+#' @param Min_Prevalence 
+#' @param Max_Prevalence 
+#' @param Sensitivity 
+#' @param Max_FP 
+#' @param overlay_position_Prevalence 
+#' @param overlay_position_FP 
+#'
+#' @return
+#' @export
+#' @importFrom magrittr %>%
+#' @importFrom dplyr sample_n filter pull
+#'
+#' @examples
 .calculate_area_overlay_coordinates <- function(uncertainty_prevalence = "high", 
                                                 Min_Prevalence, Max_Prevalence, Sensitivity, Max_FP,
                                                 overlay_position_Prevalence, overlay_position_FP) {
@@ -45,7 +61,9 @@
     point_Prevalence <<-  PPV_melted %>%
       dplyr::filter(
         # Closest value to overlay_position_Prevalence
-        abs(Prevalence - point_Prevalence_temp) == min(abs(Prevalence - point_Prevalence_temp))) %>% dplyr::sample_n(1) %>% dplyr::pull(Prevalence) 
+        abs(Prevalence - point_Prevalence_temp) == min(abs(Prevalence - point_Prevalence_temp))) %>% 
+      dplyr::sample_n(1) %>% 
+      dplyr::pull(Prevalence) 
     
     
     modifier_overlay_position_y <<- (1 - (Min_Prevalence/Max_Prevalence)) * (size_uncertainty_area * Max_Prevalence)

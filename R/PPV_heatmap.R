@@ -21,7 +21,8 @@
   #' @export
   #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin annotate ggsave
   #' @importFrom reshape2 melt
-  #' @importFrom magrittr "%>%"
+  #' @importFrom dplyr mutate filter pull
+  #' @importFrom magrittr %>%
   #'
   #' @examples
   #' 

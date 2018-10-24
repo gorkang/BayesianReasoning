@@ -8,6 +8,7 @@
 #'
 #' @return
 #' @export
+#' @importFrom ggplot2 annotate
 #'
 #' @examples
 .plot_overlay_area <- function(PPV_melted, uncertainty_prevalence = "high", overlay_labels = "", PPV_NPV = "PPV", overlay_position_FP) {
