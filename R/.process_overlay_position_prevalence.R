@@ -2,6 +2,7 @@
 
   # DEBUG -------------------------------------------------------------------
     # library(dplyr)
+    # overlay_position_Prevalence = 1
     # overlay_position_Prevalence = "86.8%"
     # overlay_position_Prevalence = "400 out of 200"
   # *************************************************************************
@@ -11,7 +12,7 @@
 
     #  x OUT OF y -------------------------------------------------------------
       
-      if (grepl("out of", overlay_position_Prevalence) == TRUE) {
+      if (grepl("out of|in", overlay_position_Prevalence) == TRUE) {
         
           overlay_prevalence = regmatches(
             overlay_position_Prevalence,
@@ -43,13 +44,17 @@
         if (overlay_prevalence_temp > 100 | overlay_prevalence_temp < 0) { stop("Impossible overlay_position_Prevalence value: ", overlay_position_Prevalence, ". It should be a number between 0% and 100%")}
         # *******************************************************************************
         
-      }
+      } else if (is.numeric(overlay_position_Prevalence) == TRUE) {
     
+        overlay_prevalence = Min_Prevalence
+        overlay_prevalence[2] = round(Min_Prevalence / (overlay_position_Prevalence / 100), 0)
+        
+      }
       
 
     # General check -----------------------------------------------------------
       if (length(overlay_prevalence) != 2) {
-        stop("***The parameter 'overlay_position_Prevalence' should be x out of y (e.g. '2 out of 100') or x% (e.g. 2%). Now is: ", overlay_position_Prevalence)
+        stop("***The parameter 'overlay_position_Prevalence' should be x out of y (e.g. '2 out of 100'), x in y (e.g. '2 in 100'), x% (e.g. 2%) or x (assumes x = x%). Now is: ", overlay_position_Prevalence)
       }
     # *************************************************************************
     
