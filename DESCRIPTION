@@ -1,6 +1,6 @@
 Package: BayesianReasoning
 Title: Plot and Help Understand Positive and Negative Predictive Values, and their Relationship with Sensitivity, Specificity and Prevalence
-Version: 0.1
+Version: 0.2
 Authors@R: c(
     person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre"))
     )
