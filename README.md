@@ -9,6 +9,7 @@ Right now it is a work in progress with lots of moving parts and horrible code. 
 
 Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP. The basic parameters are:
 
+* Min_Prevalence: Min prevalence in y axis. "Min_Prevalence out of y"
 * Max_Prevalence: Max prevalence in y axis. "1 out of Max_Prevalence"
 * Sensitivity: Sensitivity of the test. 
 * Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP
@@ -25,8 +26,28 @@ PPV_heatmap(Max_Prevalence = 1000,
 ```  
 
 
-![](outputs/PPV_heatmap/1000_100_2_en.png)  
+![](outputs/PPV_heatmap/PPV_1_1000_100_2_en.png)  
 
+
+
+You can also plot an NPV heatmap with the PPV_NPV parameter:
+
+* PPV_NPV = "NPV"
+
+```r 
+
+PPV_heatmap(PPV_NPV = "NPV",
+            Min_Prevalence = 800,
+            Max_Prevalence = 1000, 
+            Sensitivity = 80, 
+            Max_FP = 5, 
+            Language = "en",
+            save_plot = TRUE)
+
+```
+
+
+![](outputs/PPV_heatmap/NPV_800_1000_80_5_en.png)   
 
 --- 
 
@@ -44,11 +65,10 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
             overlay_position_Prevalence = "1 out of 68")
-        
 
 ```
 
-![](outputs/PPV_heatmap/1200_81_5.3_en_area.png)  
+![](outputs/PPV_heatmap/PPV_1_1200_81_5.05_area_en.png)  
 
 
 
@@ -66,7 +86,7 @@ PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
                 
 ```
 
-![](outputs/PPV_heatmap/1800_90_15_en_line.png)
+![](outputs/PPV_heatmap/PPV_1_1800_90_15_line_en.png)
 
 ---   
 
@@ -84,7 +104,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
                 
 ```
 
-![](outputs/PPV_heatmap/1200_81_5_en_line.png)  
+![](outputs/PPV_heatmap/PPV_1_1200_81_5_line_en.png)  
 
 ---   
 

@@ -126,6 +126,7 @@
     Max_Prevalence <<- Max_Prevalence
     Min_Prevalence <<- Min_Prevalence
     Language <<- Language
+    if (exists("overlay") == FALSE) overlay = "no"
     # **************************************************************************
     
  
@@ -134,10 +135,8 @@
         #GRAPHIC Parameters *************
   
         # modifier_text_overlay_position = (Max_Prevalence/75)
-    
-    
         if (overlay != "no") {
-          filename_overlay = "_overlay"
+          filename_overlay = paste0("_", overlay)
         } else {
           filename_overlay = ""
         }
@@ -176,7 +175,7 @@
         if (save_plot == TRUE) {
           
           print(p)
-          plot_name = paste0("outputs/PPV_heatmap/", Max_Prevalence, "_", Sensitivity, "_", Max_FP, "_", Language, filename_overlay, ".png")
+          plot_name = paste0("outputs/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
           ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
           cat("\n Plot created in: ", plot_name, "\n")
           
