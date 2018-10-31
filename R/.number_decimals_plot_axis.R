@@ -48,4 +48,6 @@
     decimals_x <<- decimals_x
     decimals_y <<- decimals_y
   
+    # decimals = c(decimals_x, decimals_y)
+    # decimals
 }

@@ -78,7 +78,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
       geom_line(size = 1.5) + 
       scale_colour_hue(l = 50, labels = Labels_plot) +
       theme_minimal() +
-      theme(text = element_text(size = 20)) +
+      theme(text = ggplot2::element_text(size = 20)) +
       scale_x_continuous(labels = function(x) paste0(x, "%")) +
       scale_y_continuous(name = "Positive Predictive Value", limits = c(0, 100), labels = function(x) paste0(x, "%")) +
       theme(legend.position = "bottom") +  

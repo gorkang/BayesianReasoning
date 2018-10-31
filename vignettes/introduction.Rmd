@@ -17,6 +17,7 @@ Right now it is a work in progress with lots of moving parts and horrible code. 
   # DEBUG
   # devtools::load_all()
 
+  # PRODUCTION
   library(BayesianReasoning)
 ```
 
@@ -31,6 +32,7 @@ Plot heatmaps with PPV values for a given specificity and a range of Prevalences
 * Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP
 * Language: "es" for Spanish or "en" for English  
 
+
 ```{r fig.height=8, fig.width=10}
 PPV_heatmap(Max_Prevalence = 1000, 
             Sensitivity = 100, 
@@ -38,7 +40,8 @@ PPV_heatmap(Max_Prevalence = 1000,
             Language = "en")
 ```
 
---- 
+---  
+
 You can also plot an NPV heatmap with the PPV_NPV parameter:
 
 * PPV_NPV = "NPV"
@@ -53,7 +56,6 @@ PPV_heatmap(PPV_NPV = "NPV",
             Max_FP = 5, 
             Language = "en")
 ```
-
 
 --- 
 
@@ -130,7 +132,7 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
 
 ## min_possible_prevalence()
 
-Imagine you would like to use a test in a population and have a 98% PPV, that is, *if* a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
+Imagine you would like to use a test in a population and have a 98% PPV, that is, IF a positive result comes out in the test, you would like a 98% certainty that it is a true positive. How high should be the prevalence of the disease in that group?  
 
 ```{r fig.height=8, fig.width=10}
 min_possible_prevalence(100, 0.1, 98)
