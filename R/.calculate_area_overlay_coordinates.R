@@ -14,11 +14,16 @@
 #' @importFrom dplyr sample_n filter pull
 #'
 #' @examples
-.calculate_area_overlay_coordinates <- function(uncertainty_prevalence = "high", 
-                                                Min_Prevalence, Max_Prevalence, Sensitivity, Max_FP,
-                                                overlay_position_Prevalence, overlay_position_FP) {
-  
-  
+.calculate_area_overlay_coordinates <-
+  function(PPV_melted,
+           uncertainty_prevalence = "high",
+           Min_Prevalence,
+           Max_Prevalence,
+           Sensitivity,
+           Max_FP,
+           overlay_position_Prevalence,
+           overlay_position_FP) {
+    
   # DEBUG -------------------------------------------------------------------
   if (exists("DEBUG") == FALSE) {DEBUG = 0}
   
@@ -32,6 +37,7 @@
     # message("overlay_position_Prevalence: ", overlay_position_Prevalence)
     message("overlay_prevalence_1: ", overlay_prevalence_1)
     message("overlay_prevalence_2: ", overlay_prevalence_2)
+    message("\n*** END *** ")
     
   }
   # **************************************************************************
@@ -65,10 +71,8 @@
       dplyr::sample_n(1) %>% 
       dplyr::pull(Prevalence) 
     
-    
     modifier_overlay_position_y <<- (1 - (Min_Prevalence/Max_Prevalence)) * (size_uncertainty_area * Max_Prevalence)
     
-
 
   # Final modifiers ---------------------------------------------------------
     

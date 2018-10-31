@@ -1,4 +1,17 @@
-.plot_overlay_line <- function(PPV_melted) {
+#' Title
+#'
+#' @param PPV_melted 
+#' @param Max_Prevalence 
+#' @param overlay_position_Prevalence 
+#' @param overlay_position_FP 
+#' @param overlay_labels 
+#'
+#' @return
+#' @export
+#' @importFrom ggplot2 annotate
+#'
+#' @examples
+.plot_overlay_line <- function(PPV_melted, Max_Prevalence, overlay_position_Prevalence, overlay_position_FP, overlay_labels) {
   
     # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
     if (exists("size_uncertainty_area") == FALSE) {size_uncertainty_area = 0}
@@ -27,9 +40,9 @@
     
     
     # Plot Overlay ------------------------------------------------------------
-    p <<- p + annotate("segment", x = overlay_position_FP, xend = overlay_position_x_end, 
+    p <<- p + ggplot2::annotate("segment", x = overlay_position_FP, xend = overlay_position_x_end, 
                      y = overlay_position_Prevalence, yend = overlay_position_y_end,
                      color = "red", alpha = .1, size = 3) +
-      annotate("text", x = overlay_position_FP, y = overlay_position_Prevalence, label = overlay_labels, size = 4) 
+      ggplot2::annotate("text", x = overlay_position_FP, y = overlay_position_Prevalence, label = overlay_labels, size = 4) 
 
 }
