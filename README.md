@@ -2,7 +2,7 @@
 
 This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 
-Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `devtools::install_github("gorkang/R_PPV_Plot")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).  
+Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `devtools::install_github("gorkang/BayesianReasoning")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/R_PPV_Plot/issues).  
 
 
 ## PPV_heatmap()

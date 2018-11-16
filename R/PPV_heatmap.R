@@ -67,17 +67,17 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
   # Libraries ---------------------------------------------------------------
   
   # Absolute paths
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.createPPVmatrix.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.check_size.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.plot_creation.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.plot_overlay_line.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.plot_overlay_area.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.process_overlay_position_prevalence.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.translate_labels.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.number_decimals_plot_axis.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.get_point_ppv_npv.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.createPPVmatrix.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.check_size.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_creation.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_overlay_line.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_overlay_area.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.process_overlay_position_prevalence.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.translate_labels.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.number_decimals_plot_axis.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
+  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.get_point_ppv_npv.R", local = FALSE)
   
   # Relative paths
   # source("R/.createPPVmatrix.R", local = TRUE)

@@ -33,8 +33,8 @@
   
   # Calculate Overlay Coordinates x & y -------------------------------------.
   
-  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_PPV_Plot/R/.get_point_ppv_npv.R", local = FALSE)
+  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
+  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.get_point_ppv_npv.R", local = FALSE)
   
   .calculate_area_overlay_coordinates(
     PPV_melted = PPV_melted,
