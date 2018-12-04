@@ -68,7 +68,7 @@
     # Get PPV or NPV value ----------------------------------------------------
     
     # SHOULD THIS GO INSIDE .calculate_area_overlay_coordinates()???? ####
-    .get_point_ppv_npv(PPV_melted, PPV_NPV = PPV_NPV, overlay_position_FP = overlay_position_FP, overlay_labels = overlay_labels, decimals_x = decimals_x, prevalence_label = prevalence_label)
+    .get_point_ppv_npv(PPV_melted, PPV_NPV = PPV_NPV, overlay_position_FP = overlay_position_FP) #, overlay_labels = overlay_labels, decimals_x = decimals_x, prevalence_label = prevalence_label
     
 
 
