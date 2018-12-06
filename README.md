@@ -66,7 +66,7 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 
 ```
 
-![](outputs/PPV_heatmap/PPV_1_1200_81_5.05_area_en.png)  
+![](outputs/PPV_heatmap/PPV_1_1200_81_5_area_en.png)  
 
 
 
