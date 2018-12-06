@@ -39,6 +39,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   # Sensitivity = 100
   # prevalence_screening_group = 100
   # prevalence_diagnostic_group = 2
+  # labels_prevalence = c("Screening", "Diagnostic")
 
 
   # FIXED parameters --------------------------------------------------------
@@ -66,15 +67,15 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
     mutate(Real_Prevalence = Real_Prevalence_PPV,
            Study_Prevalence = Study_Prevalence_PPV) %>%
     rename(FP = value) %>%
-    gather(Prevalence, PPV, 2:3) %>%
-    mutate(Prevalence = as.factor(Prevalence))
+    gather(prevalence, PPV, 2:3) %>%
+    mutate(prevalence = as.factor(prevalence))
 
 
   # Plot --------------------------------------------------------------------
 
     Labels_plot = c(paste0(labels_prevalence[1], " prevalence: 1 out of ", prevalence_screening_group), paste0(labels_prevalence[2], " prevalence: 1 out of ", prevalence_diagnostic_group))
 
-    p = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = Prevalence)) +
+    p = ggplot(data = FINAL, aes(x = FP, y = PPV, colour = prevalence)) +
       geom_line(size = 1.5) +
       scale_colour_hue(l = 50, labels = Labels_plot) +
       theme_minimal() +
@@ -90,7 +91,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
     # theme(plot.caption = element_text(size = 10))
     # guides(color=guide_legend("Prevalence of the "))
 
-    print(p)
+    # print(p)
 
 
     if (save_plot == TRUE) {
