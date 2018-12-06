@@ -41,8 +41,7 @@ PPV_heatmap(PPV_NPV = "NPV",
             Max_Prevalence = 1000, 
             Sensitivity = 80, 
             Max_FP = 5, 
-            Language = "en",
-            save_plot = TRUE)
+            Language = "en")
 
 ```
 
@@ -60,7 +59,6 @@ You can add different types of overlay to the plots. For example:
 
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = TRUE,
             overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
@@ -78,7 +76,6 @@ PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
 
 PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
                 label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-                save_plot = FALSE, Language = "en", 
                 overlay = TRUE, 
                 overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
                 overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
@@ -96,7 +93,6 @@ Another example. In this case, the FP is constant across age:
 
 PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-           save_plot = FALSE, Language = "en",
            overlay = TRUE,
            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
            overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
