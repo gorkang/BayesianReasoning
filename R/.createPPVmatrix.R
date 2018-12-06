@@ -61,9 +61,9 @@
   # PPV Calculation -------------------------------------------------------------
   
   # We calculate the 100x100 PPV matrix using %o% (outer)
-  PPV <<- round((Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP)), 2)
+  PPV <- round((Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP)), 2)
   
-  NPV <<- round(((Prevalence - Min_Prevalence) * (100 - Max_FP)) / (((Prevalence - Min_Prevalence) * (100 - Max_FP)) + (Prevalence  %o% Sensitivity_range)), 2)
+  NPV <- round(((Prevalence - Min_Prevalence) * (100 - Max_FP)) / (((Prevalence - Min_Prevalence) * (100 - Max_FP)) + (Prevalence  %o% Sensitivity_range)), 2)
   # (       Healty               * Specificity)   /  (          Healty               * Specificity)    + Sick       *     FN
   
   #Label columns and rows of matrix
