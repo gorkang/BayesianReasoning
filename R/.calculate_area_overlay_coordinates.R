@@ -6,7 +6,7 @@
 #' @param Sensitivity 
 #' @param Max_FP 
 #' @param overlay_position_Prevalence 
-#' @param overlay_position_FP 
+#' @param overlay_position_FP_FN 
 #'
 #' @return
 #' @export
@@ -22,7 +22,7 @@
            Sensitivity,
            Max_FP,
            overlay_position_Prevalence,
-           overlay_position_FP) {
+           overlay_position_FP_FN) {
     
   # DEBUG -------------------------------------------------------------------
   if (exists("DEBUG") == FALSE) {DEBUG = 0}
@@ -76,8 +76,8 @@
 
   # Final modifiers ---------------------------------------------------------
     
-    xmin_overlay <<- overlay_position_FP - modifier_overlay_position_x
-    xmax_overlay <<- overlay_position_FP + modifier_overlay_position_x
+    xmin_overlay <<- overlay_position_FP_FN - modifier_overlay_position_x
+    xmax_overlay <<- overlay_position_FP_FN + modifier_overlay_position_x
     ymin_overlay <<- point_Prevalence - modifier_overlay_position_y
     ymax_overlay <<- point_Prevalence + modifier_overlay_position_y
     # ymin_overlay <<- overlay_position_Prevalence - modifier_overlay_position_y

@@ -4,7 +4,7 @@
 #' @param uncertainty_prevalence 
 #' @param overlay_labels 
 #' @param PPV_NPV 
-#' @param overlay_position_FP 
+#' @param overlay_position_FP_FN 
 #'
 #' @return
 #' @export
@@ -21,7 +21,7 @@
            overlay_labels = "",
            PPV_NPV = "PPV",
            overlay_position_Prevalence,
-           overlay_position_FP,
+           overlay_position_FP_FN,
            decimals_x,
            decimals_y,
            prevalence_label) {
@@ -44,7 +44,7 @@
     Sensitivity= Sensitivity,
     Max_FP = Max_FP,
     overlay_position_Prevalence = overlay_position_Prevalence,
-    overlay_position_FP = overlay_position_FP)
+    overlay_position_FP_FN = overlay_position_FP_FN)
   
     
   # CHECKS ------------------------------------------------------------------
@@ -58,7 +58,7 @@
       modifier_text_overlay_position,
       Sensitivity,
       Max_FP,
-      overlay_position_FP,
+      overlay_position_FP_FN,
       Min_Prevalence,
       modifier_overlay_position_x,
       modifier_overlay_position_y
@@ -68,7 +68,7 @@
     # Get PPV or NPV value ----------------------------------------------------
     
     # SHOULD THIS GO INSIDE .calculate_area_overlay_coordinates()???? ####
-    .get_point_ppv_npv(PPV_melted, PPV_NPV = PPV_NPV, overlay_position_FP = overlay_position_FP) #, overlay_labels = overlay_labels, decimals_x = decimals_x, prevalence_label = prevalence_label
+    .get_point_ppv_npv(PPV_melted, PPV_NPV = PPV_NPV, overlay_position_FP_FN = overlay_position_FP_FN) #, overlay_labels = overlay_labels, decimals_x = decimals_x, prevalence_label = prevalence_label
     
 
 
@@ -87,11 +87,11 @@
       # TODO: improve this. Should be relative to size of overlay & range of x axis
       if (xmin_overlay - Min_FP < 2) {
         
-        Details_point_PPV_NPV_position_x = xmax_overlay + (xmax_overlay - overlay_position_FP ) + Max_FP/75
+        Details_point_PPV_NPV_position_x = xmax_overlay + (xmax_overlay - overlay_position_FP_FN ) + Max_FP/75
         
       } else {
         
-          Details_point_PPV_NPV_position_x = xmin_overlay - (xmax_overlay - overlay_position_FP)  - Max_FP/75#(1 + overlay_position_FP)/20
+          Details_point_PPV_NPV_position_x = xmin_overlay - (xmax_overlay - overlay_position_FP_FN)  - Max_FP/75#(1 + overlay_position_FP_FN)/20
           
       }
       
@@ -99,7 +99,7 @@
   # Add overlay -------------------------------------------------------------
 
     # If overlay outside old matrix, we need to do this
-    warning("\n\n  *Recalculate PPVMatrix: ", Min_Prevalence, " ", Max_Prevalence, " ", Sensitivity, " ", Max_FP)
+    if (DEBUG == 1) warning("\n\n  *Recalculate PPVMatrix: ", Min_Prevalence, " ", Max_Prevalence, " ", Sensitivity, " ", Max_FP)
     
     PPV_melted = .createPPVmatrix(
       Min_Prevalence = .GlobalEnv$Min_Prevalence,
@@ -125,7 +125,7 @@
                ymax = ymax_overlay) +
       # Overlay center  
       ggplot2::annotate("point", color = "red", alpha = .5, size = 1,
-               x = overlay_position_FP, 
+               x = overlay_position_FP_FN, 
                # y = overlay_position_Prevalence) +
                y = point_Prevalence) +
       # INFORMATION

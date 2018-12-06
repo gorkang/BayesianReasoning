@@ -8,7 +8,7 @@
 #' @param Max_FP Maximum False Positives ratio to show in plot (x-axis): 1-100
 #' @param overlay Show overlay: TRUE / FALSE
 #' @param overlay_labels Lables for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
-#' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param overlay_position_FP_FN FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param uncertainty_prevalence How much certainty we have about the prevalence ["high"/"low"]
 #' @param overlay_position_Prevalence Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)
 #' @param label_title Title for the plot
@@ -16,6 +16,7 @@
 #' @param Language Language for the plot labels: "sp" / "en"
 #' @param save_plot Should save the plot as .png or just show it?  [TRUE/FALSE]
 #' @param PPV_NPV Should show PPV or NPV [PPV/NPV]
+#' @param DEBUG Shows debug warnings [0/1]
 #'
 #' @return A .png plot in the /output folder, or shows a plot
 #' @export
@@ -23,6 +24,7 @@
 #' @importFrom reshape2 melt
 #' @importFrom dplyr mutate filter pull
 #' @importFrom magrittr %>%
+#' 
 #'
 #' @examples
 #' 
@@ -35,7 +37,7 @@
 #'             save_plot = FALSE, Language = "en",
 #'             overlay = "line",
 #'             overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-#'             overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+#'             overlay_position_FP_FN = c(6.5, 7, 8, 9, 12, 14, 14),
 #'             overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
 #'
 #' # Another plot with an overlay
@@ -44,7 +46,7 @@
 #'             save_plot = FALSE, Language = "en",
 #'             overlay = "line",
 #'             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
-#'             overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
+#'             overlay_position_FP_FN = c(4.8, 4.8, 4.8, 4.8, 4.8),
 #'             overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
 
 #' # A plot with a point overlay
@@ -52,18 +54,20 @@
 #'             label_subtitle = "Prenatal screening for Down Syndrome by Age",
 #'             overlay = "area",
 #'             overlay_labels = "40 y.o.",
-#'             overlay_position_FP = 4.8,
+#'             overlay_position_FP_FN = 4.8,
 #'             overlay_position_Prevalence = "1 out of 68")
 PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-                            overlay = "no", overlay_labels = "", overlay_position_FP, overlay_position_Prevalence, uncertainty_prevalence = "high",
+                            overlay = "no", overlay_labels = "", overlay_position_FP_FN, overlay_position_Prevalence, uncertainty_prevalence = "high",
                             label_title = "", label_subtitle = "",
                             Language = "en", save_plot = FALSE,
-                            PPV_NPV = "PPV") {
+                            PPV_NPV = "PPV",
+                            DEBUG = 0) {
 
   # DEBUG -------------------------------------------------------------------
 
-
-
+    # DEBUG <<- 1
+  
+  
   # Libraries ---------------------------------------------------------------
 
   # Absolute paths
@@ -98,7 +102,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
 
   # Global vars -------------------------------------------------------------
-
+  
+      DEBUG <<- DEBUG
       PPV_NPV <<- PPV_NPV
       Max_FP <<- Max_FP
       Max_Prevalence <<- Max_Prevalence
@@ -154,25 +159,13 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
       # Choose function depending on the type of overlay
 
-      if (overlay == "no") {
-
-        .plot_creation(
-          PPV_melted = PPV_melted,
-          Max_FP = Max_FP,
-          Step_size_FP = Step_size_FP,
-          decimals_x = decimals_x,
-          decimals_y = decimals_y,
-          prevalence_label = prevalence_label
-        )
-
-
-      } else if (overlay == "line") {
+     if (overlay == "line") {
 
         .plot_overlay_line(
           PPV_melted = PPV_melted,
           Max_Prevalence = Max_Prevalence,
           overlay_position_Prevalence = overlay_position_Prevalence,
-          overlay_position_FP = overlay_position_FP,
+          overlay_position_FP_FN = overlay_position_FP_FN,
           overlay_labels = overlay_labels)
 
 
@@ -188,11 +181,24 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
           overlay_labels = overlay_labels,
           PPV_NPV = PPV_NPV,
           overlay_position_Prevalence = overlay_position_Prevalence,
-          overlay_position_FP = overlay_position_FP,
+          overlay_position_FP_FN = overlay_position_FP_FN,
           decimals_x = decimals_x,
           decimals_y = decimals_y,
           prevalence_label = prevalence_label)
 
+      } else {
+        # if (overlay == "no") {
+          
+          .plot_creation(
+            PPV_melted = PPV_melted,
+            Max_FP = Max_FP,
+            Step_size_FP = Step_size_FP,
+            decimals_x = decimals_x,
+            decimals_y = decimals_y,
+            prevalence_label = prevalence_label
+          )
+          
+          
       }
 
 
