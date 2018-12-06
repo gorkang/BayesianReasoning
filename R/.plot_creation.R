@@ -50,16 +50,7 @@
      
     if (PPV_NPV == "PPV") {
          
-      # USE PPV_melted to get this!!!!
-          
-            # Looks for closer value in the Prevalence column
-            # point_Prevalence <<-  PPV_melted %>%
-            #   dplyr::filter(
-            #     # Closest value to overlay_position_Prevalence
-            #     abs(Prevalence - point_Prevalence_temp) == min(abs(Prevalence - point_Prevalence_temp))) %>% 
-            #   dplyr::sample_n(1) %>% 
-            #   dplyr::pull(Prevalence) 
-      
+        # USE PPV_melted to get this!!!!
         breaks_x = round(seq(from = .GlobalEnv$Min_FP, to = .GlobalEnv$Max_FP, by = .GlobalEnv$Step_size_FP * 10), decimals_x)
         labels_x = paste0(breaks_x, "%")
         
@@ -76,7 +67,6 @@
   
           
       } else if (PPV_NPV == "NPV") {
-  
 
         # USE PPV_melted to get this!!!!
         breaks_x = round(seq(.GlobalEnv$Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
@@ -106,7 +96,6 @@
            x = .GlobalEnv$x_axis_label, 
            y = .GlobalEnv$y_axis_label) 
   
-
 
   # Output vars -------------------------------------------------------------
     
