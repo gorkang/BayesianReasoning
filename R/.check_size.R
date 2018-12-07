@@ -82,7 +82,7 @@
           
             # Round to nearest 10'
           # Max_Prevalence <<- round((max(overlay_position_Prevalence) + (abs(modifier_text_overlay_position) + 10)), -1)
-          Max_Prevalence = round(max(point_Prevalence) +  abs(modifier_overlay_position_y), 1)
+          Max_Prevalence = ceiling(max(point_Prevalence) +  abs(modifier_overlay_position_y))
           if (DEBUG == 1) warning("\n\n  * One of the overlay_position_Prevalence is bigger than Max_Prevalence. We use the max(overlay_position_Prevalence) value to plot. NEW Max_Prevalence: ", Max_Prevalence)
   
         }
@@ -96,6 +96,7 @@
               if (Min_Prevalence < 1) {
                 
                   Min_Prevalence = 1
+                  
                   if (DEBUG == 1) warning("\n\n  * CHECK 2. Min_Prevalence < 1")
                 
               }
