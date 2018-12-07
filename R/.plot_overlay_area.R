@@ -1,4 +1,4 @@
-#' Title
+#' Plot overlay area
 #'
 #' @param PPV_melted 
 #' @param uncertainty_prevalence 
@@ -13,7 +13,7 @@
 #' @examples
 .plot_overlay_area <-
   function(PPV_melted,
-           uncertainty_prevalence = "high",
+           uncertainty_prevalence = "low",
            Min_Prevalence,
            Max_Prevalence,
            Sensitivity,
@@ -32,9 +32,6 @@
   
   
   # Calculate Overlay Coordinates x & y -------------------------------------.
-  
-  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.get_point_ppv_npv.R", local = FALSE)
   
   .calculate_area_overlay_coordinates(
     PPV_melted = PPV_melted,
@@ -74,7 +71,7 @@
 
   # Color of text -----------------------------------------------------------
      
-      if (point_PPV_NPV > 40) {
+      if (point_PPV_NPV > 65) {
         Details_point_PPV_NPV_color = "white"
       } else {
         Details_point_PPV_NPV_color = "black"
@@ -83,25 +80,44 @@
       
 
   # Position of text --------------------------------------------------------
-
-      # TODO: improve this. Should be relative to size of overlay & range of x axis
-      if (xmin_overlay - Min_FP < 2) {
+    
+      # X
+    
+        units_FP_FN = Max_FP/100 # Scale of the x axis
+        n_pixels_per_character = units_FP_FN / 3 # How many pixels is a character (?)
+        normalized_size_overlay_text_x = size_overlay_text * n_pixels_per_character
         
-        Details_point_PPV_NPV_position_x = xmax_overlay + (xmax_overlay - overlay_position_FP_FN ) + Max_FP/75
+        # If the overlay area is too close to the limits of the plot, we put the text in the other side
+        if (xmin_overlay - normalized_size_overlay_text_x < Min_FP | xmax_overlay + normalized_size_overlay_text_x < Max_FP) {
+              Details_point_PPV_NPV_position_x = xmax_overlay + normalized_size_overlay_text_x
+        } else {
+            Details_point_PPV_NPV_position_x = xmin_overlay - normalized_size_overlay_text_x
+        }
+    
+      # Y
+    
+        units_Prevalence = Max_Prevalence/100 # Scale of the x axis
+        n_pixels_per_character = units_Prevalence * 1  # How many pixels should we move up or down? (?)
+        normalized_size_overlay_text_y = n_pixels_per_character * 5
         
-      } else {
-        
-          Details_point_PPV_NPV_position_x = xmin_overlay - (xmax_overlay - overlay_position_FP_FN)  - Max_FP/75#(1 + overlay_position_FP_FN)/20
+        if (ymin_overlay - n_pixels_per_character < Min_Prevalence) {
+          Details_point_PPV_NPV_position_y = point_Prevalence + normalized_size_overlay_text_y
+        } else {
+          if (uncertainty_prevalence == "low") {
+            Details_point_PPV_NPV_position_y = ymax_overlay - normalized_size_overlay_text_y / 2
+          } else {
+            Details_point_PPV_NPV_position_y = ymax_overlay - normalized_size_overlay_text_y
+          }
           
-      }
-      
+        }
+    
       
   # Add overlay -------------------------------------------------------------
 
     # If overlay outside old matrix, we need to do this
     if (DEBUG == 1) warning("\n\n  *Recalculate PPVMatrix: ", Min_Prevalence, " ", Max_Prevalence, " ", Sensitivity, " ", Max_FP)
     
-    PPV_melted = .createPPVmatrix(
+    PPV_melted <- .createPPVmatrix(
       Min_Prevalence = .GlobalEnv$Min_Prevalence,
       Max_Prevalence = .GlobalEnv$Max_Prevalence,
       Sensitivity = .GlobalEnv$Sensitivity,
@@ -117,21 +133,21 @@
       prevalence_label = prevalence_label
     )  
     
-    p = p + 
+    p = p +
       ggplot2::annotate("rect", color = "red", alpha = .1,
-               xmin = xmin_overlay, 
-               xmax = xmax_overlay, 
-               ymin = ymin_overlay, 
+               xmin = xmin_overlay,
+               xmax = xmax_overlay,
+               ymin = ymin_overlay,
                ymax = ymax_overlay) +
-      # Overlay center  
+      # Overlay center
       ggplot2::annotate("point", color = "red", alpha = .5, size = 1,
-               x = overlay_position_FP_FN, 
+               x = overlay_position_FP_FN,
                # y = overlay_position_Prevalence) +
                y = point_Prevalence) +
       # INFORMATION
       ggplot2::annotate("text", size = 4, color = Details_point_PPV_NPV_color,
-               x = Details_point_PPV_NPV_position_x, 
-               y = point_Prevalence + modifier_overlay_position_y/2, 
+               x = Details_point_PPV_NPV_position_x,
+               y = Details_point_PPV_NPV_position_y,
                label = paste0(Details_point_PPV_NPV))
       
 
