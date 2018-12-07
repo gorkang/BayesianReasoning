@@ -57,7 +57,7 @@
 #'             overlay_position_FP_FN = 4.8,
 #'             overlay_position_Prevalence = "1 out of 68")
 PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-                            overlay = "no", overlay_labels = "", overlay_position_FP_FN, overlay_position_Prevalence, uncertainty_prevalence = "high",
+                            overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1, overlay_position_Prevalence, uncertainty_prevalence = "high",
                             label_title = "", label_subtitle = "",
                             Language = "en", save_plot = FALSE,
                             PPV_NPV = "PPV",
@@ -108,6 +108,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
       Max_FP <<- Max_FP
       Max_Prevalence <<- Max_Prevalence
       Min_Prevalence <<- Min_Prevalence
+      overlay_position_FP_FN <<- overlay_position_FP_FN
+      overlay_labels <<- overlay_labels
       # if (exists("overlay") == FALSE) overlay = "no"
 
   # **************************************************************************

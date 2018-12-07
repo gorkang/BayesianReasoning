@@ -5,7 +5,7 @@
 \title{Plot PPV heatmaps}
 \usage{
 PPV_heatmap(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-  overlay = "no", overlay_labels = "", overlay_position_FP_FN,
+  overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1,
   overlay_position_Prevalence, uncertainty_prevalence = "high",
   label_title = "", label_subtitle = "", Language = "en",
   save_plot = FALSE, PPV_NPV = "PPV", DEBUG = 0)
