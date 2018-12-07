@@ -51,8 +51,9 @@
   Prevalence_x <<- Min_Prevalence
   Max_Prevalence <<- Max_Prevalence
   Steps_Prevalence <<- steps_matrix
-  Step_size_Prevalence <<- (Max_Prevalence - Min_Prevalence)/Steps_Prevalence
-  Prevalence <<- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 0)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
+  range_prevalence = (Max_Prevalence - Min_Prevalence)
+  Step_size_Prevalence <<- range_prevalence / Steps_Prevalence
+  Prevalence <<- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
   
   # Prevalence_percent = Prevalence/Max_Prevalence
   # Prevalence_percent * 1000
