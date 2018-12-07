@@ -1,4 +1,4 @@
-#' Title
+#' Calculate area overlay coordinates
 #'
 #' @param uncertainty_prevalence 
 #' @param Min_Prevalence 
@@ -47,9 +47,9 @@
     
     # Uncertainty - how big the square should be
     if (uncertainty_prevalence == "high") {
-      size_uncertainty_area = .10
-    } else if (uncertainty_prevalence == "low") {
       size_uncertainty_area = .05
+    } else if (uncertainty_prevalence == "low") {
+      size_uncertainty_area = .02
     }
     
     # Width of X axis
