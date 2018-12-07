@@ -23,7 +23,10 @@
       dplyr::filter(
         # Closest value to overlay_position_Prevalence & overlay_position_FP_FN
         abs(Prevalence - point_Prevalence) == min(abs(Prevalence - point_Prevalence)) &
-          abs(FP - overlay_position_FP_FN) == min(abs(FP - overlay_position_FP_FN)))
+          abs(FP - overlay_position_FP_FN) == min(abs(FP - overlay_position_FP_FN))) 
+    
+    DF_point_PPV_NPV = DF_point_PPV_NPV[1,]
+    
     
       if (PPV_NPV == "NPV")  {
         
@@ -66,5 +69,6 @@
   # Function outputs
   Details_point_PPV_NPV <<- Details_point_PPV_NPV
   point_PPV_NPV <<- point_PPV_NPV
+  size_overlay_text <<- nchar(paste0(overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2))
   
 }
