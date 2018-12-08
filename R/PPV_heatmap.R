@@ -110,6 +110,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
       Min_Prevalence <<- Min_Prevalence
       overlay_position_FP_FN <<- overlay_position_FP_FN
       overlay_labels <<- overlay_labels
+      label_title <<- label_title
+      label_subtitle <<- label_subtitle
       # if (exists("overlay") == FALSE) overlay = "no"
 
   # **************************************************************************
@@ -197,7 +199,9 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
             Step_size_FP = Step_size_FP,
             decimals_x = decimals_x,
             decimals_y = decimals_y,
-            prevalence_label = prevalence_label
+            prevalence_label = prevalence_label,
+            label_subtitle = label_subtitle,
+            label_title = label_title
           )
           
           

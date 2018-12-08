@@ -129,8 +129,9 @@
       Step_size_FP = Step_size_FP,
       decimals_x = decimals_x,
       decimals_y = decimals_y,
-      prevalence_label = prevalence_label
-    )  
+      prevalence_label = prevalence_label,
+      label_subtitle = label_subtitle,
+      label_title = label_title)  
     
     p = p +
       ggplot2::annotate("rect", color = "red", alpha = .1,

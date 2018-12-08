@@ -36,7 +36,16 @@
     
     # Create plot after adjusting overlay dimensions
       # Should re-create ppv/npv matrix first?
-    .plot_creation(PPV_melted)    
+    # .plot_creation(PPV_melted)   
+    .plot_creation(
+      PPV_melted = PPV_melted,
+      Max_FP = Max_FP,
+      Step_size_FP = Step_size_FP,
+      decimals_x = decimals_x,
+      decimals_y = decimals_y,
+      prevalence_label = prevalence_label,
+      label_subtitle = label_subtitle,
+      label_title = label_title)
     
     
     # Plot Overlay ------------------------------------------------------------
