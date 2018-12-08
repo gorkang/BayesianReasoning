@@ -81,10 +81,9 @@
 
   # Position of text --------------------------------------------------------
     
-      # X
-    
+      # X axis
         units_FP_FN = Max_FP/100 # Scale of the x axis
-        n_pixels_per_character = units_FP_FN / 3 # How many pixels is a character (?)
+        n_pixels_per_character = units_FP_FN / 2 # How many pixels is a character (?)
         normalized_size_overlay_text_x = size_overlay_text * n_pixels_per_character
         
         # If the overlay area is too close to the limits of the plot, we put the text in the other side
@@ -94,11 +93,11 @@
             Details_point_PPV_NPV_position_x = xmin_overlay - normalized_size_overlay_text_x
         }
     
-      # Y
-    
+        
+      # Y axis
         units_Prevalence = Max_Prevalence/100 # Scale of the x axis
-        n_pixels_per_character = units_Prevalence * 1  # How many pixels should we move up or down? (?)
-        normalized_size_overlay_text_y = n_pixels_per_character * 5
+        n_pixels_per_character = units_Prevalence * .5  # How many pixels should we move up or down? (?)
+        normalized_size_overlay_text_y = n_pixels_per_character * 10
         
         if (ymin_overlay - n_pixels_per_character < Min_Prevalence) {
           Details_point_PPV_NPV_position_y = point_Prevalence + normalized_size_overlay_text_y
@@ -106,7 +105,7 @@
           if (uncertainty_prevalence == "low") {
             Details_point_PPV_NPV_position_y = ymax_overlay - normalized_size_overlay_text_y / 2
           } else {
-            Details_point_PPV_NPV_position_y = ymax_overlay - normalized_size_overlay_text_y
+            Details_point_PPV_NPV_position_y = ymin_overlay + normalized_size_overlay_text_y
           }
           
         }
