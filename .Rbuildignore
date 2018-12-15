@@ -1,0 +1,7 @@
+^Meta$
+^doc$
+^.*\.Rproj$
+^\.Rproj\.user$
+DEV/
+^\.httr-oauth$
+presentation/
