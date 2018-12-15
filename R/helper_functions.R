@@ -649,7 +649,7 @@
     
     # Output vars -------------------------------------------------------------
     
-    p <<- p
+    return(p)
     
   }
 
@@ -780,7 +780,7 @@
       Sensitivity = .GlobalEnv$Sensitivity,
       Max_FP = .GlobalEnv$Max_FP)
     
-    .plot_creation(
+    p = .plot_creation(
       PPV_melted = PPV_melted,
       Max_FP = Max_FP,
       Step_size_FP = Step_size_FP,
@@ -811,7 +811,7 @@
     
     # Output vars -------------------------------------------------------------
     
-    p <<- p
+    return(p)
     
   }
 
@@ -857,7 +857,7 @@
   # Create plot after adjusting overlay dimensions
   # Should re-create ppv/npv matrix first?
   # .plot_creation(PPV_melted)   
-  .plot_creation(
+  p = .plot_creation(
     PPV_melted = PPV_melted,
     Max_FP = Max_FP,
     Step_size_FP = Step_size_FP,
@@ -871,11 +871,12 @@
   
   
   # Plot Overlay ------------------------------------------------------------
-  p <<- p + ggplot2::annotate("segment", x = overlay_position_FP_FN, xend = overlay_position_x_end, 
+  p = p + ggplot2::annotate("segment", x = overlay_position_FP_FN, xend = overlay_position_x_end, 
                               y = overlay_position_Prevalence, yend = overlay_position_y_end,
                               color = "red", alpha = .1, size = 3) +
     ggplot2::annotate("text", x = overlay_position_FP_FN, y = overlay_position_Prevalence, label = overlay_labels, size = 4) 
   
+  return(p)
 }
 
 

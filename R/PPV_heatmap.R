@@ -166,7 +166,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
      if (overlay == "line") {
 
-        .plot_overlay_line(
+        p = .plot_overlay_line(
           PPV_melted = PPV_melted,
           Max_Prevalence = Max_Prevalence,
           overlay_position_Prevalence = overlay_position_Prevalence,
@@ -176,7 +176,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
       } else if (overlay == "area") {
 
-        .plot_overlay_area(
+        p = .plot_overlay_area(
           PPV_melted,
           uncertainty_prevalence = uncertainty_prevalence,
           Min_Prevalence = Min_Prevalence,
@@ -194,7 +194,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
       } else {
         # if (overlay == "no") {
           
-          .plot_creation(
+          p = .plot_creation(
             PPV_melted = PPV_melted,
             Max_FP = Max_FP,
             Step_size_FP = Step_size_FP,
