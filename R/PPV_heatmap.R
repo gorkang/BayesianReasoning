@@ -69,24 +69,24 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
   
   
   # Libraries ---------------------------------------------------------------
-
+  
   # Absolute paths
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.createPPVmatrix.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.check_size.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_creation.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_overlay_line.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.plot_overlay_area.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.process_overlay_position_prevalence.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.translate_labels.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.number_decimals_plot_axis.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/.get_point_ppv_npv.R", local = FALSE)
+  # source("../R/.createPPVmatrix.R", local = FALSE)
+  # source("../R/.check_size.R", local = FALSE)
+  # source("../R/.plot_creation.R", local = FALSE)
+  # source("../R/.plot_overlay_line.R", local = FALSE)
+  # source("../R/.plot_overlay_area.R", local = FALSE)
+  # source("../R/.calculate_area_overlay_coordinates.R", local = FALSE)
+  # source("../R/.process_overlay_position_prevalence.R", local = FALSE)
+  # source("../R/.translate_labels.R", local = FALSE)
+  # source("../R/.number_decimals_plot_axis.R", local = FALSE)
+  # source("../R/.calculate_area_overlay_coordinates.R", local = FALSE)
+  # source("../R/.get_point_ppv_npv.R", local = FALSE)
 
   # Relative paths
-  # source("R/.createPPVmatrix.R", local = TRUE)
-  # source("R/.check_size.R", local = TRUE)
-  # source("R/.plot_creation.R", local = TRUE)
+  # source("../R/.createPPVmatrix.R", local = TRUE)
+  # source("../R/.check_size.R", local = TRUE)
+  # source("../R/.plot_creation.R", local = TRUE)
 
 
 
@@ -108,6 +108,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
       Max_FP <<- Max_FP
       Max_Prevalence <<- Max_Prevalence
       Min_Prevalence <<- Min_Prevalence
+      Sensitivity <<- Sensitivity
       overlay_position_FP_FN <<- overlay_position_FP_FN
       overlay_labels <<- overlay_labels
       label_title <<- label_title
@@ -201,8 +202,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
             decimals_y = decimals_y,
             prevalence_label = prevalence_label,
             label_subtitle = label_subtitle,
-            label_title = label_title
-          )
+            label_title = label_title, 
+            label_caption = paste0("Sensitivity = ", Sensitivity, "%"))
           
           
       }
