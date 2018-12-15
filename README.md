@@ -137,11 +137,11 @@ This funtion shows a plot with the difference between the PPV of a diagnostic co
 PPV_diagnostic_vs_screening(Max_FP = 10, 
                             Sensitivity = 100, 
                             prevalence_screening_group = 1000, 
-                            prevalence_diagnostic_group = 3)
+                            prevalence_diagnostic_group = 2)
                             
 ```  
 
-![](outputs/diagnostic_vs_screening/FP_10_sens_100_screening_1000_diagnostic_3.png)
+![](outputs/diagnostic_vs_screening/FP_10_sens_100_screening_1000_diagnostic_2.png)
 
 
 
