@@ -13,7 +13,8 @@ Imports: dplyr,
          ggplot2,
          tidyr,
          magrittr,
-         tibble
+         tibble,
+         ggforce
 License: GPL (>= 3) | file LICENSE
 LazyData: true
 RoxygenNote: 7.0.2

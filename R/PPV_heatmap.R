@@ -57,11 +57,11 @@
 #'             overlay_position_FP_FN = 4.8,
 #'             overlay_prevalence_2 = "1 out of 68")
 PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-                            overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 100, uncertainty_prevalence = "high",
-                            label_title = "", label_subtitle = "",
-                            Language = "en", save_plot = FALSE,
-                            PPV_NPV = "PPV",
-                            DEBUG = 0) {
+                        overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 100, uncertainty_prevalence = "high",
+                        label_title = "", label_subtitle = "",
+                        Language = "en", save_plot = FALSE,
+                        PPV_NPV = "PPV",
+                        DEBUG = 0) {
 
   # DEBUG -------------------------------------------------------------------
 
@@ -84,6 +84,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
   # overlay_prevalence_2 = 1500
   
   
+  
   # Libraries ---------------------------------------------------------------
 
   # Absolute paths
@@ -92,33 +93,26 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
 
 
-  # Preprocessing -----------------------------------------------------------
+  # Check dimensions -----------------------------------------------------------
 
-  # if (exists("overlay_prevalence_2") == TRUE & overlay == "area") {
-      # CHANGE overlay_prevalence_2 = "868 out of 1000" to overlay_prevalence_1 = 868; overlay_prevalence_2 = 1000
-      # .process_overlay_position_prevalence(overlay_prevalence_2)
+  if (overlay == "area") {
+    
+    if (overlay_position_FP_FN > Max_FP) {
+      message("Changing Max_FP to overlay_position_FP_FN to fit overlay")
+      Max_FP = overlay_position_FP_FN 
+    }
+    
+    if (overlay_prevalence_2 > Max_Prevalence) {
+      message("Changing Max_Prevalence to overlay_prevalence_2 to fit overlay")
+      Max_Prevalence = overlay_prevalence_2 
+    }
+    
+  }
 
           #### REVIEW: CHANGE INSTANCES OF overlay_position_Prevalence to overlay_prevalence_2 in all scripts? #####
           # overlay_position_Prevalence <<- overlay_prevalence_2
-  # }
 
-
-  # Global vars -------------------------------------------------------------
   
-      # DEBUG <- DEBUG
-      # PPV_NPV <- PPV_NPV
-      # Max_FP <- Max_FP
-      # Max_Prevalence <- Max_Prevalence
-      # Min_Prevalence <- Min_Prevalence
-      # overlay_position_FP_FN <- overlay_position_FP_FN
-      # overlay_labels <- overlay_labels
-      # label_title <- label_title
-      # label_subtitle <- label_subtitle
-      # if (exists("overlay") == FALSE) overlay = "no"
-
-  # **************************************************************************
-
-
   # SYSTEM parameters -------------------------------------------------------
 
       #GRAPHIC Parameters *************
@@ -141,7 +135,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
         Max_FP = Max_FP
       )
 
-      PPV_melted <<- PPV_melted
+      # PPV_melted <<- PPV_melted
 
 
   # PLOT --------------------------------------------------------------------
