@@ -10,7 +10,7 @@
 #' @param overlay_labels Lables for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
 #' @param overlay_position_FP_FN FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param uncertainty_prevalence How much certainty we have about the prevalence ["high"/"low"]
-#' @param overlay_position_Prevalence Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)
+#' @param overlay_prevalence_2 Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)
 #' @param label_title Title for the plot
 #' @param label_subtitle Subtitle for the plot
 #' @param Language Language for the plot labels: "sp" / "en"
@@ -38,7 +38,7 @@
 #'             overlay = "line",
 #'             overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
 #'             overlay_position_FP_FN = c(6.5, 7, 8, 9, 12, 14, 14),
-#'             overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
+#'             overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
 #'
 #' # Another plot with an overlay
 #' PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
@@ -47,7 +47,7 @@
 #'             overlay = "line",
 #'             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
 #'             overlay_position_FP_FN = c(4.8, 4.8, 4.8, 4.8, 4.8),
-#'             overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
+#'             overlay_prevalence_2 = c(68, 249, 626, 946, 1068))
 
 #' # A plot with a point overlay
 #' PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
@@ -55,9 +55,9 @@
 #'             overlay = "area",
 #'             overlay_labels = "40 y.o.",
 #'             overlay_position_FP_FN = 4.8,
-#'             overlay_position_Prevalence = "1 out of 68")
+#'             overlay_prevalence_2 = "1 out of 68")
 PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-                            overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1, overlay_position_Prevalence, uncertainty_prevalence = "high",
+                            overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 100, uncertainty_prevalence = "high",
                             label_title = "", label_subtitle = "",
                             Language = "en", save_plot = FALSE,
                             PPV_NPV = "PPV",
@@ -67,52 +67,53 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
     # DEBUG <<- 1
   
+  # PPV_NPV = "PPV"
+  # Min_Prevalence = 1
+  # Language = "en"
+  # uncertainty_prevalence = "high"
+  
+  # Max_Prevalence = 2000
+  # Sensitivity = 99
+  # Max_FP = 5
+  # label_subtitle = ""
+  # save_plot = FALSE
+  # overlay = "area"
+  # overlay_labels = ""
+  # overlay_position_FP_FN = 2
+  # overlay_prevalence_1 = 1
+  # overlay_prevalence_2 = 1500
+  
   
   # Libraries ---------------------------------------------------------------
-  
-  # Absolute paths
-  # source("../R/.createPPVmatrix.R", local = FALSE)
-  # source("../R/.check_size.R", local = FALSE)
-  # source("../R/.plot_creation.R", local = FALSE)
-  # source("../R/.plot_overlay_line.R", local = FALSE)
-  # source("../R/.plot_overlay_area.R", local = FALSE)
-  # source("../R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  # source("../R/.process_overlay_position_prevalence.R", local = FALSE)
-  # source("../R/.translate_labels.R", local = FALSE)
-  # source("../R/.number_decimals_plot_axis.R", local = FALSE)
-  # source("../R/.calculate_area_overlay_coordinates.R", local = FALSE)
-  # source("../R/.get_point_ppv_npv.R", local = FALSE)
 
-  # Relative paths
-  # source("../R/.createPPVmatrix.R", local = TRUE)
-  # source("../R/.check_size.R", local = TRUE)
-  # source("../R/.plot_creation.R", local = TRUE)
+  # Absolute paths
+  # source("/home/emrys/gorkang@gmail.com/RESEARCH/PROYECTOS-Code/R_BayesianReasoning/BayesianReasoning/R/helper_functions.R", local = TRUE)
+  source(here::here("R/helper_functions.R"), local = TRUE)
 
 
 
   # Preprocessing -----------------------------------------------------------
 
-  if (exists("overlay_position_Prevalence") == TRUE & overlay == "area") {
-      # CHANGE overlay_position_Prevalence = "868 out of 1000" to overlay_prevalence_1 = 868; overlay_prevalence_2 = 1000
-      .process_overlay_position_prevalence(overlay_position_Prevalence)
+  # if (exists("overlay_prevalence_2") == TRUE & overlay == "area") {
+      # CHANGE overlay_prevalence_2 = "868 out of 1000" to overlay_prevalence_1 = 868; overlay_prevalence_2 = 1000
+      # .process_overlay_position_prevalence(overlay_prevalence_2)
 
           #### REVIEW: CHANGE INSTANCES OF overlay_position_Prevalence to overlay_prevalence_2 in all scripts? #####
-          overlay_position_Prevalence <<- overlay_prevalence_2
-  }
+          # overlay_position_Prevalence <<- overlay_prevalence_2
+  # }
 
 
   # Global vars -------------------------------------------------------------
   
-      DEBUG <<- DEBUG
-      PPV_NPV <<- PPV_NPV
-      Max_FP <<- Max_FP
-      Max_Prevalence <<- Max_Prevalence
-      Min_Prevalence <<- Min_Prevalence
-      Sensitivity <<- Sensitivity
-      overlay_position_FP_FN <<- overlay_position_FP_FN
-      overlay_labels <<- overlay_labels
-      label_title <<- label_title
-      label_subtitle <<- label_subtitle
+      # DEBUG <- DEBUG
+      # PPV_NPV <- PPV_NPV
+      # Max_FP <- Max_FP
+      # Max_Prevalence <- Max_Prevalence
+      # Min_Prevalence <- Min_Prevalence
+      # overlay_position_FP_FN <- overlay_position_FP_FN
+      # overlay_labels <- overlay_labels
+      # label_title <- label_title
+      # label_subtitle <- label_subtitle
       # if (exists("overlay") == FALSE) overlay = "no"
 
   # **************************************************************************
@@ -169,7 +170,7 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
         p = .plot_overlay_line(
           PPV_melted = PPV_melted,
           Max_Prevalence = Max_Prevalence,
-          overlay_position_Prevalence = overlay_position_Prevalence,
+          overlay_prevalence_2 = overlay_prevalence_2,
           overlay_position_FP_FN = overlay_position_FP_FN,
           overlay_labels = overlay_labels)
 
@@ -185,7 +186,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
           Max_FP = Max_FP,
           overlay_labels = overlay_labels,
           PPV_NPV = PPV_NPV,
-          overlay_position_Prevalence = overlay_position_Prevalence,
+          overlay_prevalence_1 = overlay_prevalence_1,
+          overlay_prevalence_2 = overlay_prevalence_2,
           overlay_position_FP_FN = overlay_position_FP_FN,
           decimals_x = decimals_x,
           decimals_y = decimals_y,
@@ -200,10 +202,8 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
             Step_size_FP = Step_size_FP,
             decimals_x = decimals_x,
             decimals_y = decimals_y,
-            prevalence_label = prevalence_label,
-            label_subtitle = label_subtitle,
-            label_title = label_title, 
-            label_caption = paste0("Sensitivity = ", Sensitivity, "%"))
+            prevalence_label = prevalence_label
+          )
           
           
       }
@@ -225,3 +225,4 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
       }
 
 }
+# PPV_heatmap(Max_Prevalence = 20, Sensitivity = 2.5, Max_FP = .1)

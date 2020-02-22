@@ -5,7 +5,7 @@
 #' @param Max_Prevalence 
 #' @param Sensitivity 
 #' @param Max_FP 
-#' @param overlay_position_Prevalence 
+#' @param overlay_prevalence_2 
 #' @param overlay_position_FP_FN 
 #'
 #' @return
@@ -21,7 +21,8 @@
            Max_Prevalence,
            Sensitivity,
            Max_FP,
-           overlay_position_Prevalence,
+           overlay_prevalence_1,
+           overlay_prevalence_2,
            overlay_position_FP_FN) {
     
     # DEBUG -------------------------------------------------------------------
@@ -34,7 +35,7 @@
       message("Max_Prevalence: ", Max_Prevalence)
       message("Sensitivity: ", Sensitivity)
       message("Max_FP: ", Max_FP)
-      # message("overlay_position_Prevalence: ", overlay_position_Prevalence)
+      # message("overlay_prevalence_2: ", overlay_prevalence_2)
       message("overlay_prevalence_1: ", overlay_prevalence_1)
       message("overlay_prevalence_2: ", overlay_prevalence_2)
       message("\n*** END *** ")
@@ -66,7 +67,7 @@
     # Looks for closer value in the Prevalence column
     point_Prevalence <<-  PPV_melted %>%
       dplyr::filter(
-        # Closest value to overlay_position_Prevalence
+        # Closest value to overlay_prevalence_2
         abs(Prevalence - point_Prevalence_temp) == min(abs(Prevalence - point_Prevalence_temp))) %>% 
       dplyr::sample_n(1) %>% 
       dplyr::pull(Prevalence) 
@@ -80,13 +81,13 @@
     xmax_overlay <<- overlay_position_FP_FN + modifier_overlay_position_x
     ymin_overlay <<- point_Prevalence - modifier_overlay_position_y
     ymax_overlay <<- point_Prevalence + modifier_overlay_position_y
-    # ymin_overlay <<- overlay_position_Prevalence - modifier_overlay_position_y
-    # ymax_overlay <<- overlay_position_Prevalence + modifier_overlay_position_y
+    # ymin_overlay <<- overlay_prevalence_2 - modifier_overlay_position_y
+    # ymax_overlay <<- overlay_prevalence_2 + modifier_overlay_position_y
     
     ymax_text_overlay <<- point_Prevalence + modifier_overlay_position_y #+ modifier_overlay_position_y/2
     ymin_text_overlay <<- point_Prevalence - modifier_overlay_position_y #- modifier_overlay_position_y/2
-    # ymax_text_overlay <<- overlay_position_Prevalence + modifier_overlay_position_y + modifier_overlay_position_y/2
-    # ymin_text_overlay <<- overlay_position_Prevalence - modifier_overlay_position_y - modifier_overlay_position_y/2
+    # ymax_text_overlay <<- overlay_prevalence_2 + modifier_overlay_position_y + modifier_overlay_position_y/2
+    # ymin_text_overlay <<- overlay_prevalence_2 - modifier_overlay_position_y - modifier_overlay_position_y/2
     
     # Checks
     if (ymin_overlay < 1) {ymin_overlay <<- 1}
@@ -149,7 +150,7 @@
 #'
 #' @param overlay 
 #' @param Max_Prevalence 
-#' @param overlay_position_Prevalence 
+#' @param overlay_prevalence_2 
 #' @param modifier_text_overlay_position 
 #' @param Max_FP 
 #' @param overlay_position_FP_FN 
@@ -164,8 +165,8 @@
 .check_size <-
   function(overlay,
            Max_Prevalence,
-           overlay_position_Prevalence,
-           modifier_text_overlay_position,
+           overlay_prevalence_2,
+           # modifier_text_overlay_position,
            Sensitivity,
            Max_FP,
            overlay_position_FP_FN,
@@ -222,13 +223,13 @@
     }
     # **************************************************************************
     
-    # if (Max_Prevalence <= max(overlay_position_Prevalence) + abs(modifier_text_overlay_position)) {
+    # if (Max_Prevalence <= max(overlay_prevalence_2) + abs(modifier_text_overlay_position)) {
     if (Max_Prevalence < max(point_Prevalence) +  abs(modifier_overlay_position_y)) {
       
       # Round to nearest 10'
-      # Max_Prevalence <<- round((max(overlay_position_Prevalence) + (abs(modifier_text_overlay_position) + 10)), -1)
+      # Max_Prevalence <<- round((max(overlay_prevalence_2) + (abs(modifier_text_overlay_position) + 10)), -1)
       Max_Prevalence = ceiling(max(point_Prevalence) +  abs(modifier_overlay_position_y))
-      if (DEBUG == 1) warning("\n\n  * One of the overlay_position_Prevalence is bigger than Max_Prevalence. We use the max(overlay_position_Prevalence) value to plot. NEW Max_Prevalence: ", Max_Prevalence)
+      if (DEBUG == 1) warning("\n\n  * One of the overlay_prevalence is bigger than Max_Prevalence. We use the max(overlay_prevalence_2) value to plot. NEW Max_Prevalence: ", Max_Prevalence)
       
     }
     
@@ -246,7 +247,7 @@
         
       }
       
-      if (DEBUG == 1) warning("\n\n  * One of the overlay_position_Prevalence is smaller than Min_Prevalence We use the min(overlay_position_Prevalence) value to plot. NEW Min_Prevalence: ", Min_Prevalence)
+      if (DEBUG == 1) warning("\n\n  * One of the overlay_prevalence is smaller than Min_Prevalence We use the min(overlay_prevalence_2) value to plot. NEW Min_Prevalence: ", Min_Prevalence)
       
     }
     
@@ -414,7 +415,7 @@
   # Get PPV or NPV value ----------------------------------------------------
   DF_point_PPV_NPV = PPV_melted %>%
     dplyr::filter(
-      # Closest value to overlay_position_Prevalence & overlay_position_FP_FN
+      # Closest value to overlay_prevalence_2 & overlay_position_FP_FN
       abs(Prevalence - point_Prevalence) == min(abs(Prevalence - point_Prevalence)) &
         abs(FP - overlay_position_FP_FN) == min(abs(FP - overlay_position_FP_FN))) 
   
@@ -599,12 +600,12 @@
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (Prevalence)))  
       
       # USE PPV_melted to get this!!!!
-      breaks_x = round(seq(from = .GlobalEnv$Min_FP, to = .GlobalEnv$Max_FP, by = .GlobalEnv$Step_size_FP * 10), decimals_x)
+      breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x)
       labels_x = paste0(breaks_x, "%")
       
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       # breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), max(PPV_melted$Prevalence))], decimals_y)
-      labels_y = paste(Min_Prevalence, .GlobalEnv$prevalence_label, breaks_y)
+      labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
       # labels_y = paste(Min_Prevalence, prevalence_label, round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], 0))
       
       # PPV tiles
@@ -619,11 +620,11 @@
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (Prevalence)))  
       
       # USE PPV_melted to get this!!!!
-      breaks_x = round(seq(.GlobalEnv$Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
+      breaks_x = round(seq(Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
       labels_x = paste0(breaks_x, "%")
       
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-      labels_y = paste(Min_Prevalence, .GlobalEnv$prevalence_label, breaks_y)
+      labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
       # labels_y = paste(Min_Prevalence, prevalence_label, round(unique(PPV_melted$Prevalence)[c(seq(1, 100, 10), 101)], 0))
       
       # NPV tiles
@@ -635,7 +636,7 @@
     p = p + 
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) + 
       ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) +
-      ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = .GlobalEnv$legend_label) +
+      ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 20),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 
@@ -643,8 +644,8 @@
       ggplot2::labs(title = label_title,
                     subtitle = label_subtitle, 
                     caption = label_caption,
-                    x = .GlobalEnv$x_axis_label, 
-                    y = .GlobalEnv$y_axis_label) 
+                    x = x_axis_label, 
+                    y = y_axis_label) 
     
     
     # Output vars -------------------------------------------------------------
@@ -678,7 +679,8 @@
            Max_FP,
            overlay_labels = "",
            PPV_NPV = "PPV",
-           overlay_position_Prevalence,
+           overlay_prevalence_1,
+           overlay_prevalence_2,
            overlay_position_FP_FN,
            decimals_x,
            decimals_y,
@@ -698,25 +700,26 @@
       Max_Prevalence = Max_Prevalence,
       Sensitivity= Sensitivity,
       Max_FP = Max_FP,
-      overlay_position_Prevalence = overlay_position_Prevalence,
+      overlay_prevalence_1 = overlay_prevalence_1,
+      overlay_prevalence_2 = overlay_prevalence_2,
       overlay_position_FP_FN = overlay_position_FP_FN)
     
     
     # CHECKS ------------------------------------------------------------------
-    
+
     # Checks if overlay is outside the PPV matrix range, and changes values
     # Also, it re-creates PPV matrix and plot
     .check_size(
-      overlay,
-      Max_Prevalence,
-      overlay_position_Prevalence,
-      modifier_text_overlay_position,
-      Sensitivity,
-      Max_FP,
-      overlay_position_FP_FN,
-      Min_Prevalence,
-      modifier_overlay_position_x,
-      modifier_overlay_position_y
+      overlay = overlay, 
+      Max_Prevalence = Max_Prevalence, 
+      overlay_prevalence_2 = overlay_prevalence_2,
+      # modifier_text_overlay_position,
+      Sensitivity = Sensitivity, 
+      Max_FP = Max_FP, 
+      overlay_position_FP_FN = overlay_position_FP_FN,
+      Min_Prevalence = Min_Prevalence,
+      modifier_overlay_position_x = modifier_overlay_position_x,
+      modifier_overlay_position_y = modifier_overlay_position_y
     )
     
     
@@ -773,12 +776,18 @@
     
     # If overlay outside old matrix, we need to do this
     if (DEBUG == 1) warning("\n\n  *Recalculate PPVMatrix: ", Min_Prevalence, " ", Max_Prevalence, " ", Sensitivity, " ", Max_FP)
+    if (uncertainty_prevalence == "high") {
+      uncertainty_prevalence_num = .05
+    } else {
+      uncertainty_prevalence_num = .02
+    }  
+    
     
     PPV_melted <- .createPPVmatrix(
-      Min_Prevalence = .GlobalEnv$Min_Prevalence,
-      Max_Prevalence = .GlobalEnv$Max_Prevalence,
-      Sensitivity = .GlobalEnv$Sensitivity,
-      Max_FP = .GlobalEnv$Max_FP)
+      Min_Prevalence = Min_Prevalence,
+      Max_Prevalence = Max_Prevalence,
+      Sensitivity = Sensitivity,
+      Max_FP = Max_FP)
     
     p = .plot_creation(
       PPV_melted = PPV_melted,
@@ -792,21 +801,44 @@
       label_caption = paste0("Sensitivity = ", Sensitivity, "%"))  
     
     p = p +
-      ggplot2::annotate("rect", color = "red", alpha = .1,
-                        xmin = xmin_overlay,
-                        xmax = xmax_overlay,
-                        ymin = ymin_overlay,
-                        ymax = ymax_overlay) +
+      # ggplot2::annotate("rect", color = "red", alpha = .1,
+      #                   xmin = xmin_overlay,
+      #                   xmax = xmax_overlay,
+      #                   ymin = ymin_overlay,
+      #                   ymax = ymax_overlay) +
       # Overlay center
       ggplot2::annotate("point", color = "red", alpha = .5, size = 1,
                         x = overlay_position_FP_FN,
-                        # y = overlay_position_Prevalence) +
+                        # y = overlay_prevalence_2) +
                         y = point_Prevalence) +
       # INFORMATION
-      ggplot2::annotate("text", size = 4, color = Details_point_PPV_NPV_color,
-                        x = Details_point_PPV_NPV_position_x,
-                        y = Details_point_PPV_NPV_position_y,
-                        label = paste0(Details_point_PPV_NPV))
+      # ggplot2::annotate("text", size = 4, color = Details_point_PPV_NPV_color,
+      #                   x = Details_point_PPV_NPV_position_x,
+      #                   y = Details_point_PPV_NPV_position_y,
+      #                   label = paste0(Details_point_PPV_NPV))
+    
+      
+      ggforce::geom_mark_rect(
+        label.colour = "black",
+        alpha = .04,
+        expand = uncertainty_prevalence_num,
+        aes(x = overlay_position_FP_FN, 
+            y = point_Prevalence),
+        # label = plot_text,
+        fill = "red",
+        description = paste0(Details_point_PPV_NPV))
+    
+      # Text annotation in the right margin
+      # ggplot2::annotate("text", size = 4, color = Details_point_PPV_NPV_color,
+      #                   x = Max_FP + .25,
+      #                   y = Details_point_PPV_NPV_position_y,
+      #                   label = paste0(Details_point_PPV_NPV)) +
+      #   coord_cartesian(xlim = c(Min_FP, Max_FP),
+      #                   clip = 'off') +   # This keeps the labels from disappearing
+      #   theme(plot.margin = unit(c(1,5,1,1), "lines")) +# This widens the right margin
+      #   theme(legend.justification = "bottom")
+    
+  
     
     
     # Output vars -------------------------------------------------------------
@@ -822,7 +854,8 @@
 #'
 #' @param PPV_melted 
 #' @param Max_Prevalence 
-#' @param overlay_position_Prevalence 
+#' @param overlay_prevalence_1
+#' @param overlay_prevalence_2 
 #' @param overlay_position_FP_FN 
 #' @param overlay_labels 
 #'
@@ -831,12 +864,12 @@
 #' @importFrom ggplot2 annotate
 #'
 #' @examples
-.plot_overlay_line <- function(PPV_melted, Max_Prevalence, overlay_position_Prevalence, overlay_position_FP_FN, overlay_labels) {
+.plot_overlay_line <- function(PPV_melted, Max_Prevalence, overlay_prevalence_1, overlay_prevalence_2, overlay_position_FP_FN, overlay_labels) {
   
   # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
   if (exists("size_uncertainty_area") == FALSE) {size_uncertainty_area = 0}
   
-  if (abs(Max_Prevalence - max(overlay_position_Prevalence)) > 10) {
+  if (abs(Max_Prevalence - max(overlay_prevalence_2)) > 10) {
     
     modifier_text_overlay_position = (Max_Prevalence * size_uncertainty_area  + 1)
     
@@ -848,10 +881,10 @@
   
   # overlay_labels = c("80", "70", "60", "50", "40", "30 y.o.")
   # overlay_position_FP_FN = c(7, 8, 9, 12, 14)
-  # overlay_position_Prevalence = c(26, 29, 44, 69, 227)
+  # overlay_prevalence_2 = c(26, 29, 44, 69, 227)
   
   overlay_position_x_end = c(overlay_position_FP_FN[1], overlay_position_FP_FN[-length(overlay_position_FP_FN)])
-  overlay_position_y_end = c(overlay_position_Prevalence[1], overlay_position_Prevalence[-length(overlay_position_Prevalence)])
+  overlay_position_y_end = c(overlay_prevalence_2[1], overlay_prevalence_2[-length(overlay_prevalence_2)])
   
   
   # Create plot after adjusting overlay dimensions
@@ -872,9 +905,9 @@
   
   # Plot Overlay ------------------------------------------------------------
   p = p + ggplot2::annotate("segment", x = overlay_position_FP_FN, xend = overlay_position_x_end, 
-                              y = overlay_position_Prevalence, yend = overlay_position_y_end,
+                              y = overlay_prevalence_2, yend = overlay_position_y_end,
                               color = "red", alpha = .1, size = 3) +
-    ggplot2::annotate("text", x = overlay_position_FP_FN, y = overlay_position_Prevalence, label = overlay_labels, size = 4) 
+    ggplot2::annotate("text", x = overlay_position_FP_FN, y = overlay_prevalence_2, label = overlay_labels, size = 4) 
   
   return(p)
 }
@@ -889,77 +922,77 @@
 
 
 
-.process_overlay_position_prevalence <- function(overlay_position_Prevalence = "868 out of 1000") {
-  
-  # DEBUG -------------------------------------------------------------------
-  # library(dplyr)
-  # overlay_position_Prevalence = 1
-  # overlay_position_Prevalence = "86.8%"
-  # overlay_position_Prevalence = "400 out of 200"
-  # *************************************************************************
-  
-  if (exists("overlay_position_Prevalence") == TRUE) {
-    
-    
-    #  x OUT OF y -------------------------------------------------------------
-    
-    if (grepl("out of|in", overlay_position_Prevalence) == TRUE) {
-      
-      overlay_prevalence = regmatches(
-        overlay_position_Prevalence,
-        gregexpr("[[:digit:]]+", overlay_position_Prevalence)) %>%
-        unlist() %>%
-        as.numeric()
-      
-      
-      # Checks x OUT OF y -------------------------------------------------------------
-      if (overlay_prevalence[2] < overlay_prevalence[1]) { stop("Impossible overlay_position_Prevalence value: ", overlay_position_Prevalence, ". The first value (", overlay_prevalence[1], ") should be a subset of the second value (", overlay_prevalence[2], ").")}
-      # *******************************************************************************
-      
-      #  x % ----------------------------------------------------------------------
-    } else if (grepl("%", overlay_position_Prevalence)) {
-      
-      # If there is a ",", replace by "." (, is the decimal separator in some regions)
-      if (grepl(",", overlay_position_Prevalence)) {
-        overlay_position_Prevalence = gsub(",", ".", overlay_position_Prevalence) 
-        
-      }
-      
-      # Get rid of "%" and convert to number
-      overlay_prevalence_temp = gsub("%| %", "", overlay_position_Prevalence) %>% as.numeric(.)
-      
-      overlay_prevalence = Min_Prevalence
-      overlay_prevalence[2] = round(Min_Prevalence / (overlay_prevalence_temp / 100), 0)
-      
-      # Checks x%  --------------------------------------------------------------------
-      if (overlay_prevalence_temp > 100 | overlay_prevalence_temp < 0) { stop("Impossible overlay_position_Prevalence value: ", overlay_position_Prevalence, ". It should be a number between 0% and 100%")}
-      # *******************************************************************************
-      
-    } else if (is.numeric(overlay_position_Prevalence) == TRUE) {
-      
-      overlay_prevalence = Min_Prevalence
-      overlay_prevalence[2] = round(Min_Prevalence / (overlay_position_Prevalence / 100), 0)
-      
-    }
-    
-    
-    # General check -----------------------------------------------------------
-    if (length(overlay_prevalence) != 2) {
-      stop("***The parameter 'overlay_position_Prevalence' should be x out of y (e.g. '2 out of 100'), x in y (e.g. '2 in 100'), x% (e.g. 2%) or x (assumes x = x%). Now is: ", overlay_position_Prevalence)
-    }
-    # *************************************************************************
-    
-    
-    # Output vars -------------------------------------------------------------
-    
-    .GlobalEnv$overlay_prevalence_1 <- overlay_prevalence[1]
-    .GlobalEnv$overlay_prevalence_2 <- overlay_prevalence[2]
-    # overlay_prevalence_1 <<- overlay_prevalence[1]
-    # overlay_prevalence_2 <<- overlay_prevalence[2]
-    
-  }
-  
-}
+# .process_overlay_position_prevalence <- function(overlay_position_Prevalence = "868 out of 1000") {
+#   
+#   # DEBUG -------------------------------------------------------------------
+#   # library(dplyr)
+#   # overlay_position_Prevalence = 1
+#   # overlay_position_Prevalence = "86.8%"
+#   # overlay_position_Prevalence = "400 out of 200"
+#   # *************************************************************************
+#   
+#   if (exists("overlay_position_Prevalence") == TRUE) {
+#     
+#     
+#     #  x OUT OF y -------------------------------------------------------------
+#     
+#     if (grepl("out of|in", overlay_position_Prevalence) == TRUE) {
+#       
+#       overlay_prevalence = regmatches(
+#         overlay_position_Prevalence,
+#         gregexpr("[[:digit:]]+", overlay_position_Prevalence)) %>%
+#         unlist() %>%
+#         as.numeric()
+#       
+#       
+#       # Checks x OUT OF y -------------------------------------------------------------
+#       if (overlay_prevalence[2] < overlay_prevalence[1]) { stop("Impossible overlay_position_Prevalence value: ", overlay_position_Prevalence, ". The first value (", overlay_prevalence[1], ") should be a subset of the second value (", overlay_prevalence[2], ").")}
+#       # *******************************************************************************
+#       
+#       #  x % ----------------------------------------------------------------------
+#     } else if (grepl("%", overlay_position_Prevalence)) {
+#       
+#       # If there is a ",", replace by "." (, is the decimal separator in some regions)
+#       if (grepl(",", overlay_position_Prevalence)) {
+#         overlay_position_Prevalence = gsub(",", ".", overlay_position_Prevalence) 
+#         
+#       }
+#       
+#       # Get rid of "%" and convert to number
+#       overlay_prevalence_temp = gsub("%| %", "", overlay_position_Prevalence) %>% as.numeric(.)
+#       
+#       overlay_prevalence = Min_Prevalence
+#       overlay_prevalence[2] = round(Min_Prevalence / (overlay_prevalence_temp / 100), 0)
+#       
+#       # Checks x%  --------------------------------------------------------------------
+#       if (overlay_prevalence_temp > 100 | overlay_prevalence_temp < 0) { stop("Impossible overlay_position_Prevalence value: ", overlay_position_Prevalence, ". It should be a number between 0% and 100%")}
+#       # *******************************************************************************
+#       
+#     } else if (is.numeric(overlay_position_Prevalence) == TRUE) {
+#       
+#       overlay_prevalence = Min_Prevalence
+#       overlay_prevalence[2] = round(Min_Prevalence / (overlay_position_Prevalence / 100), 0)
+#       
+#     }
+#     
+#     
+#     # General check -----------------------------------------------------------
+#     if (length(overlay_prevalence) != 2) {
+#       stop("***The parameter 'overlay_position_Prevalence' should be x out of y (e.g. '2 out of 100'), x in y (e.g. '2 in 100'), x% (e.g. 2%) or x (assumes x = x%). Now is: ", overlay_position_Prevalence)
+#     }
+#     # *************************************************************************
+#     
+#     
+#     # Output vars -------------------------------------------------------------
+#     
+#     overlay_prevalence_1 <- overlay_prevalence[1]
+#     overlay_prevalence_2 <- overlay_prevalence[2]
+#     # overlay_prevalence_1 <<- overlay_prevalence[1]
+#     # overlay_prevalence_2 <<- overlay_prevalence[2]
+#     
+#   }
+#   
+# }
 
 
 
