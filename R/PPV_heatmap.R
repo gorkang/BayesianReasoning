@@ -67,6 +67,19 @@ PPV_heatmap <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
     # DEBUG <<- 1
   
+  # Min_Prevalence = 1
+  # Max_Prevalence = 1000 
+  # Sensitivity = 100 
+  # Max_FP = .2
+  # label_subtitle = ""
+  # save_plot = FALSE
+  # overlay = "area"
+  # overlay_labels = ""
+  # overlay_position_FP_FN = .1
+  # overlay_prevalence_1 = 1
+  # overlay_prevalence_2 = 500
+  # uncertainty_prevalence = "high"
+  
   # PPV_NPV = "PPV"
   # Min_Prevalence = 1
   # Language = "en"
