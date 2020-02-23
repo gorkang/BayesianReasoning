@@ -32,12 +32,12 @@
   steps_matrix <<- 100
   
   # False Positives (x axis) 
-  Steps_FP <<- steps_matrix
+  Steps_FP <- steps_matrix
   Step_size_FP <<- Max_FP/Steps_FP
   Min_FP <<- 0 
   FP = seq(Min_FP, Max_FP, Step_size_FP) #With (Max_FP-Step_size_FP) we get 100 FPs. If we use Max_FP instead we have 101 (because we start at 0!)
   
-  # Sentisitivy
+  # Sensitivity
   Max_FN <<- (100 - Sensitivity)
   Steps_FN <<- steps_matrix
   Step_size_FN <<- Max_FN/Steps_FN
@@ -111,6 +111,8 @@
 #' @export
 #' @importFrom magrittr "%>%"
 #' @examples
+#' .get_point_ppv_npv(PPV_melted, PPV_NPV = 'PPV', overlay_position_FP_FN = 1)
+
 .get_point_ppv_npv <- function(PPV_melted, PPV_NPV = "PPV", overlay_position_FP_FN) {
   
   # BUG: THIS SHOULDN'T BE HERE. SHOULD READ FROM THE APPROPR
@@ -139,11 +141,11 @@
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       # "\n ", Min_Prevalence, " ", prevalence_label, " ", point_Prevalence,
-      "\n ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\n FN = ", paste0(overlay_position_FP_FN,
+      "\n", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+      "\nFN = ", paste0(overlay_position_FP_FN,
                          # round(DF_point_PPV_NPV$FN, decimals_x) # BUG
                          "%"),
-      "\n NPV = ", calculated_NPV
+      "\nNPV = ", calculated_NPV
       # paste0(round(DF_point_PPV_NPV$NPV, 2) * 100, "%")
     )
     
@@ -159,9 +161,9 @@
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       # "\n ", Min_Prevalence, " ", prevalence_label, " ", point_Prevalence,
-      "\n ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\n FP = ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%"),
-      "\n PPV = ", calculated_PPV
+      "\n", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+      "\nFP = ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%"),
+      "\nPPV = ", calculated_PPV
       # paste0(round(DF_point_PPV_NPV$PPV, 2) * 100, "%")
     )
     
@@ -186,7 +188,7 @@
 
 
 
-#' Title
+#' .number_decimals_plot_axis
 #'
 #' @param PPV_NPV 
 #' @param Min_FP 
@@ -200,6 +202,7 @@
 #' @export
 #'
 #' @examples
+#' .number_decimals_plot_axis(PPV_NPV = "PPV", Min_FP = 1, Max_FP = 2, Min_FN = 1, Max_FN = 2, Min_Prevalence = 1, Max_Prevalence = 100)
 .number_decimals_plot_axis <- function(PPV_NPV, Min_FP, Max_FP, Min_FN, Max_FN, Min_Prevalence, Max_Prevalence) {
   
   # The number of decimal places in the x and y axis label depends on how wide the range is
@@ -305,6 +308,8 @@
     
     if (PPV_NPV == "PPV") {
       
+      label_caption = paste0("Sensitivity = ", Sensitivity, "%")
+      
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (Prevalence)))  
       
@@ -321,9 +326,12 @@
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
       
       
+      
       # NPV ---------------------------------------------------------------------
       
     } else if (PPV_NPV == "NPV") {
+      
+      label_caption = paste0("Specificity = ", 100 - Max_FP, "%")
       
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (Prevalence)))  
@@ -473,20 +481,22 @@
 
 
 
-#' Title
+#' .plot_overlay_line
 #'
-#' @param PPV_melted 
-#' @param Max_Prevalence 
-#' @param overlay_prevalence_1
-#' @param overlay_prevalence_2 
-#' @param overlay_position_FP_FN 
-#' @param overlay_labels 
+#' @param PPV_melted DF 
+#' @param Max_Prevalence MAX prevalence for plot 
+#' @param overlay_prevalence_1 vector with x/prevalence values
+#' @param overlay_prevalence_2 vector with prevalence/x values
+#' @param overlay_position_FP_FN vector with FP/FN values
+#' @param overlay_labels vector with labels for each overlay point
 #'
 #' @return
 #' @export
 #' @importFrom ggplot2 annotate
 #'
 #' @examples
+#' .plot_overlay_line(PPV_melted, Max_Prevalence = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 1, overlay_position_FP_FN = 1, overlay_labels = "label")
+
 .plot_overlay_line <- function(PPV_melted, Max_Prevalence, overlay_prevalence_1, overlay_prevalence_2, overlay_position_FP_FN, overlay_labels) {
   
   # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
@@ -549,6 +559,7 @@
 #' @export
 #'
 #' @examples
+#' .translate_labels <- function(Language = "sp", Sensitivity = 1, Max_FP = 1)
 .translate_labels <- function(Language, Sensitivity, Max_FP) {
   
   
