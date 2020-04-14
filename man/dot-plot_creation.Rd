@@ -6,25 +6,55 @@
 \usage{
 .plot_creation(
   PPV_melted,
+  Sensitivity,
+  PPV_NPV = "PPV",
+  Min_Prevalence = 1,
+  Min_FP = 0,
   Max_FP,
-  Step_size_FP,
+  steps_matrix = 100,
+  decimals_x,
+  decimals_y,
   label_title = "",
   label_subtitle = "",
   label_caption = "",
-  decimals_x,
-  decimals_y,
-  prevalence_label
+  prevalence_label = "",
+  legend_label = "",
+  x_axis_label,
+  y_axis_label
 )
 }
 \arguments{
-\item{PPV_melted}{}
+\item{PPV_melted}{.}
 
-\item{label_title}{}
+\item{Sensitivity}{.}
 
-\item{label_subtitle}{}
-}
-\value{
+\item{PPV_NPV}{.}
 
+\item{Min_Prevalence}{.}
+
+\item{Min_FP}{.}
+
+\item{Max_FP}{.}
+
+\item{steps_matrix}{.}
+
+\item{decimals_x}{.}
+
+\item{decimals_y}{.}
+
+\item{label_title}{.}
+
+\item{label_subtitle}{.}
+
+\item{label_caption}{.}
+
+\item{prevalence_label}{.}
+
+\item{legend_label}{.}
+
+\item{x_axis_label}{.}
+
+\item{y_axis_label}{.}
 }
 \description{
 .plot_creation

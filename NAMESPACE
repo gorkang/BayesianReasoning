@@ -2,12 +2,6 @@
 
 export("%>%")
 export(.createPPVmatrix)
-export(.get_point_ppv_npv)
-export(.number_decimals_plot_axis)
-export(.plot_creation)
-export(.plot_overlay_area)
-export(.plot_overlay_line)
-export(.translate_labels)
 export(PPV_diagnostic_vs_screening)
 export(PPV_heatmap)
 export(min_possible_prevalence)

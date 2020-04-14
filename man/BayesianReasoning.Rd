@@ -5,6 +5,6 @@
 \alias{BayesianReasoning}
 \title{BayesianReasoning}
 \description{
-BayesianReasoning
+Description
 }
 \keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{.plot_overlay_area}
 \alias{.plot_overlay_area}
-\title{Plot overlay area}
+\title{.plot_overlay_area}
 \usage{
 .plot_overlay_area(
   PPV_melted,
@@ -10,6 +10,7 @@
   Min_Prevalence,
   Max_Prevalence,
   Sensitivity,
+  Min_FP = 0,
   Max_FP,
   overlay_labels = "",
   PPV_NPV = "PPV",
@@ -18,23 +19,52 @@
   overlay_position_FP_FN,
   decimals_x,
   decimals_y,
-  prevalence_label
+  prevalence_label,
+  label_title,
+  label_subtitle,
+  x_axis_label,
+  y_axis_label
 )
 }
 \arguments{
-\item{PPV_melted}{}
+\item{PPV_melted}{.}
 
-\item{uncertainty_prevalence}{}
+\item{uncertainty_prevalence}{.}
 
-\item{overlay_labels}{}
+\item{Min_Prevalence}{.}
 
-\item{PPV_NPV}{}
+\item{Max_Prevalence}{.}
 
-\item{overlay_position_FP_FN}{}
-}
-\value{
+\item{Sensitivity}{.}
 
+\item{Min_FP}{.}
+
+\item{Max_FP}{.}
+
+\item{overlay_labels}{.}
+
+\item{PPV_NPV}{.}
+
+\item{overlay_prevalence_1}{.}
+
+\item{overlay_prevalence_2}{.}
+
+\item{overlay_position_FP_FN}{.}
+
+\item{decimals_x}{.}
+
+\item{decimals_y}{.}
+
+\item{prevalence_label}{.}
+
+\item{label_title}{.}
+
+\item{label_subtitle}{.}
+
+\item{x_axis_label}{.}
+
+\item{y_axis_label}{.}
 }
 \description{
-Plot overlay area
+Description
 }
