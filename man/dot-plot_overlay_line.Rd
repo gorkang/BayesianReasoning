@@ -14,13 +14,22 @@
   overlay_position_FP_FN,
   overlay_labels,
   label_title,
-  label_subtitle
+  label_subtitle,
+  decimals_x,
+  decimals_y,
+  prevalence_label,
+  x_axis_label,
+  y_axis_label
 )
 }
 \arguments{
 \item{PPV_melted}{DF}
 
 \item{Max_Prevalence}{MAX prevalence for plot}
+
+\item{Max_FP}{.}
+
+\item{Sensitivity}{.}
 
 \item{overlay_prevalence_1}{vector with x/prevalence values}
 
@@ -29,13 +38,21 @@
 \item{overlay_position_FP_FN}{vector with FP/FN values}
 
 \item{overlay_labels}{vector with labels for each overlay point}
-}
-\value{
 
+\item{label_title}{.}
+
+\item{label_subtitle}{.}
+
+\item{decimals_x}{.}
+
+\item{decimals_y}{.}
+
+\item{prevalence_label}{.}
+
+\item{x_axis_label}{.}
+
+\item{y_axis_label}{.}
 }
 \description{
 .plot_overlay_line
-}
-\examples{
-.plot_overlay_line(PPV_melted, Max_Prevalence = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 1, overlay_position_FP_FN = 1, overlay_labels = "label")
 }

@@ -1,5 +1,7 @@
 #' BayesianReasoning
 #'
+#' Description
+#'
 #' @docType package
 #' @name BayesianReasoning
 #' @keywords internal

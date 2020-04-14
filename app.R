@@ -89,6 +89,13 @@ ui <- fluidPage(
 
 # Server ------------------------------------------------------------------
 
+#' Shiny app server
+#'
+#' @param input 
+#' @param output 
+#'
+#' @import shiny shinythemes devtools
+
 server <- function(input, output) {
 
   output$outplot <- renderPlot({

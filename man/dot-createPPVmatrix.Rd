@@ -6,20 +6,28 @@
 \usage{
 .createPPVmatrix(
   Min_Prevalence = 1,
-  Max_Prevalence,
-  Sensitivity,
+  Max_Prevalence = 1000,
+  Sensitivity = 100,
   Min_FP = 0,
-  Max_FP,
+  Max_FP = 10,
   PPV_NPV = "PPV",
   steps_matrix = 100
 )
 }
 \arguments{
+\item{Min_Prevalence}{.}
+
 \item{Max_Prevalence}{Max prevalence of disease}
 
 \item{Sensitivity}{Sensitivity of test}
 
+\item{Min_FP}{.}
+
 \item{Max_FP}{Maximum False Positives ratio}
+
+\item{PPV_NPV}{.}
+
+\item{steps_matrix}{.}
 }
 \value{
 A DF called PPV
@@ -28,5 +36,5 @@ A DF called PPV
 Create a PPV matrix helper function
 }
 \examples{
-.createPPVmatrix(1, 1000, 100, 2)
+.createPPVmatrix(1, 1000, 100, 0, 2, "PPV")
 }

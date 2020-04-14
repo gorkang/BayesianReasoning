@@ -7,18 +7,14 @@
 .translate_labels(Language, Sensitivity, Max_FP, PPV_NPV = "PPV")
 }
 \arguments{
-\item{Language}{}
+\item{Language}{.}
 
-\item{Sensitivity}{}
+\item{Sensitivity}{.}
 
-\item{Max_FP}{}
-}
-\value{
+\item{Max_FP}{.}
 
+\item{PPV_NPV}{.}
 }
 \description{
 .translate_labels
-}
-\examples{
-.translate_labels <- function(Language = "sp", Sensitivity = 1, Max_FP = 1)
 }

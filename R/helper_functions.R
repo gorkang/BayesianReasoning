@@ -1,4 +1,3 @@
-
 #' .createPPVmatrix
 #'
 #' Create a PPV matrix helper function
@@ -6,27 +5,42 @@
 #' @param Max_Prevalence Max prevalence of disease
 #' @param Sensitivity Sensitivity of test
 #' @param Max_FP Maximum False Positives ratio
+#' @param Min_Prevalence .
+#' @param Min_FP .
+#' @param PPV_NPV .
+#' @param steps_matrix .
 #'
 #' @return A DF called PPV
 #' @export
 #' @importFrom reshape2 melt
 #'
 #' @examples
-#' .createPPVmatrix(1, 1000, 100, 2)
-.createPPVmatrix <- function(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Min_FP = 0, Max_FP, PPV_NPV = "PPV", steps_matrix = 100) {
-  
+#' .createPPVmatrix(1, 1000, 100, 0, 2, "PPV")
+.createPPVmatrix <-
+  function(Min_Prevalence = 1,
+           Max_Prevalence = 1000,
+           Sensitivity = 100,
+           Min_FP = 0,
+           Max_FP = 10,
+           PPV_NPV = "PPV",
+           steps_matrix = 100) {
+    
   # library(reshape2)
   
   # DEBUG -------------------------------------------------------------------
-  
+    
+  # Min_Prevalence = 1
   # Max_Prevalence = 500
   # Sensitivity = 90
+    # Min_FP = 0
   # Max_FP = 5
   # library(tidyverse)
   # PPV_NPV = "NPV" # NPV/PPV
   # label_title = ""
   # label_subtitle = ""
+    # steps_matrix = 100
   
+    
   # TEST Parameters **************
   
   # False Positives (x axis) 
@@ -53,22 +67,6 @@
   range_prevalence = (Max_Prevalence - Min_Prevalence)
   Step_size_Prevalence <- range_prevalence / Steps_Prevalence
   Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
-  
-  # Prevalence_percent = Prevalence/Max_Prevalence
-  # Prevalence_percent * 1000
-  
-  
-  # Number of decimals for plot axis
-  # decimals = .number_decimals_plot_axis(PPV_NPV = PPV_NPV,
-  #                                       Min_FP = Min_FP,
-  #                                       Max_FP = Max_FP,
-  #                                       Min_FN = Min_FN,
-  #                                       Max_FN = Max_FN,
-  #                                       Min_Prevalence = Min_Prevalence, 
-  #                                       Max_Prevalence = Max_Prevalence)
-  # 
-  # decimals_x = decimals$decimals_x
-  # decimals_y = decimals$decimals_y
   
   
   # PPV Calculation -------------------------------------------------------------
@@ -112,17 +110,24 @@
 
 
 
-#' Get point ppv-npv
+
+#' .get_point_ppv_npv
+#' 
+#' Description
 #'
-#' @param PPV_melted
-#' @param PPV_NPV
-#' @param overlay_position_FP_FN
-#'
-#' @return
-#' @export
-#' @importFrom magrittr "%>%"
-#' @examples
-#' .get_point_ppv_npv(PPV_melted, PPV_NPV = 'PPV', overlay_position_FP_FN = 1)
+#' @param PPV_melted .
+#' @param PPV_NPV .
+#' @param Sensitivity .
+#' @param overlay_prevalence_1 .
+#' @param overlay_prevalence_2 .
+#' @param overlay_labels .
+#' @param overlay_position_FP_FN .
+#' @param point_Prevalence .
+#' @param prevalence_label .
+#' @param x_axis_label .
+#' @param y_axis_label .
+#' @param decimals_x .
+#' @param decimals_y .
 
 .get_point_ppv_npv <- function(
   PPV_melted, 
@@ -132,7 +137,12 @@
   overlay_prevalence_2,
   overlay_labels,
   overlay_position_FP_FN, 
-  point_Prevalence) {
+  point_Prevalence, 
+  prevalence_label,
+  x_axis_label,
+  y_axis_label,
+  decimals_x,
+  decimals_y) {
 
   # # BUG: THIS SHOULDN'T BE HERE. SHOULD READ FROM THE APPROPR
   # # prevalence_label = " / "
@@ -203,26 +213,16 @@
 
 
 
-
-
-
-
-
 #' .number_decimals_plot_axis
 #'
-#' @param PPV_NPV 
-#' @param Min_FP 
-#' @param Max_FP 
-#' @param Min_FN 
-#' @param Max_FN 
-#' @param Min_Prevalence 
-#' @param Max_Prevalence 
-#'
-#' @return
-#' @export
-#'
-#' @examples
-#' .number_decimals_plot_axis(PPV_NPV = "PPV", Min_FP = 0, Max_FP = 2, Min_FN = 1, Max_FN = 2, Min_Prevalence = 1, Max_Prevalence = 100)
+#' @param PPV_NPV .
+#' @param Min_FP .
+#' @param Max_FP .
+#' @param Min_FN .
+#' @param Max_FN .
+#' @param Min_Prevalence .
+#' @param Max_Prevalence .
+
 .number_decimals_plot_axis <- function(PPV_NPV = "PPV", Min_FP = 0, Max_FP, Min_FN, Max_FN, Min_Prevalence, Max_Prevalence) {
 
     # The number of decimal places in the x and y axis label depends on how wide the range is
@@ -278,14 +278,26 @@
 
 
 
+
 #' .plot_creation
+#' 
+#' @param PPV_melted .
+#' @param Sensitivity .
+#' @param PPV_NPV .
+#' @param Min_Prevalence .
+#' @param Min_FP .
+#' @param Max_FP .
+#' @param steps_matrix .
+#' @param decimals_x .
+#' @param decimals_y .
+#' @param label_title .
+#' @param label_subtitle .
+#' @param label_caption .
+#' @param prevalence_label .
+#' @param legend_label .
+#' @param x_axis_label .
+#' @param y_axis_label .
 #'
-#' @param PPV_melted 
-#' @param label_title 
-#' @param label_subtitle 
-#'
-#' @return
-#' @export
 #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin element_text
 #'
 #' @examples
@@ -296,15 +308,16 @@
            Min_Prevalence = 1,
            Min_FP = 0,
            Max_FP,
-           # Step_size_FP,
-           label_title = "",
-           label_subtitle = "",
-           label_caption = "",
-           prevalence_label,
            steps_matrix = 100, 
            decimals_x,
            decimals_y,
-           legend_label = "VPP (%)\n") {
+           label_title = "",
+           label_subtitle = "",
+           label_caption = "",           
+           prevalence_label = "",
+           legend_label = "",
+           x_axis_label,
+           y_axis_label) {
     
     # DEBUG -------------------------------------------------------------------
     
@@ -419,19 +432,33 @@
 
 
 
-#' Plot overlay area
+
+#' .plot_overlay_area
 #'
-#' @param PPV_melted 
-#' @param uncertainty_prevalence 
-#' @param overlay_labels 
-#' @param PPV_NPV 
-#' @param overlay_position_FP_FN 
+#' Description 
 #'
-#' @return
-#' @export
+#' @param PPV_melted .
+#' @param uncertainty_prevalence .
+#' @param Min_Prevalence .
+#' @param Max_Prevalence .
+#' @param Sensitivity .
+#' @param Min_FP .
+#' @param Max_FP .
+#' @param overlay_labels .
+#' @param PPV_NPV .
+#' @param overlay_prevalence_1 .
+#' @param overlay_prevalence_2 .
+#' @param overlay_position_FP_FN .
+#' @param decimals_x .
+#' @param decimals_y .
+#' @param prevalence_label .
+#' @param label_title .
+#' @param label_subtitle .
+#' @param x_axis_label .
+#' @param y_axis_label .
+#' 
 #' @importFrom ggplot2 annotate
-#'
-#' @examples
+
 .plot_overlay_area <-
   function(PPV_melted,
            uncertainty_prevalence = "low",
@@ -449,13 +476,16 @@
            decimals_y,
            prevalence_label,
            label_title,
-           label_subtitle
+           label_subtitle,
+           
+           x_axis_label,
+           y_axis_label
            ) {
     
     # DEBUG -------------------------------------------------------------------
     # uncertainty_prevalence = "high"
     # overlay_labels = ""
-    
+    # browser()
 
     # Calculate point prevalence ----------------------------------------------
 
@@ -472,7 +502,7 @@
     
     
     # Get PPV or NPV value ----------------------------------------------------
-
+# browser()
     list_point_PPV = .get_point_ppv_npv(
       PPV_melted = PPV_melted,
       PPV_NPV = PPV_NPV,
@@ -481,7 +511,13 @@
       overlay_prevalence_2 = overlay_prevalence_2,
       overlay_labels = overlay_labels,
       overlay_position_FP_FN = overlay_position_FP_FN,
-      point_Prevalence = point_Prevalence
+      point_Prevalence = point_Prevalence,
+      decimals_x = decimals_x,
+      decimals_y = decimals_y,
+      
+      prevalence_label = prevalence_label,
+      x_axis_label = x_axis_label,
+      y_axis_label = y_axis_label
     ) #, overlay_labels = overlay_labels, decimals_x = decimals_x, prevalence_label = prevalence_label
   
         Details_point_PPV_NPV = list_point_PPV$Details_point_PPV_NPV
@@ -510,7 +546,10 @@
       prevalence_label = prevalence_label,
       label_subtitle = label_subtitle,
       label_title = label_title,
-      label_caption = paste0("Sensitivity = ", Sensitivity, "%"))
+      label_caption = paste0("Sensitivity = ", Sensitivity, "%"),
+      
+      x_axis_label = x_axis_label,
+      y_axis_label = y_axis_label)
     
     p = p +
       
@@ -549,13 +588,17 @@
 #' @param overlay_prevalence_2 vector with prevalence/x values
 #' @param overlay_position_FP_FN vector with FP/FN values
 #' @param overlay_labels vector with labels for each overlay point
+#' @param Max_FP .
+#' @param Sensitivity .
+#' @param label_title .
+#' @param label_subtitle .
+#' @param decimals_x .
+#' @param decimals_y .
+#' @param prevalence_label .
+#' @param x_axis_label .
+#' @param y_axis_label .
 #'
-#' @return
-#' @export
 #' @importFrom ggplot2 annotate
-#'
-#' @examples
-#' .plot_overlay_line(PPV_melted, Max_Prevalence = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 1, overlay_position_FP_FN = 1, overlay_labels = "label")
 
 .plot_overlay_line <-
   function(PPV_melted,
@@ -567,7 +610,15 @@
            overlay_position_FP_FN,
            overlay_labels,
            label_title,
-           label_subtitle) {
+           label_subtitle,
+
+           decimals_x,
+           decimals_y,
+           
+           prevalence_label,
+           
+           x_axis_label,
+           y_axis_label) {
     
   # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
   if (exists("size_uncertainty_area") == FALSE) {size_uncertainty_area = 0}
@@ -601,6 +652,10 @@
     decimals_x = decimals_x,
     decimals_y = decimals_y,
     prevalence_label = prevalence_label,
+    
+    x_axis_label = x_axis_label,
+    y_axis_label = y_axis_label,
+    
     label_subtitle = label_subtitle,
     label_title = label_title,
     label_caption = paste0("Sensitivity = ", Sensitivity, "%"))  
@@ -620,17 +675,15 @@
 
 
 
+
 #' .translate_labels
 #'
-#' @param Language 
-#' @param Sensitivity 
-#' @param Max_FP 
+#' @param Language .
+#' @param Sensitivity . 
+#' @param Max_FP .
+#' @param PPV_NPV .
 #'
-#' @return
-#' @export
-#'
-#' @examples
-#' .translate_labels <- function(Language = "sp", Sensitivity = 1, Max_FP = 1)
+
 .translate_labels <- function(Language, Sensitivity, Max_FP, PPV_NPV = "PPV") {
   
   

@@ -4,4 +4,7 @@
 \name{BayesianReasoning}
 \alias{BayesianReasoning}
 \title{BayesianReasoning}
+\description{
+Description
+}
 \keyword{internal}

@@ -1,6 +1,6 @@
 Package: BayesianReasoning
 Title: Plot and Help Understand Positive and Negative Predictive Values, and their Relationship with Sensitivity, Specificity and Prevalence
-Version: 0.2
+Version: 0.2.1
 Authors@R: c(
     person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre"))
     )
@@ -9,6 +9,7 @@ Maintainer: Gorka Navarrete <gorkang@gmail.com>
 Description: This package includes a few functions to plot and help understand Positive Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.
 Depends: R (>= 3.4.0)
 Imports: dplyr,
+         here,
          reshape2,
          ggplot2,
          tidyr,

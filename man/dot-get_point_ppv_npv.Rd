@@ -2,7 +2,7 @@
 % Please edit documentation in R/helper_functions.R
 \name{.get_point_ppv_npv}
 \alias{.get_point_ppv_npv}
-\title{Get point ppv-npv}
+\title{.get_point_ppv_npv}
 \usage{
 .get_point_ppv_npv(
   PPV_melted,
@@ -12,18 +12,41 @@
   overlay_prevalence_2,
   overlay_labels,
   overlay_position_FP_FN,
-  point_Prevalence
+  point_Prevalence,
+  prevalence_label,
+  x_axis_label,
+  y_axis_label,
+  decimals_x,
+  decimals_y
 )
 }
 \arguments{
-\item{overlay_position_FP_FN}{}
-}
-\value{
+\item{PPV_melted}{.}
 
+\item{PPV_NPV}{.}
+
+\item{Sensitivity}{.}
+
+\item{overlay_prevalence_1}{.}
+
+\item{overlay_prevalence_2}{.}
+
+\item{overlay_labels}{.}
+
+\item{overlay_position_FP_FN}{.}
+
+\item{point_Prevalence}{.}
+
+\item{prevalence_label}{.}
+
+\item{x_axis_label}{.}
+
+\item{y_axis_label}{.}
+
+\item{decimals_x}{.}
+
+\item{decimals_y}{.}
 }
 \description{
-Get point ppv-npv
-}
-\examples{
-.get_point_ppv_npv(PPV_melted, PPV_NPV = 'PPV', overlay_position_FP_FN = 1)
+Description
 }
