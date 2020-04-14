@@ -4,7 +4,7 @@
 \alias{.translate_labels}
 \title{.translate_labels}
 \usage{
-.translate_labels(Language, Sensitivity, Max_FP)
+.translate_labels(Language, Sensitivity, Max_FP, PPV_NPV = "PPV")
 }
 \arguments{
 \item{Language}{}

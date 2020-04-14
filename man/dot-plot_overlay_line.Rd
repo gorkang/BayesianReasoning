@@ -7,10 +7,14 @@
 .plot_overlay_line(
   PPV_melted,
   Max_Prevalence,
+  Max_FP,
+  Sensitivity,
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_position_FP_FN,
-  overlay_labels
+  overlay_labels,
+  label_title,
+  label_subtitle
 )
 }
 \arguments{

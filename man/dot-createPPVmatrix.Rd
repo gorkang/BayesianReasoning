@@ -8,8 +8,10 @@
   Min_Prevalence = 1,
   Max_Prevalence,
   Sensitivity,
+  Min_FP = 0,
   Max_FP,
-  PPV_NPV = "PPV"
+  PPV_NPV = "PPV",
+  steps_matrix = 100
 )
 }
 \arguments{

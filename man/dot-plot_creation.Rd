@@ -6,14 +6,19 @@
 \usage{
 .plot_creation(
   PPV_melted,
+  Sensitivity,
+  PPV_NPV = "PPV",
+  Min_Prevalence = 1,
+  Min_FP = 0,
   Max_FP,
-  Step_size_FP,
   label_title = "",
   label_subtitle = "",
   label_caption = "",
+  prevalence_label,
+  steps_matrix = 100,
   decimals_x,
   decimals_y,
-  prevalence_label
+  legend_label = "VPP (\%)\\n"
 )
 }
 \arguments{

@@ -2,7 +2,7 @@
 ^doc$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-DEV/
 ^\.httr-oauth$
-presentation/
-app.R
+^presentation$
+^DEV$
+^R/app\.R$

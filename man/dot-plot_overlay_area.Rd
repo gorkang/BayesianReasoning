@@ -10,6 +10,7 @@
   Min_Prevalence,
   Max_Prevalence,
   Sensitivity,
+  Min_FP = 0,
   Max_FP,
   overlay_labels = "",
   PPV_NPV = "PPV",
@@ -18,7 +19,9 @@
   overlay_position_FP_FN,
   decimals_x,
   decimals_y,
-  prevalence_label
+  prevalence_label,
+  label_title,
+  label_subtitle
 )
 }
 \arguments{

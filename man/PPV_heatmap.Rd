@@ -8,6 +8,7 @@ PPV_heatmap(
   Min_Prevalence = 1,
   Max_Prevalence,
   Sensitivity,
+  Min_FP = 0,
   Max_FP,
   overlay = "no",
   overlay_labels = "",

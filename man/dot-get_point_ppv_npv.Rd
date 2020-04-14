@@ -4,13 +4,18 @@
 \alias{.get_point_ppv_npv}
 \title{Get point ppv-npv}
 \usage{
-.get_point_ppv_npv(PPV_melted, PPV_NPV = "PPV", overlay_position_FP_FN)
+.get_point_ppv_npv(
+  PPV_melted,
+  PPV_NPV = "PPV",
+  Sensitivity,
+  overlay_prevalence_1,
+  overlay_prevalence_2,
+  overlay_labels,
+  overlay_position_FP_FN,
+  point_Prevalence
+)
 }
 \arguments{
-\item{PPV_melted}{}
-
-\item{PPV_NPV}{}
-
 \item{overlay_position_FP_FN}{}
 }
 \value{

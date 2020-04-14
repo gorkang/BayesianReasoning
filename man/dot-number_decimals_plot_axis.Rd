@@ -5,8 +5,8 @@
 \title{.number_decimals_plot_axis}
 \usage{
 .number_decimals_plot_axis(
-  PPV_NPV,
-  Min_FP,
+  PPV_NPV = "PPV",
+  Min_FP = 0,
   Max_FP,
   Min_FN,
   Max_FN,
@@ -36,5 +36,5 @@
 .number_decimals_plot_axis
 }
 \examples{
-.number_decimals_plot_axis(PPV_NPV = "PPV", Min_FP = 1, Max_FP = 2, Min_FN = 1, Max_FN = 2, Min_Prevalence = 1, Max_Prevalence = 100)
+.number_decimals_plot_axis(PPV_NPV = "PPV", Min_FP = 0, Max_FP = 2, Min_FN = 1, Max_FN = 2, Min_Prevalence = 1, Max_Prevalence = 100)
 }
