@@ -4,11 +4,26 @@
 \alias{PPV_heatmap}
 \title{Plot PPV heatmaps}
 \usage{
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
-  overlay = "no", overlay_labels = "", overlay_position_FP_FN = 1,
-  overlay_position_Prevalence, uncertainty_prevalence = "high",
-  label_title = "", label_subtitle = "", Language = "en",
-  save_plot = FALSE, PPV_NPV = "PPV", DEBUG = 0)
+PPV_heatmap(
+  Min_Prevalence,
+  Max_Prevalence,
+  Sensitivity,
+  Min_FP = 0,
+  Max_FP,
+  overlay = "no",
+  overlay_labels = "",
+  overlay_position_FP = 1,
+  overlay_position_FN = 1,
+  overlay_prevalence_1 = 1,
+  overlay_prevalence_2 = 100,
+  uncertainty_prevalence = "high",
+  label_title = "",
+  label_subtitle = "",
+  Language = "en",
+  save_plot = FALSE,
+  PPV_NPV = "PPV",
+  DEBUG = 0
+)
 }
 \arguments{
 \item{Min_Prevalence}{x in the "x out of y" prevalence (y-axis): 1-Inf}
@@ -17,15 +32,21 @@ PPV_heatmap(Min_Prevalence = 1, Max_Prevalence, Sensitivity, Max_FP,
 
 \item{Sensitivity}{Sensitivity of the test: 0-100}
 
+\item{Min_FP}{Minimum False Positives ratio to show in plot (x-axis): 1-100}
+
 \item{Max_FP}{Maximum False Positives ratio to show in plot (x-axis): 1-100}
 
 \item{overlay}{Show overlay: TRUE / FALSE}
 
 \item{overlay_labels}{Lables for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
 
-\item{overlay_position_FP_FN}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
+\item{overlay_position_FP}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
 
-\item{overlay_position_Prevalence}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)}
+\item{overlay_position_FN}{FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
+
+\item{overlay_prevalence_1}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(1, 1, 1, 2, 1, 1)}
+
+\item{overlay_prevalence_2}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)}
 
 \item{uncertainty_prevalence}{How much certainty we have about the prevalence ["high"/"low"]}
 
@@ -48,32 +69,10 @@ A .png plot in the /output folder, or shows a plot
 Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP
 }
 \examples{
-
-# Simple plot
-PPV_heatmap(Max_Prevalence = 500, Sensitivity = 90, Max_FP = 15)
-
-# Show a plot with an overlay
-PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15,
-            label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-            save_plot = FALSE, Language = "en",
-            overlay = "line",
-            overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-            overlay_position_FP_FN = c(6.5, 7, 8, 9, 12, 14, 14),
-            overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
-
-# Another plot with an overlay
-PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
-            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = FALSE, Language = "en",
-            overlay = "line",
-            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
-            overlay_position_FP_FN = c(4.8, 4.8, 4.8, 4.8, 4.8),
-            overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
-# A plot with a point overlay
-PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
-            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            overlay = "area",
-            overlay_labels = "40 y.o.",
-            overlay_position_FP_FN = 4.8,
-            overlay_position_Prevalence = "1 out of 68")
+PPV_heatmap(Min_Prevalence = 1, 
+Max_Prevalence = 1000, 
+Sensitivity = 100, 
+Max_FP = 2, 
+Language = "en",
+save_plot = FALSE)
 }
