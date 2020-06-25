@@ -32,7 +32,8 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 
 ```r 
 
-PPV_heatmap(Max_Prevalence = 1000, 
+PPV_heatmap(Min_Prevalence = 1,
+            Max_Prevalence = 1000, 
             Sensitivity = 100, 
             Max_FP = 2, 
             Language = "en")
@@ -75,12 +76,14 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```r 
 
-PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            save_plot = TRUE,
             overlay = "area",
             overlay_labels = "40 y.o.",
-            overlay_position_FP_FN = 4.8,
-            overlay_position_Prevalence = "1 out of 68")
+            overlay_position_FP = 4.8,
+            overlay_prevalence_1 = 1,
+            overlay_prevalence_2 = 68)
 
 ```
 
@@ -95,12 +98,13 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 ```r 
 
-PPV_heatmap(Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
-                label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-                overlay = "line", 
-                overlay_labels = c("80", "70", "60", "50", "40", "30", "20  y.o."),
-                overlay_position_FP_FN = c(6.5, 7, 8, 9, 12, 14, 14),
-                overlay_position_Prevalence = c(22, 26, 29, 44, 69, 227, 1667))
+PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
+            label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
+            overlay = "line", 
+            overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
+            overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+            overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1),
+            overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
                 
 ```
 
@@ -112,12 +116,13 @@ Another example. In this case, the FP is constant across age:
 
 ```r 
 
-PPV_heatmap(Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
-           label_subtitle = "Prenatal screening for Down Syndrome by Age",
-           overlay = "line",
-           overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
-           overlay_position_FP_FN = c(4.8, 4.8, 4.8, 4.8, 4.8),
-           overlay_position_Prevalence = c(68, 249, 626, 946, 1068))
+PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+            label_subtitle = "Prenatal screening for Down Syndrome by Age",
+            overlay = "line",
+            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
+            overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
+            overlay_prevalence_1 = c(1, 1, 1, 1, 1),
+            overlay_prevalence_2 = c(68, 249, 626, 946, 1068))
                 
 ```
 
