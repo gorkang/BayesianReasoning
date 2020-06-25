@@ -4,9 +4,11 @@
 library(shiny)
 library(shinythemes)
 library(shinyjs)
+library(devtools)
 
 devtools::load_all()
 # library(BayesianReasoning)
+
 
 # UI ----------------------------------------------------------------------
 
@@ -198,26 +200,26 @@ server <- function(input, output, session) {
       
     if (input$tipo_overlay == "none") {
       
-      hide("FN_overlay")
-      hide("FP_overlay")
-      hide("overlay_prevalence_1")
-      hide("overlay_prevalence_2")
+      shinyjs::hide("FN_overlay")
+      shinyjs::hide("FP_overlay")
+      shinyjs::hide("overlay_prevalence_1")
+      shinyjs::hide("overlay_prevalence_2")
       
     } else if (input$tipo_overlay == "area") {
       
       if (input$PPV_NPV == "PPV") {
         
-        hide("FN_overlay")
-        show("overlay_prevalence_1")
-        show("overlay_prevalence_2")
-        show("FP_overlay")
+        shinyjs::hide("FN_overlay")
+        shinyjs::show("overlay_prevalence_1")
+        shinyjs::show("overlay_prevalence_2")
+        shinyjs::show("FP_overlay")
         
       } else if (input$PPV_NPV == "NPV") {
         
-        hide("FP_overlay")
-        show("overlay_prevalence_1")
-        show("overlay_prevalence_2")
-        show("FN_overlay")
+        shinyjs::hide("FP_overlay")
+        shinyjs::show("overlay_prevalence_1")
+        shinyjs::show("overlay_prevalence_2")
+        shinyjs::show("FN_overlay")
         
       }
       
@@ -229,32 +231,12 @@ server <- function(input, output, session) {
 
   
 
-  
-  # Hide and show sliders depending on the PPV_NPV
-  observeEvent(input$tipo_overlay,{
-    if (input$tipo_overlay == "none") {
-      hide("FN_overlay")
-      hide("FP_overlay")
-      hide("overlay_prevalence_1")
-      hide("overlay_prevalence_2")
-    } else if (input$tipo_overlay == "area") {
-      show("FN_overlay")
-      show("FP_overlay")
-      show("overlay_prevalence_1")
-      show("overlay_prevalence_2")
-    }
-  })
-  
-  
-  
-  
-  
-  
+  # Create plot
   final_plot <- reactive({
   
     # message(input$PPV_NPV)
     
-    PPV_heatmap(
+    BayesianReasoning::PPV_heatmap(
       PPV_NPV = input$PPV_NPV,
       label_title = input$plot_title,
       Max_FP = input$FP_shinny,

@@ -15,7 +15,9 @@ Imports: dplyr,
          magrittr,
          tibble,
          ggforce,
-         here
+         shinythemes,
+         shinyjs,
+         devtools
 License: GPL (>= 3) | file LICENSE
 LazyData: true
 RoxygenNote: 7.1.0
