@@ -6,6 +6,7 @@ library(shinythemes)
 library(shinyjs)
 library(devtools)
 
+# REMEMBER: If deploying the app to shinyapps.io FAILS, add devtools and utf8 to the Imports field in the DESCRIPTION file -------------------
 devtools::load_all()
 # library(BayesianReasoning)
 
