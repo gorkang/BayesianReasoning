@@ -87,17 +87,12 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
            subtitle = paste0("Sensitivity = ", Sensitivity, "%" ),
            x = "False Positive rate",
            color = "")
-    # labs(caption = "(based on data from ...)") +
-    # theme(plot.caption = element_text(size = 10))
-    # guides(color=guide_legend("Prevalence of the "))
-
-    # print(p)
 
 
     if (save_plot == TRUE) {
 
       print(p)
-      plot_name = paste0("outputs/diagnostic_vs_screening/", "FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
+      plot_name = paste0("man/figures/diagnostic_vs_screening/", "FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
       ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
       cat("\n Plot created in: ", plot_name, "\n")
 

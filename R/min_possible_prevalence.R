@@ -51,12 +51,12 @@ min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
 
     # Long format para ggplot Heatmap
     PPV_melted = reshape2::melt(PPV)
-    #Por algun motivo, melt a veces cambia nombres de variables. De este modo los fijamos
+    
+    # Rename columns
     names(PPV_melted) = c("melted_Prevalence", "melted_FP", "melted_PPV")
 
-
+    # Calculate prevalence
     output_prevalence = max(PPV_melted$melted_Prevalence[PPV_melted$melted_PPV > (min_PPV_desired / 100) & PPV_melted$melted_FP == FP_test])
-
 
     # Function output!
     cat("To reach a PPV of", min_PPV_desired, "when using a test with", Sensitivity, "% Sensitivity and", FP_test, "% False Positive Rate, you need a prevalence of at least 1 out of", output_prevalence)

@@ -15,7 +15,9 @@ The BayesianReasoning package has three main functions:
 
 --- 
 
-Right now it is a work in progress with lots of moving parts and horrible code. If despite that you want to install it, just use: `remotes::install_github("gorkang/BayesianReasoning")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/BayesianReasoning/issues). There is an initial [shiny app implementation](https://gorkang.shinyapps.io/BayesianReasoning/).  
+If you want to install the package can use: `remotes::install_github("gorkang/BayesianReasoning")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/BayesianReasoning/issues).  
+
+There is a [shiny app implementation](https://gorkang.shinyapps.io/BayesianReasoning/) with most of the main features available.  
 
 ---
 
