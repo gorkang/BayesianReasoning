@@ -13,3 +13,5 @@ rsconnect/
 outputs/
 app.R
 google-analytics.html
+cran-comments.md
+^cran-comments\.md$
