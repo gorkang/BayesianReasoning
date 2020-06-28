@@ -1,3 +1,25 @@
+---
+title: "Introduction to BayesianReasoning"
+author: "Gorka Navarrete"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to BayesianReasoning}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, echo = FALSE, message = FALSE, results = 'hide'}
+library(BayesianReasoning)
+```
+
 # Bayesian reasoning in medical contexts
 
 This package includes a few functions to plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
@@ -30,7 +52,7 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 * Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP  
 * Language: "es" for Spanish or "en" for English  
 
-```r 
+```{r heatmap}
 
 PPV_heatmap(Min_Prevalence = 1,
             Max_Prevalence = 1000, 
@@ -41,7 +63,6 @@ PPV_heatmap(Min_Prevalence = 1,
 ```  
 
 
-![](man/figures/PPV_heatmap/PPV_1_1000_100_2_en.png)  
 
 
 ---   
@@ -50,7 +71,7 @@ PPV_heatmap(Min_Prevalence = 1,
 
 You can also plot an NPV heatmap with PPV_NPV = "NPV".  
 
-```r 
+```{r NPV-heatmap}
 
 PPV_heatmap(PPV_NPV = "NPV",
             Min_Prevalence = 800,
@@ -62,7 +83,6 @@ PPV_heatmap(PPV_NPV = "NPV",
 ```
 
 
-![](man/figures/PPV_heatmap/NPV_800_1000_80_5_en.png)   
 
 --- 
 
@@ -74,11 +94,11 @@ You can add different types of overlay to the plots.
 For example, an area overlay showing the point PPV for a given prevalence and FP or FN:  
 
 
-```r 
+```{r area}
 
 PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = TRUE,
+            save_plot = FALSE,
             overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
@@ -87,7 +107,6 @@ PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP 
 
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1200_81_5_area_en.png)  
 
 
 
@@ -96,8 +115,7 @@ PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP 
 Also, you can add a line overlay highlighting a range of prevalences and FP. This is useful, for example, to show how the PPV of a test changes with age:  
 
 
-```r 
-
+```{r line}
 PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
             overlay = "line", 
@@ -108,13 +126,12 @@ PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1800, Sensitivity = 90, Max_FP 
                 
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1800_90_15_line_en.png)
 
 ---   
 
 Another example. In this case, the FP is constant across age:
 
-```r 
+```{r line-2}
 
 PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
@@ -126,7 +143,6 @@ PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP 
                 
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1200_81_5_line_en.png)  
 
 ---   
 
@@ -137,7 +153,7 @@ In scientific studies developing a new test for the early detection of a medical
 This function shows a plot with the difference between the PPV of a diagnostic context (very high prevalence; or a common study sample, e.g. ~50% prevalence) versus that of a screening context (lower prevalence).  
 
 
-```r 
+```{r diagnostic}
 
 PPV_diagnostic_vs_screening(Max_FP = 10, 
                             Sensitivity = 100, 
@@ -146,7 +162,6 @@ PPV_diagnostic_vs_screening(Max_FP = 10,
                             
 ```  
 
-![](man/figures/diagnostic_vs_screening/FP_10_sens_100_screening_1000_diagnostic_2.png)
 
 
 
@@ -179,3 +194,4 @@ min_possible_prevalence(Sensitivity = 99.9,
 > To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429
 
 --- 
+

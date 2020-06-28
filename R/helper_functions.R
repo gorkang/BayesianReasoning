@@ -11,11 +11,8 @@
 #' @param steps_matrix .
 #'
 #' @return A DF called PPV
-#' @export
 #' @importFrom reshape2 melt
 #'
-#' @examples
-#' .createPPVmatrix(1, 1000, 100, 0, 2, "PPV")
 .createPPVmatrix <-
   function(Min_Prevalence = 1,
            Max_Prevalence = 1000,
@@ -328,7 +325,6 @@
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin element_text
 #'
-#' @examples
 .plot_creation <-
   function(PPV_melted,
            Min_Prevalence,
@@ -453,10 +449,10 @@
                     y = y_axis_label)
     
     
-    # Output vars -------------------------------------------------------------
-    
-    return(p)
-    
+      # Output vars -------------------------------------------------------------
+      
+      return(p)
+      
   }
 
 
@@ -764,6 +760,7 @@
 #' @param Max_FP .
 #' @param PPV_NPV .
 #'
+#' @return A list with labels
 
 .translate_labels <- function(Language, Sensitivity, Max_FP, PPV_NPV = "PPV") {
   

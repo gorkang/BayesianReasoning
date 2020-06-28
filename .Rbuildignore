@@ -5,5 +5,11 @@
 DEV/
 ^\.httr-oauth$
 presentation/
-app.R
 .binder/
+docs/
+www/
+data/
+rsconnect/
+outputs/
+app.R
+google-analytics.html

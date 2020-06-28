@@ -15,6 +15,9 @@
 
 \item{PPV_NPV}{.}
 }
+\value{
+A list with labels
+}
 \description{
 .translate_labels
 }

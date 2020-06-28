@@ -38,7 +38,7 @@ PPV_heatmap(
 
 \item{overlay}{Show overlay: TRUE / FALSE}
 
-\item{overlay_labels}{Lables for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
+\item{overlay_labels}{Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
 
 \item{overlay_position_FP}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
 

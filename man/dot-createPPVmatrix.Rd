@@ -35,6 +35,3 @@ A DF called PPV
 \description{
 Create a PPV matrix helper function
 }
-\examples{
-.createPPVmatrix(1, 1000, 100, 0, 2, "PPV")
-}

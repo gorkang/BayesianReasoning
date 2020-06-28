@@ -1,13 +1,13 @@
 Package: BayesianReasoning
+Type: Package
 Title: Plot and Help Understand Positive and Negative Predictive Values, and their Relationship with Sensitivity, Specificity and Prevalence
-Version: 0.3
-Authors@R: c(
-    person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre"))
-    )
-Author: Gorka Navarrete <gorkang@gmail.com>
+Version: 0.3.0
+Date: 2020-06-28
+Authors@R: c(person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre")))
 Maintainer: Gorka Navarrete <gorkang@gmail.com>
-Description: This package includes a few functions to plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.
-Depends: R (>= 3.4.0)
+Description: Functions to plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.
+LazyData: TRUE
+Depends: R (>= 3.5.0)
 Imports: dplyr,
          reshape2,
          ggplot2,
@@ -16,13 +16,11 @@ Imports: dplyr,
          tibble,
          ggforce,
          shinythemes,
-         shinyjs,
-         devtools
-License: GPL (>= 3) | file LICENSE
-LazyData: true
-RoxygenNote: 7.1.0
-URL: https://github.com/gorkang/R_PPV_Plot
-BugReports: https://github.com/gorkang/R_PPV_Plot/issues
+         shinyjs
+License: CC0
+RoxygenNote: 7.1.1
+URL: https://github.com/gorkang/BayesianReasoning
+BugReports: https://github.com/gorkang/BayesianReasoning/issues
 Encoding: UTF-8
 Suggests: testthat,
     knitr,

@@ -8,8 +8,8 @@
 #' @param Min_FP Minimum False Positives ratio to show in plot (x-axis): 1-100
 #' @param Max_FP Maximum False Positives ratio to show in plot (x-axis): 1-100
 #' @param overlay Show overlay: TRUE / FALSE
-#' @param overlay_labels Lables for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
-#' @param  overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param overlay_labels Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
+#' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param uncertainty_prevalence How much certainty we have about the prevalence ["high"/"low"]
 #' @param overlay_prevalence_1 Prevalence value (position in the y-axis) for each point in the overlay. For example: c(1, 1, 1, 2, 1, 1)
@@ -119,12 +119,17 @@ PPV_heatmap <-
 
 # Check overlay prevalence ------------------------------------------------
 
-    if (overlay_prevalence_1 > overlay_prevalence_2) {
-      
-      message(overlay_prevalence_1, " is > than ", overlay_prevalence_2)
-      overlay_prevalence_1 = overlay_prevalence_2
-      
+    if (length(overlay_prevalence_1) == 1) {
+      if (overlay_prevalence_1 > overlay_prevalence_2) {
+        
+        message(overlay_prevalence_1, " is > than ", overlay_prevalence_2)
+        overlay_prevalence_1 = overlay_prevalence_2
+        
       }
+    } else if (length(overlay_prevalence_1) > 1) {
+      message("> 1 overlay")
+    
+    }
     
 
   # SYSTEM parameters -------------------------------------------------------
@@ -280,7 +285,7 @@ PPV_heatmap <-
 
         print(p)
         # plot_name = here::here(paste0("outputs/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png"))
-        plot_name = paste0("outputs/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
+        plot_name = paste0("man/figures/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
         ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
         cat("\n Plot created in: ", plot_name, "\n")
 
