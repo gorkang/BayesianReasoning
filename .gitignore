@@ -6,3 +6,7 @@ doc
 .Ruserdata
 inst/doc
 .httr-oauth
+DEV/
+.binder/
+google-analytics.html
+tests/
