@@ -1,0 +1,31 @@
+library(ggplot2)
+
+testthat::test_that("Scale is labelled 'Prevalence'", {
+  p <- BayesianReasoning::PPV_diagnostic_vs_screening(
+    Max_FP = 10,
+    Sensitivity = 100,
+    prevalence_screening_group = 1667,
+    prevalence_diagnostic_group = 44,
+    labels_prevalence = c("20 y.o.", "50 y.o.")
+  )
+  testthat::expect_true(ggplot2::is.ggplot(p))
+  testthat::expect_identical(p$labels$y, "PPV")
+  testthat::expect_identical(p$labels$x, "False Positive rate")
+
+})
+
+
+testthat::test_that("Plot is type GeomLine", {
+  p <-
+    BayesianReasoning::PPV_diagnostic_vs_screening(
+      Max_FP = 10,
+      Sensitivity = 100,
+      prevalence_screening_group = 1667,
+      prevalence_diagnostic_group = 44,
+      labels_prevalence = c("20 y.o.", "50 y.o.")
+    )
+  
+  testthat::expect_identical(sapply(p$layers, function(x)
+    class(x$geom)[1]), "GeomLine")
+  
+})

@@ -15,3 +15,5 @@ app.R
 google-analytics.html
 cran-comments.md
 ^cran-comments\.md$
+^CRAN-RELEASE$
+^codecov\.yml$

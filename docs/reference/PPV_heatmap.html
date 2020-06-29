@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot PPV heatmaps — PPV_heatmap • BayesianReasoning</title>
+<title>Plot PPV and NPV heatmaps — PPV_heatmap • BayesianReasoning</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Plot PPV heatmaps — PPV_heatmap" />
-<meta property="og:description" content="Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP" />
+<meta property="og:title" content="Plot PPV and NPV heatmaps — PPV_heatmap" />
+<meta property="og:description" content="Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -123,13 +123,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot PPV heatmaps</h1>
+    <h1>Plot PPV and NPV heatmaps</h1>
     <small class="dont-index">Source: <a href='https://github.com/gorkang/BayesianReasoning/blob/master/R/PPV_heatmap.R'><code>R/PPV_heatmap.R</code></a></small>
     <div class="hidden name"><code>PPV_heatmap.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP</p>
+    <p>Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values</p>
     </div>
 
     <pre class="usage"><span class='fu'>PPV_heatmap</span>(
@@ -148,7 +148,7 @@
   <span class='kw'>label_title</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>label_subtitle</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>Language</span> <span class='kw'>=</span> <span class='st'>"en"</span>,
-  <span class='kw'>save_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>folder</span> <span class='kw'>=</span> <span class='st'>""</span>,
   <span class='kw'>PPV_NPV</span> <span class='kw'>=</span> <span class='st'>"PPV"</span>,
   <span class='kw'>DEBUG</span> <span class='kw'>=</span> <span class='fl'>0</span>
 )</pre>
@@ -217,8 +217,8 @@
       <td><p>Language for the plot labels: "sp" / "en"</p></td>
     </tr>
     <tr>
-      <th>save_plot</th>
-      <td><p>Should save the plot as .png or just show it?  [TRUE/FALSE]</p></td>
+      <th>folder</th>
+      <td><p>Where to save the plot (the filename would be automatically created using the plot parameters)</p></td>
     </tr>
     <tr>
       <th>PPV_NPV</th>
@@ -232,15 +232,14 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A .png plot in the /output folder, or shows a plot</p>
+    <p>Shows a plot or, if given a folder argument, saves a .png version of the plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>PPV_heatmap</span>(<span class='kw'>Min_Prevalence</span> <span class='kw'>=</span> <span class='fl'>1</span>,
 <span class='kw'>Max_Prevalence</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
 <span class='kw'>Sensitivity</span> <span class='kw'>=</span> <span class='fl'>100</span>,
 <span class='kw'>Max_FP</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-<span class='kw'>Language</span> <span class='kw'>=</span> <span class='st'>"en"</span>,
-<span class='kw'>save_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='img'><img src='PPV_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>Language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='img'><img src='PPV_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
