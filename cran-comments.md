@@ -11,3 +11,17 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+Corrected issues raised in CRAN revision:
+
+* Reduced title to less than 65 characters
+* Do not capitalize things in the Description text
+* Added references to Description explaining main concepts
+* Replaced cat() with message()
+* Aded folder parameter to PPV_diagnostic_vs_screening() and PPV_heatmap() functions
+
+I also added tests for all main functions, deleted old comments and slightly improve the documentation
