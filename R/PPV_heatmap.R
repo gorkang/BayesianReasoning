@@ -93,19 +93,7 @@ PPV_heatmap <-
       
       if (overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence) {
         
-        message("\n --------- \n",
-                "overlay_prevalence_1 = ", overlay_prevalence_1, "\n",
-                "overlay_prevalence_2 = ", overlay_prevalence_2, "\n",
-                "overlay_prevalence_1/overlay_prevalence_2 = ", overlay_prevalence_1/overlay_prevalence_2, "\n\n",
-                
-                "Min_Prevalence = ", Min_Prevalence, "\n",
-                "Max_Prevalence = ", Max_Prevalence, "\n",
-                "Min_Prevalence/Max_Prevalence = ", Min_Prevalence/Max_Prevalence, "\n",
-                "\n --------- \n\n")
-        
-        message("overlay impossible to fit in plot: overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence")
-        
-        message("Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay")
+        message("Overlay impossible to fit in plot: overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence: Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay")
         
         # Min Prevalence adjusted to fit overlay
         Min_Prevalence = (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence

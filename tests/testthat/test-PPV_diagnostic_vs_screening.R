@@ -1,7 +1,7 @@
 library(ggplot2)
 
 
-test_that("Scale is labelled 'Prevalence'", {
+testthat::test_that("Scale is labelled 'Prevalence'", {
   p <- BayesianReasoning::PPV_diagnostic_vs_screening(
     Max_FP = 10,
     Sensitivity = 100,
@@ -10,14 +10,14 @@ test_that("Scale is labelled 'Prevalence'", {
     labels_prevalence = c("20 y.o.", "50 y.o."),
     save_plot = FALSE
   )
-  expect_true(is.ggplot(p))
-  expect_identical(p$labels$y, "PPV")
-  expect_identical(p$labels$x, "False Positive rate")
+  testthat::expect_true(ggplot2::is.ggplot(p))
+  testthat::expect_identical(p$labels$y, "PPV")
+  testthat::expect_identical(p$labels$x, "False Positive rate")
 
 })
 
 
-test_that("Plot is type GeomLine", {
+testthat::test_that("Plot is type GeomLine", {
   p <-
     BayesianReasoning::PPV_diagnostic_vs_screening(
       Max_FP = 10,
@@ -27,7 +27,7 @@ test_that("Plot is type GeomLine", {
       labels_prevalence = c("20 y.o.", "50 y.o.")
     )
   
-  expect_identical(sapply(p$layers, function(x)
+  testthat::expect_identical(sapply(p$layers, function(x)
     class(x$geom)[1]), "GeomLine")
   
 })
@@ -43,6 +43,6 @@ test_that("Plot is type GeomLine", {
 #                                                       save_plot = TRUE)
 #
 #   file_name_expected = paste0("man/figures/diagnostic_vs_screening/FP_10_sens_", random_sensitivity, "_screening_1667_diagnostic_44.png")
-#   expect_true(file.exists(file_name_expected))
+#   testthat::expect_true(file.exists(file_name_expected))
 #
 # })
