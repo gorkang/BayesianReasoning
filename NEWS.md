@@ -1,5 +1,11 @@
 # README
 
+### v0.3.1 Testing, testing
+
+Added tests for all main functions
+Added codecov badge
+
+
 ### v0.3.0 It, works?
 
 Global clean-up

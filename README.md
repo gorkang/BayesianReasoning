@@ -1,4 +1,12 @@
-# Bayesian reasoning in medical contexts
+# BayesianReasoning
+
+<!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/gorkang/R_PPV_Plot/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/R_PPV_Plot?branch=master)
+<!-- badges: end -->
+  
+
+## Bayesian reasoning in medical contexts
+  
 
 This package includes a few functions to plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 
