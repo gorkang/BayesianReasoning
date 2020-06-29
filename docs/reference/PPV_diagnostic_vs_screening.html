@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot PPV for a diagnostic and a screening group — PPV_diagnostic_vs_screening • BayesianReasoning</title>
+<title>Plot PPV values for a diagnostic and a screening group — PPV_diagnostic_vs_screening • BayesianReasoning</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="Plot PPV for a diagnostic and a screening group — PPV_diagnostic_vs_screening" />
+<meta property="og:title" content="Plot PPV values for a diagnostic and a screening group — PPV_diagnostic_vs_screening" />
 <meta property="og:description" content="Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups." />
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -123,7 +123,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot PPV for a diagnostic and a screening group</h1>
+    <h1>Plot PPV values for a diagnostic and a screening group</h1>
     <small class="dont-index">Source: <a href='https://github.com/gorkang/BayesianReasoning/blob/master/R/PPV_diagnostic_vs_screening.R'><code>R/PPV_diagnostic_vs_screening.R</code></a></small>
     <div class="hidden name"><code>PPV_diagnostic_vs_screening.Rd</code></div>
     </div>
@@ -138,7 +138,7 @@
   <span class='kw'>prevalence_screening_group</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>prevalence_diagnostic_group</span> <span class='kw'>=</span> <span class='fl'>2</span>,
   <span class='kw'>labels_prevalence</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Screening"</span>, <span class='st'>"Diagnostic"</span>),
-  <span class='kw'>save_plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>folder</span> <span class='kw'>=</span> <span class='st'>""</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -165,14 +165,14 @@
       <td><p>Labels to use for both groups.</p></td>
     </tr>
     <tr>
-      <th>save_plot</th>
-      <td><p>Should save the plot as .png or just show it? [TRUE/FALSE]</p></td>
+      <th>folder</th>
+      <td><p>Where to save the plot (the filename would be automatically created using the plot parameters)</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A .png plot in the /output folder, or shows a plot</p>
+    <p>Shows a plot or, if given a folder argument, saves a .png version of the plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

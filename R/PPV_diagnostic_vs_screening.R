@@ -1,4 +1,4 @@
-#' Plot PPV for a diagnostic and a screening group
+#' Plot PPV values for a diagnostic and a screening group
 #'
 #' Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups. 
 #'
@@ -6,10 +6,10 @@
 #' @param Sensitivity Sensitivity of the test [0-100].
 #' @param prevalence_screening_group Prevalence of the screening group, 1 out of x [1-Inf].
 #' @param prevalence_diagnostic_group Prevalence of the diagnostic group, 1 out of x [1-Inf].
+#' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
 #' @param labels_prevalence Labels to use for both groups.
-#' @param save_plot Should save the plot as .png or just show it? [TRUE/FALSE]
 #'
-#' @return A .png plot in the /output folder, or shows a plot
+#' @return Shows a plot or, if given a folder argument, saves a .png version of the plot
 #' @export
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 ggplot aes geom_line scale_colour_hue theme_minimal theme element_text scale_x_continuous scale_y_continuous labs
@@ -32,7 +32,8 @@
 #'                            labels_prevalence = c("20 y.o.", "50 y.o."))
 PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2,
                                         labels_prevalence = c("Screening", "Diagnostic"),
-                                        save_plot = FALSE) {
+                                        # save_plot = FALSE, 
+                                        folder = "") {
 
   # PARAMETERS --------------------------------------------------------------
   # Max_FP = 10
@@ -89,12 +90,12 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
            color = "")
 
 
-    if (save_plot == TRUE) {
-
+    if (folder != "") {
+      
       print(p)
-      plot_name = paste0("man/figures/diagnostic_vs_screening/", "FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
+      plot_name = paste0(folder, "/FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
       ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
-      cat("\n Plot created in: ", plot_name, "\n")
+      message("\n Plot created in: ", plot_name, "\n")
 
     } else {
 

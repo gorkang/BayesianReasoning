@@ -1,6 +1,6 @@
-#' Plot PPV heatmaps
+#' Plot PPV and NPV heatmaps
 #' 
-#' Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP
+#' Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 #' 
 #' @param Min_Prevalence x in the "x out of y" prevalence (y-axis): 1-Inf
 #' @param Max_Prevalence y in the "x out of y" prevalence (y-axis): 1-Inf
@@ -17,11 +17,11 @@
 #' @param label_title Title for the plot
 #' @param label_subtitle Subtitle for the plot
 #' @param Language Language for the plot labels: "sp" / "en"
-#' @param save_plot Should save the plot as .png or just show it?  [TRUE/FALSE]
 #' @param PPV_NPV Should show PPV or NPV [PPV/NPV]
 #' @param DEBUG Shows debug warnings [0/1]
+#' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
 #'
-#' @return A .png plot in the /output folder, or shows a plot
+#' @return Shows a plot or, if given a folder argument, saves a .png version of the plot
 #' @export
 #' @importFrom ggplot2 ggplot aes element_text geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin annotate ggsave
 #' @importFrom reshape2 melt
@@ -33,8 +33,7 @@
 #' Max_Prevalence = 1000, 
 #' Sensitivity = 100, 
 #' Max_FP = 2, 
-#' Language = "en",
-#' save_plot = FALSE)
+#' Language = "en")
 PPV_heatmap <-
   function(Min_Prevalence,
            Max_Prevalence,
@@ -43,34 +42,24 @@ PPV_heatmap <-
            Max_FP,
            overlay = "no",
            overlay_labels = "",
-           
-           # overlay_position_FP_FN = 1,
            overlay_position_FP = 1,
            overlay_position_FN = 1,
-           
            overlay_prevalence_1 = 1,
            overlay_prevalence_2 = 100,
            uncertainty_prevalence = "high",
            label_title = "",
            label_subtitle = "",
            Language = "en",
-           save_plot = FALSE,
+           folder = "",
            PPV_NPV = "PPV",
            DEBUG = 0) {
     
-
-  # DEBUG -------------------------------------------------------------------
-
-    # DEBUG <- 1
-
 
   # Check dimensions -----------------------------------------------------------
     
     
     # If the dimensions of the overlay are bigger, adjust Max_FP and Max_Prevalence
-    
-    # TODO: SHOULD MAKE THIS DEPEND ON PPV_NPV ##############
-    
+
     if (overlay == "area") {
       
       if (overlay_position_FP > Max_FP) {
@@ -115,8 +104,7 @@ PPV_heatmap <-
         
       }
     } else if (length(overlay_prevalence_1) > 1) {
-      message("> 1 overlay")
-    
+      if (DEBUG != 0) message("> 1 overlay")
     }
     
 
@@ -269,13 +257,13 @@ PPV_heatmap <-
 
     # Save plot ---------------------------------------------------------------
 
-      if (save_plot == TRUE) {
+      if (folder != "") {
 
         print(p)
         # plot_name = here::here(paste0("outputs/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png"))
-        plot_name = paste0("man/figures/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
+        plot_name = paste0(folder, "/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
         ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
-        cat("\n Plot created in: ", plot_name, "\n")
+        message("\n Plot created in: ", plot_name, "\n")
 
       } else {
 
@@ -284,4 +272,3 @@ PPV_heatmap <-
       }
 
 }
-# PPV_heatmap(Max_Prevalence = 20, Sensitivity = 2.5, Max_FP = .1)

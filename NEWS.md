@@ -2,8 +2,19 @@
 
 ### v0.3.1 Testing, testing
 
-Added tests for all main functions
-Added codecov badge
+Corrected issues raised in CRAN revision
+
+* Reduced title to less than 65 characters
+* Do not capitalize things in the Description text
+* Added references to Description explaining main concepts
+* Replaced cat() with message()
+* Aded folder parameter to PPV_diagnostic_vs_screening() and PPV_heatmap() functions
+
+Added tests
+
+* Added tests for all main functions
+* Added codecov
+
 
 
 ### v0.3.0 It, works?

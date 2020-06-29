@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -158,10 +158,10 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># Example 1</span>
-<span class='fu'>min_possible_prevalence</span>(<span class='kw'>Sensitivity</span> <span class='kw'>=</span> <span class='fl'>99.9</span>, <span class='kw'>FP_test</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>min_PPV_desired</span> <span class='kw'>=</span> <span class='fl'>70</span>)</div><div class='output co'>#&gt; To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429</div><div class='input'><span class='st'>"To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, 
+<span class='fu'>min_possible_prevalence</span>(<span class='kw'>Sensitivity</span> <span class='kw'>=</span> <span class='fl'>99.9</span>, <span class='kw'>FP_test</span> <span class='kw'>=</span> <span class='fl'>.1</span>, <span class='kw'>min_PPV_desired</span> <span class='kw'>=</span> <span class='fl'>70</span>)</div><div class='output co'>#&gt; <span class='message'>To reach a PPV of 70% when using a test with 99.9% Sensitivity and 0.1% False Positive Rate, you need a prevalence of at least 1 out of 429</span></div><div class='input'><span class='st'>"To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, 
 you need a prevalence of at least 1 out of 429"</span></div><div class='output co'>#&gt; [1] "To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, \nyou need a prevalence of at least 1 out of 429"</div><div class='input'>
 <span class='co'># Example 2</span>
-<span class='fu'>min_possible_prevalence</span>(<span class='fl'>100</span>, <span class='fl'>0.1</span>, <span class='fl'>98</span>)</div><div class='output co'>#&gt; To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21</div><div class='input'><span class='st'>"To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, 
+<span class='fu'>min_possible_prevalence</span>(<span class='fl'>100</span>, <span class='fl'>0.1</span>, <span class='fl'>98</span>)</div><div class='output co'>#&gt; <span class='message'>To reach a PPV of 98% when using a test with 100% Sensitivity and 0.1% False Positive Rate, you need a prevalence of at least 1 out of 21</span></div><div class='input'><span class='st'>"To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, 
 you need a prevalence of at least 1 out of 21"</span></div><div class='output co'>#&gt; [1] "To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, \nyou need a prevalence of at least 1 out of 21"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

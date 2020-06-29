@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Introduction to BayesianReasoning</h1>
                         <h4 class="author">Gorka Navarrete</h4>
             
-            <h4 class="date">2020-06-28</h4>
+            <h4 class="date">2020-06-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -160,7 +160,6 @@
 <div class="sourceCode" id="cb3"><html><body><pre class="r">
 <span class="fu"><a href="../reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1200</span>, <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">81</span>, <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">5</span>,
             <span class="kw">label_subtitle</span> <span class="kw">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
-            <span class="kw">save_plot</span> <span class="kw">=</span> <span class="fl">FALSE</span>,
             <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"area"</span>,
             <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="st">"40 y.o."</span>,
             <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fl">4.8</span>,
@@ -178,8 +177,7 @@
             <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span>),
             <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6.5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">14</span>),
             <span class="kw">overlay_prevalence_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
-            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span>))
-<span class="co">#&gt; &gt; 1 overlay</span></pre></body></html></div>
+            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span>))</pre></body></html></div>
 <p><img src="introduction_files/figure-html/line-1.png" width="4200"></p>
 <hr>
 <p>Another example. In this case, the FP is constant across age:</p>
@@ -190,8 +188,7 @@
             <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"40 y.o."</span>, <span class="st">"35 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"25 y.o."</span>, <span class="st">"20 y.o."</span>),
             <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>),
             <span class="kw">overlay_prevalence_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
-            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">68</span>, <span class="fl">249</span>, <span class="fl">626</span>, <span class="fl">946</span>, <span class="fl">1068</span>))
-<span class="co">#&gt; &gt; 1 overlay</span></pre></body></html></div>
+            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">68</span>, <span class="fl">249</span>, <span class="fl">626</span>, <span class="fl">946</span>, <span class="fl">1068</span>))</pre></body></html></div>
 <p><img src="introduction_files/figure-html/line-2-1.png" width="4200"></p>
 <hr>
 </div>

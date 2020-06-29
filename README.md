@@ -1,7 +1,7 @@
 # BayesianReasoning
 
 <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/gorkang/R_PPV_Plot/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/R_PPV_Plot?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/BayesianReasoning?branch=master)
 <!-- badges: end -->
   
 
@@ -88,7 +88,7 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            save_plot = TRUE,
+            folder = "",
             overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,

@@ -1,6 +1,6 @@
 #' Show minimum possible prevalence given the test characteristics
 #'
-#'Given a FP and a desired PPV, what is the Minimum Prevalence of a Condition 
+#' Given a FP and a desired PPV, what is the Minimum Prevalence of a Condition 
 #'
 #' @param Sensitivity Sensitivity of the test: [0-100]
 #' @param FP_test False positive rate (1-Specificity): [0-100]
@@ -59,5 +59,5 @@ min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
     output_prevalence = max(PPV_melted$melted_Prevalence[PPV_melted$melted_PPV > (min_PPV_desired / 100) & PPV_melted$melted_FP == FP_test])
 
     # Function output!
-    cat("To reach a PPV of", min_PPV_desired, "when using a test with", Sensitivity, "% Sensitivity and", FP_test, "% False Positive Rate, you need a prevalence of at least 1 out of", output_prevalence)
+    message("To reach a PPV of ", min_PPV_desired, "% when using a test with ", Sensitivity, "% Sensitivity and ", FP_test, "% False Positive Rate, you need a prevalence of at least 1 out of ", output_prevalence)
 }

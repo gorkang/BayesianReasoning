@@ -2,7 +2,7 @@
 % Please edit documentation in R/PPV_heatmap.R
 \name{PPV_heatmap}
 \alias{PPV_heatmap}
-\title{Plot PPV heatmaps}
+\title{Plot PPV and NPV heatmaps}
 \usage{
 PPV_heatmap(
   Min_Prevalence,
@@ -20,7 +20,7 @@ PPV_heatmap(
   label_title = "",
   label_subtitle = "",
   Language = "en",
-  save_plot = FALSE,
+  folder = "",
   PPV_NPV = "PPV",
   DEBUG = 0
 )
@@ -56,23 +56,22 @@ PPV_heatmap(
 
 \item{Language}{Language for the plot labels: "sp" / "en"}
 
-\item{save_plot}{Should save the plot as .png or just show it?  [TRUE/FALSE]}
+\item{folder}{Where to save the plot (the filename would be automatically created using the plot parameters)}
 
 \item{PPV_NPV}{Should show PPV or NPV [PPV/NPV]}
 
 \item{DEBUG}{Shows debug warnings [0/1]}
 }
 \value{
-A .png plot in the /output folder, or shows a plot
+Shows a plot or, if given a folder argument, saves a .png version of the plot
 }
 \description{
-Plot PPV heatmaps Plot heatmaps with PPV values for a given specificity and a range of Prevalences and FP
+Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 }
 \examples{
 PPV_heatmap(Min_Prevalence = 1, 
 Max_Prevalence = 1000, 
 Sensitivity = 100, 
 Max_FP = 2, 
-Language = "en",
-save_plot = FALSE)
+Language = "en")
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PPV_diagnostic_vs_screening.R
 \name{PPV_diagnostic_vs_screening}
 \alias{PPV_diagnostic_vs_screening}
-\title{Plot PPV for a diagnostic and a screening group}
+\title{Plot PPV values for a diagnostic and a screening group}
 \usage{
 PPV_diagnostic_vs_screening(
   Max_FP = 10,
@@ -10,7 +10,7 @@ PPV_diagnostic_vs_screening(
   prevalence_screening_group = 100,
   prevalence_diagnostic_group = 2,
   labels_prevalence = c("Screening", "Diagnostic"),
-  save_plot = FALSE
+  folder = ""
 )
 }
 \arguments{
@@ -24,10 +24,10 @@ PPV_diagnostic_vs_screening(
 
 \item{labels_prevalence}{Labels to use for both groups.}
 
-\item{save_plot}{Should save the plot as .png or just show it? [TRUE/FALSE]}
+\item{folder}{Where to save the plot (the filename would be automatically created using the plot parameters)}
 }
 \value{
-A .png plot in the /output folder, or shows a plot
+Shows a plot or, if given a folder argument, saves a .png version of the plot
 }
 \description{
 Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups.
