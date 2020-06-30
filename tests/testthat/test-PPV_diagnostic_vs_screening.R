@@ -29,3 +29,22 @@ testthat::test_that("Plot is type GeomLine", {
     class(x$geom)[1]), "GeomLine")
   
 })
+
+
+
+testthat::test_that("Plot saved", {
+  p <-
+    BayesianReasoning::PPV_diagnostic_vs_screening(
+      Max_FP = 10,
+      Sensitivity = 100,
+      prevalence_screening_group = 1667,
+      prevalence_diagnostic_group = 44,
+      labels_prevalence = c("20 y.o.", "50 y.o."), 
+      folder = "."
+    )
+  
+  file_name_test = "FP_10_sens_100_screening_1667_diagnostic_44.png"
+  expect_true(file.exists(file_name_test))
+  file.remove(file_name_test)
+
+})
