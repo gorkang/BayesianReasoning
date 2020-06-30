@@ -30,5 +30,5 @@
 \item{Max_Prevalence}{.}
 }
 \description{
-.number_decimals_plot_axis
+The number of decimal places in the x and y axis label depends on how wide the range is.
 }

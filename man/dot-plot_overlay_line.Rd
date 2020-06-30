@@ -66,5 +66,5 @@
 \item{y_axis_label}{.}
 }
 \description{
-.plot_overlay_line
+Add line overlay to PPV_heatmap plot
 }
