@@ -1,9 +1,10 @@
-# BayesianReasoning
+# BayesianReasoning <img src='man/figures/logo.png' align="right" height="139" />
+
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
 [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/BayesianReasoning?branch=master)
 <!-- badges: end -->
-  
 
 ## Bayesian reasoning in medical contexts
   
@@ -23,9 +24,9 @@ The BayesianReasoning package has three main functions:
 
 --- 
 
-If you want to install the package can use: `remotes::install_github("gorkang/BayesianReasoning")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/BayesianReasoning/issues).  
+You can install the stable (CRAN) version of the package with `install.packages("BayesianReasoning")` or development version with `remotes::install_github("gorkang/BayesianReasoning@dev")`. Please report any problems you find in the [Issues Github page](https://github.com/gorkang/BayesianReasoning/issues).  
 
-There is a [shiny app implementation](https://gorkang.shinyapps.io/BayesianReasoning/) with most of the main features available.  
+There is a [shiny app implementation](https://gorkang.shinyapps.io/BayesianReasoning/) with most of the main features of the PPV_heatmap() function available.  
 
 ---
 
