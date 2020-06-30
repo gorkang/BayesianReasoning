@@ -35,13 +35,6 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
                                         # save_plot = FALSE, 
                                         folder = "") {
 
-  # PARAMETERS --------------------------------------------------------------
-  # Max_FP = 10
-  # Sensitivity = 100
-  # prevalence_screening_group = 100
-  # prevalence_diagnostic_group = 2
-  # labels_prevalence = c("Screening", "Diagnostic")
-
 
   # FIXED parameters --------------------------------------------------------
 
@@ -53,6 +46,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   Min_FP = 0 #Step_size_FP #0
   FP = seq(Min_FP, Max_FP, Step_size_FP)
 
+  
   # Calculate PPVs ----------------------------------------------------------
 
   Real_Prevalence_PPV = list()
