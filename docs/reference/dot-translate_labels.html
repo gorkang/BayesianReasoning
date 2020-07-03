@@ -8,6 +8,13 @@
 
 <title>.translate_labels — .translate_labels • BayesianReasoning</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,7 +47,8 @@
 
 
 <meta property="og:title" content=".translate_labels — .translate_labels" />
-<meta property="og:description" content=".translate_labels" />
+<meta property="og:description" content="Supports showing plot labels in Spanish (sp) or English (default)" />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -72,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
       </span>
     </div>
 
@@ -94,6 +102,9 @@
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/PPV_NPV.html">Screening tests and PPV vs NPV</a>
+    </li>
     <li>
       <a href="../articles/introduction.html">Introduction to BayesianReasoning</a>
     </li>
@@ -129,7 +140,7 @@
     </div>
 
     <div class="ref-description">
-    <p>.translate_labels</p>
+    <p>Supports showing plot labels in Spanish (sp) or English (default)</p>
     </div>
 
     <pre class="usage"><span class='fu'>.translate_labels</span>(<span class='no'>Language</span>, <span class='no'>Sensitivity</span>, <span class='no'>Max_FP</span>, <span class='kw'>PPV_NPV</span> <span class='kw'>=</span> <span class='st'>"PPV"</span>)</pre>
@@ -139,7 +150,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>Language</th>
-      <td><p>.</p></td>
+      <td><p>Can be Spanish "sp" or English (default)</p></td>
     </tr>
     <tr>
       <th>Sensitivity</th>

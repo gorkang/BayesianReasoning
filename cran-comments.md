@@ -10,18 +10,16 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release.
+* Days since last update: 3
 
-## Resubmission
+## New minor version
 
-This is a resubmission. In this version I have:
+This is new minor version to correct a few NOTES that appeared in the CRAN checks.
 
-Corrected issues raised in CRAN revision:
+I also added more tests, cleaned up old comments and improved a couple functions:
 
-* Reduced title to less than 65 characters
-* Do not capitalize things in the Description text
-* Added references to Description explaining main concepts
-* Replaced cat() with message()
-* Aded folder parameter to PPV_diagnostic_vs_screening() and PPV_heatmap() functions
-
-I also added tests for all main functions, deleted old comments and slightly improve the documentation
+* 100% code coverage
+* min_possible_prevalence() is now much more efficient
+* Improvements to overlay = "line" en PPV_heatmap(), now using {ggforce} for labels
+* Changed color palette for NPV
+* Tweaked color palette for PPV

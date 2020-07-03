@@ -33,9 +33,9 @@
 
 \item{uncertainty_prevalence}{.}
 
-\item{Min_Prevalence}{.}
+\item{Min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{.}
+\item{Max_Prevalence}{x out of [y] prevalence of disease}
 
 \item{Sensitivity}{.}
 
@@ -47,9 +47,9 @@
 
 \item{PPV_NPV}{.}
 
-\item{overlay_prevalence_1}{.}
+\item{overlay_prevalence_1}{[x] out of y prevalence of disease for the overlay}
 
-\item{overlay_prevalence_2}{.}
+\item{overlay_prevalence_2}{x out of [y] prevalence of disease for the overlay}
 
 \item{overlay_position_FP}{.}
 
@@ -72,5 +72,5 @@
 \item{y_axis_label}{.}
 }
 \description{
-Description
+Add area overlay to PPV_heatmap plot
 }

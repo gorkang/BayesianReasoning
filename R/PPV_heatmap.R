@@ -56,52 +56,45 @@ PPV_heatmap <-
     
 
   # Check dimensions -----------------------------------------------------------
-    
+
+    if (Min_Prevalence > Max_Prevalence) {
+      message("[WARNING]: Min_Prevalence (", Min_Prevalence , ") is > than Max_Prevalence (", Max_Prevalence, "). [EXPECTED]: Min_Prevalence should be smaller than Max_Prevalence. [CHANGED]: Min_Prevalence = Max_Prevalence/2")
+      Min_Prevalence = Max_Prevalence/2
+    }
     
     # If the dimensions of the overlay are bigger, adjust Max_FP and Max_Prevalence
 
     if (overlay == "area") {
       
       if (overlay_position_FP > Max_FP) {
-      # if (overlay_position_FP_FN > Max_FP) {
-          message("Changing Max_FP to overlay_position_FP to fit overlay")
-        # Max_FP = overlay_position_FP_FN
-        Max_FP = overlay_position_FP 
+        message("[WARNING]: overlay_position_FP (", overlay_position_FP , ") is > than Max_FP (", Max_FP, "). [EXPECTED]: overlay_position_FP should be smaller than Max_FP [CHANGED]: Max_FP = overlay_position_FP")
+        Max_FP = overlay_position_FP
       }
       
       if (overlay_prevalence_2 > Max_Prevalence) {
-        message("Changing Max_Prevalence to overlay_prevalence_2 to fit overlay")
+        message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2 , ") is > than Max_Prevalence (", Max_Prevalence, "). [EXPECTED]: overlay_prevalence_2 should be smaller than Max_Prevalence [CHANGED]: Max_Prevalence = overlay_prevalence_2")
         Max_Prevalence = overlay_prevalence_2 
       }
       
-      # if(overlay_position_FP_FN > (100 - Sensitivity)) {
       if(overlay_position_FN > (100 - Sensitivity)) {
+        message("[WARNING]: overlay_position_FN (", overlay_position_FN , ") is > than (100 - Sensitivity) (", (100 - Sensitivity), "). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN")
         Sensitivity = 100 - overlay_position_FN
       }
       
-      
       if (overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence) {
-        
-        message("Overlay impossible to fit in plot: overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence: Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay")
-        
-        # Min Prevalence adjusted to fit overlay
-        Min_Prevalence = (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence
-        
+        message("[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (", overlay_prevalence_1/overlay_prevalence_2 , ") is > than Min_Prevalence/Max_Prevalence (", Min_Prevalence/Max_Prevalence, "). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay")
+        Min_Prevalence = (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence # Min Prevalence adjusted to fit overlay
       }
       
     }
 
-    
-    
 
-# Check overlay prevalence ------------------------------------------------
+  # Check overlay prevalence ------------------------------------------------
 
     if (length(overlay_prevalence_1) == 1) {
       if (overlay_prevalence_1 > overlay_prevalence_2) {
-        
-        message(overlay_prevalence_1, " is > than ", overlay_prevalence_2)
-        overlay_prevalence_1 = overlay_prevalence_2
-        
+        message("[WARNING]: overlay_prevalence_1 (", overlay_prevalence_1 , ") is > than overlay_prevalence_2 (", overlay_prevalence_2, "). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2")
+        overlay_prevalence_1 = overlay_prevalence_2/2
       }
     } else if (length(overlay_prevalence_1) > 1) {
       if (DEBUG != 0) message("> 1 overlay")
@@ -110,9 +103,6 @@ PPV_heatmap <-
 
   # SYSTEM parameters -------------------------------------------------------
 
-      #GRAPHIC Parameters *************
-
-      # modifier_text_overlay_position = (Max_Prevalence/75)
       if (overlay != "no") {
         filename_overlay = paste0("_", overlay)
       } else {
@@ -169,6 +159,7 @@ PPV_heatmap <-
 
        p = .plot_overlay_line(
           PPV_melted = PPV_melted,
+          uncertainty_prevalence = uncertainty_prevalence,
           Min_Prevalence = Min_Prevalence,
           Max_Prevalence = Max_Prevalence,
           Max_FP = Max_FP,
@@ -176,7 +167,6 @@ PPV_heatmap <-
           
           overlay_prevalence_2 = overlay_prevalence_2,
           
-          # overlay_position_FP_FN = overlay_position_FP_FN,
           overlay_position_FP = overlay_position_FP,
           overlay_position_FN = overlay_position_FN,
           
@@ -196,6 +186,7 @@ PPV_heatmap <-
 
 
       } else if (overlay == "area") {
+        
         p = .plot_overlay_area(
           PPV_melted,
           uncertainty_prevalence = uncertainty_prevalence,
@@ -204,12 +195,10 @@ PPV_heatmap <-
           Sensitivity = Sensitivity,
           Min_FP = Min_FP,
           Max_FP = Max_FP,
-          # Step_size_FP = Step_size_FP,
           overlay_labels = overlay_labels,
           overlay_prevalence_1 = overlay_prevalence_1,
           overlay_prevalence_2 = overlay_prevalence_2,
           
-          # overlay_position_FP_FN = overlay_position_FP_FN,
           overlay_position_FP = overlay_position_FP,
           overlay_position_FN = overlay_position_FN,
           
@@ -228,15 +217,14 @@ PPV_heatmap <-
         )
 
       } else {
-        # if (overlay == "no") {
-          
+        
           p = .plot_creation(
             PPV_melted = PPV_melted,
             Min_Prevalence = Min_Prevalence,
             Sensitivity = Sensitivity,
             Min_FP = Min_FP,
             Max_FP = Max_FP,
-            # Step_size_FP = Step_size_FP,
+
             decimals_x = decimals_x,
             decimals_y = decimals_y,
             
@@ -250,8 +238,7 @@ PPV_heatmap <-
             PPV_NPV = PPV_NPV
             
           )
-          
-          
+
       }
 
 
@@ -260,7 +247,6 @@ PPV_heatmap <-
       if (folder != "") {
 
         print(p)
-        # plot_name = here::here(paste0("outputs/PPV_heatmap/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png"))
         plot_name = paste0(folder, "/", PPV_NPV, "_", Min_Prevalence, "_", Max_Prevalence, "_", Sensitivity, "_", Max_FP, filename_overlay, "_", Language, ".png")
         ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
         message("\n Plot created in: ", plot_name, "\n")

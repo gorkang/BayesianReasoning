@@ -1,5 +1,16 @@
 # README
 
+### v0.3.2 Clean up, test, rinse and repeat
+
+Clean up old comments, add more tests...
+
+* 100% code coverage
+* min_possible_prevalence() is now much more efficient
+* Improvements to overlay = "line" en PPV_heatmap(), now using {ggforce} for labels
+* Changed color palette for NPV
+* Tweaked color palette for PPV
+
+
 ### v0.3.1 Testing, testing
 
 Corrected issues raised in CRAN revision
@@ -8,7 +19,7 @@ Corrected issues raised in CRAN revision
 * Do not capitalize things in the Description text
 * Added references to Description explaining main concepts
 * Replaced cat() with message()
-* Aded folder parameter to PPV_diagnostic_vs_screening() and PPV_heatmap() functions
+* Added folder parameter to PPV_diagnostic_vs_screening() and PPV_heatmap() functions
 
 Added tests
 

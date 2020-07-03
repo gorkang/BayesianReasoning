@@ -7,7 +7,7 @@
 .translate_labels(Language, Sensitivity, Max_FP, PPV_NPV = "PPV")
 }
 \arguments{
-\item{Language}{.}
+\item{Language}{Can be Spanish "sp" or English (default)}
 
 \item{Sensitivity}{.}
 
@@ -19,5 +19,5 @@
 A list with labels
 }
 \description{
-.translate_labels
+Supports showing plot labels in Spanish (sp) or English (default)
 }

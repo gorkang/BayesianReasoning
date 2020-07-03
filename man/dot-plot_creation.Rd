@@ -57,5 +57,5 @@
 \item{y_axis_label}{.}
 }
 \description{
-.plot_creation
+Function to create the main heatmap plot
 }

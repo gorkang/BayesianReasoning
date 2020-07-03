@@ -6,6 +6,7 @@
 \usage{
 .plot_overlay_line(
   PPV_melted,
+  uncertainty_prevalence = "low",
   PPV_NPV,
   Min_Prevalence,
   Max_Prevalence,
@@ -29,19 +30,21 @@
 \arguments{
 \item{PPV_melted}{DF}
 
+\item{uncertainty_prevalence}{How big the uncertainty area should be: ["low" or "high"]}
+
 \item{PPV_NPV}{.}
 
-\item{Min_Prevalence}{.}
+\item{Min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{MAX prevalence for plot}
+\item{Max_Prevalence}{x out of [y] prevalence of disease}
 
 \item{Max_FP}{.}
 
 \item{Sensitivity}{.}
 
-\item{overlay_prevalence_1}{vector with x/prevalence values}
+\item{overlay_prevalence_1}{vector with [x] out of y prevalence of disease}
 
-\item{overlay_prevalence_2}{vector with prevalence/x values}
+\item{overlay_prevalence_2}{vector with x out of [y] prevalence of disease}
 
 \item{overlay_position_FP}{.}
 
@@ -66,5 +69,5 @@
 \item{y_axis_label}{.}
 }
 \description{
-.plot_overlay_line
+Add line overlay to PPV_heatmap plot
 }
