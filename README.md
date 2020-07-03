@@ -4,6 +4,7 @@
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
 [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/BayesianReasoning?branch=master)
+[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
 <!-- badges: end -->
 
 ## Bayesian reasoning in medical contexts
