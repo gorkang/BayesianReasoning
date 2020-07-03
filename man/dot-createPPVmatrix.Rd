@@ -10,7 +10,6 @@
   Sensitivity = 100,
   Min_FP = 0,
   Max_FP = 10,
-  PPV_NPV = "PPV",
   steps_matrix = 100
 )
 }
@@ -21,13 +20,11 @@
 
 \item{Sensitivity}{Sensitivity of test}
 
-\item{Min_FP}{.}
+\item{Min_FP}{Minimum False Positive ratio}
 
-\item{Max_FP}{Maximum False Positives ratio}
+\item{Max_FP}{Maximum False Positive ratio}
 
-\item{PPV_NPV}{.}
-
-\item{steps_matrix}{.}
+\item{steps_matrix}{How big the matrix should be (probably better to leave as it is: 100)}
 }
 \value{
 A DF called PPV

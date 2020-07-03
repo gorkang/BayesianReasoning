@@ -25,9 +25,9 @@
 
 \item{Max_FN}{.}
 
-\item{Min_Prevalence}{.}
+\item{Min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{.}
+\item{Max_Prevalence}{x out of [y] prevalence of disease}
 }
 \description{
 The number of decimal places in the x and y axis label depends on how wide the range is.

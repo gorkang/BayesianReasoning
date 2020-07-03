@@ -22,15 +22,15 @@
 )
 }
 \arguments{
-\item{PPV_melted}{.}
+\item{PPV_melted}{DF out of .createPPVmatrix()}
 
-\item{PPV_NPV}{.}
+\item{PPV_NPV}{Should calculate PPV or NPV?}
 
-\item{Sensitivity}{.}
+\item{Sensitivity}{Sensitivity of the test}
 
-\item{overlay_prevalence_1}{.}
+\item{overlay_prevalence_1}{[x] out of y prevalence of disease}
 
-\item{overlay_prevalence_2}{.}
+\item{overlay_prevalence_2}{x out of [y] prevalence of disease}
 
 \item{overlay_labels}{.}
 
@@ -51,5 +51,5 @@
 \item{decimals_y}{.}
 }
 \description{
-Description
+Get PPV or NPV for the overlay
 }

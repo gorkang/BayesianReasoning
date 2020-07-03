@@ -34,17 +34,17 @@
 
 \item{PPV_NPV}{.}
 
-\item{Min_Prevalence}{.}
+\item{Min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{MAX prevalence for plot}
+\item{Max_Prevalence}{x out of [y] prevalence of disease}
 
 \item{Max_FP}{.}
 
 \item{Sensitivity}{.}
 
-\item{overlay_prevalence_1}{vector with x/prevalence values}
+\item{overlay_prevalence_1}{vector with [x] out of y prevalence of disease}
 
-\item{overlay_prevalence_2}{vector with prevalence/x values}
+\item{overlay_prevalence_2}{vector with x out of [y] prevalence of disease}
 
 \item{overlay_position_FP}{.}
 
