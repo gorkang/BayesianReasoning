@@ -49,7 +49,7 @@
   range_prevalence = (Max_Prevalence - Min_Prevalence)
   Step_size_Prevalence <- range_prevalence / Steps_Prevalence
   Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
-  
+  # Prevalence <- sort(round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4), decreasing = TRUE) # REVERSE ORDER
   
   # PPV Calculation -------------------------------------------------------------
   
@@ -282,8 +282,19 @@
     
     # Global variables -------------------------------------------------------
     
-    # Colors, breaks and steps for Prevalence and FP axis
-    Paleta_DV = c("white", "grey", "gray30", "yellowgreen", "chartreuse4")
+    # Colors PPV
+    # https://www.google.com/search?q=color+picker
+    if (PPV_NPV == "PPV") {
+      
+      Paleta_DV = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
+      
+    } else if (PPV_NPV == "NPV") {
+      
+      Paleta_DV = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
+      
+    }
+    
+    # Breaks and labels for PPV/NPV legend
     breaks_DV = c(0, 0.25, 0.5, 0.75, 1)
     labels_DV = c(0, 25, 50, 75, 100)
     
@@ -313,6 +324,7 @@
       
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
+      # labels_y = paste(breaks_y, prevalence_label, max(breaks_y)) # IF we want x out of Max_Prevalence in Y axis
       
       
       # PPV tiles
@@ -342,7 +354,7 @@
 
     p = p + 
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) + 
-      ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) +
+      ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) +  # trans = "reverse" #REVERSE Y SCALE
       ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 20),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
@@ -462,13 +474,14 @@
     
     # Add overlay -------------------------------------------------------------
     
-    ## If overlay outside old matrix, we need to do this
+    # Size of geom_mark_rect()
     if (uncertainty_prevalence == "high") {
       uncertainty_prevalence_num = .05
     } else {
       uncertainty_prevalence_num = .02
     }  
     
+      
     # X The variable that defines axis position depends on PPV_NPV
     if (PPV_NPV == "PPV") {
       x_axis_position = overlay_position_FP
@@ -504,15 +517,16 @@
                         y = point_Prevalence) +
       
       # Text + rectangle
-      ggforce::geom_mark_rect(
-        label.colour = "black",
-        alpha = .04,
-        expand = uncertainty_prevalence_num,
-        aes(
-            x = x_axis_position,
-            y = point_Prevalence),
-        fill = "red", 
-        description = paste0(Details_point_PPV_NPV))
+      ggforce::geom_mark_rect(label.colour = "black",
+                              alpha = .04,
+                              expand = uncertainty_prevalence_num,
+                              aes(
+                                x = x_axis_position,
+                                y = point_Prevalence),
+                              fill = "red", 
+                              description = paste0(Details_point_PPV_NPV),
+                              # con.border = "none", 
+                              con.size = .2)
 
     
     
@@ -547,11 +561,13 @@
 #' @param overlay_position_FN .
 #' @param PPV_NPV .
 #' @param legend_label .
+#' @param uncertainty_prevalence How big the uncertainty area should be: ["low" or "high"]
 #'
 #' @importFrom ggplot2 annotate
 
 .plot_overlay_line <-
   function(PPV_melted,
+           uncertainty_prevalence = "low",
            PPV_NPV,
            Min_Prevalence,
            Max_Prevalence,
@@ -560,7 +576,6 @@
            overlay_prevalence_1,
            overlay_prevalence_2,
            
-           # overlay_position_FP_FN,
            overlay_position_FP,
            overlay_position_FN,
            
@@ -577,22 +592,16 @@
            x_axis_label,
            y_axis_label) {
     
-  # We made the modifiers proportional to the parameters (Max_Prevalence, Max_FP)
-  if (exists("size_uncertainty_area") == FALSE) {size_uncertainty_area = 0}
-  
-  if (abs(Max_Prevalence - max(overlay_prevalence_2)) > 10) {
     
-    modifier_text_overlay_position = (Max_Prevalence * size_uncertainty_area  + 1)
+
     
-  } else {
+  # Size of geom_mark_rect()
+  if (uncertainty_prevalence == "high") {
+    uncertainty_prevalence_num = .02
+  } else if (uncertainty_prevalence == "low"){
+    uncertainty_prevalence_num = .01
+  }  
     
-    modifier_text_overlay_position = -(Max_Prevalence * size_uncertainty_area + 1)
-    
-  }
-  
-  overlay_position_x_end = c(overlay_position_FP[1], overlay_position_FP[-length(overlay_position_FP)])
-  overlay_position_y_end = c(overlay_prevalence_2[1], overlay_prevalence_2[-length(overlay_prevalence_2)])
-  
   
   # Create plot after adjusting overlay dimensions
   p = .plot_creation(
@@ -607,30 +616,75 @@
     x_axis_label = x_axis_label,
     y_axis_label = y_axis_label,
     
+    legend_label = legend_label,
     label_subtitle = label_subtitle,
     label_title = label_title,
     label_caption = paste0("Sensitivity = ", Sensitivity, "%"))  
   
+  
   # X The variable that defines axis position depends on PPV_NPV
   if (PPV_NPV == "PPV") {
     x_axis_position = overlay_position_FP
+    overlay_position_FN = NA
   } else {
     x_axis_position = overlay_position_FN
+    overlay_position_FP = NA
   }
+  
+  overlay_position_x_end = c(x_axis_position[1], x_axis_position[-length(x_axis_position)])
+  overlay_position_y_end = c(overlay_prevalence_2[1], overlay_prevalence_2[-length(overlay_prevalence_2)])
+  
   
   
   # Plot Overlay ------------------------------------------------------------
   
-  p = p + ggplot2::annotate("segment", 
+  # DF for ggforce::geom_mark_rect()
+  DF_X = data.frame(x_axis_position = x_axis_position,
+             overlay_prevalence_2 = overlay_prevalence_2,
+             overlay_labels = overlay_labels)
+  
+   p = p + ggplot2::annotate("segment", 
                             # x = overlay_position_FP_FN, 
                             x = x_axis_position, 
                             xend = overlay_position_x_end, 
                             y = overlay_prevalence_2, 
                             yend = overlay_position_y_end,
                             color = "red", alpha = .1, size = 3) +
-    ggplot2::annotate("text", x = x_axis_position, y = overlay_prevalence_2, label = overlay_labels, size = 4) 
+    
+    ggplot2::annotate("point", color = "red", alpha = .5, size = .8,
+                      x = x_axis_position,
+                      y = overlay_prevalence_2) +
+    
+    ### OPTION A)
+    # ggplot2::annotate("point", color = "black", alpha = .9, size = 10, shape = 1,
+    #                   x = x_axis_position,
+    #                   y = overlay_prevalence_2) +
+    # 
+    # ggrepel::geom_text_repel(data = DF_X,
+    #                          alpha = .9,
+    #                          aes(
+    #                            x = x_axis_position,
+    #                            y = overlay_prevalence_2),
+    #                          label = overlay_labels,
+    #                          nudge_y = min(overlay_prevalence_2) * 1.5, segment.alpha = .1)
+     
+     
+     ### OPTION B)
+     ggforce::geom_mark_rect(data = DF_X,
+                             label.colour = "black",
+                             alpha = .04,
+                             expand = uncertainty_prevalence_num,
+                             aes(
+                               x = x_axis_position,
+                               y = overlay_prevalence_2,
+                               group = overlay_labels,
+                               description = overlay_labels),
+                             fill = "red", 
+                             # con.border = "none", 
+                             con.size = .2)
+
   
-  
+
   
   # Output vars -------------------------------------------------------------
   

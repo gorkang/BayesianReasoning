@@ -159,6 +159,7 @@ PPV_heatmap <-
 
        p = .plot_overlay_line(
           PPV_melted = PPV_melted,
+          uncertainty_prevalence = uncertainty_prevalence,
           Min_Prevalence = Min_Prevalence,
           Max_Prevalence = Max_Prevalence,
           Max_FP = Max_FP,
@@ -185,6 +186,7 @@ PPV_heatmap <-
 
 
       } else if (overlay == "area") {
+        
         p = .plot_overlay_area(
           PPV_melted,
           uncertainty_prevalence = uncertainty_prevalence,

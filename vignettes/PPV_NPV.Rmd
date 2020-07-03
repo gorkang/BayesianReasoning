@@ -1,0 +1,132 @@
+---
+title: "Screening tests and PPV vs NPV"
+author: "Gorka Navarrete"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Screening tests and PPV vs NPV}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # dpi=300,
+  fig.height = 7,
+  fig.width=10
+)
+```
+
+```{r, echo = FALSE, message = FALSE, results = 'hide'}
+library(BayesianReasoning)
+library(patchwork)
+```
+
+
+Screening tests are applied to asymptomatic people with the hope to catch a disease in the early stages. 
+
+Screening tests are by definition applied to populations where the prevalence of the condition is low (most people are healthy). This simple fact has consequences for how much we can trust their + and - results, the Positive Predictive Value (PPV) and Negative Predictive Value (NPV) of the test,  respectively. 
+
+**Please, keep in mind the goal of this vignette is to exemplify how to use the BayesianReasoning package. None of the information contained here should be taken as medical advice.**
+
+
+## PPV and NPV definitions
+
+
+PPV, formally $P(Disease \mid +)$ is the probability of having a disease *given* a test result is +. 
+
+
+$P(Disease \mid +) = \frac{TruePositives}{TruePositives + FalsePositives}$  
+
+---  
+
+NPV, formally $P(Healthy \mid -)$ is the probability of being healthy *given* a test result is -.   
+
+
+$P(Healthy \mid -) = \frac{TrueNegatives}{TrueNegatives + FalseNegatives}$
+
+---  
+
+
+
+## Example
+
+We will use as an example Mammography at 50 years old as a screening test to detect Breast Cancer.  
+
+
+### PPV
+
+The PPV of Mammography at 50 years old in the general population is relatively low.  
+
+```{r}
+
+  PPV_plot = PPV_heatmap(
+    Min_Prevalence = 1,
+    Max_Prevalence = 80,
+    Sensitivity = 95,
+    Max_FP = 15,
+    overlay = "area",
+    overlay_prevalence_1 = 1,
+    overlay_prevalence_2 = 69,
+    overlay_position_FP = 12.1,
+    label_title = "PPV",
+    label_subtitle = "Screening test"
+  )
+
+```
+
+### NPV
+
+The NPV of Mammography at 50 years old in the general population is very high.  
+
+```{r}
+
+  NPV_plot = PPV_heatmap(
+    PPV_NPV = "NPV",
+    Min_Prevalence = 1,
+    Max_Prevalence = 80,
+    Sensitivity = 90,
+    Max_FP = 12.1,
+    overlay = "area",
+    overlay_prevalence_1 = 1,
+    overlay_prevalence_2 = 69,
+    overlay_position_FN = 5,
+    label_title = "NPV",
+    label_subtitle = "Screening test"
+  )
+
+```
+
+### Combined PPV + NPV 
+
+Combining both PPV and NPV shows how negative results of Mammography at 50 years old in the general population are very trustworthy, but positive results are not.  
+
+
+We can plot the PPV and NPV plots side by side using `{patchwork}`:
+
+```{r, fig.height = 12, fig.width=10}
+
+  (PPV_plot / NPV_plot) +  plot_layout(guides = 'collect')
+
+```
+
+
+## Sources
+
+**Breast Cancer screening information**:  
+
+* Nelson, H. D., O’Meara, E. S., Kerlikowske, K., Balch, S., & Miglioretti, D. (2016). Factors associated with rates of false-positive and false-negative results from digital mammography screening: An analysis of registry data. Annals of Internal Medicine, 164(4), 226–235. http://doi.org/10.7326/M15-0971  
+
+* https://seer.cancer.gov/archive/csr/1975_2012/browse_csr.php?sectionSEL=4&pageSEL=sect_04_table.24  
+
+
+**Theoretical overview of the technical concepts**:  
+
+* Akobeng, A.K. (2007)  http://doi.org/10.1111/j.1651-2227.2006.00180.x  
+
+
+**Practical explanation about the importance of understanding PPV**:
+
+* Navarrete et al. (2015) for a  http://doi.org/10.3389/fpsyg.2015.01327  

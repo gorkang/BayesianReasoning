@@ -161,6 +161,7 @@ testthat::test_that("Plot with line overlay", {
       Max_FP = 15,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
       overlay = "line",
+      uncertainty_prevalence = "low",
       overlay_labels = c(
         "80 y.o.",
         "70 y.o.",
@@ -176,7 +177,7 @@ testthat::test_that("Plot with line overlay", {
     )
   testthat::expect_identical(
     sapply(p$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomSegment", "GeomText"))
+    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
   
 })
 
@@ -186,9 +187,10 @@ testthat::test_that("Plot with line overlay", {
   p <-
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
+      uncertainty_prevalence = "high",
       DEBUG = 1,
       Min_Prevalence = 1,
-      Max_Prevalence = 1800,
+      Max_Prevalence = 1800, 
       Sensitivity = 90,
       Max_FP = 15,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
@@ -209,7 +211,7 @@ testthat::test_that("Plot with line overlay", {
     )
   testthat::expect_identical(
     sapply(p$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomSegment", "GeomText"))
+    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
   
 })
 

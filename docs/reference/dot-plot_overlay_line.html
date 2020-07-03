@@ -103,6 +103,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
+      <a href="../articles/PPV_NPV.html">Screening tests and PPV vs NPV</a>
+    </li>
+    <li>
       <a href="../articles/introduction.html">Introduction to BayesianReasoning</a>
     </li>
   </ul>
@@ -142,6 +145,7 @@
 
     <pre class="usage"><span class='fu'>.plot_overlay_line</span>(
   <span class='no'>PPV_melted</span>,
+  <span class='kw'>uncertainty_prevalence</span> <span class='kw'>=</span> <span class='st'>"low"</span>,
   <span class='no'>PPV_NPV</span>,
   <span class='no'>Min_Prevalence</span>,
   <span class='no'>Max_Prevalence</span>,
@@ -168,6 +172,10 @@
     <tr>
       <th>PPV_melted</th>
       <td><p>DF</p></td>
+    </tr>
+    <tr>
+      <th>uncertainty_prevalence</th>
+      <td><p>How big the uncertainty area should be: ["low" or "high"]</p></td>
     </tr>
     <tr>
       <th>PPV_NPV</th>

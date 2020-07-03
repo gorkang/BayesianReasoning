@@ -6,6 +6,7 @@
 \usage{
 .plot_overlay_line(
   PPV_melted,
+  uncertainty_prevalence = "low",
   PPV_NPV,
   Min_Prevalence,
   Max_Prevalence,
@@ -28,6 +29,8 @@
 }
 \arguments{
 \item{PPV_melted}{DF}
+
+\item{uncertainty_prevalence}{How big the uncertainty area should be: ["low" or "high"]}
 
 \item{PPV_NPV}{.}
 
