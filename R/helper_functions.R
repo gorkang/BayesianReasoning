@@ -5,10 +5,9 @@
 #' @param Min_Prevalence [x] out of y prevalence of disease
 #' @param Max_Prevalence x out of [y] prevalence of disease
 #' @param Sensitivity Sensitivity of test
-#' @param Max_FP Maximum False Positives ratio
-#' @param Min_FP .
-#' @param PPV_NPV .
-#' @param steps_matrix .
+#' @param Max_FP Maximum False Positive ratio
+#' @param Min_FP Minimum False Positive ratio
+#' @param steps_matrix How big the matrix should be (probably better to leave as it is: 100)
 #'
 #' @return A DF called PPV
 #' @importFrom reshape2 melt
@@ -19,7 +18,6 @@
            Sensitivity = 100,
            Min_FP = 0,
            Max_FP = 10,
-           PPV_NPV = "PPV",
            steps_matrix = 100) {
     
     
@@ -49,7 +47,7 @@
   range_prevalence = (Max_Prevalence - Min_Prevalence)
   Step_size_Prevalence <- range_prevalence / Steps_Prevalence
   Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
-  # Prevalence <- sort(round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4), decreasing = TRUE) # REVERSE ORDER
+
   
   # PPV Calculation -------------------------------------------------------------
   
@@ -89,13 +87,13 @@
 
 #' .get_point_ppv_npv
 #' 
-#' Description
+#' Get PPV or NPV for the overlay
 #'
-#' @param PPV_melted .
-#' @param PPV_NPV .
-#' @param Sensitivity .
-#' @param overlay_prevalence_1 .
-#' @param overlay_prevalence_2 .
+#' @param PPV_melted DF out of .createPPVmatrix()
+#' @param PPV_NPV Should calculate PPV or NPV?
+#' @param Sensitivity Sensitivity of the test
+#' @param overlay_prevalence_1 [x] out of y prevalence of disease
+#' @param overlay_prevalence_2 x out of [y] prevalence of disease
 #' @param overlay_position_FP .
 #' @param overlay_position_FN .
 #' @param overlay_labels .
@@ -200,8 +198,8 @@
 #' @param Max_FP .
 #' @param Min_FN .
 #' @param Max_FN .
-#' @param Min_Prevalence .
-#' @param Max_Prevalence .
+#' @param Min_Prevalence [x] out of y prevalence of disease
+#' @param Max_Prevalence x out of [y] prevalence of disease
 
 .number_decimals_plot_axis <- function(PPV_NPV = "PPV", Min_FP = 0, Max_FP, Min_FN, Max_FN, Min_Prevalence, Max_Prevalence) {
   
@@ -241,6 +239,8 @@
 
 
 #' .plot_creation
+#' 
+#' Function to create the main heatmap plot
 #' 
 #' @param PPV_melted .
 #' @param Sensitivity .
@@ -318,14 +318,13 @@
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (Prevalence)))  
       
-      # USE PPV_melted to get this!!!!
+      # [TODO] Can USE PPV_melted to get this?
       breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x)
       labels_x = paste0(breaks_x, "%")
       
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
-      # labels_y = paste(breaks_y, prevalence_label, max(breaks_y)) # IF we want x out of Max_Prevalence in Y axis
-      
+
       
       # PPV tiles
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
@@ -354,7 +353,7 @@
 
     p = p + 
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) + 
-      ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) +  # trans = "reverse" #REVERSE Y SCALE
+      ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
       ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 20),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
@@ -381,15 +380,15 @@
 #'
 #' @param PPV_melted .
 #' @param uncertainty_prevalence .
-#' @param Min_Prevalence .
-#' @param Max_Prevalence .
+#' @param Min_Prevalence [x] out of y prevalence of disease
+#' @param Max_Prevalence x out of [y] prevalence of disease
 #' @param Sensitivity .
 #' @param Min_FP .
 #' @param Max_FP .
 #' @param overlay_labels .
 #' @param PPV_NPV .
-#' @param overlay_prevalence_1 .
-#' @param overlay_prevalence_2 .
+#' @param overlay_prevalence_1 [x] out of y prevalence of disease for the overlay
+#' @param overlay_prevalence_2 x out of [y] prevalence of disease for the overlay
 #' @param decimals_x .
 #' @param decimals_y .
 #' @param prevalence_label .
@@ -543,10 +542,10 @@
 #' Add line overlay to PPV_heatmap plot
 #'
 #' @param PPV_melted DF 
-#' @param Min_Prevalence .
-#' @param Max_Prevalence MAX prevalence for plot 
-#' @param overlay_prevalence_1 vector with x/prevalence values
-#' @param overlay_prevalence_2 vector with prevalence/x values
+#' @param Min_Prevalence [x] out of y prevalence of disease
+#' @param Max_Prevalence x out of [y] prevalence of disease
+#' @param overlay_prevalence_1 vector with [x] out of y prevalence of disease
+#' @param overlay_prevalence_2 vector with x out of [y] prevalence of disease
 #' @param overlay_labels vector with labels for each overlay point
 #' @param Max_FP .
 #' @param Sensitivity .
@@ -644,7 +643,6 @@
              overlay_labels = overlay_labels)
   
    p = p + ggplot2::annotate("segment", 
-                            # x = overlay_position_FP_FN, 
                             x = x_axis_position, 
                             xend = overlay_position_x_end, 
                             y = overlay_prevalence_2, 
@@ -655,21 +653,6 @@
                       x = x_axis_position,
                       y = overlay_prevalence_2) +
     
-    ### OPTION A)
-    # ggplot2::annotate("point", color = "black", alpha = .9, size = 10, shape = 1,
-    #                   x = x_axis_position,
-    #                   y = overlay_prevalence_2) +
-    # 
-    # ggrepel::geom_text_repel(data = DF_X,
-    #                          alpha = .9,
-    #                          aes(
-    #                            x = x_axis_position,
-    #                            y = overlay_prevalence_2),
-    #                          label = overlay_labels,
-    #                          nudge_y = min(overlay_prevalence_2) * 1.5, segment.alpha = .1)
-     
-     
-     ### OPTION B)
      ggforce::geom_mark_rect(data = DF_X,
                              label.colour = "black",
                              alpha = .04,
@@ -682,8 +665,6 @@
                              fill = "red", 
                              # con.border = "none", 
                              con.size = .2)
-
-  
 
   
   # Output vars -------------------------------------------------------------
