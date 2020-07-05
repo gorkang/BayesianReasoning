@@ -279,7 +279,7 @@
            x_axis_label,
            y_axis_label) {
     
-    
+
     # Global variables -------------------------------------------------------
     
     # Colors PPV
@@ -320,6 +320,8 @@
       
       # [TODO] Can USE PPV_melted to get this?
       breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x)
+      # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
+      if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x + 1)
       labels_x = paste0(breaks_x, "%")
       
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
