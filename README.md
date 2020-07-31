@@ -4,8 +4,9 @@
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
 [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/BayesianReasoning?branch=master)
-[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
 [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
 
 <!-- badges: end -->
 
