@@ -599,7 +599,7 @@
   # Size of geom_mark_rect()
   if (uncertainty_prevalence == "high") {
     uncertainty_prevalence_num = .02
-  } else if (uncertainty_prevalence == "low"){
+  } else if (uncertainty_prevalence == "low") {
     uncertainty_prevalence_num = .01
   }  
     
@@ -663,7 +663,7 @@
                                x = x_axis_position,
                                y = overlay_prevalence_2,
                                group = overlay_labels,
-                               description = overlay_labels),
+                               label = overlay_labels),
                              fill = "red", 
                              # con.border = "none", 
                              con.size = .2)

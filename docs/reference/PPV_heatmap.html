@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -117,7 +117,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/gorkang/BayesianReasoning/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -143,26 +143,26 @@
     <p>Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PPV_heatmap</span>(
-  <span class='no'>Min_Prevalence</span>,
-  <span class='no'>Max_Prevalence</span>,
-  <span class='no'>Sensitivity</span>,
-  <span class='kw'>Min_FP</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='no'>Max_FP</span>,
-  <span class='kw'>overlay</span> <span class='kw'>=</span> <span class='st'>"no"</span>,
-  <span class='kw'>overlay_labels</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>overlay_position_FP</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>overlay_position_FN</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>overlay_prevalence_1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>overlay_prevalence_2</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>uncertainty_prevalence</span> <span class='kw'>=</span> <span class='st'>"high"</span>,
-  <span class='kw'>label_title</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>label_subtitle</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>Language</span> <span class='kw'>=</span> <span class='st'>"en"</span>,
-  <span class='kw'>folder</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>PPV_NPV</span> <span class='kw'>=</span> <span class='st'>"PPV"</span>,
-  <span class='kw'>DEBUG</span> <span class='kw'>=</span> <span class='fl'>0</span>
-)</pre>
+    <pre class="usage"><span class='fu'>PPV_heatmap</span><span class='op'>(</span>
+  <span class='va'>Min_Prevalence</span>,
+  <span class='va'>Max_Prevalence</span>,
+  <span class='va'>Sensitivity</span>,
+  Min_FP <span class='op'>=</span> <span class='fl'>0</span>,
+  <span class='va'>Max_FP</span>,
+  overlay <span class='op'>=</span> <span class='st'>"no"</span>,
+  overlay_labels <span class='op'>=</span> <span class='st'>""</span>,
+  overlay_position_FP <span class='op'>=</span> <span class='fl'>1</span>,
+  overlay_position_FN <span class='op'>=</span> <span class='fl'>1</span>,
+  overlay_prevalence_1 <span class='op'>=</span> <span class='fl'>1</span>,
+  overlay_prevalence_2 <span class='op'>=</span> <span class='fl'>100</span>,
+  uncertainty_prevalence <span class='op'>=</span> <span class='st'>"high"</span>,
+  label_title <span class='op'>=</span> <span class='st'>""</span>,
+  label_subtitle <span class='op'>=</span> <span class='st'>""</span>,
+  Language <span class='op'>=</span> <span class='st'>"en"</span>,
+  folder <span class='op'>=</span> <span class='st'>""</span>,
+  PPV_NPV <span class='op'>=</span> <span class='st'>"PPV"</span>,
+  DEBUG <span class='op'>=</span> <span class='fl'>0</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -246,11 +246,12 @@
     <p>Shows a plot or, if given a folder argument, saves a .png version of the plot</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>PPV_heatmap</span>(<span class='kw'>Min_Prevalence</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-<span class='kw'>Max_Prevalence</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-<span class='kw'>Sensitivity</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-<span class='kw'>Max_FP</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-<span class='kw'>Language</span> <span class='kw'>=</span> <span class='st'>"en"</span>)</div><div class='img'><img src='PPV_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>PPV_heatmap</span><span class='op'>(</span>Min_Prevalence <span class='op'>=</span> <span class='fl'>1</span>, 
+Max_Prevalence <span class='op'>=</span> <span class='fl'>1000</span>, 
+Sensitivity <span class='op'>=</span> <span class='fl'>100</span>, 
+Max_FP <span class='op'>=</span> <span class='fl'>2</span>, 
+Language <span class='op'>=</span> <span class='st'>"en"</span><span class='op'>)</span>
+</div><div class='img'><img src='PPV_heatmap-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -266,7 +267,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -46,7 +46,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -75,7 +75,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/gorkang/BayesianReasoning/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -97,6 +97,7 @@
 </h1></div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <div id="bayesian-reasoning-in-medical-contexts" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bayesian-reasoning-in-medical-contexts" class="anchor"></a>Bayesian reasoning in medical contexts</h2>
@@ -134,25 +135,28 @@
 </li>
 <li>Language: “es” for Spanish or “en” for English</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="r">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">1</span>,
-            <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1000</span>,
-            <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">100</span>,
-            <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">2</span>,
-            <span class="kw">Language</span> <span class="kw">=</span> <span class="st">"en"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>,
+            Max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
+            Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
+            Max_FP <span class="op">=</span> <span class="fl">2</span>, 
+            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+            </code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/PPV_1_1000_100_2_en.png"></p>
 <hr>
 <div id="npv" class="section level3">
 <h3 class="hasAnchor">
 <a href="#npv" class="anchor"></a>NPV</h3>
 <p>You can also plot an NPV heatmap with PPV_NPV = “NPV”.</p>
-<div class="sourceCode" id="cb2"><pre class="r">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">PPV_NPV</span> <span class="kw">=</span> <span class="st">"NPV"</span>,
-            <span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">800</span>,
-            <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1000</span>,
-            <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">80</span>,
-            <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">5</span>,
-            <span class="kw">Language</span> <span class="kw">=</span> <span class="st">"en"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>PPV_NPV <span class="op">=</span> <span class="st">"NPV"</span>,
+            Min_Prevalence <span class="op">=</span> <span class="fl">800</span>,
+            Max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
+            Sensitivity <span class="op">=</span> <span class="fl">80</span>, 
+            Max_FP <span class="op">=</span> <span class="fl">5</span>, 
+            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/NPV_800_1000_80_5_en.png"></p>
 <hr>
 </div>
@@ -161,40 +165,45 @@
 <a href="#area-overlay" class="anchor"></a>Area overlay</h3>
 <p>You can add different types of overlay to the plots.</p>
 <p>For example, an area overlay showing the point PPV for a given prevalence and FP or FN:</p>
-<div class="sourceCode" id="cb3"><pre class="r">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1200</span>, <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">81</span>, <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">5</span>,
-            <span class="kw">label_subtitle</span> <span class="kw">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
-            <span class="kw">folder</span> <span class="kw">=</span> <span class="st">""</span>,
-            <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"area"</span>,
-            <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="st">"40 y.o."</span>,
-            <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fl">4.8</span>,
-            <span class="kw">overlay_prevalence_1</span> <span class="kw">=</span> <span class="fl">1</span>,
-            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fl">68</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, Max_FP <span class="op">=</span> <span class="fl">5</span>,
+            label_subtitle <span class="op">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
+            folder <span class="op">=</span> <span class="st">""</span>,
+            overlay <span class="op">=</span> <span class="st">"area"</span>,
+            overlay_labels <span class="op">=</span> <span class="st">"40 y.o."</span>,
+            overlay_position_FP <span class="op">=</span> <span class="fl">4.8</span>,
+            overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
+            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/PPV_1_1200_81_5_area_en.png"></p>
 </div>
 <div id="line-overlay" class="section level3">
 <h3 class="hasAnchor">
 <a href="#line-overlay" class="anchor"></a>Line overlay</h3>
 <p>Also, you can add a line overlay highlighting a range of prevalences and FP. This is useful, for example, to show how the PPV of a test changes with age:</p>
-<div class="sourceCode" id="cb4"><pre class="r">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1800</span>, <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">90</span>, <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">15</span>,
-            <span class="kw">label_subtitle</span> <span class="kw">=</span> <span class="st">"PPV of Mammogram for Breast Cancer by Age"</span>,
-            <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"line"</span>,
-            <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span>),
-            <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">6.5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">14</span>),
-            <span class="kw">overlay_prevalence_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
-            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span>))</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1800</span>, Sensitivity <span class="op">=</span> <span class="fl">90</span>, Max_FP <span class="op">=</span> <span class="fl">15</span>, 
+            label_subtitle <span class="op">=</span> <span class="st">"PPV of Mammogram for Breast Cancer by Age"</span>,
+            overlay <span class="op">=</span> <span class="st">"line"</span>, 
+            overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span><span class="op">)</span>,
+            overlay_position_FP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">6.5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">14</span><span class="op">)</span>,
+            overlay_prevalence_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
+            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span><span class="op">)</span><span class="op">)</span>
+                </code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/PPV_1_1800_90_15_line_en.png"></p>
 <hr>
 <p>Another example. In this case, the FP is constant across age:</p>
-<div class="sourceCode" id="cb5"><pre class="r">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span>(<span class="kw">Min_Prevalence</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">Max_Prevalence</span> <span class="kw">=</span> <span class="fl">1200</span>, <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">81</span>, <span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">5</span>,
-            <span class="kw">label_subtitle</span> <span class="kw">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
-            <span class="kw">overlay</span> <span class="kw">=</span> <span class="st">"line"</span>,
-            <span class="kw">overlay_labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"40 y.o."</span>, <span class="st">"35 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"25 y.o."</span>, <span class="st">"20 y.o."</span>),
-            <span class="kw">overlay_position_FP</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>),
-            <span class="kw">overlay_prevalence_1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>),
-            <span class="kw">overlay_prevalence_2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">68</span>, <span class="fl">249</span>, <span class="fl">626</span>, <span class="fl">946</span>, <span class="fl">1068</span>))</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, Max_FP <span class="op">=</span> <span class="fl">5</span>,
+            label_subtitle <span class="op">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
+            overlay <span class="op">=</span> <span class="st">"line"</span>,
+            overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"40 y.o."</span>, <span class="st">"35 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"25 y.o."</span>, <span class="st">"20 y.o."</span><span class="op">)</span>,
+            overlay_position_FP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span><span class="op">)</span>,
+            overlay_prevalence_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
+            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">68</span>, <span class="fl">249</span>, <span class="fl">626</span>, <span class="fl">946</span>, <span class="fl">1068</span><span class="op">)</span><span class="op">)</span>
+                </code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/PPV_1_1200_81_5_line_en.png"></p>
 <hr>
 </div>
@@ -204,11 +213,13 @@
 <a href="#ppv_diagnostic_vs_screening" class="anchor"></a>PPV_diagnostic_vs_screening()</h2>
 <p>In scientific studies developing a new test for the early detection of a medical condition, it is quite common to use a sample where 50% of participants has a medical condition and the other 50% are normal controls. This has the unintended effect of maximizing the PPV of the test.</p>
 <p>This function shows a plot with the difference between the PPV of a diagnostic context (very high prevalence; or a common study sample, e.g. ~50% prevalence) versus that of a screening context (lower prevalence).</p>
-<div class="sourceCode" id="cb6"><pre class="r">
-<span class="fu"><a href="reference/PPV_diagnostic_vs_screening.html">PPV_diagnostic_vs_screening</a></span>(<span class="kw">Max_FP</span> <span class="kw">=</span> <span class="fl">10</span>,
-                            <span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">100</span>,
-                            <span class="kw">prevalence_screening_group</span> <span class="kw">=</span> <span class="fl">1000</span>,
-                            <span class="kw">prevalence_diagnostic_group</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="reference/PPV_diagnostic_vs_screening.html">PPV_diagnostic_vs_screening</a></span><span class="op">(</span>Max_FP <span class="op">=</span> <span class="fl">10</span>, 
+                            Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
+                            prevalence_screening_group <span class="op">=</span> <span class="fl">1000</span>, 
+                            prevalence_diagnostic_group <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
+                            </code></pre></div>
 <p><img src="reference/figures/diagnostic_vs_screening/FP_10_sens_100_screening_1000_diagnostic_2.png"></p>
 <hr>
 </div>
@@ -217,17 +228,19 @@
 <a href="#min_possible_prevalence" class="anchor"></a>min_possible_prevalence()</h2>
 <p>Imagine you would like to use a test in a population and want to have a 98% PPV. That is, IF a positive result comes out in the test, you would like a 98% certainty that it is a true positive.</p>
 <p>How high should the prevalence of the disease be in that group?</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/min_possible_prevalence.html">min_possible_prevalence</a></span>(<span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">100</span>,
-                        <span class="kw">FP_test</span> <span class="kw">=</span> <span class="fl">0.1</span>,
-                        <span class="kw">min_PPV_desired</span> <span class="kw">=</span> <span class="fl">98</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/min_possible_prevalence.html">min_possible_prevalence</a></span><span class="op">(</span>Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
+                        FP_test <span class="op">=</span> <span class="fl">0.1</span>, 
+                        min_PPV_desired <span class="op">=</span> <span class="fl">98</span><span class="op">)</span></code></pre></div>
 <blockquote>
 <p>To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 21</p>
 </blockquote>
 <hr>
 <p>Another example, with a very good test, and lower expectations:</p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/min_possible_prevalence.html">min_possible_prevalence</a></span>(<span class="kw">Sensitivity</span> <span class="kw">=</span> <span class="fl">99.9</span>,
-                        <span class="kw">FP_test</span> <span class="kw">=</span> <span class="fl">.1</span>,
-                        <span class="kw">min_PPV_desired</span> <span class="kw">=</span> <span class="fl">70</span>)</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/min_possible_prevalence.html">min_possible_prevalence</a></span><span class="op">(</span>Sensitivity <span class="op">=</span> <span class="fl">99.9</span>, 
+                        FP_test <span class="op">=</span> <span class="fl">.1</span>, 
+                        min_PPV_desired <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></code></pre></div>
 <blockquote>
 <p>To reach a PPV of 70 when using a test with 99.9 % Sensitivity and 0.1 % False Positive Rate, you need a prevalence of at least 1 out of 429</p>
 </blockquote>
@@ -266,6 +279,9 @@
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=BayesianReasoning"><img src="https://www.r-pkg.org/badges/version/BayesianReasoning" alt="CRAN status"></a></li>
 <li><a href="https://codecov.io/gh/gorkang/BayesianReasoning?branch=master"><img src="https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=BayesianReasoning"><img src="http://cranlogs.r-pkg.org/badges/BayesianReasoning" alt="downloads"></a></li>
+<li><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a></li>
+<li><a href="https://zenodo.org/badge/latestdoi/93097662"><img src="https://zenodo.org/badge/93097662.svg" alt="DOI"></a></li>
 </ul>
 </div>
 </div>
@@ -277,7 +293,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

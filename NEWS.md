@@ -1,5 +1,10 @@
 # README
 
+### v0.3.3
+ 
+* x axis labels should always be equally spaced
+* Update tests to work with upcoming ggplot
+
 ### v0.3.2 Clean up, test, rinse and repeat
 
 Clean up old comments, add more tests...
