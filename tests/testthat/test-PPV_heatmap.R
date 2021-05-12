@@ -115,7 +115,7 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
       PPV_NPV = "PPV"
     )
   testthat::expect_identical(
-    p$layers[[3]]$geom_params$description,
+    p$layers[[3]]$computed_geom_params$description,
     "40 y.o.\n2 out of 8\nFP = 4.8%\nPPV = 85%")
   
   # Decimal breaks y axis
@@ -144,7 +144,7 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
       PPV_NPV = "NPV"
     )
   testthat::expect_identical(
-    p$layers[[3]]$geom_params$description,
+    p$layers[[3]]$computed_geom_params$description,
     "40 y.o.\n67 out of 68\nFN = 1%\nNPV = 59%")
   
 })
