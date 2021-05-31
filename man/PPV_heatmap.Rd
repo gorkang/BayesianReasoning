@@ -5,11 +5,11 @@
 \title{Plot PPV and NPV heatmaps}
 \usage{
 PPV_heatmap(
-  Min_Prevalence,
-  Max_Prevalence,
-  Sensitivity,
+  Min_Prevalence = 1,
+  Max_Prevalence = 1000,
+  Sensitivity = 95,
   Min_FP = 0,
-  Max_FP,
+  Max_FP = 10,
   overlay = "no",
   overlay_labels = "",
   overlay_position_FP = 1,
@@ -26,17 +26,17 @@ PPV_heatmap(
 )
 }
 \arguments{
-\item{Min_Prevalence}{x in the "x out of y" prevalence (y-axis): 1-Inf}
+\item{Min_Prevalence}{x in the "x out of y" prevalence (y-axis): [1-Inf]}
 
-\item{Max_Prevalence}{y in the "x out of y" prevalence (y-axis): 1-Inf}
+\item{Max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
 
-\item{Sensitivity}{Sensitivity of the test: 0-100}
+\item{Sensitivity}{Sensitivity of the test: [0-100]}
 
-\item{Min_FP}{Minimum False Positives ratio to show in plot (x-axis): 1-100}
+\item{Min_FP}{Minimum False Positives ratio to show in plot (x-axis): [1-100]}
 
-\item{Max_FP}{Maximum False Positives ratio to show in plot (x-axis): 1-100}
+\item{Max_FP}{Maximum False Positives ratio to show in plot (x-axis): [1-100]}
 
-\item{overlay}{Show overlay: TRUE / FALSE}
+\item{overlay}{Show overlay: [TRUE, FALSE]}
 
 \item{overlay_labels}{Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
 
@@ -54,7 +54,7 @@ PPV_heatmap(
 
 \item{label_subtitle}{Subtitle for the plot}
 
-\item{Language}{Language for the plot labels: "sp" / "en"}
+\item{Language}{Language for the plot labels: ["sp", "en"]}
 
 \item{folder}{Where to save the plot (the filename would be automatically created using the plot parameters)}
 

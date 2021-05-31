@@ -4,7 +4,7 @@
 \alias{min_possible_prevalence}
 \title{Show minimum possible prevalence given the test characteristics}
 \usage{
-min_possible_prevalence(Sensitivity, FP_test, min_PPV_desired)
+min_possible_prevalence(Sensitivity = 95, FP_test = 1, min_PPV_desired = 90)
 }
 \arguments{
 \item{Sensitivity}{Sensitivity of the test: [0-100]}
