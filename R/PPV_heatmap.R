@@ -2,12 +2,12 @@
 #' 
 #' Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 #' 
-#' @param Min_Prevalence x in the "x out of y" prevalence (y-axis): 1-Inf
-#' @param Max_Prevalence y in the "x out of y" prevalence (y-axis): 1-Inf
-#' @param Sensitivity Sensitivity of the test: 0-100
-#' @param Min_FP Minimum False Positives ratio to show in plot (x-axis): 1-100
-#' @param Max_FP Maximum False Positives ratio to show in plot (x-axis): 1-100
-#' @param overlay Show overlay: TRUE / FALSE
+#' @param Min_Prevalence x in the "x out of y" prevalence (y-axis): [1-Inf]
+#' @param Max_Prevalence y in the "x out of y" prevalence (y-axis): [1-Inf]
+#' @param Sensitivity Sensitivity of the test: [0-100]
+#' @param Min_FP Minimum False Positives ratio to show in plot (x-axis): [1-100]
+#' @param Max_FP Maximum False Positives ratio to show in plot (x-axis): [1-100]
+#' @param overlay Show overlay: [TRUE, FALSE]
 #' @param overlay_labels Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
 #' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
@@ -16,7 +16,7 @@
 #' @param overlay_prevalence_2 Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)
 #' @param label_title Title for the plot
 #' @param label_subtitle Subtitle for the plot
-#' @param Language Language for the plot labels: "sp" / "en"
+#' @param Language Language for the plot labels: ["sp", "en"]
 #' @param PPV_NPV Should show PPV or NPV [PPV/NPV]
 #' @param DEBUG Shows debug warnings [0/1]
 #' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
@@ -35,11 +35,11 @@
 #' Max_FP = 2, 
 #' Language = "en")
 PPV_heatmap <-
-  function(Min_Prevalence,
-           Max_Prevalence,
-           Sensitivity,
+  function(Min_Prevalence = 1,
+           Max_Prevalence = 1000,
+           Sensitivity = 95,
            Min_FP = 0,
-           Max_FP,
+           Max_FP = 10,
            overlay = "no",
            overlay_labels = "",
            overlay_position_FP = 1,

@@ -21,7 +21,7 @@
 #' min_possible_prevalence(100, 0.1, 98)
 #' "To reach a PPV of 98 when using a test with 100 % Sensitivity and 0.1 % False Positive Rate, 
 #' you need a prevalence of at least 1 out of 21"
-min_possible_prevalence <- function(Sensitivity, FP_test, min_PPV_desired) {
+min_possible_prevalence <- function(Sensitivity = 95, FP_test = 1, min_PPV_desired = 90) {
 
 
   # Fixed parameters --------------------------------------------------------
