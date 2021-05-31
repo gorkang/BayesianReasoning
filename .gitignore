@@ -4,6 +4,7 @@ doc
 .Rhistory
 .RData
 .Ruserdata
+.Renviron
 inst/doc
 .httr-oauth
 DEV/
