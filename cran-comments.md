@@ -1,5 +1,5 @@
 ## Test environments
-* local Ubuntu 18.04, R 3.6.3
+* local Ubuntu 20.04, R 4.0.5
 * win-builder (devel and release)
 * R-hub
   + Windows Server 2008 R2 SP1, R-devel, 32/64 bit
@@ -14,12 +14,11 @@
 
 ## New minor version
 
-This is new minor version to correct a few NOTES that appeared in the CRAN checks.
+This is new minor version to update some test to woek with the upcomming ggplot2.
 
-I also added more tests, cleaned up old comments and improved a couple functions:
+I also fixed a couple minor bugs:
 
-* 100% code coverage
-* min_possible_prevalence() is now much more efficient
-* Improvements to overlay = "line" en PPV_heatmap(), now using {ggforce} for labels
-* Changed color palette for NPV
-* Tweaked color palette for PPV
+* x axis labels should always be equally spaced #37
+* Update tests to work with upcoming ggplot2 #42 (comment out new version until next release)
+* Add default parameters to avoid errors #43
+* Fix LazyData NOTE
