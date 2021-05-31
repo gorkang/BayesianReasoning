@@ -117,16 +117,16 @@ We can plot the PPV and NPV plots side by side using `{patchwork}`:
 
 **Breast Cancer screening information**:  
 
-* Nelson, H. D., O’Meara, E. S., Kerlikowske, K., Balch, S., & Miglioretti, D. (2016). Factors associated with rates of false-positive and false-negative results from digital mammography screening: An analysis of registry data. Annals of Internal Medicine, 164(4), 226–235. http://doi.org/10.7326/M15-0971  
+* Nelson, H. D., O’Meara, E. S., Kerlikowske, K., Balch, S., & Miglioretti, D. (2016). Factors associated with rates of false-positive and false-negative results from digital mammography screening: An analysis of registry data. Annals of Internal Medicine, 164(4), 226–235. https://doi.org/10.7326/M15-0971  
 
 * https://seer.cancer.gov/archive/csr/1975_2012/browse_csr.php?sectionSEL=4&pageSEL=sect_04_table.24  
 
 
 **Theoretical overview of the technical concepts**:  
 
-* Akobeng, A.K. (2007)  http://doi.org/10.1111/j.1651-2227.2006.00180.x  
+* Akobeng, A.K. (2007)  https://doi.org/10.1111/j.1651-2227.2006.00180.x  
 
 
 **Practical explanation about the importance of understanding PPV**:
 
-* Navarrete et al. (2015) for a  http://doi.org/10.3389/fpsyg.2015.01327  
+* Navarrete et al. (2015) for a  https://doi.org/10.3389/fpsyg.2015.01327  
