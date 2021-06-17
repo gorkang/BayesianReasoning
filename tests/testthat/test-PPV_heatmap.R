@@ -98,56 +98,56 @@ testthat::test_that("Plot with area overlay", {
   
 })
 
-# testthat::test_that("PPV calculation with area overlay, low uncertainty, and decimals in y axis", {
-#   p <-
-#     BayesianReasoning::PPV_heatmap(
-#       Min_Prevalence = 1,
-#       Max_Prevalence = 8,
-#       Sensitivity = 81,
-#       Max_FP = 5,
-#       label_subtitle = "Prenatal screening for Down Syndrome by Age",
-#       overlay = "area",
-#       overlay_labels = "40 y.o.",
-#       overlay_position_FP = 4.8,
-#       overlay_prevalence_1 = 2,
-#       overlay_prevalence_2 = 8, 
-#       uncertainty_prevalence = "low", 
-#       PPV_NPV = "PPV"
-#     )
-#   testthat::expect_identical(
-#     p$layers[[3]]$computed_geom_params$description,
-#     "40 y.o.\n2 out of 8\nFP = 4.8%\nPPV = 85%")
-#   
-#   # Decimal breaks y axis
-#   testthat::expect_identical(
-#     p$plot_env$breaks_y,
-#     c(1.0, 1.7, 2.4, 3.1, 3.8, 4.5, 5.2, 5.9, 6.6, 7.3, 8.0))
-#   
-# })
-# 
-# 
-# 
-# testthat::test_that("NPV calculation with area overlay and low uncertainty", {
-#   p <-
-#     BayesianReasoning::PPV_heatmap(
-#       Min_Prevalence = 1,
-#       Max_Prevalence = 1200,
-#       Sensitivity = 81,
-#       Max_FP = 5,
-#       label_subtitle = "Prenatal screening for Down Syndrome by Age",
-#       overlay = "area",
-#       overlay_labels = "40 y.o.",
-#       overlay_position_FP = 4.8,
-#       overlay_prevalence_1 = 67,
-#       overlay_prevalence_2 = 68, 
-#       uncertainty_prevalence = "low", 
-#       PPV_NPV = "NPV"
-#     )
-#   testthat::expect_identical(
-#     p$layers[[3]]$computed_geom_params$description,
-#     "40 y.o.\n67 out of 68\nFN = 1%\nNPV = 59%")
-#   
-# })
+testthat::test_that("PPV calculation with area overlay, low uncertainty, and decimals in y axis", {
+  p <-
+    BayesianReasoning::PPV_heatmap(
+      Min_Prevalence = 1,
+      Max_Prevalence = 8,
+      Sensitivity = 81,
+      Max_FP = 5,
+      label_subtitle = "Prenatal screening for Down Syndrome by Age",
+      overlay = "area",
+      overlay_labels = "40 y.o.",
+      overlay_position_FP = 4.8,
+      overlay_prevalence_1 = 2,
+      overlay_prevalence_2 = 8,
+      uncertainty_prevalence = "low",
+      PPV_NPV = "PPV"
+    )
+  testthat::expect_identical(
+    p$layers[[3]]$computed_geom_params$description,
+    "40 y.o.\n2 out of 8\nFP = 4.8%\nPPV = 85%")
+
+  # Decimal breaks y axis
+  testthat::expect_identical(
+    p$plot_env$breaks_y,
+    c(1.0, 1.7, 2.4, 3.1, 3.8, 4.5, 5.2, 5.9, 6.6, 7.3, 8.0))
+
+})
+
+
+
+testthat::test_that("NPV calculation with area overlay and low uncertainty", {
+  p <-
+    BayesianReasoning::PPV_heatmap(
+      Min_Prevalence = 1,
+      Max_Prevalence = 1200,
+      Sensitivity = 81,
+      Max_FP = 5,
+      label_subtitle = "Prenatal screening for Down Syndrome by Age",
+      overlay = "area",
+      overlay_labels = "40 y.o.",
+      overlay_position_FP = 4.8,
+      overlay_prevalence_1 = 67,
+      overlay_prevalence_2 = 68,
+      uncertainty_prevalence = "low",
+      PPV_NPV = "NPV"
+    )
+  testthat::expect_identical(
+    p$layers[[3]]$computed_geom_params$description,
+    "40 y.o.\n67 out of 68\nFN = 1%\nNPV = 59%")
+
+})
 
 
 # Line overlay ------------------------------------------------------------

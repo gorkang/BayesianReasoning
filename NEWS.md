@@ -3,7 +3,7 @@
 Minor update  
 
 * x axis labels should always be equally spaced #37
-* Update tests to work with upcoming ggplot2 #42 (comment out new version until next release)
+* Update tests to work with upcoming ggplot2 #42
 * Add default parameters to avoid errors #43
 * Fix LazyData NOTE
 
