@@ -37,8 +37,8 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
 
 
   # FIXED parameters --------------------------------------------------------
-
-  Prevalence_x = 1
+  
+  Min_Prevalence = 1
 
   # FP
   Steps_FP = 100
@@ -50,10 +50,10 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
   # Calculate PPVs ----------------------------------------------------------
 
   Real_Prevalence_PPV = list()
-  Real_Prevalence_PPV = ( (Sensitivity * Prevalence_x) / ( (Sensitivity * Prevalence_x) + ( (prevalence_screening_group - 1) * FP) )) * 100
+  Real_Prevalence_PPV = ( (Sensitivity * Min_Prevalence) / ( (Sensitivity * Min_Prevalence) + ( (prevalence_screening_group - 1) * FP) )) * 100
 
   Study_Prevalence_PPV = list()
-  Study_Prevalence_PPV = ( (Sensitivity * Prevalence_x) / ( (Sensitivity * Prevalence_x) + ( (prevalence_diagnostic_group - 1) * FP) )) * 100
+  Study_Prevalence_PPV = ( (Sensitivity * Min_Prevalence) / ( (Sensitivity * Min_Prevalence) + ( (prevalence_diagnostic_group - 1) * FP) )) * 100
 
 
   # Build DF ----------------------------------------------------------------

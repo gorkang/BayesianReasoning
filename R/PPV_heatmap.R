@@ -135,7 +135,8 @@ PPV_heatmap <-
         y_axis_label <- translated_labels_list$y_axis_label
         prevalence_label <- translated_labels_list$prevalence_label
         legend_label <- translated_labels_list$legend_label
-      
+        PPV_NPV_label <- translated_labels_list$PPV_NPV_label
+        
 
 
     # Max_FN & Min_FN are created in .createPPVmatrix()
@@ -207,6 +208,7 @@ PPV_heatmap <-
           
           prevalence_label = prevalence_label,
           legend_label = legend_label,
+          PPV_NPV_label = PPV_NPV_label,
           label_title = label_title,
           label_subtitle = label_subtitle,
           x_axis_label = x_axis_label,

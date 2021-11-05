@@ -7,9 +7,10 @@
 .plot_overlay_line(
   PPV_melted,
   uncertainty_prevalence = "low",
-  PPV_NPV,
+  PPV_NPV = "PPV",
   Min_Prevalence,
   Max_Prevalence,
+  Min_FP = 0,
   Max_FP,
   Sensitivity,
   overlay_prevalence_1,

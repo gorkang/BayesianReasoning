@@ -1,3 +1,13 @@
+# BayesianReasoning 0.3.3.9990
+
+Minor update  
+
+* Avoid acronyms
+* Add bold label to area overlay
+* Get rid of extra character in legend
+* Translate all elements in area overlay
+
+
 # BayesianReasoning 0.3.3
 
 Minor update  

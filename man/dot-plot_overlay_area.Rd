@@ -22,6 +22,7 @@
   decimals_y,
   prevalence_label,
   legend_label,
+  PPV_NPV_label,
   label_title,
   label_subtitle,
   x_axis_label,

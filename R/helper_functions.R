@@ -25,34 +25,31 @@
   
   # False Positives (x axis) 
   Steps_FP <- steps_matrix
-  Step_size_FP <- Max_FP/Steps_FP
+  range_FP = (Max_FP - Min_FP)
+  Step_size_FP <- range_FP/Steps_FP
+  FP = seq(Min_FP, Max_FP, Step_size_FP)
   
-  FP = seq(Min_FP, Max_FP, Step_size_FP) #With (Max_FP-Step_size_FP) we get 100 FPs. If we use Max_FP instead we have 101 (because we start at 0!)
   
   # Sensitivity
-  Max_FN <- (100 - Sensitivity)
   Steps_FN <- steps_matrix
-  Step_size_FN <- Max_FN/Steps_FN
   Min_FN <- 0
-  
+  Max_FN <- (100 - Sensitivity)
+  range_FN = (Max_FN - Min_FN)
+  Step_size_FN <- range_FN/Steps_FN
   Sensitivity_range = seq(Min_FN, Max_FN, Step_size_FN)
   
   
-  # CONDITION Parameters ---
-  
-  Min_Prevalence <- Min_Prevalence
-  Prevalence_x <- Min_Prevalence
-  Max_Prevalence <- Max_Prevalence
+  # Prevalence
   Steps_Prevalence <- steps_matrix
   range_prevalence = (Max_Prevalence - Min_Prevalence)
   Step_size_Prevalence <- range_prevalence / Steps_Prevalence
-  Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)  #With (1 + Max_Prevalence) we get 101. If we use Max_Prevalence we get 100
+  Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)
 
   
   # PPV Calculation -------------------------------------------------------------
   
   # We calculate a 100x100 PPV matrix using %o% (outer)
-  PPV <- round((Sensitivity * Prevalence_x) / ((Sensitivity * Prevalence_x) + ((Prevalence - 1) %o% FP)), 2)
+  PPV <- round((Sensitivity * Min_Prevalence) / ((Sensitivity * Min_Prevalence) + ((Prevalence - 1) %o% FP)), 2)
   
   NPV <- round(((Prevalence - Min_Prevalence) * (100 - Max_FP)) / (((Prevalence - Min_Prevalence) * (100 - Max_FP)) + (Prevalence  %o% Sensitivity_range)), 2)
     # (Healthy * Specificity) / (Healthy * Specificity) + (Sick * FN)
@@ -298,14 +295,16 @@
     
     # False Positives (x axis) 
     Steps_FP <- steps_matrix
-    Step_size_FP <- Max_FP/Steps_FP
+    range_FP = (Max_FP - Min_FP)
+    Step_size_FP <- range_FP/Steps_FP
     
     # Sensitivity (For NPV plot)
-    Max_FN <- (100 - Sensitivity)
     Steps_FN <- steps_matrix
-    Step_size_FN <- Max_FN/Steps_FN
     Min_FN <- 0
-    
+    Max_FN <- (100 - Sensitivity)
+    range_FN = (Max_FN - Min_FN)
+    Step_size_FN <- range_FN/Steps_FN
+
     
     # PPV ---------------------------------------------------------------------
     
@@ -316,16 +315,17 @@
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (Prevalence)))  
       
-      # [TODO] Can USE PPV_melted to get this?
+      # BREAKS X # [TODO] Can USE PPV_melted to get this?
       breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x)
       # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
       if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FP, to = Max_FP, by = Step_size_FP * 10), decimals_x + 1)
+      
       labels_x = paste0(breaks_x, "%")
       
+      # BREAKS Y
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
 
-      
       # PPV tiles
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
       
@@ -339,10 +339,14 @@
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (Prevalence)))  
       
-      # [TODO] Can USE PPV_melted to get this?
+      # BREAKS X # [TODO] Can USE PPV_melted to get this?
       breaks_x = round(seq(Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
+      # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
+      if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FN, to = Max_FN, by = Step_size_FN * 10), decimals_x + 1)
+      
       labels_x = paste0(breaks_x, "%")
       
+      # BREAKS Y
       breaks_y = round(unique(PPV_melted$Prevalence)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
       labels_y = paste(Min_Prevalence, prevalence_label, breaks_y)
 
@@ -352,7 +356,7 @@
     }
 
     p = p + 
-      ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) + 
+      ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
       ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
       ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 20),
@@ -494,6 +498,7 @@
       PPV_melted = PPV_melted,
       Min_Prevalence = Min_Prevalence,
       Sensitivity = Sensitivity,
+      Min_FP = Min_FP,
       Max_FP = Max_FP,
       decimals_x = decimals_x,
       decimals_y = decimals_y,
@@ -577,9 +582,10 @@
 .plot_overlay_line <-
   function(PPV_melted,
            uncertainty_prevalence = "low",
-           PPV_NPV,
+           PPV_NPV = "PPV",
            Min_Prevalence,
            Max_Prevalence,
+           Min_FP = 0,
            Max_FP,
            Sensitivity,
            overlay_prevalence_1,
@@ -616,6 +622,7 @@
   p = .plot_creation(
     PPV_melted = PPV_melted,
     Min_Prevalence = Min_Prevalence,
+    Min_FP = Min_FP,
     Max_FP = Max_FP,
     Sensitivity = Sensitivity,
     decimals_x = decimals_x,

@@ -1,8 +1,8 @@
 Package: BayesianReasoning
 Type: Package
 Title: Plot Positive and Negative Predictive Values for Medical Tests
-Version: 0.3.3
-Date: 2021-06-16
+Version: 0.3.3.9990
+Date: 2021-11-5
 Authors@R: c(person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7678-8656")))
 Maintainer: Gorka Navarrete <gorkang@gmail.com>
 Description: Functions to plot and help understand positive and negative predictive values (PPV and NPV), and their relationship with sensitivity, specificity, and prevalence. See Akobeng, A.K. (2007) <doi:10.1111/j.1651-2227.2006.00180.x> for a theoretical overview of the technical concepts and Navarrete et al. (2015) for a practical explanation about the importance of their understanding <doi:10.3389/fpsyg.2015.01327>.
@@ -16,7 +16,7 @@ Imports: dplyr,
          tibble,
          ggforce
 License: CC0
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 URL: https://github.com/gorkang/BayesianReasoning
 BugReports: https://github.com/gorkang/BayesianReasoning/issues
 Encoding: UTF-8
