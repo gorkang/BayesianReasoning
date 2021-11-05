@@ -154,9 +154,8 @@
     
     Details_point_PPV_NPV = paste0(
       overlay_labels,
-      "\n", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\nFN = ", paste0(overlay_FP_FN, "%"),
-      "\nNPV = ", calculated_NPV
+      "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+      "\n", x_axis_label, ": ", paste0(overlay_FP_FN, "%")
       )
 
     point_PPV_NPV = DF_point_PPV_NPV %>% mutate(NPV = round(NPV * 100, 2))  %>% dplyr::pull(NPV)
@@ -170,9 +169,8 @@
 
     Details_point_PPV_NPV = paste0(
       overlay_labels,
-      "\n", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\nFP = ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%"),
-      "\nPPV = ", calculated_PPV
+      "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+      "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%")
       )
 
     point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
@@ -424,6 +422,7 @@
            decimals_y,
            prevalence_label,
            legend_label,
+           PPV_NPV_label,
            label_title,
            label_subtitle,
            
@@ -512,23 +511,32 @@
     
     p = p +
       
-      # Overlay center
-      ggplot2::annotate("point", color = "red", alpha = .5, size = 1,
+      # Overlay center (red dot)
+      ggplot2::annotate("point", color = "red", alpha = 1, size = 1.5,
                         x = x_axis_position,
                         y = point_Prevalence) +
       
       # Text + rectangle
-      ggforce::geom_mark_rect(label.colour = "black",
-                              alpha = .04,
-                              expand = uncertainty_prevalence_num,
-                              aes(
-                                x = x_axis_position,
-                                y = point_Prevalence),
-                              fill = "red", 
-                              description = paste0(Details_point_PPV_NPV),
-                              # con.border = "none", 
-                              con.size = .2)
-
+      ggforce::geom_mark_rect(
+        
+        # Uncertainty square
+        aes(label = paste0(PPV_NPV_label, ": ", point_PPV_NPV, "%"), # BOLD title white rectangle
+            x = x_axis_position,
+            y = point_Prevalence),
+        alpha = .04,
+        expand = uncertainty_prevalence_num,
+        fill = "red", 
+        color = "black",
+        
+        # Description white rectangle
+        label.colour = "black",
+        description = paste0(Details_point_PPV_NPV),
+        label.width = 82,
+        label.minwidth = 35, 
+        
+        # Connector (line)
+        con.size = .2
+        )
     
     
     # Output vars -------------------------------------------------------------
@@ -701,8 +709,9 @@
       label_caption = paste("Sensibilidad =", Sensitivity, "%")
       x_axis_label = "Tasa de Falsos Positivos"
       y_axis_label = "Prevalencia"
-      prevalence_label = "de cada"
-      legend_label = "VPP (%)\n"
+      prevalence_label = "de"
+      legend_label = "Valor\nPredictivo\nPositivo (%)\n "
+      PPV_NPV_label = "Valor Predictivo Positivo"
       
     } else {
       
@@ -710,8 +719,8 @@
       x_axis_label = "False Positive rate"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
-      legend_label = "PPV (%)\n"
-      
+      legend_label = "Positive\nPredictive\nValue (%)\n "
+      PPV_NPV_label = "Positive Predictive Value"
     }
     
     
@@ -724,8 +733,9 @@
       label_caption = paste("Tasa de Verdaderos Negativos =", (100 - Max_FP), "%")
       x_axis_label = "Tasa de Falsos Negativos"
       y_axis_label = "Prevalencia"
-      prevalence_label = "de cada"
-      legend_label = "VPN (%)\n"
+      prevalence_label = "de"
+      legend_label = "Valor\nPredictivo\nNegativo (%)\n "
+      PPV_NPV_label = "Valor Predictivo Negativo"
       
     } else {
       
@@ -733,7 +743,8 @@
       x_axis_label = "False Negative rate"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
-      legend_label = "NPV (%)\n"
+      legend_label = "Negative\nPredictive\nValue (%)\n "
+      PPV_NPV_label = "Negative Predictive Value"
       
     }
     
@@ -747,7 +758,8 @@
     x_axis_label = x_axis_label,
     y_axis_label = y_axis_label,
     prevalence_label = prevalence_label,
-    legend_label = legend_label
+    legend_label = legend_label,
+    PPV_NPV_label = PPV_NPV_label
   )
   
 }
