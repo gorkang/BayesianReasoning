@@ -66,7 +66,7 @@ PPV_heatmap <-
 
     if (overlay == "area") {
       
-      if (overlay_position_FP > Max_FP) {
+      if (overlay_position_FP > Max_FP & PPV_NPV == "PPV") {
         message("[WARNING]: overlay_position_FP (", overlay_position_FP , ") is > than Max_FP (", Max_FP, "). [EXPECTED]: overlay_position_FP should be smaller than Max_FP [CHANGED]: Max_FP = overlay_position_FP")
         Max_FP = overlay_position_FP
       }
@@ -76,7 +76,7 @@ PPV_heatmap <-
         Max_Prevalence = overlay_prevalence_2 
       }
       
-      if(overlay_position_FN > (100 - Sensitivity)) {
+      if(overlay_position_FN > (100 - Sensitivity) & PPV_NPV == "NPV") {
         message("[WARNING]: overlay_position_FN (", overlay_position_FN , ") is > than (100 - Sensitivity) (", (100 - Sensitivity), "). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN")
         Sensitivity = 100 - overlay_position_FN
       }
@@ -116,6 +116,7 @@ PPV_heatmap <-
       PPV_melted = .createPPVmatrix(
         Min_Prevalence = Min_Prevalence,
         Max_Prevalence = Max_Prevalence,
+        # Min_Sensitivity = Min_Sensitivity,
         Sensitivity = Sensitivity,
         Min_FP = Min_FP,
         Max_FP = Max_FP
@@ -181,6 +182,7 @@ PPV_heatmap <-
           legend_label = legend_label,
           label_title = label_title,
           label_subtitle = label_subtitle,
+          label_caption = label_caption,
           x_axis_label = x_axis_label,
           y_axis_label = y_axis_label,
           PPV_NPV = PPV_NPV)
@@ -211,6 +213,7 @@ PPV_heatmap <-
           PPV_NPV_label = PPV_NPV_label,
           label_title = label_title,
           label_subtitle = label_subtitle,
+          label_caption = label_caption,
           x_axis_label = x_axis_label,
           y_axis_label = y_axis_label,
           
@@ -234,6 +237,7 @@ PPV_heatmap <-
             legend_label = legend_label,
             label_title = label_title,
             label_subtitle = label_subtitle,
+            label_caption = label_caption,
             x_axis_label = x_axis_label,
             y_axis_label = y_axis_label,
             
