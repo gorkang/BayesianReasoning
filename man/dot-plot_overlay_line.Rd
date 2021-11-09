@@ -20,6 +20,7 @@
   overlay_labels,
   label_title,
   label_subtitle,
+  label_caption,
   legend_label,
   decimals_x,
   decimals_y,

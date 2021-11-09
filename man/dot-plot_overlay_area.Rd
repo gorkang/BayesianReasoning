@@ -25,6 +25,7 @@
   PPV_NPV_label,
   label_title,
   label_subtitle,
+  label_caption,
   x_axis_label,
   y_axis_label
 )

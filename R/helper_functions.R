@@ -214,6 +214,8 @@
     decimals_x = 1
   } else if  (Max_FP_FN - Min_FP_FN > 5) {
     decimals_x = 0
+  } else {
+    decimals_x = 0
   }
   
   
@@ -221,6 +223,8 @@
   if (Max_Prevalence - Min_Prevalence < 9) {
     decimals_y = 1
   } else if  (Max_Prevalence - Min_Prevalence >= 9) {
+    decimals_y = 0
+  } else {
     decimals_y = 0
   }
   
@@ -310,7 +314,7 @@
     
     if (PPV_NPV == "PPV") {
       
-      label_caption = paste0("Sensitivity = ", Sensitivity, "%")
+      # label_caption = paste0("Sensitivity = ", Sensitivity, "%")
       
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (Prevalence)))  
@@ -334,7 +338,7 @@
       
     } else if (PPV_NPV == "NPV") {
       
-      label_caption = paste0("Specificity = ", 100 - Max_FP, "%")
+      # label_caption = paste0("Specificity = ", 100 - Max_FP, "%")
       
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (Prevalence)))  
@@ -429,6 +433,7 @@
            PPV_NPV_label,
            label_title,
            label_subtitle,
+           label_caption,
            
            x_axis_label,
            y_axis_label
@@ -506,7 +511,7 @@
       legend_label = legend_label,
       label_subtitle = label_subtitle,
       label_title = label_title,
-      label_caption = paste0("Sensitivity = ", Sensitivity, "%"),
+      label_caption = label_caption,
       
       x_axis_label = x_axis_label,
       y_axis_label = y_axis_label,
@@ -597,6 +602,7 @@
            overlay_labels,
            label_title,
            label_subtitle,
+           label_caption,
            legend_label,
 
            decimals_x,
@@ -635,7 +641,7 @@
     legend_label = legend_label,
     label_subtitle = label_subtitle,
     label_title = label_title,
-    label_caption = paste0("Sensitivity = ", Sensitivity, "%"))  
+    label_caption = label_caption)  
   
   
   # X The variable that defines axis position depends on PPV_NPV
@@ -711,7 +717,7 @@
   if (PPV_NPV == "PPV") {
     
     #Labels 
-    if (Language == "sp") {
+    if (Language == "sp" | Language == "es") {
       
       label_caption = paste("Sensibilidad =", Sensitivity, "%")
       x_axis_label = "Tasa de Falsos Positivos"
@@ -735,7 +741,7 @@
     
     
     #Labels 
-    if (Language == "sp") {
+    if (Language == "sp" | Language == "es") {
       
       label_caption = paste("Tasa de Verdaderos Negativos =", (100 - Max_FP), "%")
       x_axis_label = "Tasa de Falsos Negativos"
