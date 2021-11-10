@@ -21,7 +21,23 @@
            steps_matrix = 100) {
     
     
-  # TEST Parameters ---
+    
+    # DEBUG *********************************************
+    # ***************************************************
+    # PPV_NPV = "NPV"
+    # Min_Prevalence = 1 
+    # Max_Prevalence = 500
+    # Sensitivity = 85
+    # Max_FP = 1
+    # steps_matrix = 100
+    # 
+    # Min_FP = 0
+    
+    # ***************************************************
+    # ***************************************************
+    
+    
+  # Parameters ---
   
   # False Positives (x axis) 
   Steps_FP <- steps_matrix
@@ -43,7 +59,7 @@
   Steps_Prevalence <- steps_matrix
   range_prevalence = (Max_Prevalence - Min_Prevalence)
   Step_size_Prevalence <- range_prevalence / Steps_Prevalence
-  Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4)
+  Prevalence <- round(seq(Min_Prevalence, (Max_Prevalence), Step_size_Prevalence), 4) # *Prevalence* of sick [x] out of y
 
   
   # PPV Calculation -------------------------------------------------------------
@@ -105,6 +121,7 @@
   PPV_melted, 
   PPV_NPV = "PPV", 
   Sensitivity,
+  Max_FP,
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_labels,
@@ -127,58 +144,75 @@
     overlay_FP_FN = overlay_position_FN
   }
   
+  PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
+  
   
   # Get PPV or NPV value ----------------------------------------------------
-  DF_point_PPV_NPV = PPV_melted %>%
-    dplyr::filter(
-      # Closest value to overlay_prevalence_2 & overlay_position_FP_FN
-      abs(Prevalence - point_Prevalence) == min(abs(Prevalence - point_Prevalence)) &
-        abs(FP - overlay_position_FP) == min(abs(FP - overlay_position_FP)))
-        
-  DF_point_PPV_NPV = DF_point_PPV_NPV[1,]
-
 
   if (PPV_NPV == "NPV")  {
 
-    calculated_NPV = paste0(
+    DF_point_PPV_NPV = PPV_melted %>%
+      dplyr::filter(
+        # Closest value to PCT_prevalence_overlay & overlay_position_FP_FN
+        abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay)) &
+          abs(FN - overlay_position_FN) == min(abs(FN - overlay_position_FN)))
+    
+    DF_point_PPV_NPV = DF_point_PPV_NPV[1,]
+    
+    # REVIEW
+    calculated_NPV = 
       round(
-        ((100 - overlay_position_FP) * (overlay_prevalence_2 - overlay_prevalence_1)) / 
-          
-          (((100 - overlay_position_FP) * (overlay_prevalence_2 - overlay_prevalence_1)) + (overlay_prevalence_1 * overlay_position_FN))
-        
-        , 2) * 100, "%")
-
+        ((100 - Max_FP) * (overlay_prevalence_2 - overlay_prevalence_1)) / 
+          (((100 - Max_FP) * (overlay_prevalence_2 - overlay_prevalence_1)) + (overlay_prevalence_1 * overlay_FP_FN))
+        , 2) 
+    
+    DEBUG_MESSAGE = paste0("calculated_NPV: ", calculated_NPV * 100, "%", " | NPV in PPV_melted: ", DF_point_PPV_NPV$NPV * 100, "%", " | DIFF: ", round(calculated_NPV - DF_point_PPV_NPV$NPV, 2) * 100, "%")
     
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\n", x_axis_label, ": ", paste0(overlay_FP_FN, "%")
+      "\nSpecificity : ", 100 - Max_FP, "%",
+      "\n", x_axis_label, ": ", overlay_FP_FN, "%"
       )
 
-    point_PPV_NPV = DF_point_PPV_NPV %>% mutate(NPV = round(NPV * 100, 2))  %>% dplyr::pull(NPV)
+    # point_PPV_NPV = DF_point_PPV_NPV %>% mutate(NPV = round(NPV * 100, 2))  %>% dplyr::pull(NPV)
+    point_PPV_NPV = calculated_NPV * 100
 
   } else if (PPV_NPV == "PPV"){
 
-    calculated_PPV = paste0(
+    DF_point_PPV_NPV = PPV_melted %>%
+      dplyr::filter(
+        # Closest value to PCT_prevalence_overlay & overlay_position_FP_FN
+        abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay)) &
+          abs(FP - overlay_position_FP) == min(abs(FP - overlay_position_FP)))
+    
+    DF_point_PPV_NPV = DF_point_PPV_NPV[1,]
+    
+    # REVIEW
+    calculated_PPV = 
       round(
         (Sensitivity * overlay_prevalence_1) / ((Sensitivity * overlay_prevalence_1) + (overlay_prevalence_2 - overlay_prevalence_1) * overlay_FP_FN),
-        2) * 100, "%")
+        2) 
+    
+    DEBUG_MESSAGE = paste0("calculated_PPV: ", calculated_PPV * 100, "%", " | PPV in PPV_melted: ", DF_point_PPV_NPV$PPV * 100, "%", " | DIFF: ", round(calculated_PPV - DF_point_PPV_NPV$PPV, 2) * 100, "%")
 
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+      "\n Sensitivity : ", Sensitivity, "%",
       "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%")
       )
 
-    point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
-
+    # point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
+    point_PPV_NPV = calculated_PPV * 100
   }
 
   # Function outputs
   list(
   Details_point_PPV_NPV = Details_point_PPV_NPV,
   point_PPV_NPV = point_PPV_NPV,
-  size_overlay_text = nchar(paste0(overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2))
+  size_overlay_text = nchar(paste0(overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2)),
+  DEBUG_MESSAGE = DEBUG_MESSAGE
   )
 }
 
@@ -276,7 +310,9 @@
            prevalence_label = "",
            legend_label = "",
            x_axis_label,
-           y_axis_label) {
+           y_axis_label,
+           
+           DEBUG_MESSAGE = "") {
     
 
     # Global variables -------------------------------------------------------
@@ -439,20 +475,53 @@
            y_axis_label
            ) {
     
-
+    
     # Calculate point prevalence ----------------------------------------------
 
-    # Calculates y as in Min_Prevalence out of y
-    point_Prevalence_temp = Min_Prevalence / (overlay_prevalence_1 / overlay_prevalence_2)
-    
-    # Looks for closer value in the Prevalence column
-    point_Prevalence <-  PPV_melted %>%
-      dplyr::filter(
-        # Closest value to overlay_prevalence_2
-        abs(Prevalence - point_Prevalence_temp) == min(abs(Prevalence - point_Prevalence_temp))) %>% 
+    # Use overlay prevalence as a pct
+    PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
+  
+    # Looks for closer value of Prevalence (prevalence_2) using the prevalence_pct
+      # Sets the y axis position of overlay
+    point_Prevalence = PPV_melted %>%
+      dplyr::filter(abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay))) %>% 
       dplyr::sample_n(1) %>% 
-      dplyr::pull(Prevalence)     
+      dplyr::pull(Prevalence)  
     
+  
+    # DEBUG *********************************************
+    # ***************************************************
+    
+     # overlay_prevalence_1 <<- overlay_prevalence_1
+     # overlay_prevalence_2 <<- overlay_prevalence_2
+     # Min_Prevalence <<- Min_Prevalence
+     # Max_Prevalence <<- Max_Prevalence
+     # PPV_melted <<- PPV_melted
+     # PPV_NPV <<- PPV_NPV
+     # Sensitivity <<- Sensitivity
+     # Max_FP <<- Max_FP
+     # overlay_prevalence_1 <<- overlay_prevalence_1
+     # overlay_prevalence_2 <<- overlay_prevalence_2
+     # overlay_labels <<- overlay_labels
+     # overlay_position_FP <<- overlay_position_FP
+     # overlay_position_FN <<- overlay_position_FN
+     # point_Prevalence <<- point_Prevalence
+     # decimals_x <<- decimals_x
+     # decimals_y <<- decimals_y
+     # prevalence_label <<- prevalence_label
+     # x_axis_label <<- x_axis_label
+     # y_axis_label <<- y_axis_label
+     # uncertainty_prevalence <<- uncertainty_prevalence
+     # Min_FP <<- Min_FP
+     # legend_label <<- legend_label
+     # label_subtitle <<- label_subtitle
+     # label_title <<- label_title
+     # label_caption <<- label_caption
+     # PPV_NPV_label <<- PPV_NPV_label
+    
+    # ***************************************************
+    # ***************************************************
+      
     
     # Get PPV or NPV value ----------------------------------------------------
 
@@ -460,6 +529,7 @@
       PPV_melted = PPV_melted,
       PPV_NPV = PPV_NPV,
       Sensitivity = Sensitivity,
+      Max_FP = Max_FP,
       overlay_prevalence_1 = overlay_prevalence_1,
       overlay_prevalence_2 = overlay_prevalence_2,
       overlay_labels = overlay_labels,
@@ -480,7 +550,11 @@
       point_PPV_NPV = list_point_PPV$point_PPV_NPV
       size_overlay_text = list_point_PPV$size_overlay_text
       
-    
+      # TODO: DEBUG - COMMENT OUT
+      cat(PPV_NPV, ": ", list_point_PPV$DEBUG_MESSAGE)
+      
+      
+      
     # Add overlay -------------------------------------------------------------
     
     # Size of geom_mark_rect()
@@ -498,7 +572,6 @@
       x_axis_position = overlay_position_FN
     }
         
-
     p = .plot_creation(
       PPV_melted = PPV_melted,
       Min_Prevalence = Min_Prevalence,
@@ -516,7 +589,9 @@
       x_axis_label = x_axis_label,
       y_axis_label = y_axis_label,
       
-      PPV_NPV = PPV_NPV)
+      PPV_NPV = PPV_NPV,
+      
+      DEBUG_MESSAGE = list_point_PPV$DEBUG_MESSAGE)
     
     
     p = p +
