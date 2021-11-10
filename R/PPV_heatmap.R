@@ -44,7 +44,7 @@ PPV_heatmap <-
            overlay_labels = "",
            overlay_position_FP = 1,
            overlay_position_FN = 1,
-           overlay_prevalence_1 = 1,
+           overlay_prevalence_1 = Min_Prevalence,
            overlay_prevalence_2 = 100,
            uncertainty_prevalence = "high",
            label_title = "",
@@ -57,11 +57,15 @@ PPV_heatmap <-
 
   # Check dimensions -----------------------------------------------------------
 
+    if (Min_Prevalence < 1) {
+      message("[WARNING]: Min_Prevalence (", Min_Prevalence , ") is < 1. [EXPECTED]: Min_Prevalence should be an integer > 0.  [CHANGED]: Min_Prevalence = 1")
+      Min_Prevalence = 1
+    }
+    
     if (Min_Prevalence > Max_Prevalence) {
       message("[WARNING]: Min_Prevalence (", Min_Prevalence , ") is > than Max_Prevalence (", Max_Prevalence, "). [EXPECTED]: Min_Prevalence should be smaller than Max_Prevalence. [CHANGED]: Min_Prevalence = Max_Prevalence/2")
       Min_Prevalence = Max_Prevalence/2
     }
-    
     # If the dimensions of the overlay are bigger, adjust Max_FP and Max_Prevalence
 
     if (overlay == "area") {
@@ -81,9 +85,14 @@ PPV_heatmap <-
         Sensitivity = 100 - overlay_position_FN
       }
       
-      if (overlay_prevalence_1/overlay_prevalence_2 < Min_Prevalence/Max_Prevalence) {
-        message("[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (", overlay_prevalence_1/overlay_prevalence_2 , ") is > than Min_Prevalence/Max_Prevalence (", Min_Prevalence/Max_Prevalence, "). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay")
-        Min_Prevalence = (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence # Min Prevalence adjusted to fit overlay
+      if (overlay_prevalence_1 < Min_Prevalence) {
+        message("[WARNING]: overlay_prevalence_1 (", overlay_prevalence_1, ") < Min_Prevalence (", Min_Prevalence , ") . [EXPECTED]: overlay_prevalence_1 should be smaller than Min_Prevalence [CHANGED]: Changing Min_Prevalence to overlay_prevalence_1")
+        Min_Prevalence = overlay_prevalence_1 # Min Prevalence adjusted to fit overlay
+      }
+      
+      if (overlay_prevalence_2 > Max_Prevalence) {
+        message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2, ") < Max_Prevalence (", Max_Prevalence , ") . [EXPECTED]: overlay_prevalence_2 should be smaller than Max_Prevalence [CHANGED]: Changing Max_Prevalence to overlay_prevalence_2")
+        Max_Prevalence = overlay_prevalence_2 # Min Prevalence adjusted to fit overlay
       }
       
     }
