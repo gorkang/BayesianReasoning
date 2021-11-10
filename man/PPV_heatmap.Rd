@@ -14,7 +14,7 @@ PPV_heatmap(
   overlay_labels = "",
   overlay_position_FP = 1,
   overlay_position_FN = 1,
-  overlay_prevalence_1 = 1,
+  overlay_prevalence_1 = Min_Prevalence,
   overlay_prevalence_2 = 100,
   uncertainty_prevalence = "high",
   label_title = "",

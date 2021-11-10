@@ -20,7 +20,8 @@
   prevalence_label = "",
   legend_label = "",
   x_axis_label,
-  y_axis_label
+  y_axis_label,
+  DEBUG_MESSAGE = ""
 )
 }
 \arguments{

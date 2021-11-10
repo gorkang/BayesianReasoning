@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9990</span>
       </span>
     </div>
 
@@ -89,13 +89,13 @@
 
       
 
-      </header><script src="introduction_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="introduction_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to BayesianReasoning</h1>
                         <h4 class="author">Gorka Navarrete</h4>
             
-            <h4 class="date">2021-06-16</h4>
+            <h4 class="date">2021-11-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -122,7 +122,7 @@
 <strong>min_possible_prevalence()</strong>: Calculates how high should the prevalence of a disease be to reach a desired PPV given certain test parameters.</li>
 </ul>
 <hr>
-<p>If you want to install the package can use: <code><a href="https://remotes.r-lib.org/reference/install_github.html">remotes::install_github("gorkang/BayesianReasoning")</a></code>. Please report any problems you find in the <a href="https://github.com/gorkang/BayesianReasoning/issues">Issues Github page</a>.</p>
+<p>If you want to install the package can use: <code>remotes::install_github("gorkang/BayesianReasoning")</code>. Please report any problems you find in the <a href="https://github.com/gorkang/BayesianReasoning/issues">Issues Github page</a>.</p>
 <p>There is a <a href="https://gorkang.shinyapps.io/BayesianReasoning/">shiny app implementation</a> with most of the main features available.</p>
 <hr>
 <div id="ppv_heatmap" class="section level2">
@@ -160,7 +160,8 @@
             Max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
             Sensitivity <span class="op">=</span> <span class="fl">80</span>, 
             Max_FP <span class="op">=</span> <span class="fl">5</span>, 
-            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+<span class="co">#&gt; [WARNING]: overlay_prevalence_1 (800) is &gt; than overlay_prevalence_2 (100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2</span></code></pre></div>
 <p><img src="introduction_files/figure-html/NPV-heatmap-1.png" width="4200"></p>
 <hr>
 </div>
@@ -177,7 +178,8 @@
             overlay_labels <span class="op">=</span> <span class="st">"40 y.o."</span>,
             overlay_position_FP <span class="op">=</span> <span class="fl">4.8</span>,
             overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
-            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
+            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span>
+<span class="co">#&gt; PPV :  calculated_PPV: 20% | PPV in PPV_melted: 19% | DIFF: 1%</span></code></pre></div>
 <p><img src="introduction_files/figure-html/area-1.png" width="4200"></p>
 </div>
 <div id="line-overlay" class="section level3">

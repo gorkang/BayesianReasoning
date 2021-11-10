@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">BayesianReasoning</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3.9990</span>
       </span>
     </div>
 
@@ -146,9 +146,10 @@
     <pre class="usage"><span class='fu'>.plot_overlay_line</span><span class='op'>(</span>
   <span class='va'>PPV_melted</span>,
   uncertainty_prevalence <span class='op'>=</span> <span class='st'>"low"</span>,
-  <span class='va'>PPV_NPV</span>,
+  PPV_NPV <span class='op'>=</span> <span class='st'>"PPV"</span>,
   <span class='va'>Min_Prevalence</span>,
   <span class='va'>Max_Prevalence</span>,
+  Min_FP <span class='op'>=</span> <span class='fl'>0</span>,
   <span class='va'>Max_FP</span>,
   <span class='va'>Sensitivity</span>,
   <span class='va'>overlay_prevalence_1</span>,
@@ -158,6 +159,7 @@
   <span class='va'>overlay_labels</span>,
   <span class='va'>label_title</span>,
   <span class='va'>label_subtitle</span>,
+  <span class='va'>label_caption</span>,
   <span class='va'>legend_label</span>,
   <span class='va'>decimals_x</span>,
   <span class='va'>decimals_y</span>,

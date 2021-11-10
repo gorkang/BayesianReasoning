@@ -8,6 +8,7 @@
   PPV_melted,
   PPV_NPV = "PPV",
   Sensitivity,
+  Max_FP,
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_labels,
