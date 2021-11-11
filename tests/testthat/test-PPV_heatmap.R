@@ -3,10 +3,10 @@ library(ggplot2)
 
 testthat::test_that("Scale is labelled 'Prevalence'", {
   p <- BayesianReasoning::PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 1000,
+    min_Prevalence = 1,
+    max_Prevalence = 1000,
     Sensitivity = 100,
-    Max_FP = 2,
+    max_FP = 2,
     Language = "en",
     PPV_NPV = "PPV"
   )
@@ -20,10 +20,10 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
 
 testthat::test_that("Scale is labelled 'Prevalence'", {
   p <- BayesianReasoning::PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 1000,
+    min_Prevalence = 1,
+    max_Prevalence = 1000,
     Sensitivity = 100,
-    Max_FP = 2,
+    max_FP = 2,
     Language = "en",
     PPV_NPV = "NPV"
   )
@@ -36,10 +36,10 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
 
 testthat::test_that("Spanish translation works'", {
   p <- BayesianReasoning::PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 1000,
+    min_Prevalence = 1,
+    max_Prevalence = 1000,
     Sensitivity = 100,
-    Max_FP = 2,
+    max_FP = 2,
     Language = "sp"
   )
   testthat::expect_identical(p$labels$y, "Prevalencia")
@@ -50,10 +50,10 @@ testthat::test_that("Spanish translation works'", {
 
 testthat::test_that("Spanish NPV'", {
   p <- BayesianReasoning::PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 1000,
+    min_Prevalence = 1,
+    max_Prevalence = 1000,
     Sensitivity = 100,
-    Max_FP = 2,
+    max_FP = 2,
     PPV_NPV = "NPV",
     Language = "sp"
   )
@@ -65,10 +65,10 @@ testthat::test_that("Spanish NPV'", {
 
 testthat::test_that("Plot is type GeomTile", {
   p <- BayesianReasoning::PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 1000,
+    min_Prevalence = 1,
+    max_Prevalence = 1000,
     Sensitivity = 100,
-    Max_FP = 2,
+    max_FP = 2,
     Language = "en"
   )
   testthat::expect_identical(
@@ -81,10 +81,10 @@ testthat::test_that("Plot is type GeomTile", {
 testthat::test_that("Plot with area overlay", {
   p <-
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 1,
-      Max_Prevalence = 1200,
+      min_Prevalence = 1,
+      max_Prevalence = 1200,
       Sensitivity = 81,
-      Max_FP = 5,
+      max_FP = 5,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -101,10 +101,10 @@ testthat::test_that("Plot with area overlay", {
 testthat::test_that("PPV calculation with area overlay, low uncertainty, and decimals in y axis", {
   p <-
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 1,
-      Max_Prevalence = 8,
+      min_Prevalence = 1,
+      max_Prevalence = 8,
       Sensitivity = 81,
-      Max_FP = 5,
+      max_FP = 5,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -130,10 +130,10 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
 testthat::test_that("NPV calculation with area overlay and low uncertainty", {
   p <-
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 1,
-      Max_Prevalence = 1200,
+      min_Prevalence = 1,
+      max_Prevalence = 1200,
       Sensitivity = 81,
-      Max_FP = 5,
+      max_FP = 5,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -155,10 +155,10 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
 testthat::test_that("Plot with line overlay", {
   p <-
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 1,
-      Max_Prevalence = 1800,
+      min_Prevalence = 1,
+      max_Prevalence = 1800,
       Sensitivity = 90,
-      Max_FP = 15,
+      max_FP = 15,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
       overlay = "line",
       uncertainty_prevalence = "low",
@@ -189,10 +189,10 @@ testthat::test_that("Plot with line overlay", {
       PPV_NPV = "NPV",
       uncertainty_prevalence = "high",
       DEBUG = 1,
-      Min_Prevalence = 1,
-      Max_Prevalence = 1800, 
+      min_Prevalence = 1,
+      max_Prevalence = 1800, 
       Sensitivity = 90,
-      Max_FP = 15,
+      max_FP = 15,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
       overlay = "line",
       overlay_labels = c(
@@ -219,18 +219,18 @@ testthat::test_that("Plot with line overlay", {
 
 # Messages ----------------------------------------------------------------
 
-testthat::test_that("WARNING Min_Prevalence > Max_Prevalence", {
+testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
   
   res <- evaluate_promise(
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 2000,
-      Max_Prevalence = 1000,
+      min_Prevalence = 2000,
+      max_Prevalence = 1000,
       Sensitivity = 81,
-      Max_FP = 5))
+      max_FP = 5))
   
   testthat::expect_equal(
     res$messages,
-    "[WARNING]: Min_Prevalence (2000) is > than Max_Prevalence (1000). [EXPECTED]: Min_Prevalence should be smaller than Max_Prevalence. [CHANGED]: Min_Prevalence = Max_Prevalence/2\n")
+    "[WARNING]: min_Prevalence (2000) is > than max_Prevalence (1000). [EXPECTED]: min_Prevalence should be smaller than max_Prevalence. [CHANGED]: min_Prevalence = max_Prevalence/2\n")
 })
 
 
@@ -238,10 +238,10 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
   
   res <- evaluate_promise(
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 2,
-      Max_Prevalence = 1000,
+      min_Prevalence = 2,
+      max_Prevalence = 1000,
       Sensitivity = 81,
-      Max_FP = 5,
+      max_FP = 5,
       overlay = "area",
       overlay_position_FP = 4.8,
       overlay_prevalence_1 = 1,
@@ -249,17 +249,17 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
   
   testthat::expect_equal(
     res$messages,
-    "[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (0.001) is > than Min_Prevalence/Max_Prevalence (0.002). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing Min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * Max_Prevalence to fit overlay\n")
+    "[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (0.001) is > than min_Prevalence/max_Prevalence (0.002). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * max_Prevalence to fit overlay\n")
 })
 
 testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
   
   res <- evaluate_promise(
     BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 2,
-      Max_Prevalence = 1000,
+      min_Prevalence = 2,
+      max_Prevalence = 1000,
       Sensitivity = 81,
-      Max_FP = 5,
+      max_FP = 5,
       overlay = "area",
       overlay_position_FP = 6,
       overlay_prevalence_1 = 1110,
@@ -267,8 +267,8 @@ testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
   
   testthat::expect_equal(
     res$messages,
-    c("[WARNING]: overlay_position_FP (6) is > than Max_FP (5). [EXPECTED]: overlay_position_FP should be smaller than Max_FP [CHANGED]: Max_FP = overlay_position_FP\n",
-      "[WARNING]: overlay_prevalence_2 (1100) is > than Max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than Max_Prevalence [CHANGED]: Max_Prevalence = overlay_prevalence_2\n",
+    c("[WARNING]: overlay_position_FP (6) is > than max_FP (5). [EXPECTED]: overlay_position_FP should be smaller than max_FP [CHANGED]: max_FP = overlay_position_FP\n",
+      "[WARNING]: overlay_prevalence_2 (1100) is > than max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2\n",
       "[WARNING]: overlay_prevalence_1 (1110) is > than overlay_prevalence_2 (1100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2\n"))
 })
 
@@ -278,10 +278,10 @@ testthat::test_that("WARNINGS - NPV", {
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       DEBUG = 1,
-      Min_Prevalence = 2,
-      Max_Prevalence = 1000,
+      min_Prevalence = 2,
+      max_Prevalence = 1000,
       Sensitivity = 90,
-      Max_FP = 5,
+      max_FP = 5,
       overlay = "area",
       overlay_position_FN = 20,
       # overlay_position_FP = 6,
@@ -290,7 +290,7 @@ testthat::test_that("WARNINGS - NPV", {
   
   testthat::expect_equal(
     res$messages,
-    c("[WARNING]: overlay_prevalence_2 (1100) is > than Max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than Max_Prevalence [CHANGED]: Max_Prevalence = overlay_prevalence_2\n", 
+    c("[WARNING]: overlay_prevalence_2 (1100) is > than max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2\n", 
       "[WARNING]: overlay_position_FN (20) is > than (100 - Sensitivity) (10). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN\n", 
       "[WARNING]: overlay_prevalence_1 (1110) is > than overlay_prevalence_2 (1100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2\n"))
 })
@@ -302,10 +302,10 @@ testthat::test_that("WARNINGS - NPV", {
 testthat::test_that("Plot saved", {
   
     p <- BayesianReasoning::PPV_heatmap(
-      Min_Prevalence = 1,
-      Max_Prevalence = 1000,
+      min_Prevalence = 1,
+      max_Prevalence = 1000,
       Sensitivity = 100,
-      Max_FP = 2,
+      max_FP = 2,
       folder = "."
     )
   

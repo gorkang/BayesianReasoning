@@ -5,16 +5,16 @@
 \title{Plot PPV and NPV heatmaps}
 \usage{
 PPV_heatmap(
-  Min_Prevalence = 1,
-  Max_Prevalence = 1000,
+  min_Prevalence = 1,
+  max_Prevalence = 1000,
   Sensitivity = 95,
-  Min_FP = 0,
-  Max_FP = 10,
+  min_FP = 0,
+  max_FP = 10,
   overlay = "no",
   overlay_labels = "",
   overlay_position_FP = 1,
   overlay_position_FN = 1,
-  overlay_prevalence_1 = Min_Prevalence,
+  overlay_prevalence_1 = min_Prevalence,
   overlay_prevalence_2 = 100,
   uncertainty_prevalence = "high",
   label_title = "",
@@ -26,15 +26,15 @@ PPV_heatmap(
 )
 }
 \arguments{
-\item{Min_Prevalence}{x in the "x out of y" prevalence (y-axis): [1-Inf]}
+\item{min_Prevalence}{x in the "x out of y" prevalence (y-axis): [1-Inf]}
 
-\item{Max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
+\item{max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
 
 \item{Sensitivity}{Sensitivity of the test: [0-100]}
 
-\item{Min_FP}{Minimum False Positives ratio to show in plot (x-axis): [1-100]}
+\item{min_FP}{Minimum False Positives ratio to show in plot (x-axis): [1-100]}
 
-\item{Max_FP}{Maximum False Positives ratio to show in plot (x-axis): [1-100]}
+\item{max_FP}{Maximum False Positives ratio to show in plot (x-axis): [1-100]}
 
 \item{overlay}{Show overlay: [TRUE, FALSE]}
 
@@ -69,9 +69,9 @@ Shows a plot or, if given a folder argument, saves a .png version of the plot
 Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 }
 \examples{
-PPV_heatmap(Min_Prevalence = 1, 
-Max_Prevalence = 1000, 
+PPV_heatmap(min_Prevalence = 1, 
+max_Prevalence = 1000, 
 Sensitivity = 100, 
-Max_FP = 2, 
+max_FP = 2, 
 Language = "en")
 }

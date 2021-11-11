@@ -63,10 +63,10 @@ The PPV of Mammography at 50 years old in the general population is relatively l
 ```{r}
 
   PPV_plot = PPV_heatmap(
-    Min_Prevalence = 1,
-    Max_Prevalence = 80,
+    min_Prevalence = 1,
+    max_Prevalence = 80,
     Sensitivity = 95,
-    Max_FP = 15,
+    max_FP = 15,
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,
@@ -85,10 +85,10 @@ The NPV of Mammography at 50 years old in the general population is very high.
 
   NPV_plot = PPV_heatmap(
     PPV_NPV = "NPV",
-    Min_Prevalence = 1,
-    Max_Prevalence = 80,
+    min_Prevalence = 1,
+    max_Prevalence = 80,
     Sensitivity = 90,
-    Max_FP = 12.1,
+    max_FP = 12.1,
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,

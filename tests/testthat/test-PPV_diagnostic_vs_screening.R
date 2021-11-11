@@ -2,7 +2,7 @@ library(ggplot2)
 
 testthat::test_that("Scale is labelled 'Prevalence'", {
   p <- BayesianReasoning::PPV_diagnostic_vs_screening(
-    Max_FP = 10,
+    max_FP = 10,
     Sensitivity = 100,
     prevalence_screening_group = 1667,
     prevalence_diagnostic_group = 44,
@@ -18,7 +18,7 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
 testthat::test_that("Plot is type GeomLine", {
   p <-
     BayesianReasoning::PPV_diagnostic_vs_screening(
-      Max_FP = 10,
+      max_FP = 10,
       Sensitivity = 100,
       prevalence_screening_group = 1667,
       prevalence_diagnostic_group = 44,
@@ -35,7 +35,7 @@ testthat::test_that("Plot is type GeomLine", {
 testthat::test_that("Plot saved", {
   p <-
     BayesianReasoning::PPV_diagnostic_vs_screening(
-      Max_FP = 10,
+      max_FP = 10,
       Sensitivity = 100,
       prevalence_screening_group = 1667,
       prevalence_diagnostic_group = 44,

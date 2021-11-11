@@ -5,29 +5,29 @@
 \title{.createPPVmatrix}
 \usage{
 .createPPVmatrix(
-  Min_Prevalence = 1,
-  Max_Prevalence = 1000,
+  min_Prevalence = 1,
+  max_Prevalence = 1000,
   Sensitivity = 100,
-  Min_FP = 0,
-  Max_FP = 10,
+  min_FP = 0,
+  max_FP = 10,
   steps_matrix = 100
 )
 }
 \arguments{
-\item{Min_Prevalence}{[x] out of y prevalence of disease}
+\item{min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{x out of [y] prevalence of disease}
+\item{max_Prevalence}{x out of [y] prevalence of disease}
 
 \item{Sensitivity}{Sensitivity of test}
 
-\item{Min_FP}{Minimum False Positive ratio}
+\item{min_FP}{Minimum False Positive ratio}
 
-\item{Max_FP}{Maximum False Positive ratio}
+\item{max_FP}{Maximum False Positive ratio}
 
 \item{steps_matrix}{How big the matrix should be (probably better to leave as it is: 100)}
 }
 \value{
-A DF called PPV
+A DF called PPV_melted
 }
 \description{
 Create a PPV matrix helper function

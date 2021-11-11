@@ -2,7 +2,7 @@
 #'
 #' Plot PPV associated to different levels of FP and a specific Sensitivity, for two different Prevalence groups. 
 #'
-#' @param Max_FP False positive rate (1-Specificity) [0-100].
+#' @param max_FP False positive rate (1-Specificity) [0-100].
 #' @param Sensitivity Sensitivity of the test [0-100].
 #' @param prevalence_screening_group Prevalence of the screening group, 1 out of x [1-Inf].
 #' @param prevalence_diagnostic_group Prevalence of the diagnostic group, 1 out of x [1-Inf].
@@ -21,16 +21,16 @@
 #' @examples
 #' 
 #' # Example 1
-#' PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
+#' PPV_diagnostic_vs_screening(max_FP = 10, Sensitivity = 100, 
 #'                             prevalence_screening_group = 1500, 
 #'                             prevalence_diagnostic_group = 3)
 #' 
 #' # Example 2. QWith custom labels
-#' PPV_diagnostic_vs_screening(Max_FP = 10, Sensitivity = 100, 
+#' PPV_diagnostic_vs_screening(max_FP = 10, Sensitivity = 100, 
 #'                             prevalence_screening_group = 1667, 
 #'                             prevalence_diagnostic_group = 44, 
 #'                            labels_prevalence = c("20 y.o.", "50 y.o."))
-PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2,
+PPV_diagnostic_vs_screening <- function(max_FP = 10, Sensitivity = 100, prevalence_screening_group = 100,  prevalence_diagnostic_group = 2,
                                         labels_prevalence = c("Screening", "Diagnostic"),
                                         # save_plot = FALSE, 
                                         folder = "") {
@@ -38,22 +38,22 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
 
   # FIXED parameters --------------------------------------------------------
   
-  Min_Prevalence = 1
+  min_Prevalence = 1
 
   # FP
   Steps_FP = 100
-  Step_size_FP = Max_FP / Steps_FP
-  Min_FP = 0 #Step_size_FP #0
-  FP = seq(Min_FP, Max_FP, Step_size_FP)
+  Step_size_FP = max_FP / Steps_FP
+  min_FP = 0 #Step_size_FP #0
+  FP = seq(min_FP, max_FP, Step_size_FP)
 
   
   # Calculate PPVs ----------------------------------------------------------
 
   Real_Prevalence_PPV = list()
-  Real_Prevalence_PPV = ( (Sensitivity * Min_Prevalence) / ( (Sensitivity * Min_Prevalence) + ( (prevalence_screening_group - 1) * FP) )) * 100
+  Real_Prevalence_PPV = ( (Sensitivity * min_Prevalence) / ( (Sensitivity * min_Prevalence) + ( (prevalence_screening_group - 1) * FP) )) * 100
 
   Study_Prevalence_PPV = list()
-  Study_Prevalence_PPV = ( (Sensitivity * Min_Prevalence) / ( (Sensitivity * Min_Prevalence) + ( (prevalence_diagnostic_group - 1) * FP) )) * 100
+  Study_Prevalence_PPV = ( (Sensitivity * min_Prevalence) / ( (Sensitivity * min_Prevalence) + ( (prevalence_diagnostic_group - 1) * FP) )) * 100
 
 
   # Build DF ----------------------------------------------------------------
@@ -87,7 +87,7 @@ PPV_diagnostic_vs_screening <- function(Max_FP = 10, Sensitivity = 100, prevalen
     if (folder != "") {
       
       print(p)
-      plot_name = paste0(folder, "/FP_", Max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
+      plot_name = paste0(folder, "/FP_", max_FP, "_sens_", Sensitivity, "_screening_", prevalence_screening_group, "_diagnostic_", prevalence_diagnostic_group, ".png")
       ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
       message("\n Plot created in: ", plot_name, "\n")
 

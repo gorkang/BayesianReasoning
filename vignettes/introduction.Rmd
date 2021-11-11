@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Introduction to BayesianReasoning}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -51,18 +53,18 @@ There is a [shiny app implementation](https://gorkang.shinyapps.io/BayesianReaso
 
 Plot heatmaps with PPV or NPV values for a given specificity and a range of Prevalences and FP or FN (1 - Sensitivity). The basic parameters are:
 
-* Min_Prevalence: Min prevalence in y axis. "Min_Prevalence out of y"  
-* Max_Prevalence: Max prevalence in y axis. "1 out of Max_Prevalence"  
+* min_Prevalence: Min prevalence in y axis. "min_Prevalence out of y"  
+* max_Prevalence: Max prevalence in y axis. "1 out of max_Prevalence"  
 * Sensitivity: Sensitivity of the test  
-* Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP  
+* max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to max_FP  
 * Language: "es" for Spanish or "en" for English  
 
 ```{r heatmap}
 
-PPV_heatmap(Min_Prevalence = 1,
-            Max_Prevalence = 1000, 
+PPV_heatmap(min_Prevalence = 1,
+            max_Prevalence = 1000, 
             Sensitivity = 100, 
-            Max_FP = 2, 
+            max_FP = 2, 
             Language = "en")
             
 ```  
@@ -79,10 +81,10 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 ```{r NPV-heatmap}
 
 PPV_heatmap(PPV_NPV = "NPV",
-            Min_Prevalence = 800,
-            Max_Prevalence = 1000, 
+            min_Prevalence = 800,
+            max_Prevalence = 1000, 
             Sensitivity = 80, 
-            Max_FP = 5, 
+            max_FP = 5, 
             Language = "en")
 
 ```
@@ -101,7 +103,7 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```{r area}
 
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "area",
             overlay_labels = "40 y.o.",
@@ -120,7 +122,7 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 
 ```{r line}
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, max_FP = 15, 
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
             overlay = "line", 
             overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
@@ -137,7 +139,7 @@ Another example. In this case, the FP is constant across age:
 
 ```{r line-2}
 
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, max_FP = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "line",
             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
@@ -159,7 +161,7 @@ This function shows a plot with the difference between the PPV of a diagnostic c
 
 ```{r diagnostic}
 
-PPV_diagnostic_vs_screening(Max_FP = 10, 
+PPV_diagnostic_vs_screening(max_FP = 10, 
                             Sensitivity = 100, 
                             prevalence_screening_group = 1000, 
                             prevalence_diagnostic_group = 2)

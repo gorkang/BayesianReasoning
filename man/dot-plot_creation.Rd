@@ -6,11 +6,12 @@
 \usage{
 .plot_creation(
   PPV_melted,
-  Min_Prevalence,
+  min_Prevalence,
+  max_Prevalence,
   Sensitivity,
   PPV_NPV = "PPV",
-  Min_FP = 0,
-  Max_FP,
+  min_FP = 0,
+  max_FP,
   steps_matrix = 100,
   decimals_x,
   decimals_y,
@@ -27,15 +28,15 @@
 \arguments{
 \item{PPV_melted}{.}
 
-\item{Min_Prevalence}{.}
+\item{min_Prevalence}{.}
 
 \item{Sensitivity}{.}
 
 \item{PPV_NPV}{.}
 
-\item{Min_FP}{.}
+\item{min_FP}{.}
 
-\item{Max_FP}{.}
+\item{max_FP}{.}
 
 \item{steps_matrix}{.}
 

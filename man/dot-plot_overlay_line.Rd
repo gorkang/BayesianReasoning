@@ -8,10 +8,10 @@
   PPV_melted,
   uncertainty_prevalence = "low",
   PPV_NPV = "PPV",
-  Min_Prevalence,
-  Max_Prevalence,
-  Min_FP = 0,
-  Max_FP,
+  min_Prevalence,
+  max_Prevalence,
+  min_FP = 0,
+  max_FP,
   Sensitivity,
   overlay_prevalence_1,
   overlay_prevalence_2,
@@ -36,11 +36,11 @@
 
 \item{PPV_NPV}{.}
 
-\item{Min_Prevalence}{[x] out of y prevalence of disease}
+\item{min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{x out of [y] prevalence of disease}
+\item{max_Prevalence}{x out of [y] prevalence of disease}
 
-\item{Max_FP}{.}
+\item{max_FP}{.}
 
 \item{Sensitivity}{.}
 

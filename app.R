@@ -47,13 +47,13 @@ ui <-
                       "PPV or NPV", 
                       c("PPV", "NPV")), # linea
     
-          sliderInput("Min_Prevalence",
+          sliderInput("min_Prevalence",
                       "Prevalence: [ x ] out of y",
                       min = 1,
                       max = 10000,
                       value = 1),
           
-          sliderInput("Max_Prevalence",
+          sliderInput("max_Prevalence",
                       "Prevalence: x out of [ y ]",
                       min = 1,
                       max = 10000,
@@ -176,15 +176,15 @@ server <- function(input, output, session) {
 
   # Change values of sliders depending on other sliders
   observe({
-    val_min_prevalence <- input$Min_Prevalence
-    val_max_prevalence <- input$Max_Prevalence
+    val_min_prevalence <- input$min_Prevalence
+    val_max_prevalence <- input$max_Prevalence
     val_sensitivity <- input$Sensitivity
     val_FP <- input$FP_shinny
     val_FP <- input$FP_shinny
     val_overlay_prevalence_1 <- input$overlay_prevalence_1
     val_overlay_prevalence_2 <- input$overlay_prevalence_2
 
-    updateSliderInput(session, "Min_Prevalence", max = val_max_prevalence)
+    updateSliderInput(session, "min_Prevalence", max = val_max_prevalence)
     updateSliderInput(session, "overlay_prevalence_1", min = val_min_prevalence, max = val_overlay_prevalence_2) #value = val_min_prevalence, 
     updateSliderInput(session, "overlay_prevalence_2", min = val_overlay_prevalence_1, max = val_max_prevalence) #value = val_max_prevalence/2, 
     updateSliderInput(session, "FP_overlay", min = 0, max = val_FP) #value = val_FP/2, 
@@ -240,12 +240,12 @@ server <- function(input, output, session) {
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = input$PPV_NPV,
       label_title = input$plot_title,
-      Max_FP = input$FP_shinny,
-      Min_Prevalence = input$Min_Prevalence,
-      Max_Prevalence = input$Max_Prevalence,
+      max_FP = input$FP_shinny,
+      min_Prevalence = input$min_Prevalence,
+      max_Prevalence = input$max_Prevalence,
       Sensitivity = input$Sensitivity,
       overlay = input$tipo_overlay,
-      # Min_Prevalence = 1,
+      # min_Prevalence = 1,
       overlay_prevalence_1 = input$overlay_prevalence_1,
       overlay_prevalence_2 = input$overlay_prevalence_2,
       # overlay_position_FP_FN = input$FP_overlay

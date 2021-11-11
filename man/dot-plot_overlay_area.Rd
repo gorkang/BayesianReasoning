@@ -7,11 +7,11 @@
 .plot_overlay_area(
   PPV_melted,
   uncertainty_prevalence = "low",
-  Min_Prevalence,
-  Max_Prevalence,
+  min_Prevalence,
+  max_Prevalence,
   Sensitivity,
-  Min_FP = 0,
-  Max_FP,
+  min_FP = 0,
+  max_FP,
   overlay_labels = "",
   PPV_NPV = "PPV",
   overlay_prevalence_1,
@@ -35,15 +35,15 @@
 
 \item{uncertainty_prevalence}{.}
 
-\item{Min_Prevalence}{[x] out of y prevalence of disease}
+\item{min_Prevalence}{[x] out of y prevalence of disease}
 
-\item{Max_Prevalence}{x out of [y] prevalence of disease}
+\item{max_Prevalence}{x out of [y] prevalence of disease}
 
 \item{Sensitivity}{.}
 
-\item{Min_FP}{.}
+\item{min_FP}{.}
 
-\item{Max_FP}{.}
+\item{max_FP}{.}
 
 \item{overlay_labels}{.}
 
