@@ -8,7 +8,7 @@
   PPV_melted,
   PPV_NPV = "PPV",
   Sensitivity,
-  max_FP,
+  Specificity,
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_labels,
@@ -28,6 +28,8 @@
 \item{PPV_NPV}{Should calculate PPV or NPV?}
 
 \item{Sensitivity}{Sensitivity of the test}
+
+\item{Specificity}{Specificity of the test}
 
 \item{overlay_prevalence_1}{[x] out of y prevalence of disease}
 

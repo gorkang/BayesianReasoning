@@ -64,7 +64,7 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 PPV_heatmap(min_Prevalence = 1,
             max_Prevalence = 1000, 
             Sensitivity = 100, 
-            max_FP = 2, 
+            Specificity = 98, 
             Language = "en")
             
 ```  
@@ -84,7 +84,7 @@ PPV_heatmap(PPV_NPV = "NPV",
             min_Prevalence = 800,
             max_Prevalence = 1000, 
             Sensitivity = 80, 
-            max_FP = 5, 
+            Specificity = 95, 
             Language = "en")
 
 ```
@@ -103,7 +103,7 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```{r area}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 95,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "area",
             overlay_labels = "40 y.o.",
@@ -122,7 +122,7 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 
 ```{r line}
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, max_FP = 15, 
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, Specificity = 85, 
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
             overlay = "line", 
             overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
@@ -139,7 +139,7 @@ Another example. In this case, the FP is constant across age:
 
 ```{r line-2}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 95,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "line",
             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),

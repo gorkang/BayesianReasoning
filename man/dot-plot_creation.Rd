@@ -12,6 +12,8 @@
   PPV_NPV = "PPV",
   min_FP = 0,
   max_FP,
+  Max_FN,
+  Min_FN,
   steps_matrix = 100,
   decimals_x,
   decimals_y,

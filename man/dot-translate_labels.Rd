@@ -4,16 +4,16 @@
 \alias{.translate_labels}
 \title{.translate_labels}
 \usage{
-.translate_labels(Language, Sensitivity, max_FP, PPV_NPV = "PPV")
+.translate_labels(Language, Sensitivity, Specificity, PPV_NPV = "PPV")
 }
 \arguments{
 \item{Language}{Can be Spanish "sp" or English (default)}
 
 \item{Sensitivity}{.}
 
-\item{max_FP}{.}
-
 \item{PPV_NPV}{.}
+
+\item{max_FP}{.}
 }
 \value{
 A list with labels

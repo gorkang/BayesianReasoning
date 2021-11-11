@@ -125,22 +125,22 @@
 <a href="#ppv_heatmap" class="anchor"></a>PPV_heatmap()</h2>
 <p>Plot heatmaps with PPV or NPV values for a given specificity and a range of Prevalences and FP or FN (1 - Sensitivity). The basic parameters are:</p>
 <ul>
-<li>Min_Prevalence: Min prevalence in y axis. “Min_Prevalence out of y”<br>
+<li>min_Prevalence: Min prevalence in y axis. “min_Prevalence out of y”<br>
 </li>
-<li>Max_Prevalence: Max prevalence in y axis. “1 out of Max_Prevalence”<br>
+<li>max_Prevalence: Max prevalence in y axis. “1 out of max_Prevalence”<br>
 </li>
 <li>Sensitivity: Sensitivity of the test<br>
 </li>
-<li>Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP<br>
+<li>max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to max_FP<br>
 </li>
 <li>Language: “es” for Spanish or “en” for English</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>,
-            Max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>,
+            max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
             Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
-            Max_FP <span class="op">=</span> <span class="fl">2</span>, 
+            max_FP <span class="op">=</span> <span class="fl">2</span>, 
             Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
             </code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/PPV_1_1000_100_2_en.png"></p>
@@ -152,10 +152,10 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>PPV_NPV <span class="op">=</span> <span class="st">"NPV"</span>,
-            Min_Prevalence <span class="op">=</span> <span class="fl">800</span>,
-            Max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
+            min_Prevalence <span class="op">=</span> <span class="fl">800</span>,
+            max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
             Sensitivity <span class="op">=</span> <span class="fl">80</span>, 
-            Max_FP <span class="op">=</span> <span class="fl">5</span>, 
+            max_FP <span class="op">=</span> <span class="fl">5</span>, 
             Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/PPV_heatmap/NPV_800_1000_80_5_en.png"></p>
 <hr>
@@ -167,7 +167,7 @@
 <p>For example, an area overlay showing the point PPV for a given prevalence and FP or FN:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, Max_FP <span class="op">=</span> <span class="fl">5</span>,
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, max_FP <span class="op">=</span> <span class="fl">5</span>,
             label_subtitle <span class="op">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
             folder <span class="op">=</span> <span class="st">""</span>,
             overlay <span class="op">=</span> <span class="st">"area"</span>,
@@ -183,7 +183,7 @@
 <p>Also, you can add a line overlay highlighting a range of prevalences and FP. This is useful, for example, to show how the PPV of a test changes with age:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1800</span>, Sensitivity <span class="op">=</span> <span class="fl">90</span>, Max_FP <span class="op">=</span> <span class="fl">15</span>, 
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">1800</span>, Sensitivity <span class="op">=</span> <span class="fl">90</span>, max_FP <span class="op">=</span> <span class="fl">15</span>, 
             label_subtitle <span class="op">=</span> <span class="st">"PPV of Mammogram for Breast Cancer by Age"</span>,
             overlay <span class="op">=</span> <span class="st">"line"</span>, 
             overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span><span class="op">)</span>,
@@ -196,7 +196,7 @@
 <p>Another example. In this case, the FP is constant across age:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>Min_Prevalence <span class="op">=</span> <span class="fl">1</span>, Max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, Max_FP <span class="op">=</span> <span class="fl">5</span>,
+<span class="fu"><a href="reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, max_FP <span class="op">=</span> <span class="fl">5</span>,
             label_subtitle <span class="op">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>,
             overlay <span class="op">=</span> <span class="st">"line"</span>,
             overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"40 y.o."</span>, <span class="st">"35 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"25 y.o."</span>, <span class="st">"20 y.o."</span><span class="op">)</span>,
@@ -215,7 +215,7 @@
 <p>This function shows a plot with the difference between the PPV of a diagnostic context (very high prevalence; or a common study sample, e.g. ~50% prevalence) versus that of a screening context (lower prevalence).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
-<span class="fu"><a href="reference/PPV_diagnostic_vs_screening.html">PPV_diagnostic_vs_screening</a></span><span class="op">(</span>Max_FP <span class="op">=</span> <span class="fl">10</span>, 
+<span class="fu"><a href="reference/PPV_diagnostic_vs_screening.html">PPV_diagnostic_vs_screening</a></span><span class="op">(</span>max_FP <span class="op">=</span> <span class="fl">10</span>, 
                             Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
                             prevalence_screening_group <span class="op">=</span> <span class="fl">1000</span>, 
                             prevalence_diagnostic_group <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>

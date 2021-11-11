@@ -39,18 +39,18 @@ There is a [shiny app implementation](https://gorkang.shinyapps.io/BayesianReaso
 
 Plot heatmaps with PPV or NPV values for a given specificity and a range of Prevalences and FP or FN (1 - Sensitivity). The basic parameters are:
 
-* Min_Prevalence: Min prevalence in y axis. "Min_Prevalence out of y"  
-* Max_Prevalence: Max prevalence in y axis. "1 out of Max_Prevalence"  
+* min_Prevalence: Min prevalence in y axis. "min_Prevalence out of y"  
+* max_Prevalence: Max prevalence in y axis. "1 out of max_Prevalence"  
 * Sensitivity: Sensitivity of the test  
-* Max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to Max_FP  
+* max_FP: FP is 1 - specificity. The x axis will go from FP = 0% to max_FP  
 * Language: "es" for Spanish or "en" for English  
 
 ```r 
 
-PPV_heatmap(Min_Prevalence = 1,
-            Max_Prevalence = 1000, 
+PPV_heatmap(min_Prevalence = 1, 
+            max_Prevalence = 1000, 
             Sensitivity = 100, 
-            Max_FP = 2, 
+            Specificity = 99, width_Specificity = 2, 
             Language = "en")
             
 ```  
@@ -68,16 +68,16 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 ```r 
 
 PPV_heatmap(PPV_NPV = "NPV",
-            Min_Prevalence = 800,
-            Max_Prevalence = 1000, 
-            Sensitivity = 80, 
-            Max_FP = 5, 
+            min_Prevalence = 800,
+            max_Prevalence = 1000, 
+            Sensitivity = 90, width_Sensitivity = 20,
+            Specificity = 95, 
             Language = "en")
 
 ```
 
 
-![](man/figures/PPV_heatmap/NPV_800_1000_80_5_en.png)   
+![](man/figures/PPV_heatmap/NPV_800_1000_90_10_en.png)   
 
 --- 
 
@@ -91,9 +91,8 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```r 
 
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 100, width_Specificity = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            folder = "",
             overlay = "area",
             overlay_labels = "40 y.o.",
             overlay_position_FP = 4.8,
@@ -113,14 +112,14 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 ```r 
 
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1800, Sensitivity = 90, Max_FP = 15, 
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, Specificity = 100, width_Specificity = 15,
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
             overlay = "line", 
             overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
             overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
             overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1),
             overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
-                
+            
 ```
 
 ![](man/figures/PPV_heatmap/PPV_1_1800_90_15_line_en.png)
@@ -131,14 +130,14 @@ Another example. In this case, the FP is constant across age:
 
 ```r 
 
-PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, Max_FP = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 100, width_Specificity = 5,
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "line",
             overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
             overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
             overlay_prevalence_1 = c(1, 1, 1, 1, 1),
             overlay_prevalence_2 = c(68, 249, 626, 946, 1068))
-                
+            
 ```
 
 ![](man/figures/PPV_heatmap/PPV_1_1200_81_5_line_en.png)  
@@ -154,7 +153,7 @@ This function shows a plot with the difference between the PPV of a diagnostic c
 
 ```r 
 
-PPV_diagnostic_vs_screening(Max_FP = 10, 
+PPV_diagnostic_vs_screening(max_FP = 10, 
                             Sensitivity = 100, 
                             prevalence_screening_group = 1000, 
                             prevalence_diagnostic_group = 2)

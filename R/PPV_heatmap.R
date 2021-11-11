@@ -5,8 +5,6 @@
 #' @param min_Prevalence x in the "x out of y" prevalence (y-axis): [1-Inf]
 #' @param max_Prevalence y in the "x out of y" prevalence (y-axis): [1-Inf]
 #' @param Sensitivity Sensitivity of the test: [0-100]
-#' @param min_FP Minimum False Positives ratio to show in plot (x-axis): [1-100]
-#' @param max_FP Maximum False Positives ratio to show in plot (x-axis): [1-100]
 #' @param overlay Show overlay: [TRUE, FALSE]
 #' @param overlay_labels Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
 #' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
@@ -37,14 +35,19 @@
 PPV_heatmap <-
   function(min_Prevalence = 1,
            max_Prevalence = 1000,
+           
            Sensitivity = 95,
-           min_FP = 0,
-           max_FP = 10,
+           Specificity = 95,
+           width_Sensitivity = 10, 
+           width_Specificity = 10,
+           
+           # min_FP = 0,
+           # max_FP = 10,
            overlay = "no",
            overlay_labels = "",
            overlay_position_FP = 1,
            overlay_position_FN = 1,
-           overlay_prevalence_1 = min_Prevalence,
+           overlay_prevalence_1 = 1,
            overlay_prevalence_2 = 100,
            uncertainty_prevalence = "high",
            label_title = "",
@@ -54,9 +57,36 @@ PPV_heatmap <-
            PPV_NPV = "PPV",
            DEBUG = 0) {
     
+    
+    # PROCESS VARIABLES -------------------------------------------------------
+    
+    
+    main_variables = process_variables(
+      Sensitivity = Sensitivity,
+      Specificity = Specificity,
+      width_Sensitivity = width_Sensitivity,
+      width_Specificity = width_Specificity)
+    
+    
+    # Min_FN = (100 - main_variables$min_Sensitivity)
+    # Max_FN = (100 - main_variables$max_Sensitivity)
+    
+    Max_FN = (100 - main_variables$min_Sensitivity)
+    Min_FN = (100 - main_variables$max_Sensitivity)
+    
+    # In 
+    max_FP = (100 - main_variables$min_Specificity)
+    min_FP = (100 - main_variables$max_Specificity)
+    
 
   # Check dimensions -----------------------------------------------------------
 
+
+    # CHECKS
+    if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity sould be a value 0-100")
+    if (Specificity > 100 | Specificity < 0) stop("* Specificity sould be a value 0-100")
+    
+    
     if (min_Prevalence < 1) {
       message("[WARNING]: min_Prevalence (", min_Prevalence , ") is < 1. [EXPECTED]: min_Prevalence should be an integer > 0.  [CHANGED]: min_Prevalence = 1")
       min_Prevalence = 1
@@ -70,29 +100,84 @@ PPV_heatmap <-
 
     if (overlay == "area") {
       
-      if (overlay_position_FP > max_FP & PPV_NPV == "PPV") {
-        message("[WARNING]: overlay_position_FP (", overlay_position_FP , ") is > than max_FP (", max_FP, "). [EXPECTED]: overlay_position_FP should be smaller than max_FP [CHANGED]: max_FP = overlay_position_FP")
-        max_FP = overlay_position_FP
+      if (exists("overlay_position_FP")) {
+        if (overlay_position_FP > max_FP & PPV_NPV == "PPV") {
+          message("[WARNING]: overlay_position_FP (", overlay_position_FP , ") is > than max_FP (", max_FP, "). [EXPECTED]: overlay_position_FP should be smaller than max_FP [CHANGED]: max_FP = overlay_position_FP")
+          max_FP = overlay_position_FP
+        }
       }
       
-      if (overlay_prevalence_2 > max_Prevalence) {
-        message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2 , ") is > than max_Prevalence (", max_Prevalence, "). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2")
-        max_Prevalence = overlay_prevalence_2 
+      # if (overlay_prevalence_2 > max_Prevalence) {
+      #   message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2 , ") is > than max_Prevalence (", max_Prevalence, "). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2")
+      #   max_Prevalence = overlay_prevalence_2 
+      # }
+      
+      # if(overlay_position_FN > (100 - Sensitivity) & PPV_NPV == "NPV") {
+      #   message("[WARNING]: overlay_position_FN (", overlay_position_FN , ") is > than (100 - Sensitivity) (", (100 - Sensitivity), "). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN")
+      #   Sensitivity = 100 - overlay_position_FN
+      # }
+      
+      # CHECK overlay_prevalence_1/overlay_prevalence_2 fits into min_Prevalence/max_Prevalence
+      if (min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2) {
+        
+        message("\n[WARNING]: min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2\n[EXPECTED]: min_Prevalence/max_Prevalence should be <= overlay_prevalence_1/overlay_prevalence_2")
+        
+        if (max_Prevalence == overlay_prevalence_2 & min_Prevalence != overlay_prevalence_1) {
+          message("[CONDITION]: max_Prevalence == overlay_prevalence_2\n[CHANGED]: Changing min_Prevalence = overlay_prevalence_1")
+          min_Prevalence = overlay_prevalence_1  
+        } else if (min_Prevalence == overlay_prevalence_1 & max_Prevalence != overlay_prevalence_2) {
+          message("[CONDITION]: min_Prevalence == overlay_prevalence_1\n[CHANGED]: Changing max_Prevalence = overlay_prevalence_2")
+          max_Prevalence = overlay_prevalence_2
+        } else {
+          message("[CONDITION]: min_Prevalence != overlay_prevalence_1\n\t     max_Prevalence != overlay_prevalence_2\n[CHANGED]: Changing max_Prevalence = overlay_prevalence_2 & min_Prevalence = overlay_prevalence_1")
+          min_Prevalence = overlay_prevalence_1
+          max_Prevalence = overlay_prevalence_2
+        }
       }
       
-      if(overlay_position_FN > (100 - Sensitivity) & PPV_NPV == "NPV") {
-        message("[WARNING]: overlay_position_FN (", overlay_position_FN , ") is > than (100 - Sensitivity) (", (100 - Sensitivity), "). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN")
-        Sensitivity = 100 - overlay_position_FN
-      }
+      # if (overlay_prevalence_1 < min_Prevalence) {
+      #   message("[WARNING]: overlay_prevalence_1 (", overlay_prevalence_1, ") < min_Prevalence (", min_Prevalence , ") . [EXPECTED]: overlay_prevalence_1 should be >= than min_Prevalence [CHANGED]: Changing min_Prevalence to overlay_prevalence_1")
+      #   min_Prevalence = overlay_prevalence_1 # Min Prevalence adjusted to fit overlay
+      # }
+      # 
+      # if (overlay_prevalence_2 > max_Prevalence) {
+      #   message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2, ") < max_Prevalence (", max_Prevalence , ") . [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: Changing max_Prevalence to overlay_prevalence_2")
+      #   max_Prevalence = overlay_prevalence_2 # Min Prevalence adjusted to fit overlay
+      # }
       
-      if (overlay_prevalence_1 < min_Prevalence) {
-        message("[WARNING]: overlay_prevalence_1 (", overlay_prevalence_1, ") < min_Prevalence (", min_Prevalence , ") . [EXPECTED]: overlay_prevalence_1 should be smaller than min_Prevalence [CHANGED]: Changing min_Prevalence to overlay_prevalence_1")
-        min_Prevalence = overlay_prevalence_1 # Min Prevalence adjusted to fit overlay
-      }
+    } 
+    
+    
+    if (overlay == "line" | overlay == "area") {
+        
+      if (PPV_NPV == "PPV"){
       
-      if (overlay_prevalence_2 > max_Prevalence) {
-        message("[WARNING]: overlay_prevalence_2 (", overlay_prevalence_2, ") < max_Prevalence (", max_Prevalence , ") . [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: Changing max_Prevalence to overlay_prevalence_2")
-        max_Prevalence = overlay_prevalence_2 # Min Prevalence adjusted to fit overlay
+        if (exists("overlay_position_FP")) {
+          if (min(overlay_position_FP) < min_FP) {
+            message("[WARNING]: overlay_position_FP (", min(overlay_position_FP) , ") is < min_FP (", min_FP, "). [EXPECTED]: overlay_position_FP should be >= min_FP.  [CHANGED]: min_FP = 0")
+            min_FP = 0
+          }
+          
+          if (max(overlay_position_FP) > max_FP) {
+            message("[WARNING]: overlay_position_FP (", max(overlay_position_FP) , ") is > min_FP (", min_FP, "). [EXPECTED]: overlay_position_FP should be <= max_FP.  [CHANGED]: max_FP = overlay_position_FP + 10%")
+            max_FP = max(overlay_position_FP) + (max(overlay_position_FP) * .1)
+          }
+        }
+        
+      } else if (PPV_NPV == "NPV") {
+        
+        if (exists("overlay_position_FN")) {
+          if (max(overlay_position_FN) > Max_FN) {
+            message("[WARNING]: overlay_position_FN (", max(overlay_position_FN) , ") is > Max_FN (", Max_FN, ") [EXPECTED]: overlay_position_FN should be <= Max_FN  [CHANGED]: Max_FN = overlay_position_FN + 10%")
+            Max_FN = max(overlay_position_FN) + (max(overlay_position_FN) * .1)
+          }
+          
+          if (min(overlay_position_FN) < Min_FN) {
+            message("[WARNING]: overlay_position_FN (", min(overlay_position_FN) , ") is > Min_FN (", Min_FN, ") [EXPECTED]: overlay_position_FN should be <= Min_FN  [CHANGED]: Min_FN = 0")
+            Min_FN = 0
+          }
+          
+        }  
       }
       
     }
@@ -118,16 +203,20 @@ PPV_heatmap <-
         filename_overlay = ""
       }
 
+    
+  
+
 
   # Create PPV matrix -------------------------------------------------------
 
       PPV_melted = .createPPVmatrix(
         min_Prevalence = min_Prevalence,
         max_Prevalence = max_Prevalence,
-        # Min_Sensitivity = Min_Sensitivity,
         Sensitivity = Sensitivity,
         min_FP = min_FP,
-        max_FP = max_FP
+        max_FP = max_FP,
+        Max_FN = Max_FN,
+        Min_FN = Min_FN
       )
 
 
@@ -136,13 +225,12 @@ PPV_heatmap <-
     # Create plot labels in Language
       translated_labels = .translate_labels(Language = Language,
                         Sensitivity = Sensitivity,
-                        max_FP = max_FP,
+                        Specificity = Specificity,
+                        # max_FP = max_FP,
                         PPV_NPV = PPV_NPV)
   
 
-    # Max_FN & Min_FN are created in .createPPVmatrix()
-      Max_FN <- (100 - Sensitivity)
-      Min_FN <- 0
+    # Number of decimals depends on the range
       decimals = .number_decimals_plot_axis(PPV_NPV = PPV_NPV,
                                             min_FP = min_FP,
                                             max_FP = max_FP,
@@ -161,8 +249,13 @@ PPV_heatmap <-
           uncertainty_prevalence = uncertainty_prevalence,
           min_Prevalence = min_Prevalence,
           max_Prevalence = max_Prevalence,
+          min_FP = min_FP,
           max_FP = max_FP,
+          Max_FN = Max_FN,
+          Min_FN = Min_FN,
+          
           Sensitivity = Sensitivity,
+          Specificity = Specificity,
           
           overlay_prevalence_2 = overlay_prevalence_2,
           
@@ -194,8 +287,13 @@ PPV_heatmap <-
           min_Prevalence = min_Prevalence,
           max_Prevalence = max_Prevalence,
           Sensitivity = Sensitivity,
+          Specificity = Specificity,
+          
           min_FP = min_FP,
           max_FP = max_FP,
+          Max_FN = Max_FN,
+          Min_FN = Min_FN,
+          
           overlay_labels = overlay_labels,
           overlay_prevalence_1 = overlay_prevalence_1,
           overlay_prevalence_2 = overlay_prevalence_2,
@@ -226,9 +324,12 @@ PPV_heatmap <-
             min_Prevalence = min_Prevalence,
             max_Prevalence = max_Prevalence,
             Sensitivity = Sensitivity,
+            
             min_FP = min_FP,
             max_FP = max_FP,
-
+            Max_FN = Max_FN,
+            Min_FN = Min_FN,
+            
             decimals_x = decimals$decimals_x,
             decimals_y = decimals$decimals_y,
 

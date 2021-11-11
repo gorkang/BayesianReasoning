@@ -10,6 +10,8 @@
   Sensitivity = 100,
   min_FP = 0,
   max_FP = 10,
+  Max_FN = 0,
+  Min_FN = 10,
   steps_matrix = 100
 )
 }

@@ -6,7 +6,7 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
     min_Prevalence = 1,
     max_Prevalence = 1000,
     Sensitivity = 100,
-    max_FP = 2,
+    Specificity = 98,
     Language = "en",
     PPV_NPV = "PPV"
   )
@@ -23,7 +23,7 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
     min_Prevalence = 1,
     max_Prevalence = 1000,
     Sensitivity = 100,
-    max_FP = 2,
+    Specificity = 98,
     Language = "en",
     PPV_NPV = "NPV"
   )
@@ -39,7 +39,7 @@ testthat::test_that("Spanish translation works'", {
     min_Prevalence = 1,
     max_Prevalence = 1000,
     Sensitivity = 100,
-    max_FP = 2,
+    Specificity = 98,
     Language = "sp"
   )
   testthat::expect_identical(p$labels$y, "Prevalencia")
@@ -53,7 +53,7 @@ testthat::test_that("Spanish NPV'", {
     min_Prevalence = 1,
     max_Prevalence = 1000,
     Sensitivity = 100,
-    max_FP = 2,
+    Specificity = 98,
     PPV_NPV = "NPV",
     Language = "sp"
   )
@@ -68,7 +68,7 @@ testthat::test_that("Plot is type GeomTile", {
     min_Prevalence = 1,
     max_Prevalence = 1000,
     Sensitivity = 100,
-    max_FP = 2,
+    Specificity = 98,
     Language = "en"
   )
   testthat::expect_identical(
@@ -84,7 +84,7 @@ testthat::test_that("Plot with area overlay", {
       min_Prevalence = 1,
       max_Prevalence = 1200,
       Sensitivity = 81,
-      max_FP = 5,
+      Specificity = 95,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -104,7 +104,7 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
       min_Prevalence = 1,
       max_Prevalence = 8,
       Sensitivity = 81,
-      max_FP = 5,
+      Specificity = 95,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -114,14 +114,34 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
       uncertainty_prevalence = "low",
       PPV_NPV = "PPV"
     )
-  testthat::expect_identical(
+  
+  
+    testthat::expect_identical(
     p$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\n2 out of 8\nFP = 4.8%\nPPV = 85%")
+    "40 y.o.\nPrevalence: 2 out of 8\nSensitivity : 81%\nFalse Positive rate: 5%")
 
   # Decimal breaks y axis
   testthat::expect_identical(
     p$plot_env$breaks_y,
     c(1.0, 1.7, 2.4, 3.1, 3.8, 4.5, 5.2, 5.9, 6.6, 7.3, 8.0))
+
+})
+
+
+testthat::test_that("Range of data is the same as the x axis range", {
+  p <-
+    PPV_heatmap(PPV_NPV = "NPV",
+                min_Prevalence = 800,
+                max_Prevalence = 1000,
+                Sensitivity = 80,
+                Specificity = 95)
+
+  # Decimal breaks y axis
+  testthat::expect_identical(
+    c(p$plot_env$Min_FN, p$plot_env$Max_FN), 
+    range(p$data$FN)
+    )
+    
 
 })
 
@@ -133,7 +153,7 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
       min_Prevalence = 1,
       max_Prevalence = 1200,
       Sensitivity = 81,
-      max_FP = 5,
+      Specificity = 95,
       label_subtitle = "Prenatal screening for Down Syndrome by Age",
       overlay = "area",
       overlay_labels = "40 y.o.",
@@ -145,7 +165,7 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
     )
   testthat::expect_identical(
     p$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\n67 out of 68\nFN = 1%\nNPV = 59%")
+    "40 y.o.\nPrevalence: 67 out of 68\nSpecificity : 95%\nFalse Negative rate: 1%")
 
 })
 
@@ -158,7 +178,7 @@ testthat::test_that("Plot with line overlay", {
       min_Prevalence = 1,
       max_Prevalence = 1800,
       Sensitivity = 90,
-      max_FP = 15,
+      Specificity = 85,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
       overlay = "line",
       uncertainty_prevalence = "low",
@@ -192,7 +212,7 @@ testthat::test_that("Plot with line overlay", {
       min_Prevalence = 1,
       max_Prevalence = 1800, 
       Sensitivity = 90,
-      max_FP = 15,
+      Specificity = 85,
       label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
       overlay = "line",
       overlay_labels = c(
@@ -226,7 +246,7 @@ testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
       min_Prevalence = 2000,
       max_Prevalence = 1000,
       Sensitivity = 81,
-      max_FP = 5))
+      Specificity = 95))
   
   testthat::expect_equal(
     res$messages,
@@ -241,15 +261,19 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
-      max_FP = 5,
+      Specificity = 95,
       overlay = "area",
       overlay_position_FP = 4.8,
       overlay_prevalence_1 = 1,
-      overlay_prevalence_2 = 1000))
+      overlay_prevalence_2 = 1000)
+    )
   
   testthat::expect_equal(
     res$messages,
-    "[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (0.001) is > than min_Prevalence/max_Prevalence (0.002). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * max_Prevalence to fit overlay\n")
+    c("\n[WARNING]: min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2\n[EXPECTED]: min_Prevalence/max_Prevalence should be <= overlay_prevalence_1/overlay_prevalence_2\n",
+      "[CONDITION]: max_Prevalence == overlay_prevalence_2\n[CHANGED]: Changing min_Prevalence = overlay_prevalence_1\n")
+    )
+  # "[WARNING]: overlay_prevalence_1/overlay_prevalence_2 (0.001) is > than min_Prevalence/max_Prevalence (0.002). [EXPECTED]: Prevalence for overlay should be smaller than Prevalence [CHANGED]: Changing min_Prevalence to (overlay_prevalence_1/overlay_prevalence_2) * max_Prevalence to fit overlay\n"
 })
 
 testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
@@ -259,16 +283,17 @@ testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
-      max_FP = 5,
+      Specificity = 95,
       overlay = "area",
       overlay_position_FP = 6,
       overlay_prevalence_1 = 1110,
-      overlay_prevalence_2 = 1100))
+      overlay_prevalence_2 = 1100)
+    )
   
   testthat::expect_equal(
     res$messages,
-    c("[WARNING]: overlay_position_FP (6) is > than max_FP (5). [EXPECTED]: overlay_position_FP should be smaller than max_FP [CHANGED]: max_FP = overlay_position_FP\n",
-      "[WARNING]: overlay_prevalence_2 (1100) is > than max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2\n",
+    c(
+      # "[WARNING]: overlay_position_FP (6) is > than max_FP (5). [EXPECTED]: overlay_position_FP should be smaller than max_FP [CHANGED]: max_FP = overlay_position_FP\n",
       "[WARNING]: overlay_prevalence_1 (1110) is > than overlay_prevalence_2 (1100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2\n"))
 })
 
@@ -281,18 +306,23 @@ testthat::test_that("WARNINGS - NPV", {
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 90,
-      max_FP = 5,
+      Specificity = 95,
       overlay = "area",
       overlay_position_FN = 20,
       # overlay_position_FP = 6,
       overlay_prevalence_1 = 1110,
-      overlay_prevalence_2 = 1100))
+      overlay_prevalence_2 = 1100)
+    )
   
   testthat::expect_equal(
     res$messages,
-    c("[WARNING]: overlay_prevalence_2 (1100) is > than max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2\n", 
-      "[WARNING]: overlay_position_FN (20) is > than (100 - Sensitivity) (10). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN\n", 
-      "[WARNING]: overlay_prevalence_1 (1110) is > than overlay_prevalence_2 (1100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2\n"))
+    c(
+      "[WARNING]: overlay_position_FN (20) is > Max_FN (15) [EXPECTED]: overlay_position_FN should be <= Max_FN  [CHANGED]: Max_FN = overlay_position_FN + 10%\n",
+      "[WARNING]: overlay_prevalence_1 (1110) is > than overlay_prevalence_2 (1100). [EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2 [CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2\n"
+      # "[WARNING]: overlay_prevalence_2 (1100) is > than max_Prevalence (1000). [EXPECTED]: overlay_prevalence_2 should be smaller than max_Prevalence [CHANGED]: max_Prevalence = overlay_prevalence_2\n"
+      # "[WARNING]: overlay_position_FN (20) is > than (100 - Sensitivity) (10). [EXPECTED]: overlay_position_FN should be smaller than (100 - Sensitivity) [CHANGED]: Sensitivity = 100 - overlay_position_FN\n", 
+      
+      ))
 })
 
 
@@ -305,13 +335,12 @@ testthat::test_that("Plot saved", {
       min_Prevalence = 1,
       max_Prevalence = 1000,
       Sensitivity = 100,
-      max_FP = 2,
+      Specificity = 98,
       folder = "."
     )
   
-  file_name_test = "PPV_1_1000_100_2_en.png"
+  file_name_test = "PPV_1_1000_100_10_en.png"
   expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
   
 })
-

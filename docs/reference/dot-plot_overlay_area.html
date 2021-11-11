@@ -146,11 +146,14 @@
     <pre class="usage"><span class='fu'>.plot_overlay_area</span><span class='op'>(</span>
   <span class='va'>PPV_melted</span>,
   uncertainty_prevalence <span class='op'>=</span> <span class='st'>"low"</span>,
-  <span class='va'>Min_Prevalence</span>,
-  <span class='va'>Max_Prevalence</span>,
+  <span class='va'>min_Prevalence</span>,
+  <span class='va'>max_Prevalence</span>,
   <span class='va'>Sensitivity</span>,
+  <span class='va'>Specificity</span>,
   min_FP <span class='op'>=</span> <span class='fl'>0</span>,
-  <span class='va'>Max_FP</span>,
+  <span class='va'>max_FP</span>,
+  <span class='va'>Max_FN</span>,
+  <span class='va'>Min_FN</span>,
   overlay_labels <span class='op'>=</span> <span class='st'>""</span>,
   PPV_NPV <span class='op'>=</span> <span class='st'>"PPV"</span>,
   <span class='va'>overlay_prevalence_1</span>,
@@ -181,11 +184,11 @@
       <td><p>.</p></td>
     </tr>
     <tr>
-      <th>Min_Prevalence</th>
+      <th>min_Prevalence</th>
       <td><p>[x] out of y prevalence of disease</p></td>
     </tr>
     <tr>
-      <th>Max_Prevalence</th>
+      <th>max_Prevalence</th>
       <td><p>x out of [y] prevalence of disease</p></td>
     </tr>
     <tr>
@@ -197,7 +200,7 @@
       <td><p>.</p></td>
     </tr>
     <tr>
-      <th>Max_FP</th>
+      <th>max_FP</th>
       <td><p>.</p></td>
     </tr>
     <tr>

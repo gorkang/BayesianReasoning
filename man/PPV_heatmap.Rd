@@ -8,13 +8,14 @@ PPV_heatmap(
   min_Prevalence = 1,
   max_Prevalence = 1000,
   Sensitivity = 95,
-  min_FP = 0,
-  max_FP = 10,
+  Specificity = 95,
+  width_Sensitivity = 10,
+  width_Specificity = 10,
   overlay = "no",
   overlay_labels = "",
   overlay_position_FP = 1,
   overlay_position_FN = 1,
-  overlay_prevalence_1 = min_Prevalence,
+  overlay_prevalence_1 = 1,
   overlay_prevalence_2 = 100,
   uncertainty_prevalence = "high",
   label_title = "",
@@ -31,10 +32,6 @@ PPV_heatmap(
 \item{max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
 
 \item{Sensitivity}{Sensitivity of the test: [0-100]}
-
-\item{min_FP}{Minimum False Positives ratio to show in plot (x-axis): [1-100]}
-
-\item{max_FP}{Maximum False Positives ratio to show in plot (x-axis): [1-100]}
 
 \item{overlay}{Show overlay: [TRUE, FALSE]}
 

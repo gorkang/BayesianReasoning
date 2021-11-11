@@ -144,11 +144,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>.createPPVmatrix</span><span class='op'>(</span>
-  Min_Prevalence <span class='op'>=</span> <span class='fl'>1</span>,
-  Max_Prevalence <span class='op'>=</span> <span class='fl'>1000</span>,
+  min_Prevalence <span class='op'>=</span> <span class='fl'>1</span>,
+  max_Prevalence <span class='op'>=</span> <span class='fl'>1000</span>,
   Sensitivity <span class='op'>=</span> <span class='fl'>100</span>,
   min_FP <span class='op'>=</span> <span class='fl'>0</span>,
-  Max_FP <span class='op'>=</span> <span class='fl'>10</span>,
+  max_FP <span class='op'>=</span> <span class='fl'>10</span>,
+  Max_FN <span class='op'>=</span> <span class='fl'>0</span>,
+  Min_FN <span class='op'>=</span> <span class='fl'>10</span>,
   steps_matrix <span class='op'>=</span> <span class='fl'>100</span>
 <span class='op'>)</span></pre>
 
@@ -156,11 +158,11 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>Min_Prevalence</th>
+      <th>min_Prevalence</th>
       <td><p>[x] out of y prevalence of disease</p></td>
     </tr>
     <tr>
-      <th>Max_Prevalence</th>
+      <th>max_Prevalence</th>
       <td><p>x out of [y] prevalence of disease</p></td>
     </tr>
     <tr>
@@ -172,7 +174,7 @@
       <td><p>Minimum False Positive ratio</p></td>
     </tr>
     <tr>
-      <th>Max_FP</th>
+      <th>max_FP</th>
       <td><p>Maximum False Positive ratio</p></td>
     </tr>
     <tr>
@@ -183,7 +185,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A DF called PPV</p>
+    <p>A DF called PPV_melted</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

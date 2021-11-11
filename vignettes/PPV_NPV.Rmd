@@ -5,8 +5,10 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Screening tests and PPV vs NPV}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include = FALSE}
@@ -64,9 +66,9 @@ The PPV of Mammography at 50 years old in the general population is relatively l
 
   PPV_plot = PPV_heatmap(
     min_Prevalence = 1,
-    max_Prevalence = 80,
+    max_Prevalence = 80, width_Specificity = 15,
     Sensitivity = 95,
-    max_FP = 15,
+    Specificity = 95,
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,
@@ -88,7 +90,7 @@ The NPV of Mammography at 50 years old in the general population is very high.
     min_Prevalence = 1,
     max_Prevalence = 80,
     Sensitivity = 90,
-    max_FP = 12.1,
+    Specificity = 87.9,
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,
