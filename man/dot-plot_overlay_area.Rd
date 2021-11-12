@@ -29,6 +29,7 @@
   label_title,
   label_subtitle,
   label_caption,
+  label_caption_name,
   x_axis_label,
   y_axis_label
 )

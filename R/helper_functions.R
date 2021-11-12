@@ -228,6 +228,8 @@ process_variables <- function(Sensitivity,
   prevalence_label,
   x_axis_label,
   y_axis_label,
+  label_caption_name,
+  
   decimals_x,
   decimals_y) {
 
@@ -266,7 +268,7 @@ process_variables <- function(Sensitivity,
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\nSpecificity : ", Specificity, "%",
+      "\n", label_caption_name, ": ", Specificity, "%",
       "\n", x_axis_label, ": ", overlay_FP_FN, "%"
       )
 
@@ -294,7 +296,7 @@ process_variables <- function(Sensitivity,
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\nSensitivity : ", Sensitivity, "%",
+      "\n", label_caption_name, ": ", Sensitivity, "%",
       "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%")
       )
 
@@ -304,10 +306,10 @@ process_variables <- function(Sensitivity,
 
   # Function outputs
   list(
-  Details_point_PPV_NPV = Details_point_PPV_NPV,
-  point_PPV_NPV = point_PPV_NPV,
-  size_overlay_text = nchar(paste0(overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2)),
-  DEBUG_MESSAGE = DEBUG_MESSAGE
+    Details_point_PPV_NPV = Details_point_PPV_NPV,
+    point_PPV_NPV = point_PPV_NPV,
+    # size_overlay_text = nchar(paste0(overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2)),
+    DEBUG_MESSAGE = DEBUG_MESSAGE
   )
 }
 
@@ -449,8 +451,6 @@ process_variables <- function(Sensitivity,
     
     if (PPV_NPV == "PPV") {
       
-      # label_caption = paste0("Sensitivity = ", Sensitivity, "%")
-      
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (prevalence_2)))  
       
@@ -472,8 +472,6 @@ process_variables <- function(Sensitivity,
     # NPV ---------------------------------------------------------------------
       
     } else if (PPV_NPV == "NPV") {
-      
-      # label_caption = paste0("Specificity = ", 100 - max_FP, "%")
       
       # Create plot
       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (prevalence_2)))  
@@ -573,6 +571,7 @@ process_variables <- function(Sensitivity,
            label_title,
            label_subtitle,
            label_caption,
+           label_caption_name,
            
            x_axis_label,
            y_axis_label
@@ -600,7 +599,7 @@ process_variables <- function(Sensitivity,
       PPV_NPV = PPV_NPV,
       Sensitivity = Sensitivity,
       Specificity = Specificity,
-      # max_FP = max_FP,
+
       overlay_prevalence_1 = overlay_prevalence_1,
       overlay_prevalence_2 = overlay_prevalence_2,
       overlay_labels = overlay_labels,
@@ -614,13 +613,11 @@ process_variables <- function(Sensitivity,
       
       prevalence_label = prevalence_label,
       x_axis_label = x_axis_label,
-      y_axis_label = y_axis_label
+      y_axis_label = y_axis_label,
+      label_caption_name = label_caption_name
     ) 
   
-      Details_point_PPV_NPV = list_point_PPV$Details_point_PPV_NPV
-      point_PPV_NPV = list_point_PPV$point_PPV_NPV
-      size_overlay_text = list_point_PPV$size_overlay_text
-      
+
       # TODO: DEBUG - COMMENT OUT
       cat(PPV_NPV, ": ", list_point_PPV$DEBUG_MESSAGE)
       
@@ -679,7 +676,7 @@ process_variables <- function(Sensitivity,
       ggforce::geom_mark_rect(
         
         # Uncertainty square
-        aes(label = paste0(PPV_NPV_label, ": ", point_PPV_NPV, "%"), # BOLD title white rectangle
+        aes(label = paste0(PPV_NPV_label, ": ", list_point_PPV$point_PPV_NPV, "%"), # BOLD title white rectangle
             x = x_axis_position,
             y = point_Prevalence),
         alpha = .04,
@@ -689,7 +686,7 @@ process_variables <- function(Sensitivity,
         
         # Description white rectangle
         label.colour = "black",
-        description = paste0(Details_point_PPV_NPV),
+        description = paste0(list_point_PPV$Details_point_PPV_NPV),
         label.width = 82,
         label.minwidth = 35, 
         
@@ -875,6 +872,7 @@ process_variables <- function(Sensitivity,
     #Labels 
     if (Language == "sp" | Language == "es") {
       
+      label_caption_name = "Sensibilidad"
       label_caption = paste0("Sensibilidad = ", Sensitivity, "%")
       x_axis_label = "Tasa de Falsos Positivos"
       y_axis_label = "Prevalencia"
@@ -884,6 +882,7 @@ process_variables <- function(Sensitivity,
       
     } else {
       
+      label_caption_name = "Sensitivity"
       label_caption = paste0("Sensitivity = ", Sensitivity, "%")
       x_axis_label = "False Positive rate"
       y_axis_label = "Prevalence"
@@ -899,6 +898,7 @@ process_variables <- function(Sensitivity,
     #Labels 
     if (Language == "sp" | Language == "es") {
       
+      label_caption_name = "Especificidad"
       label_caption = paste0("Especificidad = ", Specificity, "%") #Tasa de Verdaderos Negativos
       x_axis_label = "Tasa de Falsos Negativos"
       y_axis_label = "Prevalencia"
@@ -908,6 +908,7 @@ process_variables <- function(Sensitivity,
       
     } else {
       
+      label_caption_name = "Specificity"
       label_caption = paste0("Specificity = ", Specificity, "%") #True Negative Rate
       x_axis_label = "False Negative rate"
       y_axis_label = "Prevalence"
@@ -924,6 +925,7 @@ process_variables <- function(Sensitivity,
   
   list(
     label_caption = label_caption,
+    label_caption_name = label_caption_name,
     x_axis_label = x_axis_label,
     y_axis_label = y_axis_label,
     prevalence_label = prevalence_label,

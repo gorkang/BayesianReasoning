@@ -18,6 +18,7 @@
   prevalence_label,
   x_axis_label,
   y_axis_label,
+  label_caption_name,
   decimals_x,
   decimals_y
 )
