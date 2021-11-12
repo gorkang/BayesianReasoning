@@ -8,35 +8,68 @@
 process_variables <- function(Sensitivity, 
                              Specificity, 
                              width_Sensitivity = 10, 
-                             width_Specificity = 10) {
+                             width_Specificity = 10,
+                             
+                             # TESTING
+                             limits_Sensitivity = NULL,
+                             limits_Specificity = NULL) {
+  
+  if (is.null(limits_Sensitivity)) {
+    limits_Sensitivity = c(0, 0)
+    if (Sensitivity + 5 > 100) limits_Sensitivity[2] = 100
+    if (Sensitivity - 5 < 0) limits_Sensitivity[1] = 0
+    if (Sensitivity + 5 <= 100) limits_Sensitivity[2] = c(Sensitivity + 5)
+    if (Sensitivity - 5 >= 0) limits_Sensitivity[1] = c(Sensitivity - 5)
+  }
+  
+  if (is.null(limits_Specificity)) {
+    limits_Specificity = c(0, 0)
+    if (Specificity + 5 > 100) limits_Specificity[2] = 100
+    if (Specificity - 5 < 0) limits_Specificity[1] = 0
+    if (Specificity + 5 <= 100) limits_Specificity[2] = c(Specificity + 5)
+    if (Specificity - 5 >= 0) limits_Specificity[1] = c(Specificity - 5)
+    
+    
+  }
   
   # CHECKS
   if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity sould be a value 0-100")
   if (Specificity > 100 | Specificity < 0) stop("* Specificity sould be a value 0-100")
-
-  # Sensitivity range
-  if (Sensitivity + (width_Sensitivity / 2) > 100) {
-    max_Sensitivity = 100
-    min_Sensitivity = max_Sensitivity - width_Sensitivity - (100 - max_Sensitivity)
-  } else if (Sensitivity - (width_Sensitivity / 2) < 0) {
-    min_Sensitivity = 0
-    max_Sensitivity = min_Sensitivity + width_Sensitivity + (0 + min_Sensitivity)
-  } else {
-    min_Sensitivity = Sensitivity - (width_Sensitivity / 2)
-    max_Sensitivity = Sensitivity + (width_Sensitivity / 2)
-  }
   
-  # Specificity range
-  if (Specificity + (width_Specificity / 2) > 100) {
-    max_Specificity = 100
-    min_Specificity = max_Specificity - width_Specificity - (100 - max_Specificity)
-  } else if (Specificity - (width_Specificity / 2) < 0) {
-    min_Specificity = 0
-    max_Specificity = min_Specificity + width_Specificity + (0 + min_Specificity)
-  } else {
-    min_Specificity = Specificity - (width_Specificity / 2)
-    max_Specificity = Specificity + (width_Specificity / 2)
-  }
+  if (length(limits_Sensitivity) != 2) stop("* limits_Sensitivity sould be a vector of length 2. e.g.: limits_Sensitivity = c(90, 95)")
+  if (length(limits_Specificity) != 2) stop("* limits_Specificity sould be a vector of length 2. e.g.: limits_Specificity = c(90, 95)")
+  
+  if (any(limits_Sensitivity > 100 | limits_Sensitivity < 0)) stop("* limits_Sensitivity sould be values 0-100")
+  if (any(limits_Specificity > 100 | limits_Specificity < 0)) stop("* limits_Specificity sould be values 0-100")
+
+  max_Sensitivity = limits_Sensitivity[2]
+  min_Sensitivity = limits_Sensitivity[1]
+  
+  max_Specificity = limits_Specificity[2]
+  min_Specificity = limits_Specificity[1]
+  # Sensitivity range
+  # if (Sensitivity + (width_Sensitivity / 2) > 100) {
+  #   max_Sensitivity = 100
+  #   min_Sensitivity = max_Sensitivity - width_Sensitivity - (100 - max_Sensitivity)
+  # } else if (Sensitivity - (width_Sensitivity / 2) < 0) {
+  #   min_Sensitivity = 0
+  #   max_Sensitivity = min_Sensitivity + width_Sensitivity + (0 + min_Sensitivity)
+  # } else {
+  #   min_Sensitivity = Sensitivity - (width_Sensitivity / 2)
+  #   max_Sensitivity = Sensitivity + (width_Sensitivity / 2)
+  # }
+  # 
+  # # Specificity range
+  # if (Specificity + (width_Specificity / 2) > 100) {
+  #   max_Specificity = 100
+  #   min_Specificity = max_Specificity - width_Specificity - (100 - max_Specificity)
+  # } else if (Specificity - (width_Specificity / 2) < 0) {
+  #   min_Specificity = 0
+  #   max_Specificity = min_Specificity + width_Specificity + (0 + min_Specificity)
+  # } else {
+  #   min_Specificity = Specificity - (width_Specificity / 2)
+  #   max_Specificity = Specificity + (width_Specificity / 2)
+  # }
   
   
   main_variables = 
@@ -420,6 +453,7 @@ process_variables <- function(Sensitivity,
     
     # Colors PPV
     # https://www.google.com/search?q=color+picker
+    # Palettes: 0%, 25%, 2550%, 75%, 100%
     if (PPV_NPV == "PPV") {
       
       Paleta_DV = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
@@ -427,6 +461,7 @@ process_variables <- function(Sensitivity,
     } else if (PPV_NPV == "NPV") {
       
       Paleta_DV = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
+      # Paleta_DV = c("#ffffff", "grey", "#190d24","#9281c7", "#404788FF") # Violet
       
     }
     
@@ -687,7 +722,7 @@ process_variables <- function(Sensitivity,
         # Description white rectangle
         label.colour = "black",
         description = paste0(list_point_PPV$Details_point_PPV_NPV),
-        label.width = 82,
+        label.width = 83, # Adjust to fit label
         label.minwidth = 35, 
         
         # Connector (line)

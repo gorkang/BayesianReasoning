@@ -40,6 +40,8 @@ PPV_heatmap <-
            Specificity = 95,
            width_Sensitivity = 10, 
            width_Specificity = 10,
+           limits_Sensitivity = NULL, 
+           limits_Specificity = NULL, 
            
            # min_FP = 0,
            # max_FP = 10,
@@ -65,20 +67,27 @@ PPV_heatmap <-
       Sensitivity = Sensitivity,
       Specificity = Specificity,
       width_Sensitivity = width_Sensitivity,
-      width_Specificity = width_Specificity)
+      width_Specificity = width_Specificity,
+      limits_Sensitivity = limits_Sensitivity,
+      limits_Specificity = limits_Specificity)
     
     
     # Min_FN = (100 - main_variables$min_Sensitivity)
     # Max_FN = (100 - main_variables$max_Sensitivity)
+    # min_FP = (100 - main_variables$min_Specificity)
+    # max_FP = (100 - main_variables$max_Specificity)
+    
     
     Max_FN = (100 - main_variables$min_Sensitivity)
     Min_FN = (100 - main_variables$max_Sensitivity)
-    
-    # In 
+
+    # In
     max_FP = (100 - main_variables$min_Specificity)
     min_FP = (100 - main_variables$max_Specificity)
-    
 
+    message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " Max_FN: ", Max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " Min_FN: ",  Min_FN)
+    message("DEBUG: ", "min_Specificity: ", main_variables$min_Specificity, " max_FP: ", max_FP, " | max_Specificity: ", main_variables$max_Specificity, " min_FP: ",  min_FP)
+    
   # Check dimensions -----------------------------------------------------------
 
 
