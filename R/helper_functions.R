@@ -277,7 +277,7 @@ process_variables <- function(Sensitivity,
   PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
   
   
-  # Get PPV or NPV value ----------------------------------------------------
+  # Get PPV or NPV value ---
 
   if (PPV_NPV == "NPV")  {
 
@@ -326,11 +326,25 @@ process_variables <- function(Sensitivity,
     
     DEBUG_MESSAGE = paste0("calculated_PPV: ", calculated_PPV * 100, "%", " | PPV in PPV_melted: ", DF_point_PPV_NPV$PPV * 100, "%", " | DIFF: ", round(calculated_PPV - DF_point_PPV_NPV$PPV, 2) * 100, "%")
 
+    # Process labels for area overlay    
+    sick_positive = (overlay_prevalence_1 * Sensitivity) / 100
+    label_sick = ifelse(sick_positive > 1, "enfermas", "enferma")
+    
+    healthy_positive = ((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP) / 100
+    label_healthy = ifelse(healthy_positive > 1, "sanas", "sana")
+    
+    # Should use "~"?
+    decimals_sick_positive = sick_positive %% 1
+    label_sick_aprox = ifelse(decimals_sick_positive >= .99 | decimals_sick_positive <= 0.01, "", "~")
+    decimals_healthy_positive = sick_positive %% 1
+    label_healthy_aprox = ifelse(decimals_healthy_positive >= .99 | decimals_healthy_positive <= 0.01, "", "~")
+    
+    
     Details_point_PPV_NPV = paste0(
       overlay_labels,
       "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\n", label_caption_name, ": ", Sensitivity, "%",
-      "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "%")
+      "\n", label_caption_name, ": ", Sensitivity, "% (",label_sick_aprox, ceiling((overlay_prevalence_1 * Sensitivity) /100), " ", label_sick, " +)",
+      "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "% (", label_healthy_aprox, ceiling(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100), " ", label_healthy, " +)")
       )
 
     # point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
@@ -532,10 +546,15 @@ process_variables <- function(Sensitivity,
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
       ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
       ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
-      ggplot2::theme(text = ggplot2::element_text(size = 20),
+      ggplot2::theme(text = ggplot2::element_text(size = 16),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 
-                     axis.title.x = ggplot2::element_text(margin = ggplot2::margin(10,0,0,0))) +
+                     axis.title.x = ggplot2::element_text(margin = ggplot2::margin(10,0,0,0)),
+                     legend.position = c(0.94, 0.85), # horizontal, vertical
+                     legend.direction = "vertical",
+                     # legend.direction = 'horizontal',
+                     legend.margin =  margin(5, 5, 10, 5)
+                     ) +
       ggplot2::labs(title = label_title,
                     subtitle = label_subtitle, 
                     caption = label_caption,
@@ -909,7 +928,7 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Sensibilidad"
       label_caption = paste0("Sensibilidad = ", Sensitivity, "%")
-      x_axis_label = "Tasa de Falsos Positivos"
+      x_axis_label = "Falsos Positivos"
       y_axis_label = "Prevalencia"
       prevalence_label = "de"
       legend_label = "Valor\nPredictivo\nPositivo (%)\n "
@@ -919,7 +938,7 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Sensitivity"
       label_caption = paste0("Sensitivity = ", Sensitivity, "%")
-      x_axis_label = "False Positive rate"
+      x_axis_label = "False Positives"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
       legend_label = "Positive\nPredictive\nValue (%)\n "
@@ -935,7 +954,7 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Especificidad"
       label_caption = paste0("Especificidad = ", Specificity, "%") #Tasa de Verdaderos Negativos
-      x_axis_label = "Tasa de Falsos Negativos"
+      x_axis_label = "Falsos Negativos"
       y_axis_label = "Prevalencia"
       prevalence_label = "de"
       legend_label = "Valor\nPredictivo\nNegativo (%)\n "
@@ -945,7 +964,7 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Specificity"
       label_caption = paste0("Specificity = ", Specificity, "%") #True Negative Rate
-      x_axis_label = "False Negative rate"
+      x_axis_label = "False Negatives"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
       legend_label = "Negative\nPredictive\nValue (%)\n "
