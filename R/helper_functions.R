@@ -107,11 +107,8 @@ process_variables <- function(Sensitivity,
            max_Prevalence = 1000,
            Sensitivity = 100,
            # Specificity = 100,
-           
-           #TESTING
-           # width_Sensitivity = 10,
-           # width_Specificity = 10,
-           
+
+           one_out_of = TRUE,
            
            min_FP = 0,
            max_FP = 10,
@@ -130,7 +127,9 @@ process_variables <- function(Sensitivity,
     # max_Prevalence = 100
     # Sensitivity = 100
     # max_FP = 1
-    # steps_matrix = 10
+    # Max_FN = 0
+    # Min_FN = 10
+    # steps_matrix = 100
     # 
     # min_FP = 0
     
@@ -157,7 +156,9 @@ process_variables <- function(Sensitivity,
     # prevalence_2
     range_prevalence = (max_Prevalence - min_Prevalence)
     Step_size_Prevalence <- range_prevalence / steps_matrix
-    prevalence_2 <- round(seq(min_Prevalence, max_Prevalence, Step_size_Prevalence), 4) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+    
+    if (one_out_of == TRUE) prevalence_2 <- round(seq(min_Prevalence, max_Prevalence, Step_size_Prevalence), 4) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+    if (one_out_of == FALSE) prevalence_2 <- exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = steps_matrix + 1)) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
     
     
     # NEW SYSTEM ---
@@ -182,7 +183,7 @@ process_variables <- function(Sensitivity,
     FALSE_negatives = (sick %o% (1 - sensitivity))
     
     
-    # PPV Calculation -------------------------------------------------------------
+    # PPV & NPV Calculation ---
     
     # We calculate a 100x100 PPV matrix using %o% (outer)
     # With the old system, min_Prevalence == sick people, and prevalence_2 - min_Prevalence is healthy people (min_Prevalence is set to 1 by default)
@@ -407,7 +408,7 @@ process_variables <- function(Sensitivity,
   }
   
   
-  # Output vars -------------------------------------------------------------
+  # Output vars ---
   
   list("decimals_x" = decimals_x, 
        "decimals_y" = decimals_y)
@@ -449,6 +450,8 @@ process_variables <- function(Sensitivity,
            Max_FN,
            Min_FN,
            
+           one_out_of = TRUE,
+           
            steps_matrix = 100, 
            decimals_x,
            decimals_y,
@@ -463,25 +466,27 @@ process_variables <- function(Sensitivity,
            DEBUG_MESSAGE = "") {
     
 
-    # Global variables -------------------------------------------------------
+    # Global variables ---
     
     # Colors PPV
     # https://www.google.com/search?q=color+picker
     # Palettes: 0%, 25%, 2550%, 75%, 100%
     if (PPV_NPV == "PPV") {
       
-      Paleta_DV = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
+      Paleta_legend = c("white", "grey", "black", "yellowgreen", "chartreuse4") #Original
       
     } else if (PPV_NPV == "NPV") {
       
-      Paleta_DV = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
-      # Paleta_DV = c("#ffffff", "grey", "#190d24","#9281c7", "#404788FF") # Violet
+      Paleta_legend = c("white", "grey", "black","#bd7afa", "#420080") # Violet
+      # Paleta_legend = c("white", "grey", "black","#D6A8FF", "#420080") # Violet
+      
+      # Paleta_legend = c("#ffffff", "grey", "#190d24","#9281c7", "#404788FF") # Violet
       
     }
     
     # Breaks and labels for PPV/NPV legend
-    breaks_DV = c(0, 0.25, 0.5, 0.75, 1)
-    labels_DV = c(0, 25, 50, 75, 100)
+    breaks_legend = c(0, 0.25, 0.5, 0.75, 1)
+    labels_legend = c(0, 25, 50, 75, 100)
     
     # False Positives (x axis) 
     Steps_FP <- steps_matrix
@@ -511,8 +516,17 @@ process_variables <- function(Sensitivity,
       labels_x = paste0(breaks_x, "%")
       
       # BREAKS Y
-      breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-      labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+      if (one_out_of == TRUE) {
+        breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
+        labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+      } else {
+        breaks_y = round(exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = 10)), decimals_y)
+        labels_y = rev(paste(breaks_y, prevalence_label, max_Prevalence))
+        
+      }
+      
+      
+      
       
       # PPV tiles
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
@@ -533,8 +547,14 @@ process_variables <- function(Sensitivity,
       labels_x = paste0(breaks_x, "%")
       
       # BREAKS Y
-      breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-      labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+      if (one_out_of == TRUE) {
+        breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
+        labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+      } else {
+        breaks_y = round(exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = 10)), decimals_y)
+        labels_y = rev(paste(breaks_y, prevalence_label, max_Prevalence))
+      }
+      
       
 
       # NPV tiles
@@ -544,8 +564,7 @@ process_variables <- function(Sensitivity,
 
     p = p + 
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
-      ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
-      ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
+      ggplot2::scale_fill_gradientn(colours = Paleta_legend, na.value = "transparent", breaks = breaks_legend, labels = labels_legend, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 16),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 
@@ -561,8 +580,12 @@ process_variables <- function(Sensitivity,
                     x = x_axis_label, 
                     y = y_axis_label)
     
-    
-      # Output vars -------------------------------------------------------------
+    if (one_out_of == TRUE) {
+      p = p + ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0))
+    } else {
+      p = p + ggplot2::scale_y_log10(breaks = breaks_y, labels = labels_y, expand = c(0,0))
+    }
+      # Output vars ---
       
       return(p)
       
@@ -609,6 +632,7 @@ process_variables <- function(Sensitivity,
            max_FP,
            Max_FN,
            Min_FN,
+           one_out_of = TRUE, 
            overlay_labels = "",
            PPV_NPV = "PPV",
            overlay_prevalence_1,
@@ -632,7 +656,7 @@ process_variables <- function(Sensitivity,
            ) {
     
     
-    # Calculate point prevalence ----------------------------------------------
+    # Calculate point prevalence ---
 
     # Use overlay prevalence as a pct
     PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
@@ -646,7 +670,7 @@ process_variables <- function(Sensitivity,
       # dplyr::pull(prevalence_1) # NEW Style
     
     
-    # Get PPV or NPV value ----------------------------------------------------
+    # Get PPV or NPV value ---
 
     list_point_PPV = .get_point_ppv_npv(
       PPV_melted = PPV_melted,
@@ -677,7 +701,7 @@ process_variables <- function(Sensitivity,
       
       
       
-    # Add overlay -------------------------------------------------------------
+    # Add overlay ---
     
     # Size of geom_mark_rect()
     if (uncertainty_prevalence == "high") {
@@ -703,6 +727,7 @@ process_variables <- function(Sensitivity,
       max_FP = max_FP,
       Max_FN = Max_FN,
       Min_FN = Min_FN,
+      one_out_of = one_out_of,
       decimals_x = decimals_x,
       decimals_y = decimals_y,
       prevalence_label = prevalence_label,
@@ -749,7 +774,7 @@ process_variables <- function(Sensitivity,
         )
     
     
-    # Output vars -------------------------------------------------------------
+    # Output vars ---
     
     return(p)
     
@@ -794,6 +819,7 @@ process_variables <- function(Sensitivity,
            max_FP,
            Max_FN,
            Min_FN,
+           one_out_of = TRUE,
            Sensitivity,
            Specificity,
            
@@ -837,6 +863,7 @@ process_variables <- function(Sensitivity,
     max_FP = max_FP,
     Max_FN = Max_FN,
     Min_FN = Min_FN,
+    one_out_of = one_out_of,
     Sensitivity = Sensitivity,
     decimals_x = decimals_x,
     decimals_y = decimals_y,
@@ -867,7 +894,7 @@ process_variables <- function(Sensitivity,
   
   
   
-  # Plot Overlay ------------------------------------------------------------
+  # Plot Overlay ---
   
   # DF for ggforce::geom_mark_rect()
   DF_X = data.frame(x_axis_position = x_axis_position,
@@ -919,7 +946,7 @@ process_variables <- function(Sensitivity,
 .translate_labels <- function(Language, Sensitivity, Specificity, PPV_NPV = "PPV") {
   
   
-  # PPV ---------------------------------------------------------------------
+  # PPV ---
   
   if (PPV_NPV == "PPV") {
     
@@ -945,6 +972,8 @@ process_variables <- function(Sensitivity,
       PPV_NPV_label = "Positive Predictive Value"
     }
     
+    
+  # NPV ---
     
   } else if (PPV_NPV == "NPV") {
     
@@ -975,7 +1004,7 @@ process_variables <- function(Sensitivity,
   }
   
   
-  # Output vars -------------------------------------------------------------
+  # Output vars ---
   
   list(
     label_caption = label_caption,
@@ -1183,17 +1212,17 @@ process_variables <- function(Sensitivity,
 #'     # https://www.google.com/search?q=color+picker
 #'     if (PPV_NPV == "PPV") {
 #'       
-#'       Paleta_DV = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
+#'       Paleta_legend = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
 #'       
 #'     } else if (PPV_NPV == "NPV") {
 #'       
-#'       Paleta_DV = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
+#'       Paleta_legend = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
 #'       
 #'     }
 #'     
 #'     # Breaks and labels for PPV/NPV legend
-#'     breaks_DV = c(0, 0.25, 0.5, 0.75, 1)
-#'     labels_DV = c(0, 25, 50, 75, 100)
+#'     breaks_legend = c(0, 0.25, 0.5, 0.75, 1)
+#'     labels_legend = c(0, 25, 50, 75, 100)
 #'     
 #'     # False Positives (x axis) 
 #'     Steps_FP <- steps_matrix
@@ -1266,7 +1295,7 @@ process_variables <- function(Sensitivity,
 #'     p = p + 
 #'       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
 #'       ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
-#'       ggplot2::scale_fill_gradientn(colours = Paleta_DV, na.value = "transparent", breaks = breaks_DV, labels = labels_DV, limits = c(0,1), name = legend_label) +
+#'       ggplot2::scale_fill_gradientn(colours = Paleta_legend, na.value = "transparent", breaks = breaks_legend, labels = labels_legend, limits = c(0,1), name = legend_label) +
 #'       ggplot2::theme(text = ggplot2::element_text(size = 20),
 #'                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
 #'                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 

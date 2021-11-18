@@ -43,6 +43,9 @@ PPV_heatmap <-
            limits_Sensitivity = NULL, 
            limits_Specificity = NULL, 
            
+           one_out_of = TRUE, 
+           
+           
            # min_FP = 0,
            # max_FP = 10,
            overlay = "no",
@@ -216,7 +219,9 @@ PPV_heatmap <-
         min_FP = min_FP,
         max_FP = max_FP,
         Max_FN = Max_FN,
-        Min_FN = Min_FN
+        Min_FN = Min_FN,
+        
+        one_out_of = one_out_of
       )
 
 
@@ -253,6 +258,9 @@ PPV_heatmap <-
           max_FP = max_FP,
           Max_FN = Max_FN,
           Min_FN = Min_FN,
+          
+          one_out_of = one_out_of, 
+          
           
           Sensitivity = Sensitivity,
           Specificity = Specificity,
@@ -294,6 +302,9 @@ PPV_heatmap <-
           Max_FN = Max_FN,
           Min_FN = Min_FN,
           
+          one_out_of = one_out_of, 
+          
+          
           overlay_labels = overlay_labels,
           overlay_prevalence_1 = overlay_prevalence_1,
           overlay_prevalence_2 = overlay_prevalence_2,
@@ -330,6 +341,8 @@ PPV_heatmap <-
             max_FP = max_FP,
             Max_FN = Max_FN,
             Min_FN = Min_FN,
+            
+            one_out_of = one_out_of, 
             
             decimals_x = decimals$decimals_x,
             decimals_y = decimals$decimals_y,
