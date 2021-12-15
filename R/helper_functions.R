@@ -47,6 +47,7 @@ process_variables <- function(Sensitivity,
   
   max_Specificity = limits_Specificity[2]
   min_Specificity = limits_Specificity[1]
+  
   # Sensitivity range
   # if (Sensitivity + (width_Sensitivity / 2) > 100) {
   #   max_Sensitivity = 100
@@ -122,8 +123,8 @@ process_variables <- function(Sensitivity,
     
     # DEBUG *********************************************
     # ***************************************************
-    # PPV_NPV = "NPV"
-    # min_Prevalence = 50 
+    # PPV_NPV = "PPV"
+    # min_Prevalence = 1 
     # max_Prevalence = 100
     # Sensitivity = 100
     # max_FP = 1
@@ -157,8 +158,15 @@ process_variables <- function(Sensitivity,
     range_prevalence = (max_Prevalence - min_Prevalence)
     Step_size_Prevalence <- range_prevalence / steps_matrix
     
-    if (one_out_of == TRUE) prevalence_2 <- round(seq(min_Prevalence, max_Prevalence, Step_size_Prevalence), 4) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
-    if (one_out_of == FALSE) prevalence_2 <- exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = steps_matrix + 1)) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+
+    if (one_out_of == FALSE) {
+      prevalence_2 <- exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = steps_matrix + 1))# *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+      # prevalence_2 <- pracma::logseq(min_Prevalence, max_Prevalence,  steps_matrix + 1) # GENERATES IDENTICAL SEQUENCE...
+      
+    } else {
+      # prevalence_2 <- round(seq(min_Prevalence, max_Prevalence, Step_size_Prevalence), 4) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+      prevalence_2 <- seq(min_Prevalence, max_Prevalence, length.out = steps_matrix + 1) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
+    }
     
     
     # NEW SYSTEM ---
@@ -178,7 +186,7 @@ process_variables <- function(Sensitivity,
     sensitivity = (100 - Sensitivity_range) / 100
     specificity = rep((100 - max_FP) / 100, steps_matrix + 1) # specificity is fixed when calculating PPV
     
-    # The order of this  %o% multiplications is critical (in NPV they have to be reversed) ¯\_(ツ)_/¯
+    # The order of this %o% multiplications is critical (in NPV they have to be reversed) ¯\_(ツ)_/¯
     TRUE_negatives = (healthy %o% specificity)
     FALSE_negatives = (sick %o% (1 - sensitivity))
     
@@ -205,8 +213,7 @@ process_variables <- function(Sensitivity,
     # Long format para ggplot Heatmap
     PPV_melted_PPV = reshape2::melt(PPV)
     PPV_melted_NPV = reshape2::melt(NPV)
-    PPV_melted = PPV_melted_PPV %>% 
-      cbind(PPV_melted_NPV)
+    PPV_melted = PPV_melted_PPV %>% cbind(PPV_melted_NPV)
     
     # Give names to variables
     names(PPV_melted) = c("prevalence_2", "FP", "PPV", "Prevalence2", "FN", "NPV") 
@@ -340,13 +347,28 @@ process_variables <- function(Sensitivity,
     decimals_healthy_positive = sick_positive %% 1
     label_healthy_aprox = ifelse(decimals_healthy_positive >= .99 | decimals_healthy_positive <= 0.01, "", "~")
     
+    # Standard overlay
+    # Details_point_PPV_NPV = paste0(
+    #   overlay_labels,
+    #   "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+    #   "\n", label_caption_name, ": ", Sensitivity, "% (",label_sick_aprox, ceiling((overlay_prevalence_1 * Sensitivity) /100), " ", label_sick, " +)",
+    #   "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "% (", label_healthy_aprox, ceiling(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100), " ", label_healthy, " +)")
+    #   )
     
+    # NEW overlay
     Details_point_PPV_NPV = paste0(
       overlay_labels,
-      "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
-      "\n", label_caption_name, ": ", Sensitivity, "% (",label_sick_aprox, ceiling((overlay_prevalence_1 * Sensitivity) /100), " ", label_sick, " +)",
-      "\n", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "% (", label_healthy_aprox, ceiling(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100), " ", label_healthy, " +)")
-      )
+        "\n", y_axis_label, ": ", overlay_prevalence_1, " ", prevalence_label, " ", overlay_prevalence_2,
+        "\n", label_caption_name, ": ", Sensitivity, "% ", x_axis_label, ": ", paste0(round(DF_point_PPV_NPV$FP, decimals_x), "% "),
+      "\n ---------------------------------------------",
+      # "\n ___________________________________\n", 
+
+      "\n", overlay_prevalence_1, " ", label_sick, ": ", round((overlay_prevalence_1 * Sensitivity) /100, 1), " (+) ", overlay_prevalence_1 - round((overlay_prevalence_1 * Sensitivity) /100, 1), " (–)",
+      "\n", overlay_prevalence_2 - overlay_prevalence_1, " ", label_healthy, ": ", (overlay_prevalence_2 - overlay_prevalence_1) - round(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100), " (–) ", round(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100), " (+) "
+      # "\n", label_sick, " +: ", round((overlay_prevalence_1 * Sensitivity) /100, 1), " | ", label_healthy, " +: ", round(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100),
+      # "\n", label_sick, " –: ", overlay_prevalence_1 - round((overlay_prevalence_1 * Sensitivity) /100, 1), " | ", label_healthy, " –: ", (overlay_prevalence_2 - overlay_prevalence_1) - round(((overlay_prevalence_2 - overlay_prevalence_1) * DF_point_PPV_NPV$FP)/100)
+    )
+    
 
     # point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
     point_PPV_NPV = calculated_PPV * 100
@@ -435,6 +457,7 @@ process_variables <- function(Sensitivity,
 #' @param prevalence_label .
 #' @param legend_label .
 #' @param x_axis_label .
+#' @param x_axis_label_extra .
 #' @param y_axis_label .
 #'
 #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin element_text
@@ -461,11 +484,20 @@ process_variables <- function(Sensitivity,
            prevalence_label = "",
            legend_label = "",
            x_axis_label,
+           x_axis_label_extra,
            y_axis_label,
            
            DEBUG_MESSAGE = "") {
     
 
+    # DEBUG
+    min_FP <<- min_FP
+    max_FP <<-max_FP
+    decimals_x <<-decimals_x
+    max_Prevalence <<- max_Prevalence
+    min_Prevalence <<- min_Prevalence
+    
+    
     # Global variables ---
     
     # Colors PPV
@@ -473,32 +505,31 @@ process_variables <- function(Sensitivity,
     # Palettes: 0%, 25%, 2550%, 75%, 100%
     if (PPV_NPV == "PPV") {
       
-      Paleta_legend = c("white", "grey", "black", "yellowgreen", "chartreuse4") #Original
+      Paleta_legend <<- c("white", "grey", "black", "yellowgreen", "chartreuse4") #Original
       
     } else if (PPV_NPV == "NPV") {
       
       Paleta_legend = c("white", "grey", "black","#bd7afa", "#420080") # Violet
       # Paleta_legend = c("white", "grey", "black","#D6A8FF", "#420080") # Violet
-      
       # Paleta_legend = c("#ffffff", "grey", "#190d24","#9281c7", "#404788FF") # Violet
       
     }
     
     # Breaks and labels for PPV/NPV legend
-    breaks_legend = c(0, 0.25, 0.5, 0.75, 1)
-    labels_legend = c(0, 25, 50, 75, 100)
+    breaks_legend <<- c(0, 0.25, 0.5, 0.75, 1)
+    labels_legend <<- c(0, 25, 50, 75, 100)
     
     # False Positives (x axis) 
-    Steps_FP <- steps_matrix
-    range_FP = (max_FP - min_FP)
-    step_size_FP <- range_FP/Steps_FP
+    Steps_FP <<- steps_matrix
+    range_FP <<- (max_FP - min_FP)
+    step_size_FP <<- range_FP/Steps_FP
     
     # Sensitivity (For NPV plot)
-    Steps_FN <- steps_matrix
+    Steps_FN <<- steps_matrix
     # Min_FN <- 0
     # Max_FN <- (100 - Sensitivity)
-    range_FN = (Max_FN - Min_FN)
-    Step_size_FN <- range_FN/Steps_FN
+    range_FN <<- (Max_FN - Min_FN)
+    Step_size_FN <<- range_FN/Steps_FN
 
     
     # PPV ---------------------------------------------------------------------
@@ -506,28 +537,19 @@ process_variables <- function(Sensitivity,
     if (PPV_NPV == "PPV") {
       
       # Create plot
-      p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (prevalence_2)))  
-      
-      # BREAKS X # [TODO] Can USE PPV_melted to get this?
-      breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x)
-      # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
-      if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x + 1)
-      
-      labels_x = paste0(breaks_x, "%")
-      
-      # BREAKS Y
       if (one_out_of == TRUE) {
-        breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-        labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+        p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (prevalence_2)))  
       } else {
-        breaks_y = round(exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = 10)), decimals_y)
-        labels_y = rev(paste(breaks_y, prevalence_label, max_Prevalence))
-        
+        p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (prevalence_pct)))    
       }
       
       
+      # BREAKS X # [TODO] Can USE PPV_melted to get this?
+      breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x)
       
-      
+        # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
+        if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x + 1)
+
       # PPV tiles
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
       
@@ -537,35 +559,30 @@ process_variables <- function(Sensitivity,
     } else if (PPV_NPV == "NPV") {
       
       # Create plot
-      p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (prevalence_2)))  
+      if (one_out_of == TRUE) {
+        p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (prevalence_2)))  
+      } else {
+        p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (prevalence_pct)))    
+      }
       
       # BREAKS X # [TODO] Can USE PPV_melted to get this?
       breaks_x = round(seq(Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
-      # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
-      if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FN, to = Max_FN, by = Step_size_FN * 10), decimals_x + 1)
       
-      labels_x = paste0(breaks_x, "%")
-      
-      # BREAKS Y
-      if (one_out_of == TRUE) {
-        breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-        labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
-      } else {
-        breaks_y = round(exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = 10)), decimals_y)
-        labels_y = rev(paste(breaks_y, prevalence_label, max_Prevalence))
-      }
-      
-      
+        # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
+        if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FN, to = Max_FN, by = Step_size_FN * 10), decimals_x + 1)
 
       # NPV tiles
       p = p + ggplot2::geom_tile(ggplot2::aes(fill = NPV), colour = "white")
       
     }
 
-    p = p + 
+    labels_x = paste0(breaks_x, "%")
+    
+    p <- p + 
       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
       ggplot2::scale_fill_gradientn(colours = Paleta_legend, na.value = "transparent", breaks = breaks_legend, labels = labels_legend, limits = c(0,1), name = legend_label) +
       ggplot2::theme(text = ggplot2::element_text(size = 16),
+                     panel.background = ggplot2::element_rect(fill = "transparent"),
                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 
                      axis.title.x = ggplot2::element_text(margin = ggplot2::margin(10,0,0,0)),
@@ -577,18 +594,55 @@ process_variables <- function(Sensitivity,
       ggplot2::labs(title = label_title,
                     subtitle = label_subtitle, 
                     caption = label_caption,
-                    x = x_axis_label, 
+                    x = paste(x_axis_label, x_axis_label_extra), 
                     y = y_axis_label)
     
+    
+
+  # Y axis breaks -----------------------------------------------------------
+
+    min_prevalence_pct = min(PPV_melted$prevalence_pct)
+    max_prevalence_pct = max(PPV_melted$prevalence_pct)
+
+    num_breaks = 10
+    
+    # BREAKS Y
+    if (one_out_of == TRUE) {
+      
+      # breaks_y = unique(PPV_melted$prevalence_pct)[c(seq(1, steps_matrix, 10), 101)]
+      breaks_y <- round(seq(min_Prevalence, max_Prevalence, length.out = num_breaks), 0)
+      
+      # 1 out of MAX
+      # labels_y <- rev(paste(round(breaks_y, 0), "out of", max_Prevalence))
+      
+      # 1 out of 1
+      labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
+      
+    } else {
+      
+      breaks_y <- pracma::logseq(min_prevalence_pct, max_prevalence_pct,  num_breaks)
+      labels_y <- paste(round(breaks_y * max_Prevalence, 0), prevalence_label, max_Prevalence) # breaks_y * max_Prevalence
+      
+      # OLD way, unequal space between labels
+      # breaks_y <- round(exp(seq(log(min_Prevalence), log(max_Prevalence), length.out = 10)), decimals_y)
+      # labels_y <- rev(paste(breaks_y, prevalence_label, max_Prevalence))
+    }
+    
+    
+    # Change scale depending on one_out_of
     if (one_out_of == TRUE) {
       p = p + ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0))
     } else {
-      p = p + ggplot2::scale_y_log10(breaks = breaks_y, labels = labels_y, expand = c(0,0))
+      # p = p + ggplot2::scale_y_log10(breaks = breaks_y, labels = labels_y, expand = c(0,0))
+      # trans_reverser() to reverse a log scale
+      p = p +  ggplot2::scale_y_continuous(trans = ggforce::trans_reverser('log10'), breaks = breaks_y, labels = labels_y, expand = c(0,0)) 
+      
+
     }
-      # Output vars ---
-      
-      return(p)
-      
+    
+    # Output vars ---
+    return(p)
+    
   }
 
 
@@ -614,6 +668,7 @@ process_variables <- function(Sensitivity,
 #' @param label_title .
 #' @param label_subtitle .
 #' @param x_axis_label .
+#' @param x_axis_label_extra .
 #' @param y_axis_label .
 #' @param overlay_position_FP .
 #' @param overlay_position_FN .
@@ -652,22 +707,31 @@ process_variables <- function(Sensitivity,
            label_caption_name,
            
            x_axis_label,
+           x_axis_label_extra,
            y_axis_label
            ) {
     
     
     # Calculate point prevalence ---
 
-    # Use overlay prevalence as a pct
+    # # Use overlay prevalence as a pct
     PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
-  
-    # Looks for closer value of prevalence_2 (prevalence_2) using the prevalence_pct
+    # 
+    # # Looks for closer value of prevalence_2 (prevalence_2) using the prevalence_pct
       # Sets the y axis position of overlay
-    point_Prevalence = PPV_melted %>%
-      dplyr::filter(abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay))) %>% 
-      dplyr::sample_n(1) %>% 
-      dplyr::pull(prevalence_2) # OLD Style
-      # dplyr::pull(prevalence_1) # NEW Style
+    point_Prevalence_DF = PPV_melted %>%
+      dplyr::filter(abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay))) %>%
+      dplyr::sample_n(1)
+      # dplyr::pull(prevalence_2) # OLD Style
+      # dplyr::pull(prevalence_pct) # ? Style
+    # dplyr::pull(prevalence_1) # NEW Style
+    
+    
+    if (one_out_of == TRUE) {
+      point_Prevalence <- point_Prevalence_DF %>% dplyr::pull(prevalence_2) 
+    } else {
+      point_Prevalence <- point_Prevalence_DF %>% dplyr::pull(prevalence_pct) 
+    }
     
     
     # Get PPV or NPV value ---
@@ -737,6 +801,7 @@ process_variables <- function(Sensitivity,
       label_caption = label_caption,
       
       x_axis_label = x_axis_label,
+      x_axis_label_extra = x_axis_label_extra,
       y_axis_label = y_axis_label,
       
       PPV_NPV = PPV_NPV,
@@ -766,7 +831,7 @@ process_variables <- function(Sensitivity,
         # Description white rectangle
         label.colour = "black",
         description = paste0(list_point_PPV$Details_point_PPV_NPV),
-        label.width = 83, # Adjust to fit label
+        label.width = 85, # Adjust to fit label
         label.minwidth = 35, 
         
         # Connector (line)
@@ -800,6 +865,7 @@ process_variables <- function(Sensitivity,
 #' @param decimals_y .
 #' @param prevalence_label .
 #' @param x_axis_label .
+#' @param x_axis_label_extra .
 #' @param y_axis_label .
 #' @param overlay_position_FP .
 #' @param overlay_position_FN .
@@ -841,6 +907,7 @@ process_variables <- function(Sensitivity,
            prevalence_label,
            
            x_axis_label,
+           x_axis_label_extra,
            y_axis_label) {
     
     
@@ -870,6 +937,7 @@ process_variables <- function(Sensitivity,
     prevalence_label = prevalence_label,
     
     x_axis_label = x_axis_label,
+    x_axis_label_extra = x_axis_label_extra,
     y_axis_label = y_axis_label,
     
     legend_label = legend_label,
@@ -955,7 +1023,8 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Sensibilidad"
       label_caption = paste0("Sensibilidad = ", Sensitivity, "%")
-      x_axis_label = "Falsos Positivos"
+      x_axis_label = "Falsos +"
+      x_axis_label_extra = "(1 - Especificidad)"
       y_axis_label = "Prevalencia"
       prevalence_label = "de"
       legend_label = "Valor\nPredictivo\nPositivo (%)\n "
@@ -965,7 +1034,8 @@ process_variables <- function(Sensitivity,
       
       label_caption_name = "Sensitivity"
       label_caption = paste0("Sensitivity = ", Sensitivity, "%")
-      x_axis_label = "False Positives"
+      x_axis_label = "False +"
+      x_axis_label_extra = "(1 - Specificity)"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
       legend_label = "Positive\nPredictive\nValue (%)\n "
@@ -984,6 +1054,7 @@ process_variables <- function(Sensitivity,
       label_caption_name = "Especificidad"
       label_caption = paste0("Especificidad = ", Specificity, "%") #Tasa de Verdaderos Negativos
       x_axis_label = "Falsos Negativos"
+      x_axis_label_extra = "(1 - Sensibilidad)"
       y_axis_label = "Prevalencia"
       prevalence_label = "de"
       legend_label = "Valor\nPredictivo\nNegativo (%)\n "
@@ -994,6 +1065,7 @@ process_variables <- function(Sensitivity,
       label_caption_name = "Specificity"
       label_caption = paste0("Specificity = ", Specificity, "%") #True Negative Rate
       x_axis_label = "False Negatives"
+      x_axis_label_extra = "(1 - Sensitivity)"
       y_axis_label = "Prevalence"
       prevalence_label = "out of"
       legend_label = "Negative\nPredictive\nValue (%)\n "
@@ -1010,6 +1082,7 @@ process_variables <- function(Sensitivity,
     label_caption = label_caption,
     label_caption_name = label_caption_name,
     x_axis_label = x_axis_label,
+    x_axis_label_extra = x_axis_label_extra,
     y_axis_label = y_axis_label,
     prevalence_label = prevalence_label,
     legend_label = legend_label,
@@ -1017,299 +1090,3 @@ process_variables <- function(Sensitivity,
   )
   
 }
-
-
-
-
-
-
-
-#' 
-#' 
-#' #' .createPPVmatrix
-#' #'
-#' #' Create a PPV matrix helper function
-#' #' 
-#' #' @param min_Prevalence [x] out of y prevalence of disease
-#' #' @param max_Prevalence x out of [y] prevalence of disease
-#' #' @param Sensitivity Sensitivity of test
-#' #' @param max_FP Maximum False Positive ratio
-#' #' @param min_FP Minimum False Positive ratio
-#' #' @param steps_matrix How big the matrix should be (probably better to leave as it is: 100)
-#' #'
-#' #' @return A DF called PPV
-#' #' @importFrom reshape2 melt
-#' #'
-#' .createPPVmatrix <-
-#'   function(min_Prevalence = 1,
-#'            max_Prevalence = 1000,
-#'            Sensitivity = 100,
-#'            min_FP = 0,
-#'            max_FP = 10,
-#'            steps_matrix = 100) {
-#'     
-#'     
-#'     
-#'     # DEBUG *********************************************
-#'     # ***************************************************
-#'     # PPV_NPV = "NPV"
-#'     # min_Prevalence = 1 
-#'     # max_Prevalence = 500
-#'     # Sensitivity = 85
-#'     # max_FP = 1
-#'     # steps_matrix = 100
-#'     # 
-#'     # min_FP = 0
-#'     
-#'     # ***************************************************
-#'     # ***************************************************
-#'     
-#'     
-#'     # False Positives (x axis) 
-#'     Steps_FP <- steps_matrix
-#'     range_FP = (max_FP - min_FP)
-#'     step_size_FP <- range_FP/Steps_FP
-#'     FP = seq(min_FP, max_FP, step_size_FP)
-#'     
-#'     
-#'     # Sensitivity
-#'     Steps_FN <- steps_matrix
-#'     Min_FN <- 0
-#'     Max_FN <- (100 - Sensitivity)
-#'     range_FN = (Max_FN - Min_FN)
-#'     Step_size_FN <- range_FN/Steps_FN
-#'     Sensitivity_range = seq(Min_FN, Max_FN, Step_size_FN)
-#'     
-#'     
-#'     # prevalence_2
-#'     Steps_Prevalence <- steps_matrix
-#'     range_prevalence = (max_Prevalence - min_Prevalence)
-#'     Step_size_Prevalence <- range_prevalence / Steps_Prevalence
-#'     # prevalence_2 <- round(seq(min_Prevalence, (max_Prevalence), Step_size_Prevalence), 4) # *prevalence_2* of sick [x] out of y
-#'     
-#'     
-#'     prevalence_1 <- round(seq(min_Prevalence, (max_Prevalence), Step_size_Prevalence), 4) # *prevalence_2* of sick [x] out of y
-#'     prevalence_2 <- max_Prevalence
-#'     
-#'     
-#'     # PPV Calculation -------------------------------------------------------------
-#'     
-#'     # We calculate a 100x100 PPV matrix using %o% (outer)
-#'     PPV <- round((Sensitivity * prevalence_1) / ((Sensitivity * prevalence_1) + ((rep(prevalence_2, steps_matrix + 1) - 1) %o% FP)), 2)
-#'     
-#'     NPV <- round(((prevalence_2 - prevalence_1) * (100 - max_FP)) / (((prevalence_2 - prevalence_1) * (100 - max_FP)) + (rep(prevalence_2, steps_matrix + 1)  %o% Sensitivity_range)), 2)
-#'     # (Healthy * Specificity) / (Healthy * Specificity) + (Sick * FN)
-#'     
-#'     #Label columns and rows of matrix
-#'     colnames(PPV) = FP
-#'     rownames(PPV) = rep(prevalence_2, steps_matrix + 1)
-#'     
-#'     colnames(NPV) = Sensitivity_range
-#'     rownames(NPV) = rep(prevalence_2, steps_matrix + 1)
-#'     
-#'     
-#'     # Long format para ggplot Heatmap
-#'     PPV_melted_PPV = reshape2::melt(PPV)
-#'     PPV_melted_NPV = reshape2::melt(NPV)
-#'     PPV_melted = PPV_melted_PPV %>% 
-#'       cbind(PPV_melted_NPV)
-#'     
-#'     # Give names to variables
-#'     names(PPV_melted) = c("prevalence_2", "FP", "PPV", "Prevalence2", "FN", "NPV") 
-#'     
-#'     PPV_melted = 
-#'       PPV_melted %>% 
-#'       dplyr::mutate(prevalence_1 = rep(prevalence_1, steps_matrix + 1),
-#'                     prevalence_2 = as.double(prevalence_2)
-#'                     ) %>% 
-#'       dplyr::select(-Prevalence2) %>% 
-#'       dplyr::select(prevalence_1, dplyr::everything()) %>% 
-#'       dplyr::mutate(prevalence_pct = prevalence_1/prevalence_2) %>% 
-#'       dplyr::as_tibble()
-#'     
-#'     return(PPV_melted)
-#'     
-#'   }
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' 
-#' #' .plot_creation
-#' #' 
-#' #' Function to create the main heatmap plot
-#' #' 
-#' #' @param PPV_melted .
-#' #' @param Sensitivity .
-#' #' @param PPV_NPV .
-#' #' @param min_Prevalence .
-#' #' @param min_FP .
-#' #' @param max_FP .
-#' #' @param steps_matrix .
-#' #' @param decimals_x .
-#' #' @param decimals_y .
-#' #' @param label_title .
-#' #' @param label_subtitle .
-#' #' @param label_caption .
-#' #' @param prevalence_label .
-#' #' @param legend_label .
-#' #' @param x_axis_label .
-#' #' @param y_axis_label .
-#' #'
-#' #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin element_text
-#' #'
-#' .plot_creation <-
-#'   function(PPV_melted,
-#'            min_Prevalence,
-#'            max_Prevalence,
-#'            Sensitivity,
-#'            PPV_NPV = "PPV",
-#'            min_FP = 0,
-#'            max_FP,
-#'            steps_matrix = 100, 
-#'            decimals_x,
-#'            decimals_y,
-#'            label_title = "",
-#'            label_subtitle = "",
-#'            label_caption = "",           
-#'            prevalence_label = "",
-#'            legend_label = "",
-#'            x_axis_label,
-#'            y_axis_label,
-#'            
-#'            DEBUG_MESSAGE = "") {
-#'     
-#'     
-#'     
-#'     
-#'     # PPV_melted <<- PPV_melted
-#'     # min_Prevalence <<- min_Prevalence
-#'     # max_Prevalence <<- max_Prevalence
-#'     # Sensitivity <<- Sensitivity
-#'     # PPV_NPV <<- PPV_NPV
-#'     # min_FP <<- min_FP
-#'     # max_FP <<- max_FP
-#'     # steps_matrix <<- steps_matrix
-#'     # decimals_x <<- decimals_x
-#'     # decimals_y <<- decimals_y
-#'     # label_title <<- label_title
-#'     # label_subtitle <<- label_subtitle
-#'     # label_caption <<- label_caption
-#'     # prevalence_label <<- prevalence_label
-#'     # legend_label <<- legend_label
-#'     # x_axis_label <<- x_axis_label
-#'     # y_axis_label <<- y_axis_label
-#'     
-#'     
-#'     
-#'     # Global variables -------------------------------------------------------
-#'     
-#'     # Colors PPV
-#'     # https://www.google.com/search?q=color+picker
-#'     if (PPV_NPV == "PPV") {
-#'       
-#'       Paleta_legend = c("white", "grey", "1b2610", "yellowgreen", "chartreuse4") #Original
-#'       
-#'     } else if (PPV_NPV == "NPV") {
-#'       
-#'       Paleta_legend = c("#ffffff", "grey", "#190d24","#bd7afa", "#420080") # Violet
-#'       
-#'     }
-#'     
-#'     # Breaks and labels for PPV/NPV legend
-#'     breaks_legend = c(0, 0.25, 0.5, 0.75, 1)
-#'     labels_legend = c(0, 25, 50, 75, 100)
-#'     
-#'     # False Positives (x axis) 
-#'     Steps_FP <- steps_matrix
-#'     range_FP = (max_FP - min_FP)
-#'     step_size_FP <- range_FP/Steps_FP
-#'     
-#'     # Sensitivity (For NPV plot)
-#'     Steps_FN <- steps_matrix
-#'     Min_FN <- 0
-#'     Max_FN <- (100 - Sensitivity)
-#'     range_FN = (Max_FN - Min_FN)
-#'     Step_size_FN <- range_FN/Steps_FN
-#'     
-#'     
-#'     # PPV ---------------------------------------------------------------------
-#'     
-#'     if (PPV_NPV == "PPV") {
-#'       
-#'       # label_caption = paste0("Sensitivity = ", Sensitivity, "%")
-#'       
-#'       # Create plot
-#'       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FP, (prevalence_1)))  
-#'       
-#'       # BREAKS X # [TODO] Can USE PPV_melted to get this?
-#'       breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x)
-#'       # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
-#'       if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = min_FP, to = max_FP, by = step_size_FP * 10), decimals_x + 1)
-#'       
-#'       labels_x = paste0(breaks_x, "%")
-#'       
-#'       # BREAKS Y
-#'       # breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-#'       # labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
-#'       
-#'       breaks_y = round(unique(PPV_melted$prevalence_1)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-#'       labels_y = paste(breaks_y, prevalence_label, max_Prevalence)
-#'       
-#'       # PPV tiles
-#'       p = p + ggplot2::geom_tile(ggplot2::aes(fill = PPV), colour = "white")
-#'       
-#'       
-#'       # NPV ---------------------------------------------------------------------
-#'       
-#'     } else if (PPV_NPV == "NPV") {
-#'       
-#'       # label_caption = paste0("Specificity = ", 100 - max_FP, "%")
-#'       
-#'       # Create plot
-#'       p = ggplot2::ggplot(PPV_melted, ggplot2::aes(FN, (prevalence_1)))  
-#'       
-#'       # BREAKS X # [TODO] Can USE PPV_melted to get this?
-#'       breaks_x = round(seq(Min_FN, Max_FN, Step_size_FN * 10), decimals_x)
-#'       # With no decimals sometimes the breaks are not equidistant. This is a hacky way to solve it
-#'       if (length(unique(diff(breaks_x))) > 1) breaks_x = round(seq(from = Min_FN, to = Max_FN, by = Step_size_FN * 10), decimals_x + 1)
-#'       
-#'       labels_x = paste0(breaks_x, "%")
-#'       
-#'       # BREAKS Y
-#'       # breaks_y = round(unique(PPV_melted$prevalence_2)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-#'       # labels_y = paste(min_Prevalence, prevalence_label, breaks_y)
-#'       breaks_y = round(unique(PPV_melted$prevalence_1)[c(seq(1, steps_matrix, 10), 101)], decimals_y)
-#'       labels_y = paste(breaks_y, prevalence_label, max_Prevalence)
-#'       
-#'       
-#'       # NPV tiles
-#'       p = p + ggplot2::geom_tile(ggplot2::aes(fill = NPV), colour = "white")
-#'       
-#'     }
-#'     
-#'     p = p + 
-#'       ggplot2::scale_x_continuous(breaks = breaks_x, labels = labels_x, expand = c(0,0)) +
-#'       ggplot2::scale_y_continuous(breaks = breaks_y, labels = labels_y, expand = c(0,0)) + 
-#'       ggplot2::scale_fill_gradientn(colours = Paleta_legend, na.value = "transparent", breaks = breaks_legend, labels = labels_legend, limits = c(0,1), name = legend_label) +
-#'       ggplot2::theme(text = ggplot2::element_text(size = 20),
-#'                      plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
-#'                      axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0,10,0,0)), 
-#'                      axis.title.x = ggplot2::element_text(margin = ggplot2::margin(10,0,0,0))) +
-#'       ggplot2::labs(title = label_title,
-#'                     subtitle = label_subtitle, 
-#'                     caption = label_caption,
-#'                     x = x_axis_label, 
-#'                     y = y_axis_label)
-#'     
-#'     
-#'     # Output vars -------------------------------------------------------------
-#'     
-#'     return(p)
-#'     
-#'   }
-#' 

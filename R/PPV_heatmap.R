@@ -212,7 +212,7 @@ PPV_heatmap <-
 
   # Create PPV matrix -------------------------------------------------------
 
-      PPV_melted = .createPPVmatrix(
+      PPV_melted <<- .createPPVmatrix(
         min_Prevalence = min_Prevalence,
         max_Prevalence = max_Prevalence,
         Sensitivity = Sensitivity,
@@ -280,6 +280,7 @@ PPV_heatmap <-
           
           label_caption = translated_labels$label_caption,
           x_axis_label = translated_labels$x_axis_label,
+          x_axis_label_extra = translated_labels$x_axis_label_extra,
           y_axis_label = translated_labels$y_axis_label,
           prevalence_label = translated_labels$prevalence_label,
           legend_label = translated_labels$legend_label,
@@ -321,6 +322,7 @@ PPV_heatmap <-
           label_caption = translated_labels$label_caption,
           label_caption_name = translated_labels$label_caption_name,
           x_axis_label = translated_labels$x_axis_label,
+          x_axis_label_extra = translated_labels$x_axis_label_extra,
           y_axis_label = translated_labels$y_axis_label,
           prevalence_label = translated_labels$prevalence_label,
           legend_label = translated_labels$legend_label,
@@ -352,6 +354,7 @@ PPV_heatmap <-
 
             label_caption = translated_labels$label_caption,
             x_axis_label = translated_labels$x_axis_label,
+            x_axis_label_extra = translated_labels$x_axis_label_extra,
             y_axis_label = translated_labels$y_axis_label,
             prevalence_label = translated_labels$prevalence_label,
             legend_label = translated_labels$legend_label,

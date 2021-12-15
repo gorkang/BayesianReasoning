@@ -15,6 +15,7 @@
   max_FP,
   Max_FN,
   Min_FN,
+  one_out_of = TRUE,
   overlay_labels = "",
   PPV_NPV = "PPV",
   overlay_prevalence_1,
@@ -31,6 +32,7 @@
   label_caption,
   label_caption_name,
   x_axis_label,
+  x_axis_label_extra,
   y_axis_label
 )
 }
@@ -74,6 +76,8 @@
 \item{label_subtitle}{.}
 
 \item{x_axis_label}{.}
+
+\item{x_axis_label_extra}{.}
 
 \item{y_axis_label}{.}
 }

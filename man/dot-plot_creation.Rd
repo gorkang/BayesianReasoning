@@ -14,6 +14,7 @@
   max_FP,
   Max_FN,
   Min_FN,
+  one_out_of = TRUE,
   steps_matrix = 100,
   decimals_x,
   decimals_y,
@@ -23,6 +24,7 @@
   prevalence_label = "",
   legend_label = "",
   x_axis_label,
+  x_axis_label_extra,
   y_axis_label,
   DEBUG_MESSAGE = ""
 )
@@ -57,6 +59,8 @@
 \item{legend_label}{.}
 
 \item{x_axis_label}{.}
+
+\item{x_axis_label_extra}{.}
 
 \item{y_axis_label}{.}
 }

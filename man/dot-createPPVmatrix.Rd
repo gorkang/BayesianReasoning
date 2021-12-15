@@ -8,6 +8,7 @@
   min_Prevalence = 1,
   max_Prevalence = 1000,
   Sensitivity = 100,
+  one_out_of = TRUE,
   min_FP = 0,
   max_FP = 10,
   Max_FN = 0,

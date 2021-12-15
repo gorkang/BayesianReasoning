@@ -14,6 +14,7 @@
   max_FP,
   Max_FN,
   Min_FN,
+  one_out_of = TRUE,
   Sensitivity,
   Specificity,
   overlay_prevalence_1,
@@ -29,6 +30,7 @@
   decimals_y,
   prevalence_label,
   x_axis_label,
+  x_axis_label_extra,
   y_axis_label
 )
 }
@@ -70,6 +72,8 @@
 \item{prevalence_label}{.}
 
 \item{x_axis_label}{.}
+
+\item{x_axis_label_extra}{.}
 
 \item{y_axis_label}{.}
 }

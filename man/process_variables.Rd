@@ -9,7 +9,9 @@ process_variables(
   Sensitivity,
   Specificity,
   width_Sensitivity = 10,
-  width_Specificity = 10
+  width_Specificity = 10,
+  limits_Sensitivity = NULL,
+  limits_Specificity = NULL
 )
 }
 \arguments{
