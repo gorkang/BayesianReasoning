@@ -13,27 +13,21 @@
   Specificity,
   min_FP = 0,
   max_FP,
-  Max_FN,
-  Min_FN,
+  max_FN,
+  min_FN,
   one_out_of = TRUE,
   overlay_labels = "",
   PPV_NPV = "PPV",
+  Language = "en",
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_position_FP,
   overlay_position_FN,
   decimals_x,
   decimals_y,
-  prevalence_label,
-  legend_label,
-  PPV_NPV_label,
   label_title,
   label_subtitle,
-  label_caption,
-  label_caption_name,
-  x_axis_label,
-  x_axis_label_extra,
-  y_axis_label
+  translated_labels = translated_labels
 )
 }
 \arguments{
@@ -55,6 +49,8 @@
 
 \item{PPV_NPV}{.}
 
+\item{Language}{.}
+
 \item{overlay_prevalence_1}{[x] out of y prevalence of disease for the overlay}
 
 \item{overlay_prevalence_2}{x out of [y] prevalence of disease for the overlay}
@@ -67,19 +63,11 @@
 
 \item{decimals_y}{.}
 
-\item{prevalence_label}{.}
-
-\item{legend_label}{.}
-
 \item{label_title}{.}
 
 \item{label_subtitle}{.}
 
-\item{x_axis_label}{.}
-
-\item{x_axis_label_extra}{.}
-
-\item{y_axis_label}{.}
+\item{translated_labels}{.}
 }
 \description{
 Add area overlay to PPV_heatmap plot

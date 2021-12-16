@@ -7,6 +7,7 @@
 .get_point_ppv_npv(
   PPV_melted,
   PPV_NPV = "PPV",
+  Language,
   Sensitivity,
   Specificity,
   overlay_prevalence_1,
@@ -15,10 +16,7 @@
   overlay_position_FP,
   overlay_position_FN,
   point_Prevalence,
-  prevalence_label,
-  x_axis_label,
-  y_axis_label,
-  label_caption_name,
+  translated_labels,
   decimals_x,
   decimals_y
 )
@@ -27,6 +25,8 @@
 \item{PPV_melted}{DF out of .createPPVmatrix()}
 
 \item{PPV_NPV}{Should calculate PPV or NPV?}
+
+\item{Language}{["en" / "es"]}
 
 \item{Sensitivity}{Sensitivity of the test}
 
@@ -44,11 +44,7 @@
 
 \item{point_Prevalence}{.}
 
-\item{prevalence_label}{.}
-
-\item{x_axis_label}{.}
-
-\item{y_axis_label}{.}
+\item{translated_labels}{}
 
 \item{decimals_x}{.}
 

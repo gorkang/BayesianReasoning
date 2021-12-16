@@ -8,24 +8,18 @@
   PPV_melted,
   min_Prevalence,
   max_Prevalence,
-  Sensitivity,
   PPV_NPV = "PPV",
   min_FP = 0,
   max_FP,
-  Max_FN,
-  Min_FN,
+  max_FN,
+  min_FN,
   one_out_of = TRUE,
   steps_matrix = 100,
   decimals_x,
   decimals_y,
   label_title = "",
   label_subtitle = "",
-  label_caption = "",
-  prevalence_label = "",
-  legend_label = "",
-  x_axis_label,
-  x_axis_label_extra,
-  y_axis_label,
+  translated_labels = translated_labels,
   DEBUG_MESSAGE = ""
 )
 }
@@ -33,8 +27,6 @@
 \item{PPV_melted}{.}
 
 \item{min_Prevalence}{.}
-
-\item{Sensitivity}{.}
 
 \item{PPV_NPV}{.}
 
@@ -52,17 +44,9 @@
 
 \item{label_subtitle}{.}
 
-\item{label_caption}{.}
+\item{translated_labels}{.}
 
-\item{prevalence_label}{.}
-
-\item{legend_label}{.}
-
-\item{x_axis_label}{.}
-
-\item{x_axis_label_extra}{.}
-
-\item{y_axis_label}{.}
+\item{Sensitivity}{.}
 }
 \description{
 Function to create the main heatmap plot

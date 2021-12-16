@@ -11,9 +11,9 @@
 
 \item{Sensitivity}{.}
 
-\item{PPV_NPV}{.}
+\item{Specificity}{.}
 
-\item{max_FP}{.}
+\item{PPV_NPV}{.}
 }
 \value{
 A list with labels

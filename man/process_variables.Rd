@@ -8,10 +8,9 @@ Process main variables, checks for errors, creates ranges...}
 process_variables(
   Sensitivity,
   Specificity,
-  width_Sensitivity = 10,
-  width_Specificity = 10,
   limits_Sensitivity = NULL,
-  limits_Specificity = NULL
+  limits_Specificity = NULL,
+  PPV_NPV = "PPV"
 )
 }
 \arguments{
@@ -19,9 +18,9 @@ process_variables(
 
 \item{Specificity}{}
 
-\item{width_Sensitivity}{}
+\item{limits_Sensitivity}{}
 
-\item{width_Specificity}{}
+\item{limits_Specificity}{}
 }
 \description{
 process_variables

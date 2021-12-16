@@ -1,11 +1,20 @@
 # BayesianReasoning 0.3.3.9990
 
-Minor update  
+Major updates
+
+* Refactored the way we calculate PPV and NPV
+* Added new parameter to control type of y scale (one_out_of)
+* Added new parameter to control x axis (limits_Sensitivity and limits_Specificity)
+* Added multiple checks to catch corner conditions
+* Renamed lots of parameters to make things more coherent
+
+Minor updates  
 
 * Avoid acronyms
 * Add bold label to area overlay
 * Get rid of extra character in legend
 * Translate all elements in area overlay
+* Changed palette for NPV plots
 
 
 # BayesianReasoning 0.3.3

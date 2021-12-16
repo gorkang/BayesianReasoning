@@ -8,11 +8,12 @@
   min_Prevalence = 1,
   max_Prevalence = 1000,
   Sensitivity = 100,
+  Specificity = 99,
   one_out_of = TRUE,
   min_FP = 0,
   max_FP = 10,
-  Max_FN = 0,
-  Min_FN = 10,
+  max_FN = 0,
+  min_FN = 10,
   steps_matrix = 100
 )
 }
@@ -23,9 +24,17 @@
 
 \item{Sensitivity}{Sensitivity of test}
 
+\item{Specificity}{Specificity of test}
+
+\item{one_out_of}{.}
+
 \item{min_FP}{Minimum False Positive ratio}
 
 \item{max_FP}{Maximum False Positive ratio}
+
+\item{max_FN}{.}
+
+\item{min_FN}{.}
 
 \item{steps_matrix}{How big the matrix should be (probably better to leave as it is: 100)}
 }

@@ -43,7 +43,7 @@ testthat::test_that("Spanish translation works'", {
     Language = "sp"
   )
   testthat::expect_identical(p$labels$y, "Prevalencia")
-  testthat::expect_identical(p$labels$x, "Tasa de Falsos Positivos")
+  testthat::expect_identical(p$labels$x, "Falsos + (1 - Especificidad)")
   
 })
 
@@ -58,7 +58,7 @@ testthat::test_that("Spanish NPV'", {
     Language = "sp"
   )
   testthat::expect_identical(p$labels$y, "Prevalencia")
-  testthat::expect_identical(p$labels$x, "Tasa de Falsos Negativos")
+  testthat::expect_identical(p$labels$x, "Falsos Negativos (1 - Sensibilidad)")
   
 })
 
@@ -116,14 +116,15 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
     )
   
   
-    testthat::expect_identical(
-    p$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\nPrevalence: 2 out of 8\nSensitivity : 81%\nFalse Positive rate: 5%")
-
+  # Overlay description
+  testthat::expect_identical(
+  p$layers[[3]]$computed_geom_params$description,
+  "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% \n ---------------------------------------------\n2 sick: 1.6 (+) 0.4 (–)\n6 healthy: 5.7 (–) 0.3 (+) ")
+    
   # Decimal breaks y axis
   testthat::expect_identical(
     p$plot_env$breaks_y,
-    c(1.0, 1.7, 2.4, 3.1, 3.8, 4.5, 5.2, 5.9, 6.6, 7.3, 8.0))
+    c(1.0, 1.5, 2, 2.5, 3.0, 3.5, 4, 4.5, 5, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0))
 
 })
 
@@ -163,10 +164,11 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
       uncertainty_prevalence = "low",
       PPV_NPV = "NPV"
     )
+  
   testthat::expect_identical(
     p$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\nPrevalence: 67 out of 68\nSpecificity : 95%\nFalse Negative rate: 1%")
-
+    "40 y.o.\nPrevalence: 67 out of 68\nSpecificity: 95%\nFalse Negatives: 1%\n ---------------------------------------------\n67 sick: 54.3 (+) 12.7 (–)\n1 healthy: 1 (–) 0 (+) ")
+  
 })
 
 
@@ -241,7 +243,7 @@ testthat::test_that("Plot with line overlay", {
 
 testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
   
-  res <- evaluate_promise(
+  res <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2000,
       max_Prevalence = 1000,
@@ -256,7 +258,7 @@ testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
 
 testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
   
-  res <- evaluate_promise(
+  res <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2,
       max_Prevalence = 1000,
@@ -278,7 +280,7 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
 
 testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
   
-  res <- evaluate_promise(
+  res <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2,
       max_Prevalence = 1000,
@@ -299,7 +301,7 @@ testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
 
 testthat::test_that("WARNINGS - NPV", {
   
-  res <- evaluate_promise(
+  res <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       DEBUG = 1,

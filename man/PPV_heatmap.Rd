@@ -9,15 +9,13 @@ PPV_heatmap(
   max_Prevalence = 1000,
   Sensitivity = 95,
   Specificity = 95,
-  width_Sensitivity = 10,
-  width_Specificity = 10,
   limits_Sensitivity = NULL,
   limits_Specificity = NULL,
-  one_out_of = TRUE,
+  one_out_of = FALSE,
   overlay = "no",
   overlay_labels = "",
-  overlay_position_FP = 1,
-  overlay_position_FN = 1,
+  overlay_position_FP = NULL,
+  overlay_position_FN = NULL,
   overlay_prevalence_1 = 1,
   overlay_prevalence_2 = 100,
   uncertainty_prevalence = "high",
@@ -26,6 +24,7 @@ PPV_heatmap(
   Language = "en",
   folder = "",
   PPV_NPV = "PPV",
+  steps_matrix = 100,
   DEBUG = 0
 )
 }
@@ -35,6 +34,14 @@ PPV_heatmap(
 \item{max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
 
 \item{Sensitivity}{Sensitivity of the test: [0-100]}
+
+\item{Specificity}{Specificity of the test: [0-100]}
+
+\item{limits_Sensitivity}{c(min Sensitivity, max Sensitivity)}
+
+\item{limits_Specificity}{c(min Specificity, max Specificity)}
+
+\item{one_out_of}{Show y scale as 1 out of x [TRUE, FALSE] FALSE by default}
 
 \item{overlay}{Show overlay: [TRUE, FALSE]}
 
@@ -60,6 +67,8 @@ PPV_heatmap(
 
 \item{PPV_NPV}{Should show PPV or NPV [PPV/NPV]}
 
+\item{steps_matrix}{with of PPV/NPV matrix. 100 by default}
+
 \item{DEBUG}{Shows debug warnings [0/1]}
 }
 \value{
@@ -72,6 +81,6 @@ Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences
 PPV_heatmap(min_Prevalence = 1, 
 max_Prevalence = 1000, 
 Sensitivity = 100, 
-max_FP = 2, 
+Specificity = 98, 
 Language = "en")
 }

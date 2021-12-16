@@ -12,26 +12,19 @@
   max_Prevalence,
   min_FP = 0,
   max_FP,
-  Max_FN,
-  Min_FN,
+  max_FN,
+  min_FN,
   one_out_of = TRUE,
-  Sensitivity,
-  Specificity,
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_position_FP,
   overlay_position_FN,
+  decimals_x,
+  decimals_y,
   overlay_labels,
   label_title,
   label_subtitle,
-  label_caption,
-  legend_label,
-  decimals_x,
-  decimals_y,
-  prevalence_label,
-  x_axis_label,
-  x_axis_label_extra,
-  y_axis_label
+  translated_labels = translated_labels
 )
 }
 \arguments{
@@ -45,9 +38,15 @@
 
 \item{max_Prevalence}{x out of [y] prevalence of disease}
 
+\item{min_FP}{}
+
 \item{max_FP}{.}
 
-\item{Sensitivity}{.}
+\item{max_FN}{}
+
+\item{min_FN}{}
+
+\item{one_out_of}{}
 
 \item{overlay_prevalence_1}{vector with [x] out of y prevalence of disease}
 
@@ -57,25 +56,21 @@
 
 \item{overlay_position_FN}{.}
 
+\item{decimals_x}{.}
+
+\item{decimals_y}{.}
+
 \item{overlay_labels}{vector with labels for each overlay point}
 
 \item{label_title}{.}
 
 \item{label_subtitle}{.}
 
-\item{legend_label}{.}
+\item{translated_labels}{.}
 
-\item{decimals_x}{.}
+\item{Sensitivity}{.}
 
-\item{decimals_y}{.}
-
-\item{prevalence_label}{.}
-
-\item{x_axis_label}{.}
-
-\item{x_axis_label_extra}{.}
-
-\item{y_axis_label}{.}
+\item{Specificity}{}
 }
 \description{
 Add line overlay to PPV_heatmap plot

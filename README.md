@@ -50,7 +50,7 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 PPV_heatmap(min_Prevalence = 1, 
             max_Prevalence = 1000, 
             Sensitivity = 100, 
-            Specificity = 99, width_Specificity = 2, 
+            Specificity = 99, 
             Language = "en")
             
 ```  
@@ -70,7 +70,7 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 PPV_heatmap(PPV_NPV = "NPV",
             min_Prevalence = 800,
             max_Prevalence = 1000, 
-            Sensitivity = 90, width_Sensitivity = 20,
+            Sensitivity = 90, 
             Specificity = 95, 
             Language = "en")
 

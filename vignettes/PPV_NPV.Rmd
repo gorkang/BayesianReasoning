@@ -65,17 +65,17 @@ The PPV of Mammography at 50 years old in the general population is relatively l
 ```{r}
 
   PPV_plot = PPV_heatmap(
-    min_Prevalence = 1,
-    max_Prevalence = 80, width_Specificity = 15,
+    min_Prevalence = 1, max_Prevalence = 80, 
     Sensitivity = 95,
-    Specificity = 95,
+    limits_Specificity = c(85, 100),
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,
     overlay_position_FP = 12.1,
     label_title = "PPV",
     label_subtitle = "Screening test"
-  )
+  )    
+
 
 ```
 
@@ -89,7 +89,7 @@ The NPV of Mammography at 50 years old in the general population is very high.
     PPV_NPV = "NPV",
     min_Prevalence = 1,
     max_Prevalence = 80,
-    Sensitivity = 90,
+    # Sensitivity = 90,
     Specificity = 87.9,
     overlay = "area",
     overlay_prevalence_1 = 1,

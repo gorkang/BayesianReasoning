@@ -8,8 +8,8 @@
   PPV_NPV = "PPV",
   min_FP = 0,
   max_FP,
-  Min_FN,
-  Max_FN,
+  min_FN,
+  max_FN,
   min_Prevalence,
   max_Prevalence
 )
@@ -21,9 +21,9 @@
 
 \item{max_FP}{.}
 
-\item{Min_FN}{.}
+\item{min_FN}{.}
 
-\item{Max_FN}{.}
+\item{max_FN}{.}
 
 \item{min_Prevalence}{[x] out of y prevalence of disease}
 
