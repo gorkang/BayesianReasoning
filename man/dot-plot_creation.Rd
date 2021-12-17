@@ -5,34 +5,41 @@
 \title{.plot_creation}
 \usage{
 .plot_creation(
-  PPV_melted,
+  PPV_NPV = "PPV",
+  one_out_of = TRUE,
   min_Prevalence,
   max_Prevalence,
-  PPV_NPV = "PPV",
   min_FP = 0,
   max_FP,
   max_FN,
   min_FN,
-  one_out_of = TRUE,
+  PPV_melted,
   steps_matrix = 100,
   decimals_x,
   decimals_y,
   label_title = "",
   label_subtitle = "",
-  translated_labels = translated_labels,
-  DEBUG_MESSAGE = ""
+  translated_labels = translated_labels
 )
 }
 \arguments{
-\item{PPV_melted}{.}
+\item{PPV_NPV}{.}
+
+\item{one_out_of}{.}
 
 \item{min_Prevalence}{.}
 
-\item{PPV_NPV}{.}
+\item{max_Prevalence}{.}
 
 \item{min_FP}{.}
 
 \item{max_FP}{.}
+
+\item{max_FN}{.}
+
+\item{min_FN}{.}
+
+\item{PPV_melted}{.}
 
 \item{steps_matrix}{.}
 
@@ -45,8 +52,6 @@
 \item{label_subtitle}{.}
 
 \item{translated_labels}{.}
-
-\item{Sensitivity}{.}
 }
 \description{
 Function to create the main heatmap plot

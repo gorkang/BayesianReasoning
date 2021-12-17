@@ -25,7 +25,7 @@ PPV_heatmap(
   folder = "",
   PPV_NPV = "PPV",
   steps_matrix = 100,
-  DEBUG = 0
+  DEBUG = FALSE
 )
 }
 \arguments{
@@ -69,7 +69,7 @@ PPV_heatmap(
 
 \item{steps_matrix}{with of PPV/NPV matrix. 100 by default}
 
-\item{DEBUG}{Shows debug warnings [0/1]}
+\item{DEBUG}{Shows debug warnings [TRUE/FALSE]}
 }
 \value{
 Shows a plot or, if given a folder argument, saves a .png version of the plot

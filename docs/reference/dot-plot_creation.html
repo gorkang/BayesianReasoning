@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.3.9990</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9990</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,36 +59,43 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">.plot_creation</span><span class="op">(</span>
-  <span class="va">PPV_melted</span>,
+  PPV_NPV <span class="op">=</span> <span class="st">"PPV"</span>,
+  one_out_of <span class="op">=</span> <span class="cn">TRUE</span>,
   <span class="va">min_Prevalence</span>,
   <span class="va">max_Prevalence</span>,
-  PPV_NPV <span class="op">=</span> <span class="st">"PPV"</span>,
   min_FP <span class="op">=</span> <span class="fl">0</span>,
   <span class="va">max_FP</span>,
   <span class="va">max_FN</span>,
   <span class="va">min_FN</span>,
-  one_out_of <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">PPV_melted</span>,
   steps_matrix <span class="op">=</span> <span class="fl">100</span>,
   <span class="va">decimals_x</span>,
   <span class="va">decimals_y</span>,
   label_title <span class="op">=</span> <span class="st">""</span>,
   label_subtitle <span class="op">=</span> <span class="st">""</span>,
-  translated_labels <span class="op">=</span> <span class="va">translated_labels</span>,
-  DEBUG_MESSAGE <span class="op">=</span> <span class="st">""</span>
+  translated_labels <span class="op">=</span> <span class="va">translated_labels</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>PPV_melted</dt>
+    <dl><dt>PPV_NPV</dt>
+<dd><p>.</p></dd>
+<dt>one_out_of</dt>
 <dd><p>.</p></dd>
 <dt>min_Prevalence</dt>
 <dd><p>.</p></dd>
-<dt>PPV_NPV</dt>
+<dt>max_Prevalence</dt>
 <dd><p>.</p></dd>
 <dt>min_FP</dt>
 <dd><p>.</p></dd>
 <dt>max_FP</dt>
+<dd><p>.</p></dd>
+<dt>max_FN</dt>
+<dd><p>.</p></dd>
+<dt>min_FN</dt>
+<dd><p>.</p></dd>
+<dt>PPV_melted</dt>
 <dd><p>.</p></dd>
 <dt>steps_matrix</dt>
 <dd><p>.</p></dd>
@@ -101,8 +108,6 @@
 <dt>label_subtitle</dt>
 <dd><p>.</p></dd>
 <dt>translated_labels</dt>
-<dd><p>.</p></dd>
-<dt>Sensitivity</dt>
 <dd><p>.</p></dd>
 </dl></div>
 

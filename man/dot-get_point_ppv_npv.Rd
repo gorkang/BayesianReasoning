@@ -44,7 +44,7 @@
 
 \item{point_Prevalence}{.}
 
-\item{translated_labels}{}
+\item{translated_labels}{.}
 
 \item{decimals_x}{.}
 

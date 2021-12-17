@@ -89,7 +89,6 @@ The NPV of Mammography at 50 years old in the general population is very high.
     PPV_NPV = "NPV",
     min_Prevalence = 1,
     max_Prevalence = 80,
-    # Sensitivity = 90,
     Specificity = 87.9,
     overlay = "area",
     overlay_prevalence_1 = 1,

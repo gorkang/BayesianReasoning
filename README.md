@@ -3,7 +3,7 @@
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
-[![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://codecov.io/gh/gorkang/BayesianReasoning?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)
 [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
@@ -47,16 +47,15 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 
 ```r 
 
-PPV_heatmap(min_Prevalence = 1, 
+PPV_heatmap(min_Prevalence = 1,
             max_Prevalence = 1000, 
             Sensitivity = 100, 
-            Specificity = 99, 
             Language = "en")
             
 ```  
 
 
-![](man/figures/PPV_heatmap/PPV_1_1000_100_2_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_1000_100_10_en.png)  
 
 
 ---   
@@ -70,14 +69,13 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 PPV_heatmap(PPV_NPV = "NPV",
             min_Prevalence = 800,
             max_Prevalence = 1000, 
-            Sensitivity = 90, 
             Specificity = 95, 
             Language = "en")
 
 ```
 
 
-![](man/figures/PPV_heatmap/NPV_800_1000_90_10_en.png)   
+![](man/figures/PPV_heatmap/NPV_800_1000_95_10_en.png)   
 
 --- 
 
@@ -91,7 +89,9 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```r 
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 100, width_Specificity = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, 
+            Sensitivity = 81, 
+            limits_Specificity = c(94, 100),
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "area",
             overlay_labels = "40 y.o.",
@@ -101,7 +101,7 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specifi
 
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1200_81_5_area_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_1200_81_6_area_en.png)  
 
 
 
@@ -112,7 +112,9 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 ```r 
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, Specificity = 100, width_Specificity = 15,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, 
+            Sensitivity = 90, 
+            limits_Specificity = c(84, 100),
             label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
             overlay = "line", 
             overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
@@ -122,7 +124,7 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, Sensitivity = 90, Specifi
             
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1800_90_15_line_en.png)
+![](man/figures/PPV_heatmap/PPV_1_1800_90_16_line_en.png)
 
 ---   
 
@@ -130,17 +132,18 @@ Another example. In this case, the FP is constant across age:
 
 ```r 
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, Sensitivity = 81, Specificity = 100, width_Specificity = 5,
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 2000, Sensitivity = 81, 
+            limits_Specificity = c(94, 100),
             label_subtitle = "Prenatal screening for Down Syndrome by Age",
             overlay = "line",
-            overlay_labels = c("40 y.o.", "35 y.o.", "30 y.o.", "25 y.o.", "20 y.o."),
-            overlay_position_FP = c(4.8, 4.8, 4.8, 4.8, 4.8),
-            overlay_prevalence_1 = c(1, 1, 1, 1, 1),
-            overlay_prevalence_2 = c(68, 249, 626, 946, 1068))
+            overlay_labels = c("40 y.o.", "30 y.o.", "20 y.o."),
+            overlay_position_FP = c(4.8, 4.8, 4.8),
+            overlay_prevalence_1 = c(1, 1, 1),
+            overlay_prevalence_2 = c(68, 626, 1068))
             
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1200_81_5_line_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_2000_81_6_line_en.png)  
 
 ---   
 

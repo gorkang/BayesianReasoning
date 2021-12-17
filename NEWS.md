@@ -1,4 +1,4 @@
-# BayesianReasoning 0.3.3.9990
+# BayesianReasoning 0.4.0.9990
 
 Major updates
 
@@ -15,6 +15,7 @@ Minor updates
 * Get rid of extra character in legend
 * Translate all elements in area overlay
 * Changed palette for NPV plots
+* Add tests for new parameters and checks
 
 
 # BayesianReasoning 0.3.3

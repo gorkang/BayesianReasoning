@@ -14,13 +14,15 @@ process_variables(
 )
 }
 \arguments{
-\item{Sensitivity}{}
+\item{Sensitivity}{.}
 
-\item{Specificity}{}
+\item{Specificity}{.}
 
-\item{limits_Sensitivity}{}
+\item{limits_Sensitivity}{.}
 
-\item{limits_Specificity}{}
+\item{limits_Specificity}{.}
+
+\item{PPV_NPV}{.}
 }
 \description{
 process_variables

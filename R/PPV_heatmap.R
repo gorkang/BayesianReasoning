@@ -19,7 +19,7 @@
 #' @param label_subtitle Subtitle for the plot
 #' @param Language Language for the plot labels: ["sp", "en"]
 #' @param PPV_NPV Should show PPV or NPV [PPV/NPV]
-#' @param DEBUG Shows debug warnings [0/1]
+#' @param DEBUG Shows debug warnings [TRUE/FALSE]
 #' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
 #' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
 #' @param steps_matrix with of PPV/NPV matrix. 100 by default
@@ -63,7 +63,7 @@ PPV_heatmap <-
            PPV_NPV = "PPV",
            
            steps_matrix = 100,
-           DEBUG = 0) {
+           DEBUG = FALSE) {
     
 
 
@@ -84,13 +84,15 @@ PPV_heatmap <-
     # limits_Sensitivity = NULL
     # limits_Specificity = NULL 
     # one_out_of = FALSE
-    # DEBUG = 1
+    # DEBUG = TRUE
     # Language = "es"
     # uncertainty_prevalence = "high"
     # label_title = ""
     # label_subtitle = ""
     # 
 
+  
+    
   # CHECK variables ---------------------------------------------------------
     
   if (PPV_NPV == "PPV") {
@@ -129,16 +131,15 @@ PPV_heatmap <-
       limits_Specificity = limits_Specificity,
       PPV_NPV = PPV_NPV)
     
-    message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ",  main_variables$min_FN)
-    message("DEBUG: ", "min_Specificity: ", main_variables$min_Specificity, " max_FP: ", main_variables$max_FP, " | max_Specificity: ", main_variables$max_Specificity, " min_FP: ",  main_variables$min_FP)
+    if (DEBUG == TRUE) {
+      message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ",  main_variables$min_FN)
+      message("DEBUG: ", "min_Specificity: ", main_variables$min_Specificity, " max_FP: ", main_variables$max_FP, " | max_Specificity: ", main_variables$max_Specificity, " min_FP: ",  main_variables$min_FP)
+    }
     
         
   # Check dimensions -----------------------------------------------------------
 
     # CHECKS
-    if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity sould be a value 0-100")
-    if (Specificity > 100 | Specificity < 0) stop("* Specificity sould be a value 0-100")
-
     if (min_Prevalence < 1) {
       message("\n[WARNING]: min_Prevalence (", min_Prevalence , ") is < 1. \n[EXPECTED]: min_Prevalence should be an integer > 0.\n[CHANGED]: min_Prevalence = 1")
       min_Prevalence = 1
@@ -242,7 +243,7 @@ PPV_heatmap <-
         overlay_prevalence_1 = overlay_prevalence_2/2
       }
     } else if (length(overlay_prevalence_1) > 1) {
-      if (DEBUG != 0) message("> 1 overlay")
+      if (DEBUG == TRUE) message("> 1 overlay")
     }
 
     
@@ -273,7 +274,7 @@ PPV_heatmap <-
 
   # Create PPV matrix -------------------------------------------------------
 
-      PPV_melted <<- .createPPVmatrix(
+      PPV_melted <- .createPPVmatrix(
         min_Prevalence = min_Prevalence,
         max_Prevalence = max_Prevalence,
         Sensitivity = Sensitivity,
@@ -348,38 +349,81 @@ PPV_heatmap <-
       } else if (overlay == "area") {
         
         p = .plot_overlay_area(
-          PPV_melted,
-          uncertainty_prevalence = uncertainty_prevalence,
+          
+          PPV_NPV = PPV_NPV,
+          one_out_of = one_out_of,
+          
           min_Prevalence = min_Prevalence,
           max_Prevalence = max_Prevalence,
-          Sensitivity = Sensitivity,
-          Specificity = Specificity,
           
           min_FP = main_variables$min_FP,
           max_FP = main_variables$max_FP,
           max_FN = main_variables$max_FN,
           min_FN = main_variables$min_FN,
           
-          one_out_of = one_out_of, 
-          
-          
-          overlay_labels = overlay_labels,
-          overlay_prevalence_1 = overlay_prevalence_1,
-          overlay_prevalence_2 = overlay_prevalence_2,
-          
-          overlay_position_FP = overlay_position_FP,
-          overlay_position_FN = overlay_position_FN,
-          
+          PPV_melted = PPV_melted,
+          steps_matrix = steps_matrix,
           decimals_x = decimals$decimals_x,
           decimals_y = decimals$decimals_y,
-
+          
           label_title = label_title,
           label_subtitle = label_subtitle,
-          
           translated_labels = translated_labels,
           
-          PPV_NPV = PPV_NPV,
-          Language = Language
+          # DEBUG_MESSAGE = DEBUG_MESSAGE,
+          
+          # Overlay area specific parameters
+          Language = Language,
+          
+          Sensitivity = Sensitivity,
+          Specificity = Specificity,
+          
+          uncertainty_prevalence = uncertainty_prevalence,
+          overlay_prevalence_1 = overlay_prevalence_1,
+          overlay_prevalence_2 = overlay_prevalence_2,
+          overlay_position_FP = overlay_position_FP,
+          overlay_position_FN = overlay_position_FN,
+          overlay_labels = overlay_labels,
+          
+          # Ellipsis
+          DEBUG = DEBUG
+          
+          
+          # PPV_melted,
+          # uncertainty_prevalence = uncertainty_prevalence,
+          # min_Prevalence = min_Prevalence,
+          # max_Prevalence = max_Prevalence,
+          # Sensitivity = Sensitivity,
+          # Specificity = Specificity,
+          # 
+          # min_FP = main_variables$min_FP,
+          # max_FP = main_variables$max_FP,
+          # max_FN = main_variables$max_FN,
+          # min_FN = main_variables$min_FN,
+          # 
+          # one_out_of = one_out_of, 
+          # 
+          # 
+          # overlay_labels = overlay_labels,
+          # overlay_prevalence_1 = overlay_prevalence_1,
+          # overlay_prevalence_2 = overlay_prevalence_2,
+          # 
+          # overlay_position_FP = overlay_position_FP,
+          # overlay_position_FN = overlay_position_FN,
+          # 
+          # decimals_x = decimals$decimals_x,
+          # decimals_y = decimals$decimals_y,
+          # 
+          # label_title = label_title,
+          # label_subtitle = label_subtitle,
+          # 
+          # translated_labels = translated_labels,
+          # 
+          # PPV_NPV = PPV_NPV,
+          # Language = Language,
+          # 
+          # # Ellipsis
+          # DEBUG = DEBUG
         )
 
       } else {

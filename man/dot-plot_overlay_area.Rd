@@ -5,59 +5,53 @@
 \title{.plot_overlay_area}
 \usage{
 .plot_overlay_area(
-  PPV_melted,
-  uncertainty_prevalence = "low",
+  PPV_NPV = "PPV",
+  one_out_of = TRUE,
   min_Prevalence,
   max_Prevalence,
-  Sensitivity,
-  Specificity,
   min_FP = 0,
   max_FP,
   max_FN,
   min_FN,
-  one_out_of = TRUE,
-  overlay_labels = "",
-  PPV_NPV = "PPV",
+  PPV_melted,
+  steps_matrix = 100,
+  decimals_x,
+  decimals_y,
+  label_title = "",
+  label_subtitle = "",
+  translated_labels = translated_labels,
   Language = "en",
+  Sensitivity,
+  Specificity,
+  uncertainty_prevalence = "low",
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_position_FP,
   overlay_position_FN,
-  decimals_x,
-  decimals_y,
-  label_title,
-  label_subtitle,
-  translated_labels = translated_labels
+  overlay_labels = "",
+  ...
 )
 }
 \arguments{
-\item{PPV_melted}{.}
+\item{PPV_NPV}{.}
 
-\item{uncertainty_prevalence}{.}
+\item{one_out_of}{.}
 
 \item{min_Prevalence}{[x] out of y prevalence of disease}
 
 \item{max_Prevalence}{x out of [y] prevalence of disease}
 
-\item{Sensitivity}{.}
-
 \item{min_FP}{.}
 
 \item{max_FP}{.}
 
-\item{overlay_labels}{.}
+\item{max_FN}{.}
 
-\item{PPV_NPV}{.}
+\item{min_FN}{.}
 
-\item{Language}{.}
+\item{PPV_melted}{.}
 
-\item{overlay_prevalence_1}{[x] out of y prevalence of disease for the overlay}
-
-\item{overlay_prevalence_2}{x out of [y] prevalence of disease for the overlay}
-
-\item{overlay_position_FP}{.}
-
-\item{overlay_position_FN}{.}
+\item{steps_matrix}{.}
 
 \item{decimals_x}{.}
 
@@ -68,6 +62,26 @@
 \item{label_subtitle}{.}
 
 \item{translated_labels}{.}
+
+\item{Language}{.}
+
+\item{Sensitivity}{.}
+
+\item{Specificity}{.}
+
+\item{uncertainty_prevalence}{.}
+
+\item{overlay_prevalence_1}{[x] out of y prevalence of disease for the overlay}
+
+\item{overlay_prevalence_2}{x out of [y] prevalence of disease for the overlay}
+
+\item{overlay_position_FP}{.}
+
+\item{overlay_position_FN}{.}
+
+\item{overlay_labels}{.}
+
+\item{...}{.}
 }
 \description{
 Add area overlay to PPV_heatmap plot
