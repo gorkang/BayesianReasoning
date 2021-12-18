@@ -41,8 +41,8 @@ PPV_heatmap <-
   function(min_Prevalence = 1,
            max_Prevalence = 1000,
            
-           Sensitivity = 95,
-           Specificity = 95,
+           Sensitivity = NULL,
+           Specificity = NULL,
 
            limits_Sensitivity = NULL, 
            limits_Specificity = NULL, 
@@ -89,47 +89,27 @@ PPV_heatmap <-
     # uncertainty_prevalence = "high"
     # label_title = ""
     # label_subtitle = ""
-    # 
 
-  
-    
-  # CHECK variables ---------------------------------------------------------
-    
-  if (PPV_NPV == "PPV") {
-    
-    if (is.null(Sensitivity)) stop("\n* Sensitivity is needed in PPV_NPV == 'PPV'")
-    
-    if (overlay == "area" | overlay == "line") {
-    
-      if (is.null(overlay_position_FP)) stop("\n* overlay_position_FP needs a value")
-      if (!is.null(overlay_position_FN)) warning("\n* overlay_position_FN should only be used for NPV plots")
-    }
-      
-  } else if (PPV_NPV == "NPV") {
-    
-    if (is.null(Specificity)) stop("\n* Specificity is needed in PPV_NPV == 'NPV'")
-    
-    if (overlay == "area" | overlay == "line") {
-    
-      if (is.null(overlay_position_FN)) stop("\n* overlay_position_FN needs a value")
-      if (!is.null(overlay_position_FP)) warning("\n*  overlay_position_FP should only be used for PPV plots")
-      
-    }
-    
-  }
-  
-    
 
     
     # PROCESS VARIABLES -------------------------------------------------------
     
-    
+    # CHECKS variables and sets defaults
     main_variables = process_variables(
+      min_Prevalence = min_Prevalence,
+      max_Prevalence = max_Prevalence,
       Sensitivity = Sensitivity,
       Specificity = Specificity,
       limits_Sensitivity = limits_Sensitivity,
       limits_Specificity = limits_Specificity,
-      PPV_NPV = PPV_NPV)
+      overlay_position_FP = overlay_position_FP,
+      overlay_position_FN = overlay_position_FN,
+      overlay_prevalence_1 = overlay_prevalence_1,
+      overlay_prevalence_2 = overlay_prevalence_2,
+      PPV_NPV = PPV_NPV,
+      one_out_of = one_out_of,
+      overlay = overlay)
+    
     
     if (DEBUG == TRUE) {
       message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ",  main_variables$min_FN)
@@ -137,130 +117,7 @@ PPV_heatmap <-
     }
     
         
-  # Check dimensions -----------------------------------------------------------
-
-    # CHECKS
-    if (min_Prevalence < 1) {
-      message("\n[WARNING]: min_Prevalence (", min_Prevalence , ") is < 1. \n[EXPECTED]: min_Prevalence should be an integer > 0.\n[CHANGED]: min_Prevalence = 1")
-      min_Prevalence = 1
-    }
-    
-    if (min_Prevalence > max_Prevalence) {
-      message("\n[WARNING]: min_Prevalence (", min_Prevalence , ") is > than max_Prevalence (", max_Prevalence, ").\n[EXPECTED]: min_Prevalence should be smaller than max_Prevalence.\n[CHANGED]: min_Prevalence = max_Prevalence/2")
-      min_Prevalence = max_Prevalence/2
-    }
-    
-    # If the dimensions of the overlay are bigger, adjust max_FP and max_Prevalence
-
-    if (overlay == "area" | overlay == "line") {
-
-      if (overlay == "area" & length(overlay_prevalence_1) > 1) stop("* overlay_prevalence_1 has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
-      
-      
-      # CHECK overlay_prevalence_1/overlay_prevalence_2 fits into min_Prevalence/max_Prevalence
-      if (any(min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2)) {
-        
-        index_issue = which(min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2)
-        message("\n[WARNING]: min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2\n[EXPECTED]: min_Prevalence/max_Prevalence should be <= overlay_prevalence_1/overlay_prevalence_2")
-        
-        if (max_Prevalence == overlay_prevalence_2[index_issue] & min_Prevalence != overlay_prevalence_1[index_issue]) {
-          message("\n[WARNING]: max_Prevalence == overlay_prevalence_2\n[CHANGED]: Changing min_Prevalence = overlay_prevalence_1")
-          min_Prevalence = overlay_prevalence_1[index_issue]
-        } else if (min_Prevalence == overlay_prevalence_1[index_issue] & max_Prevalence != overlay_prevalence_2[index_issue]) {
-          message("\n[WARNING]: min_Prevalence == overlay_prevalence_1\n[CHANGED]: Changing max_Prevalence = overlay_prevalence_2")
-          max_Prevalence = overlay_prevalence_2[index_issue]
-        } else {
-          message("\n[WARNING]: min_Prevalence != overlay_prevalence_1\n\t     max_Prevalence != overlay_prevalence_2\n[CHANGED]: Changing max_Prevalence = overlay_prevalence_2 & min_Prevalence = overlay_prevalence_1")
-          min_Prevalence = overlay_prevalence_1[index_issue]
-          max_Prevalence = overlay_prevalence_2[index_issue]
-        }
-        
-      }
-      
-
-      if (PPV_NPV == "PPV"){
-
-        if (overlay == "area" & length(overlay_position_FP) > 1) stop("* overlay_position_FP has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
-        
-        if (overlay == "area") {
-          
-          if (exists("overlay_position_FP")) {
-            if (overlay_position_FP > main_variables$max_FP & PPV_NPV == "PPV") {
-              message("\n[WARNING]: overlay_position_FP (", overlay_position_FP , ") is > than max_FP (", main_variables$max_FP, ").\n[EXPECTED]: overlay_position_FP should be smaller than max_FP\n[CHANGED]: max_FP = overlay_position_FP")
-              main_variables$max_FP = overlay_position_FP
-            }
-          }
-        }
-        
-        if (exists("overlay_position_FP")) {
-          if (min(overlay_position_FP) < main_variables$min_FP) {
-            message("\n[WARNING]: overlay_position_FP (", min(overlay_position_FP) , ") is < min_FP (", main_variables$min_FP, ").\n[EXPECTED]: overlay_position_FP should be >= min_FP.\n[CHANGED]: min_FP = 0")
-            main_variables$min_FP = 0
-          }
-          
-          if (max(overlay_position_FP) > main_variables$max_FP) {
-            message("\n[WARNING]: overlay_position_FP (", max(overlay_position_FP) , ") is > min_FP (", main_variables$min_FP, ").\n[EXPECTED]: overlay_position_FP should be <= max_FP.\n[CHANGED]: max_FP = overlay_position_FP + 10%")
-            main_variables$max_FP = max(overlay_position_FP) + (max(overlay_position_FP) * .1)
-          }
-        }
-        
-      } else if (PPV_NPV == "NPV") {
-        
-        if (overlay == "area" & length(overlay_position_FN) > 1) stop("* overlay_position_FN has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
-        
-        if (exists("overlay_position_FN")) {
-          if (max(overlay_position_FN) > main_variables$max_FN) {
-            message("\n[WARNING]: overlay_position_FN (", max(overlay_position_FN) , ") is > max_FN (", main_variables$max_FN, ")\n[EXPECTED]: overlay_position_FN should be <= max_FN.\n[CHANGED]: max_FN = overlay_position_FN + 10%")
-            main_variables$max_FN = max(overlay_position_FN) + (max(overlay_position_FN) * .1)
-          }
-          
-          if (min(overlay_position_FN) < main_variables$min_FN) {
-            message("\n[WARNING]: overlay_position_FN (", min(overlay_position_FN) , ") is < min_FN (", main_variables$min_FN, ")\n[EXPECTED]: overlay_position_FN should be <= min_FN.\n[CHANGED]: min_FN = 0")
-            main_variables$min_FN = 0
-          }
-          
-        }  
-      }
-    }
-      
-    # Only needed in "line" because in area we calculate the position of the individual point using prevalence_PCT 
-    if (overlay == "line") {  
-      if (any(overlay_prevalence_1 > min_Prevalence)) {
-        ratio_x = (overlay_prevalence_1 / min_Prevalence) 
-        message("\n[WARNING]: Some of the overlay_prevalence_1 (", min(overlay_prevalence_1) , ") are > min_Prevalence (", min_Prevalence, ").\n[EXPECTED]: overlay_prevalence_1 should be >= min_Prevalence.\n[CHANGED]: overlay_prevalence_1 and overlay_prevalence_2 to ", paste(overlay_prevalence_1 * ratio_x, collapse = ", "), " and ", paste(overlay_prevalence_2 * ratio_x, collapse = ", "))
-        overlay_prevalence_1 = overlay_prevalence_1/ratio_x
-        overlay_prevalence_2 = overlay_prevalence_2/ratio_x
-      }
-    }
-
-
-
-  # Check overlay prevalence ------------------------------------------------
-
-    if (length(overlay_prevalence_1) == 1) {
-      if (overlay_prevalence_1 > overlay_prevalence_2) {
-        message("\n[WARNING]: overlay_prevalence_1 (", overlay_prevalence_1 , ") is > than overlay_prevalence_2 (", overlay_prevalence_2, ").\n[EXPECTED]: overlay_prevalence_1 should be smaller than overlay_prevalence_2.\n[CHANGED]: overlay_prevalence_1 = overlay_prevalence_2/2")
-        overlay_prevalence_1 = overlay_prevalence_2/2
-      }
-    } else if (length(overlay_prevalence_1) > 1) {
-      if (DEBUG == TRUE) message("> 1 overlay")
-    }
-
-    
-    # If the overlay prevalence is very high and we have one_out_of = TRUE, sometimes the closest row in the PPV matrix is the first one, which distorts the NPV calculation
-    if (one_out_of == TRUE & PPV_NPV == "NPV" & overlay == "area") {
-      
-      overlay_P = overlay_prevalence_1/overlay_prevalence_2
-      # steps_matrix = 100
-      prevalence_temp <- seq(min_Prevalence, max_Prevalence, length.out = steps_matrix + 1) # *prevalence_2* x out of [y] (min_Prevalence out of max_Prevalence)
-      prevalence_P = prevalence_temp[1]/prevalence_temp[2]
-      
-      if ((overlay_P - prevalence_P) > (1 - overlay_P)) {
-        message("\n[WARNING]: overlay_prevalence_1/overlay_prevalence_2 closer to 1 than to the first prevalence row\n[CHANGED]: Changing max_Prevalence = (overlay_prevalence_2-overlay_prevalence_1) * 3")
-        max_Prevalence = (overlay_prevalence_2 - overlay_prevalence_1) * 3
-      }
-      
-    }    
+ 
 
   # SYSTEM parameters -------------------------------------------------------
 
@@ -284,7 +141,8 @@ PPV_heatmap <-
         max_FN = main_variables$max_FN,
         min_FN = main_variables$min_FN,
         
-        one_out_of = one_out_of
+        one_out_of = one_out_of,
+        PPV_NPV = PPV_NPV
       )
 
 
