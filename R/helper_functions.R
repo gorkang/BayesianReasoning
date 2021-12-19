@@ -170,6 +170,10 @@ process_variables <- function(min_Prevalence = NULL,
   
   if (overlay == "area" | overlay == "line") {
     
+    if (is.null(overlay_prevalence_1) & is.null(overlay_prevalence_2)) stop("* Need a prevalence for the overlay. Use the overlay_prevalence_1 and overlay_prevalence_2 parameters (overlay_prevalence_1 out of overlay_prevalence_2)")
+    if (is.null(overlay_prevalence_1)) stop("* Missing the overlay_prevalence_1 parameter for the overlay's prevalence (overlay_prevalence_1 out of overlay_prevalence_2)")
+    if (is.null(overlay_prevalence_2)) stop("* Missing the overlay_prevalence_2 parameter for the overlay's prevalence (overlay_prevalence_1 out of overlay_prevalence_2)")
+    
     if (overlay == "area" & length(overlay_prevalence_1) > 1) stop("* overlay_prevalence_1 has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
     
     
@@ -427,10 +431,16 @@ process_variables <- function(min_Prevalence = NULL,
 
     # Final touches to DF   
     PPV_melted = PPV_melted %>% 
-      dplyr::mutate(prevalence_1 = min_Prevalence) %>% 
-      dplyr::select(prevalence_1, dplyr::everything()) %>% 
-      dplyr::mutate(prevalence_pct = prevalence_1/prevalence_2) %>% 
+      dplyr::mutate(prevalence_1 = min_Prevalence,
+                    sensitivity = rep(sensitivity_array, each = steps_matrix + 1),
+                    specificity = rep(specificity_array, each = steps_matrix + 1)
+                    ) %>% 
+      dplyr::select(prevalence_1, prevalence_2, sensitivity, specificity, dplyr::everything()) %>% 
+      dplyr::mutate(prevalence_pct = prevalence_1/prevalence_2,
+                    PPV_calc = (prevalence_1 * sensitivity) / ((prevalence_1 * sensitivity) + ((prevalence_2 - prevalence_1) * (1-specificity)))) %>% 
       dplyr::as_tibble()
+    
+    
     
     return(PPV_melted)
     
@@ -625,8 +635,6 @@ process_variables <- function(min_Prevalence = NULL,
   } else if (max_FP_FN - min_FP_FN <= 5) {
     decimals_x = 1
   } else if (max_FP_FN - min_FP_FN > 5) {
-    decimals_x = 0
-  } else {
     decimals_x = 0
   }
   
