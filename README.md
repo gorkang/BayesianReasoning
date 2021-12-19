@@ -55,7 +55,7 @@ PPV_heatmap(min_Prevalence = 1,
 ```  
 
 
-![](man/figures/PPV_heatmap/PPV_1_1000_100_10_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_1000_100_0_10_en.png)  
 
 
 ---   
@@ -75,7 +75,7 @@ PPV_heatmap(PPV_NPV = "NPV",
 ```
 
 
-![](man/figures/PPV_heatmap/NPV_800_1000_95_10_en.png)   
+![](man/figures/PPV_heatmap/NPV_800_1000_95_0_10_en.png)   
 
 --- 
 
@@ -101,7 +101,7 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200,
 
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1200_81_6_area_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_1200_81_0_6_area_en.png)  
 
 
 
@@ -124,7 +124,7 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800,
             
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_1800_90_16_line_en.png)
+![](man/figures/PPV_heatmap/PPV_1_1800_90_0_16_line_en.png)
 
 ---   
 
@@ -143,7 +143,7 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 2000, Sensitivity = 81,
             
 ```
 
-![](man/figures/PPV_heatmap/PPV_1_2000_81_6_line_en.png)  
+![](man/figures/PPV_heatmap/PPV_1_2000_81_0_6_line_en.png)  
 
 ---   
 

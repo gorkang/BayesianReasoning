@@ -10,6 +10,7 @@
   Sensitivity = 100,
   Specificity = 99,
   one_out_of = TRUE,
+  PPV_NPV = "PPV",
   min_FP = 0,
   max_FP = 10,
   max_FN = 0,
@@ -27,6 +28,8 @@
 \item{Specificity}{Specificity of test}
 
 \item{one_out_of}{.}
+
+\item{PPV_NPV}{Should show PPV or NPV ["PPV", "NPV"]}
 
 \item{min_FP}{Minimum False Positive ratio}
 

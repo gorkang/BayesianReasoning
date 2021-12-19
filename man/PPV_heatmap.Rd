@@ -7,8 +7,8 @@
 PPV_heatmap(
   min_Prevalence = 1,
   max_Prevalence = 1000,
-  Sensitivity = 95,
-  Specificity = 95,
+  Sensitivity = NULL,
+  Specificity = NULL,
   limits_Sensitivity = NULL,
   limits_Specificity = NULL,
   one_out_of = FALSE,
@@ -43,7 +43,7 @@ PPV_heatmap(
 
 \item{one_out_of}{Show y scale as 1 out of x [TRUE, FALSE] FALSE by default}
 
-\item{overlay}{Show overlay: [TRUE, FALSE]}
+\item{overlay}{Type of overlay: ["line", "area"]}
 
 \item{overlay_labels}{Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
 
@@ -65,7 +65,7 @@ PPV_heatmap(
 
 \item{folder}{Where to save the plot (the filename would be automatically created using the plot parameters)}
 
-\item{PPV_NPV}{Should show PPV or NPV [PPV/NPV]}
+\item{PPV_NPV}{Should show PPV or NPV ["PPV", "NPV"]}
 
 \item{steps_matrix}{with of PPV/NPV matrix. 100 by default}
 

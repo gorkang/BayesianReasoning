@@ -79,7 +79,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to BayesianReasoning</h1>
                         <h4 data-toc-skip class="author">Gorka Navarrete</h4>
             
-            <h4 data-toc-skip class="date">2021-12-17</h4>
+            <h4 data-toc-skip class="date">2021-12-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="d-none name"><code>introduction.Rmd</code></div>
@@ -128,7 +128,10 @@
 <span class="fu"><a href="../reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>,
             max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
             Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
-            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+<span class="co">#&gt; Warning in process_variables(min_Prevalence = min_Prevalence, max_Prevalence</span>
+<span class="co">#&gt; = max_Prevalence, : Specificity and limits_Specificity are NULL. Setting</span>
+<span class="co">#&gt; Specificity = 95 and limits_Specificity = c(90, 100)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/heatmap-1.png" width="4200"></p>
 <hr>
 <div class="section level3">
@@ -141,7 +144,10 @@
             min_Prevalence <span class="op">=</span> <span class="fl">800</span>,
             max_Prevalence <span class="op">=</span> <span class="fl">1000</span>, 
             Specificity <span class="op">=</span> <span class="fl">95</span>, 
-            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span></code></pre></div>
+            Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
+<span class="co">#&gt; Warning in process_variables(min_Prevalence = min_Prevalence, max_Prevalence</span>
+<span class="co">#&gt; = max_Prevalence, : Sensitivity and limits_Specificity are NULL. Setting</span>
+<span class="co">#&gt; Sensitivity = 95 and limits_Sensitivity = c(90, 100)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/NPV-heatmap-1.png" width="4200"></p>
 <hr>
 </div>

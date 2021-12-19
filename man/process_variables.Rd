@@ -3,28 +3,55 @@
 \name{process_variables}
 \alias{process_variables}
 \title{process_variables
-Process main variables, checks for errors, creates ranges...}
+Checks and process main variables, checks for errors, creates defaults}
 \usage{
 process_variables(
-  Sensitivity,
-  Specificity,
+  min_Prevalence = NULL,
+  max_Prevalence = NULL,
+  Sensitivity = NULL,
+  Specificity = NULL,
   limits_Sensitivity = NULL,
   limits_Specificity = NULL,
-  PPV_NPV = "PPV"
+  overlay_position_FP = NULL,
+  overlay_position_FN = NULL,
+  overlay_prevalence_1 = NULL,
+  overlay_prevalence_2 = NULL,
+  PPV_NPV = "PPV",
+  one_out_of = one_out_of,
+  overlay = "",
+  steps_matrix = 100
 )
 }
 \arguments{
-\item{Sensitivity}{.}
+\item{min_Prevalence}{x in the "x out of y" prevalence (y-axis): [1-Inf]}
 
-\item{Specificity}{.}
+\item{max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
 
-\item{limits_Sensitivity}{.}
+\item{Sensitivity}{Sensitivity of the test: [0-100]}
 
-\item{limits_Specificity}{.}
+\item{Specificity}{Specificity of the test: [0-100]}
 
-\item{PPV_NPV}{.}
+\item{limits_Sensitivity}{c(min Sensitivity, max Sensitivity)}
+
+\item{limits_Specificity}{c(min Specificity, max Specificity)}
+
+\item{overlay_position_FP}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
+
+\item{overlay_position_FN}{FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
+
+\item{overlay_prevalence_1}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(1, 1, 1, 2, 1, 1)}
+
+\item{overlay_prevalence_2}{Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)}
+
+\item{PPV_NPV}{Should show PPV or NPV ["PPV", "NPV"]}
+
+\item{one_out_of}{Show y scale as 1 out of x [TRUE, FALSE] FALSE by default}
+
+\item{overlay}{Type of overlay: ["line", "area"]}
+
+\item{steps_matrix}{with of PPV/NPV matrix. 100 by default}
 }
 \description{
 process_variables
-Process main variables, checks for errors, creates ranges...
+Checks and process main variables, checks for errors, creates defaults
 }
