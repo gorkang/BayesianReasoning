@@ -29,6 +29,7 @@
   overlay_position_FP,
   overlay_position_FN,
   overlay_labels = "",
+  overlay_extra_info = FALSE,
   ...
 )
 }
@@ -80,6 +81,8 @@
 \item{overlay_position_FN}{.}
 
 \item{overlay_labels}{.}
+
+\item{overlay_extra_info}{show extra info in overlay? [TRUE/FALSE]}
 
 \item{...}{.}
 }

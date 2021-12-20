@@ -13,6 +13,7 @@
   overlay_prevalence_1,
   overlay_prevalence_2,
   overlay_labels,
+  overlay_extra_info = FALSE,
   overlay_position_FP,
   overlay_position_FN,
   point_Prevalence,
@@ -37,6 +38,8 @@
 \item{overlay_prevalence_2}{x out of [y] prevalence of disease}
 
 \item{overlay_labels}{.}
+
+\item{overlay_extra_info}{show extra info in overlay? [TRUE/FALSE]}
 
 \item{overlay_position_FP}{.}
 

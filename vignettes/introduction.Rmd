@@ -113,6 +113,23 @@ PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200,
 
 ```
 
+The area plot overlay can show more details about how the calculation of PPV/NPV is performed:  
+
+```{r area2}
+
+PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, 
+            Sensitivity = 81, 
+            limits_Specificity = c(94, 100),
+            label_subtitle = "Prenatal screening for Down Syndrome by Age", 
+            overlay_extra_info = TRUE,
+            overlay = "area",
+            overlay_labels = "40 y.o.",
+            overlay_position_FP = 4.8,
+            overlay_prevalence_1 = 1,
+            overlay_prevalence_2 = 68)
+
+```
+
 
 
 

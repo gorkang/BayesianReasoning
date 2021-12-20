@@ -14,10 +14,11 @@ PPV_heatmap(
   one_out_of = FALSE,
   overlay = "no",
   overlay_labels = "",
+  overlay_extra_info = FALSE,
   overlay_position_FP = NULL,
   overlay_position_FN = NULL,
-  overlay_prevalence_1 = 1,
-  overlay_prevalence_2 = 100,
+  overlay_prevalence_1 = NULL,
+  overlay_prevalence_2 = NULL,
   uncertainty_prevalence = "high",
   label_title = "",
   label_subtitle = "",
@@ -46,6 +47,8 @@ PPV_heatmap(
 \item{overlay}{Type of overlay: ["line", "area"]}
 
 \item{overlay_labels}{Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")}
+
+\item{overlay_extra_info}{show extra info in overlay? [TRUE/FALSE]}
 
 \item{overlay_position_FP}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
 

@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9990</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to BayesianReasoning</h1>
                         <h4 data-toc-skip class="author">Gorka Navarrete</h4>
             
-            <h4 data-toc-skip class="date">2021-12-18</h4>
+            <h4 data-toc-skip class="date">2021-12-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="d-none name"><code>introduction.Rmd</code></div>
@@ -130,7 +130,7 @@
             Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
             Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in process_variables(min_Prevalence = min_Prevalence, max_Prevalence</span>
-<span class="co">#&gt; = max_Prevalence, : Specificity and limits_Specificity are NULL. Setting</span>
+<span class="co">#&gt; = max_Prevalence, : * Specificity and limits_Specificity are NULL. Setting</span>
 <span class="co">#&gt; Specificity = 95 and limits_Specificity = c(90, 100)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/heatmap-1.png" width="4200"></p>
 <hr>
@@ -146,7 +146,7 @@
             Specificity <span class="op">=</span> <span class="fl">95</span>, 
             Language <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span>
 <span class="co">#&gt; Warning in process_variables(min_Prevalence = min_Prevalence, max_Prevalence</span>
-<span class="co">#&gt; = max_Prevalence, : Sensitivity and limits_Specificity are NULL. Setting</span>
+<span class="co">#&gt; = max_Prevalence, : * Sensitivity and limits_Specificity are NULL. Setting</span>
 <span class="co">#&gt; Sensitivity = 95 and limits_Sensitivity = c(90, 100)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/NPV-heatmap-1.png" width="4200"></p>
 <hr>
@@ -168,12 +168,26 @@
             overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
             overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/area-1.png" width="4200"></p>
+<p>The area plot overlay can show more details about how the calculation of PPV/NPV is performed:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="fu"><a href="../reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">1200</span>, 
+            Sensitivity <span class="op">=</span> <span class="fl">81</span>, 
+            limits_Specificity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">94</span>, <span class="fl">100</span><span class="op">)</span>,
+            label_subtitle <span class="op">=</span> <span class="st">"Prenatal screening for Down Syndrome by Age"</span>, 
+            overlay_extra_info <span class="op">=</span> <span class="cn">TRUE</span>,
+            overlay <span class="op">=</span> <span class="st">"area"</span>,
+            overlay_labels <span class="op">=</span> <span class="st">"40 y.o."</span>,
+            overlay_position_FP <span class="op">=</span> <span class="fl">4.8</span>,
+            overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
+            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
+<p><img src="introduction_files/figure-html/area2-1.png" width="4200"></p>
 </div>
 <div class="section level3">
 <h3 id="line-overlay">Line overlay<a class="anchor" aria-label="anchor" href="#line-overlay"></a>
 </h3>
 <p>Also, you can add a line overlay highlighting a range of prevalences and FP. This is useful, for example, to show how the PPV of a test changes with age:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">1800</span>, 
             Sensitivity <span class="op">=</span> <span class="fl">90</span>, 
@@ -187,7 +201,7 @@
 <p><img src="introduction_files/figure-html/line-1.png" width="4200"></p>
 <hr>
 <p>Another example. In this case, the FP is constant across age:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/PPV_heatmap.html">PPV_heatmap</a></span><span class="op">(</span>min_Prevalence <span class="op">=</span> <span class="fl">1</span>, max_Prevalence <span class="op">=</span> <span class="fl">2000</span>, Sensitivity <span class="op">=</span> <span class="fl">81</span>, 
             limits_Specificity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">94</span>, <span class="fl">100</span><span class="op">)</span>,
@@ -206,7 +220,7 @@
 </h2>
 <p>In scientific studies developing a new test for the early detection of a medical condition, it is quite common to use a sample where 50% of participants has a medical condition and the other 50% are normal controls. This has the unintended effect of maximizing the PPV of the test.</p>
 <p>This function shows a plot with the difference between the PPV of a diagnostic context (very high prevalence; or a common study sample, e.g. ~50% prevalence) versus that of a screening context (lower prevalence).</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="fu"><a href="../reference/PPV_diagnostic_vs_screening.html">PPV_diagnostic_vs_screening</a></span><span class="op">(</span>max_FP <span class="op">=</span> <span class="fl">10</span>, 
                             Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
@@ -220,7 +234,7 @@
 </h2>
 <p>Imagine you would like to use a test in a population and want to have a 98% PPV. That is, IF a positive result comes out in the test, you would like a 98% certainty that it is a true positive.</p>
 <p>How high should the prevalence of the disease be in that group?</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/min_possible_prevalence.html">min_possible_prevalence</a></span><span class="op">(</span>Sensitivity <span class="op">=</span> <span class="fl">100</span>, 
                         FP_test <span class="op">=</span> <span class="fl">0.1</span>, 
                         min_PPV_desired <span class="op">=</span> <span class="fl">98</span><span class="op">)</span></code></pre></div>
@@ -229,7 +243,7 @@
 </blockquote>
 <hr>
 <p>Another example, with a very good test, and lower expectations:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/min_possible_prevalence.html">min_possible_prevalence</a></span><span class="op">(</span>Sensitivity <span class="op">=</span> <span class="fl">99.9</span>, 
                         FP_test <span class="op">=</span> <span class="fl">.1</span>, 
                         min_PPV_desired <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></code></pre></div>
