@@ -10,6 +10,7 @@
 #' @param limits_Specificity c(min Specificity, max Specificity)
 #' @param overlay Type of overlay: ["line", "area"]
 #' @param overlay_labels Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
+#' @param overlay_extra_info show extra info in overlay? [TRUE/FALSE]
 #' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param uncertainty_prevalence How much certainty we have about the prevalence ["high"/"low"]
@@ -51,6 +52,7 @@ PPV_heatmap <-
 
            overlay = "no",
            overlay_labels = "",
+           overlay_extra_info = FALSE,
            overlay_position_FP = NULL,
            overlay_position_FN = NULL,
            overlay_prevalence_1 = NULL,
@@ -96,13 +98,18 @@ PPV_heatmap <-
 
   # SYSTEM parameters -------------------------------------------------------
 
-      if (overlay != "no") {
-        filename_overlay = paste0("_", overlay)
-      } else {
-        filename_overlay = ""
-      }
+    if (overlay != "no") {
+      overlay_tag =  paste0("_", overlay)
+    } else {
+      overlay_tag = ""
+    }
 
-
+    if (overlay_extra_info == TRUE) {
+      overlay_extra_info_tag = paste0(overlay_extra_info, "_")
+    } else {
+      overlay_extra_info_tag = ""
+    }
+    
 
   # Create PPV matrix -------------------------------------------------------
 
@@ -211,6 +218,7 @@ PPV_heatmap <-
           overlay_position_FP = overlay_position_FP,
           overlay_position_FN = overlay_position_FN,
           overlay_labels = overlay_labels,
+          overlay_extra_info = overlay_extra_info,
           
           # Ellipsis
           DEBUG = DEBUG
@@ -258,7 +266,7 @@ PPV_heatmap <-
         }
 
         # Name and save
-        plot_name = paste0(folder, "/", PPV_NPV, "_", main_variables$min_Prevalence, "_", main_variables$max_Prevalence, "_", Sensitivity_Specificity_tag, "_", range_tag, filename_overlay, "_", Language, ".png")
+        plot_name = paste0(folder, "/", PPV_NPV, "_", main_variables$min_Prevalence, "_", main_variables$max_Prevalence, "_", Sensitivity_Specificity_tag, "_", range_tag, overlay_tag, "_", overlay_extra_info_tag, Language, ".png")
         ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
         message("\n Plot created in: ", plot_name, "\n")
         
