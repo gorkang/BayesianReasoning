@@ -1,23 +1,22 @@
 ## Test environments
-* local Ubuntu 20.04, R 4.1
+* local Ubuntu 20.04, R 4.1.2
 * win-builder (devel and release)
 * R-hub
-  + Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+  + Windows Server 2022, R-devel, 64 bit
   + Ubuntu Linux 20.04.1 LTS, R-release, GCC
   + Fedora Linux, R-devel, clang, gfortran
   
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+Maintainer: ‘Gorka Navarrete <gorkang@gmail.com>’
+
+Size of tarball: 6242682 bytes
 
 
-## New minor version
+## New major version
 
-This is a new minor version updating two tests to work with the upcomming ggplot2.
+This is a new version refactoring the way we calculate the PPV and NPV matrices.
 
-I also fixed a couple minor bugs:
-
-* x axis labels should always be equally spaced #37  
-* Update tests to work with upcoming ggplot2 #42  
-* Add default parameters to avoid errors #43  
-* Fix LazyData NOTE  
+I also added parameters to control the scales, and multiple checks and tests.
