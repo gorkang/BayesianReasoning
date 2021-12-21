@@ -7,6 +7,7 @@
 #' @param Specificity Specificity of the test: [0-100]
 #' @param limits_Sensitivity c(min Sensitivity, max Sensitivity) 
 #' @param limits_Specificity c(min Specificity, max Specificity)
+#' @param overlay_labels vector with labels for each overlay point 
 #' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_prevalence_1 Prevalence value (position in the y-axis) for each point in the overlay. For example: c(1, 1, 1, 2, 1, 1)
@@ -15,6 +16,7 @@
 #' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
 #' @param steps_matrix with of PPV/NPV matrix. 100 by default
 #' @param overlay Type of overlay: ["line", "area"]
+#'
 #' @importFrom stats var
 
 process_variables <- function(min_Prevalence = NULL,
@@ -23,12 +25,13 @@ process_variables <- function(min_Prevalence = NULL,
                               Specificity = NULL, 
                               limits_Sensitivity = NULL,
                               limits_Specificity = NULL,
+                              overlay_labels = NULL,
                               overlay_position_FP = NULL,
                               overlay_position_FN = NULL,
                               overlay_prevalence_1 = NULL,
                               overlay_prevalence_2 = NULL,
                               PPV_NPV = "PPV",
-                              one_out_of = one_out_of,
+                              one_out_of = NULL,
                               overlay = "",
                               steps_matrix = 100) {
 
@@ -54,7 +57,7 @@ process_variables <- function(min_Prevalence = NULL,
       if (var(limits_Specificity) == 0) stop("\n* limits_Specificity need two different numbers: limits_Specificity = c(min, max)")
       Specificity = mean(limits_Specificity)
       default_plus_minus = limits_Specificity[2] - Specificity
-      warning("* Both Specificity (", Specificity, ") and limits_Specificity (", paste(limits_Specificity, collapse = ", "), ") have values. Ignoring Sensitivity and using limits_Specificity")
+      warning("* Both Specificity (", Specificity, ") and limits_Specificity (", paste(limits_Specificity, collapse = ", "), ") have values. Ignoring Specificity and using limits_Specificity")
     } else if (is.null(Specificity) & is.null(limits_Specificity)) {
       Specificity = 95
       warning("* Specificity and limits_Specificity are NULL. Setting Specificity = ", Specificity, " and limits_Specificity = c(", Specificity - default_plus_minus, ", ", Specificity + default_plus_minus, ")")
@@ -179,6 +182,10 @@ process_variables <- function(min_Prevalence = NULL,
     
     if (overlay == "area" & length(overlay_prevalence_1) > 1) stop("* overlay_prevalence_1 has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
     
+    # General case. Then we have specific for PPV and NPV below
+    if (overlay == "line" & (length(overlay_prevalence_1) != length(overlay_prevalence_2))) stop("* overlay_prevalence_1 and overlay_prevalence_2 need to have the same number of values. Now they have ", length(overlay_prevalence_1), " and ", length(overlay_prevalence_2))
+    if (overlay == "line" & !is.null(overlay_labels) & length(overlay_labels) != 1) { if (length(overlay_prevalence_1) != length(overlay_labels)) stop("* overlay_labels needs 0, 1 or the same number of values that overlay_prevalence_1 (", length(overlay_prevalence_1), "). Now it has ", length(overlay_labels)) }
+    
     
     # CHECK overlay_prevalence_1/overlay_prevalence_2 fits into min_Prevalence/max_Prevalence
     if (any(min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2)) {
@@ -204,6 +211,8 @@ process_variables <- function(min_Prevalence = NULL,
     if (PPV_NPV == "PPV"){
       
       if (overlay == "area" & length(overlay_position_FP) > 1) stop("* overlay_position_FP has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
+      if (overlay == "line" & (length(overlay_prevalence_1) != length(overlay_position_FP))) stop("* overlay_position_FP and overlay_prevalence_1, ... need to have the same number of values. Now they have ", length(overlay_position_FP), " and ", length(overlay_prevalence_1))
+      
       
       if (overlay == "area") {
         
@@ -230,6 +239,7 @@ process_variables <- function(min_Prevalence = NULL,
     } else if (PPV_NPV == "NPV") {
       
       if (overlay == "area" & length(overlay_position_FN) > 1) stop("* overlay_position_FN has > 1 value. Not allowed in overlay = 'area'. Did you meant overlay = 'line'? ")
+      if (overlay == "line" & (length(overlay_prevalence_1) != length(overlay_position_FN))) stop("* overlay_position_FN and overlay_prevalence_1, ... need to have the same number of values. Now they have ", length(overlay_position_FN), " and ", length(overlay_prevalence_1))
       
       if (exists("overlay_position_FN")) {
         if (max(overlay_position_FN) > max_FN) {
@@ -477,7 +487,7 @@ process_variables <- function(min_Prevalence = NULL,
 #' @param overlay_prevalence_2 x out of [y] prevalence of disease
 #' @param overlay_position_FP .
 #' @param overlay_position_FN .
-#' @param overlay_labels .
+#' @param overlay_labels vector with labels for each overlay point
 #' @param overlay_extra_info show extra info in overlay? [TRUE/FALSE]
 #' @param point_Prevalence .
 #' @param decimals_x .
@@ -888,7 +898,7 @@ process_variables <- function(min_Prevalence = NULL,
 #' @param Sensitivity .
 #' @param min_FP .
 #' @param max_FP .
-#' @param overlay_labels .
+#' @param overlay_labels vector with labels for each overlay point
 #' @param overlay_extra_info show extra info in overlay? [TRUE/FALSE]
 #' @param PPV_NPV .
 #' @param Language .
@@ -1031,6 +1041,8 @@ process_variables <- function(min_Prevalence = NULL,
       decimals_y = decimals_y,
       
       translated_labels = translated_labels,
+      label_subtitle = label_subtitle,
+      label_title = label_title,
       
       PPV_NPV = PPV_NPV
       
