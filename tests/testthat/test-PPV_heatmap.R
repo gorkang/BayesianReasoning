@@ -146,7 +146,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   testthat::expect_error(BayesianReasoning::PPV_heatmap(Sensitivity = 99, limits_Specificity = c(90, 100), overlay = "area", overlay_position_FP = 1, overlay_prevalence_1 = NULL, overlay_prevalence_2 = 1, PPV_NPV = "PPV")) # * Missing the overlay_prevalence_1 parameter for the overlay's prevalence (overlay_prevalence_1 out of overlay_prevalence_2)
   testthat::expect_error(BayesianReasoning::PPV_heatmap(Sensitivity = 99, limits_Specificity = c(90, 100), overlay = "area", overlay_position_FP = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = NULL, PPV_NPV = "PPV")) # * Missing the overlay_prevalence_2 parameter for the overlay's prevalence (overlay_prevalence_1 out of overlay_prevalence_2)
   testthat::expect_error(BayesianReasoning::PPV_heatmap(Sensitivity = 99, limits_Specificity = c(90, 100), overlay = "area", overlay_position_FP = 1)) # * Need a prevalence for the overlay. Use the overlay_prevalence_1 and overlay_prevalence_2 parameters (overlay_prevalence_1 out of overlay_prevalence_2)
-  
+
   testthat::expect_error(BayesianReasoning::PPV_heatmap(Sensitivity = 99, limits_Specificity = c(90, 100), overlay = "area", overlay_position_FP = NULL, PPV_NPV = "PPV")) # * overlay_position_FP needs a value
   testthat::expect_error(BayesianReasoning::PPV_heatmap(Specificity = 99, limits_Sensitivity = c(90, 100), overlay = "area", overlay_position_FN = NULL, PPV_NPV = "NPV")) # * overlay_position_FN needs a value
   
@@ -303,12 +303,15 @@ testthat::test_that("Extra decimals when axis are tight", {
 
 
 testthat::test_that("PPV Plot", {
+  
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1,
       max_Prevalence = 1000,
       Sensitivity = 100,
       limits_Specificity = c(95, 100),
+      label_title = "Title plot", 
+      label_subtitle = "Subtitle plot",
       Language = "en",
       PPV_NPV = "PPV")
     )
@@ -316,6 +319,8 @@ testthat::test_that("PPV Plot", {
   testthat::expect_true(ggplot2::is.ggplot(p$result))
   testthat::expect_identical(p$result$labels$x, "False + (1 - Specificity)")
   testthat::expect_identical(p$result$labels$y, "Prevalence")
+  testthat::expect_identical(p$result$labels$title, "Title plot")
+  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
   testthat::expect_identical(p$result$labels$caption, "Sensitivity = 100%")
   testthat::expect_equal(p$result$plot_env$breaks_y, c(0.001000000, 0.002154435, 0.004641589, 0.010000000, 0.021544347, 0.046415888, 0.100000000, 0.215443469, 0.464158883, 1.000000000))
   testthat::expect_equal(p$result$plot_env$breaks_x, c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0))
@@ -337,12 +342,16 @@ testthat::test_that("NPV Plot", {
       max_Prevalence = 1000,
       Specificity = 100,
       limits_Sensitivity = c(95, 100),
+      label_title = "Title plot", 
+      label_subtitle = "Subtitle plot",
       Language = "en",
       PPV_NPV = "NPV"
     ))
   testthat::expect_true(ggplot2::is.ggplot(p$result))
   testthat::expect_identical(p$result$labels$x, "False - (1 - Sensitivity)")
   testthat::expect_identical(p$result$labels$y, "Prevalence")
+  testthat::expect_identical(p$result$labels$title, "Title plot")
+  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
   testthat::expect_identical(p$result$labels$caption, "Specificity = 100%")
   testthat::expect_equal(p$result$plot_env$breaks_y, c(0.001000000, 0.002154435, 0.004641589, 0.010000000, 0.021544347, 0.046415888, 0.100000000, 0.215443469, 0.464158883, 1.000000000))
   testthat::expect_equal(p$result$plot_env$breaks_x, c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0))
@@ -358,53 +367,44 @@ testthat::test_that("NPV Plot", {
 
 
 
-testthat::test_that("Spanish translation works'", {
+testthat::test_that("Spanish translation", {
+  
   p <- BayesianReasoning::PPV_heatmap(
-    min_Prevalence = 1,
-    max_Prevalence = 1000,
-    Sensitivity = 100,
-    limits_Specificity = c(93, 100),
-    Language = "sp")
+        min_Prevalence = 1, max_Prevalence = 1000,
+        Sensitivity = 100, limits_Specificity = c(93, 100),
+        Language = "sp")
+  
   testthat::expect_identical(p$labels$y, "Prevalencia")
   testthat::expect_identical(p$labels$x, "Falsos + (1 - Especificidad)")
   
-})
-
-testthat::test_that("Spanish translation with overlay works'", {
   p <-  testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
-      Sensitivity = 100,
-      Specificity = 90,
-      limits_Specificity = c(90, 100),
+      Sensitivity = 100, limits_Specificity = c(90, 100),
+      label_title = "Title plot", 
+      label_subtitle = "Subtitle plot",
       Language = "sp",
       overlay = "area",
-      overlay_position_FP = 1,
-      overlay_prevalence_1 = 1, overlay_prevalence_2 = 100)
+      overlay_position_FP = 1, overlay_prevalence_1 = 1, overlay_prevalence_2 = 100)
   )
   
-  testthat::expect_identical(
-    sapply(p$result$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomPoint", "GeomMarkRect"))
+  testthat::expect_identical(sapply(p$result$layers, function(x) class(x$geom)[1]), c("GeomTile", "GeomPoint", "GeomMarkRect"))
+  testthat::expect_identical(p$result$labels$title, "Title plot")
+  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
   
-})
-
-testthat::test_that("Spanish translation with overlay works NPV", {
+  
   p <-  testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
-      PPV_NPV = "NPV",
-      min_Prevalence = 1, max_Prevalence = 1000,
-      Sensitivity = 100,
-      Specificity = 90,
-      limits_Sensitivity = c(90, 100),
-      Language = "sp",
-      overlay = "area",
-      overlay_position_FN = 1,
-      overlay_prevalence_1 = 1, overlay_prevalence_2 = 100)
-  )
-  testthat::expect_identical(
-    sapply(p$result$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomPoint", "GeomMarkRect"))
+      BayesianReasoning::PPV_heatmap(
+        PPV_NPV = "NPV",
+        min_Prevalence = 1, max_Prevalence = 1000,
+        Specificity = 90,
+        limits_Sensitivity = c(90, 100),
+        Language = "sp",
+        overlay = "area",
+        overlay_position_FN = 1,
+        overlay_prevalence_1 = 1, overlay_prevalence_2 = 100)
+      )
+  testthat::expect_identical(sapply(p$result$layers, function(x) class(x$geom)[1]), c("GeomTile", "GeomPoint", "GeomMarkRect"))
   testthat::expect_identical(p$result$labels$y, "Prevalencia")
   testthat::expect_identical(p$result$labels$x, "Falsos - (1 - Sensibilidad)")
   
@@ -412,6 +412,7 @@ testthat::test_that("Spanish translation with overlay works NPV", {
 
 
 testthat::test_that("one_out_of PPV", {
+  
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 2,
@@ -427,10 +428,6 @@ testthat::test_that("one_out_of PPV", {
   testthat::expect_true(p$result$plot_env$one_out_of)
   testthat::expect_equal(range(p$result$plot_env$breaks_x), c(0,100))
   
-})
-
-
-testthat::test_that("one_out_of NPV", {
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1,
@@ -447,7 +444,7 @@ testthat::test_that("one_out_of NPV", {
 })
 
 
-testthat::test_that("PPV calculation with area overlay, low uncertainty, and decimals in y axis. overlay_extra_info TRUE", {
+testthat::test_that("Area overlay, low uncertainty, and decimals in y axis. overlay_extra_info TRUE/FALSE", {
   p <-
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 8,
@@ -459,20 +456,13 @@ testthat::test_that("PPV calculation with area overlay, low uncertainty, and dec
       PPV_NPV = "PPV"
     )
   
-  
   # Overlay description
   testthat::expect_identical(
-  p$layers[[3]]$computed_geom_params$description,
-  "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% \n ---------------------------------------------\n2 sick: 1.62 (+) 0.38 (-)\n6 healthy: 5.71 (-) 0.29 (+) ")
+  p$layers[[3]]$computed_geom_params$description, "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% \n ---------------------------------------------\n2 sick: 1.62 (+) 0.38 (-)\n6 healthy: 5.71 (-) 0.29 (+) ")
     
   # Decimal breaks y axis
-  testthat::expect_equal(
-    p$plot_env$breaks_y,
-    c(0.1250000, 0.1450162, 0.1682375, 0.195177295538928, 0.226430916065977, 0.262689159663305, 0.304753413551119, 0.353553390593274, 0.410167678003819, 0.47584757650531, 0.552044756836906, 0.640443344882136, 0.742997144568474, 0.861972821246978, 1.0000000))
+  testthat::expect_equal(p$plot_env$breaks_y, c(0.1250000, 0.1450162, 0.1682375, 0.195177295538928, 0.226430916065977, 0.262689159663305, 0.304753413551119, 0.353553390593274, 0.410167678003819, 0.47584757650531, 0.552044756836906, 0.640443344882136, 0.742997144568474, 0.861972821246978, 1.0000000))
 
-})
-
-testthat::test_that("PPV calculation with area overlay, overlay_extra_info FALSE", {
   p <-
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 8,
@@ -484,16 +474,11 @@ testthat::test_that("PPV calculation with area overlay, overlay_extra_info FALSE
       PPV_NPV = "PPV"
     )
   
-  
   # Overlay description
-  testthat::expect_identical(
-    p$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% ")
+  testthat::expect_identical(p$layers[[3]]$computed_geom_params$description, "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% ")
   
   # Decimal breaks y axis
-  testthat::expect_equal(
-    p$plot_env$breaks_y,
-    c(0.1250000, 0.1450162, 0.1682375, 0.195177295538928, 0.226430916065977, 0.262689159663305, 0.304753413551119, 0.353553390593274, 0.410167678003819, 0.47584757650531, 0.552044756836906, 0.640443344882136, 0.742997144568474, 0.861972821246978, 1.0000000))
+  testthat::expect_equal(p$plot_env$breaks_y, c(0.1250000, 0.1450162, 0.1682375, 0.195177295538928, 0.226430916065977, 0.262689159663305, 0.304753413551119, 0.353553390593274, 0.410167678003819, 0.47584757650531, 0.552044756836906, 0.640443344882136, 0.742997144568474, 0.861972821246978, 1.0000000))
   
 })
 
@@ -507,16 +492,13 @@ testthat::test_that("Range of data is the same as the x axis range", {
                 Specificity = 95)
 
   # Decimal breaks y axis
-  testthat::expect_identical(
-    c(p$plot_env$min_FN, p$plot_env$max_FN), 
-    range(p$data$FN)
-    )
+  testthat::expect_identical(c(p$plot_env$min_FN, p$plot_env$max_FN), range(p$data$FN))
     
 
 })
 
 
-
+# TODO: Should check uncertainty_prevalence consequences
 testthat::test_that("NPV calculation with area overlay and low uncertainty", {
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
@@ -539,29 +521,17 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
 })
 
 
-testthat::test_that("* overlay_position_FP needs a value", {
-  testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
-      min_Prevalence = 1, max_Prevalence = 1200,
-      limits_Specificity = c(76, 86),
-      # Specificity = 95,
-      overlay = "area",
-      overlay_position_FN = 4.8,
-      overlay_prevalence_1 = c(67, 100), overlay_prevalence_2 = c(68, 1500),
-      uncertainty_prevalence = "low",
-      PPV_NPV = "PPV")
-    )
-  
-})
-
 
 # Line overlay ------------------------------------------------------------
 
-testthat::test_that("Plot with line overlay PPV", {
+testthat::test_that("Plot with line overlay", {
+  
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1800,
       Sensitivity = 90, limits_Specificity = c(80, 90),
+      label_title = "Title plot", 
+      label_subtitle = "Subtitle plot",
       overlay = "line",
       uncertainty_prevalence = "low",
       overlay_labels = c("80 y.o.", "70 y.o.","60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
@@ -569,43 +539,97 @@ testthat::test_that("Plot with line overlay PPV", {
       overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 2),
       overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
     )
-  testthat::expect_identical(
-    sapply(p$result$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
+  testthat::expect_identical(sapply(p$result$layers, function(x) class(x$geom)[1]), c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
+  testthat::expect_identical(p$result$labels$title, "Title plot")
+  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
+
+  p <- testthat::evaluate_promise(
+    BayesianReasoning::PPV_heatmap(
+      PPV_NPV = "NPV",
+      uncertainty_prevalence = "high",
+      min_Prevalence = 1, max_Prevalence = 1800, 
+      Specificity = 85, limits_Sensitivity = c(85, 95),
+      label_title = "Title plot", 
+      label_subtitle = "Subtitle plot",
+      overlay = "line",
+      overlay_labels = c("80 y.o.", "70 y.o.","60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o.", "X yo"),
+      overlay_position_FN = c(6.5, 7, 8, 9, 12, 14, 14, 14),
+      overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1, 1),
+      overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667, 1798))
+  )
+  
+  testthat::expect_identical(sapply(p$result$layers, function(x) class(x$geom)[1]), c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
+  testthat::expect_identical(p$result$labels$title, "Title plot")
+  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
   
 })
 
 
-
-testthat::test_that("Plot with line overlay NPV", {
-  p <-
+testthat::test_that("Unequal overlay number of parameters", {
+  testthat::expect_error(
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
-      uncertainty_prevalence = "high",
-      DEBUG = 1,
-      min_Prevalence = 1,
-      max_Prevalence = 1800, 
-      limits_Sensitivity = c(85, 95),
-      Specificity = 85,
-      label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
+      min_Prevalence = 1, max_Prevalence = 1800, 
+      Specificity = 85, limits_Sensitivity = c(85, 95),
       overlay = "line",
-      overlay_labels = c(
-        "80 y.o.",
-        "70 y.o.",
-        "60 y.o.",
-        "50 y.o.",
-        "40 y.o.",
-        "30 y.o.",
-        "20  y.o.",
-        "X  y.o."
-      ),
-      overlay_position_FN = c(6.5, 7, 8, 9, 12, 14, 14, 14),
-      overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1, 1),
-      overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667, 1798)
+      overlay_labels = c("80 y.o."),
+      overlay_position_FN = c(6.5, 7),
+      overlay_prevalence_1 = c(1, 1, 1),
+      overlay_prevalence_2 = c(22, 26, 23, 278))
     )
-  testthat::expect_identical(
-    sapply(p$layers, function(x) class(x$geom)[1]),
-    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect"))
+  
+  testthat::expect_error(
+    BayesianReasoning::PPV_heatmap(
+      PPV_NPV = "PPV",
+      min_Prevalence = 1, max_Prevalence = 1800, 
+      Sensitivity = 85, limits_Specificity = c(85, 95),
+      overlay = "line",
+      overlay_labels = c("80 y.o.", "asd", "asd", "asd"),
+      overlay_position_FP = c(6.5, 7),
+      overlay_prevalence_1 = c(1, 1, 1, 3),
+      overlay_prevalence_2 = c(22, 26, 23, 278))
+  )
+  
+  testthat::expect_error(
+    BayesianReasoning::PPV_heatmap(
+      PPV_NPV = "NPV",
+      min_Prevalence = 1, max_Prevalence = 1800, 
+      Specificity = 85, limits_Sensitivity = c(85, 95),
+      overlay = "line",
+      overlay_labels = c("80 y.o.", "asd", "asd", "asd"),
+      overlay_position_FN = c(6.5, 7),
+      overlay_prevalence_1 = c(1, 1, 1, 3),
+      overlay_prevalence_2 = c(22, 26, 23, 278))
+  )
+  
+  p = testthat::evaluate_promise(
+    BayesianReasoning::PPV_heatmap(
+      min_Prevalence = 1, max_Prevalence = 1200,
+      limits_Specificity = c(75, 85),
+      Sensitivity = 95,
+      overlay = "line",
+      overlay_labels = c("tag 1", "", "tag 3"),
+      overlay_position_FP = c(5, 10, 20),
+      overlay_prevalence_1 = c(1, 1, 5), overlay_prevalence_2 = c(8, 55, 176),
+      uncertainty_prevalence = "low",
+      PPV_NPV = "PPV")
+  )
+  
+  testthat::expect_length(p$warnings, 2)
+  
+  # TODO: accept NULL values in overlay line?
+  testthat::expect_error(
+    BayesianReasoning::PPV_heatmap(
+      min_Prevalence = 1, max_Prevalence = 1200,
+      limits_Specificity = c(76, 86),
+      Sensitivity = 95,
+      overlay = "line",
+      overlay_labels = c("tag 1", NULL, "tag 3"),
+      overlay_position_FP = c(4.8, 15, 20),
+      overlay_prevalence_1 = c(1, 2, 1), overlay_prevalence_2 = c(8, 55, 176),
+      uncertainty_prevalence = "low",
+      PPV_NPV = "PPV")
+  )
   
 })
 
@@ -614,7 +638,7 @@ testthat::test_that("Plot with line overlay NPV", {
 
 # Save plot ---------------------------------------------------------------
 
-testthat::test_that("Plot saved", {
+testthat::test_that("Save plots", {
   
   p <- BayesianReasoning::PPV_heatmap(
     min_Prevalence = 1, max_Prevalence = 1000,
@@ -627,10 +651,6 @@ testthat::test_that("Plot saved", {
   testthat::expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
   
-})
-
-testthat::test_that("Plot saved", {
-  
   p <- BayesianReasoning::PPV_heatmap(
     PPV_NPV = "NPV",
     min_Prevalence = 1, max_Prevalence = 1000,
@@ -640,6 +660,23 @@ testthat::test_that("Plot saved", {
   )
   
   file_name_test = "NPV_1_1000_100_0_10_en.png"
+  testthat::expect_true(file.exists(file_name_test))
+  file.remove(file_name_test)
+  
+  p <- BayesianReasoning::PPV_heatmap(
+    PPV_NPV = "NPV",
+    min_Prevalence = 1, max_Prevalence = 1000,
+    Specificity = 100,
+    limits_Sensitivity = c(90, 100),
+    overlay = "area",
+    overlay_extra_info = TRUE,
+    overlay_position_FN = 2,
+    overlay_prevalence_1 = 1,
+    overlay_prevalence_2 = 10,
+    folder = "."
+  )
+  
+  file_name_test = "NPV_1_1000_100_0_10_area_TRUE_en.png"
   testthat::expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
   
