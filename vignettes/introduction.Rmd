@@ -15,9 +15,9 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  dpi=300,
+  dpi = 60,
   fig.height = 10,
-  fig.width=14
+  fig.width = 14
 )
 ```
 
@@ -25,7 +25,21 @@ knitr::opts_chunk$set(
 library(BayesianReasoning)
 ```
 
-# Bayesian reasoning in medical contexts
+# Bayesian reasoning
+
+ 
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
+[![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)
+[![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
+<!-- badges: end -->
+
+---  
+
+## Bayesian reasoning in medical contexts
+
 
 This package includes a few functions to plot and help understand Positive and Negative Predictive Values, and their relationship with Sensitivity, Specificity and Prevalence.  
 
@@ -63,7 +77,7 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 
 PPV_heatmap(min_Prevalence = 1,
             max_Prevalence = 1000, 
-            Sensitivity = 100, 
+            Sensitivity = 100, limits_Specificity = c(90, 100),
             Language = "en")
             
 ```  
@@ -80,9 +94,8 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 ```{r NPV-heatmap}
 
 PPV_heatmap(PPV_NPV = "NPV",
-            min_Prevalence = 800,
-            max_Prevalence = 1000, 
-            Specificity = 95, 
+            min_Prevalence = 800, max_Prevalence = 1000, 
+            Specificity = 95, limits_Sensitivity = c(90, 100),
             Language = "en")
 
 ```

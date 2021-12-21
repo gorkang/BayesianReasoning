@@ -24,6 +24,7 @@
 #' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
 #' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
 #' @param steps_matrix with of PPV/NPV matrix. 100 by default
+#' @param ... .
 #'
 #' @return Shows a plot or, if given a folder argument, saves a .png version of the plot
 #' @export
@@ -65,10 +66,14 @@ PPV_heatmap <-
            PPV_NPV = "PPV",
            
            steps_matrix = 100,
-           DEBUG = FALSE) {
+           DEBUG = FALSE,
+           ...) {
 
     
     # PROCESS VARIABLES -------------------------------------------------------
+    
+    # Get ... vars    
+    dots <- list(...)
     
     # CHECKS variables and sets defaults
     main_variables = process_variables(
@@ -78,6 +83,7 @@ PPV_heatmap <-
       Specificity = Specificity,
       limits_Sensitivity = limits_Sensitivity,
       limits_Specificity = limits_Specificity,
+      overlay_labels = overlay_labels,
       overlay_position_FP = overlay_position_FP,
       overlay_position_FN = overlay_position_FN,
       overlay_prevalence_1 = overlay_prevalence_1,
@@ -255,7 +261,12 @@ PPV_heatmap <-
     # Show and Save plot -----------------------------------------------------
 
       if (folder != "") {
-
+        
+        if (is.null(dots$dpi)) dots$dpi = 150
+        if (is.null(dots$width)) dots$width = 14
+        if (is.null(dots$height)) dots$height = 10
+          
+        
         # PPV/NPV defines what we use for filename
         if (PPV_NPV == "PPV") {
           Sensitivity_Specificity_tag = main_variables$Sensitivity
@@ -267,7 +278,7 @@ PPV_heatmap <-
 
         # Name and save
         plot_name = paste0(folder, "/", PPV_NPV, "_", main_variables$min_Prevalence, "_", main_variables$max_Prevalence, "_", Sensitivity_Specificity_tag, "_", range_tag, overlay_tag, "_", overlay_extra_info_tag, Language, ".png")
-        ggsave(plot_name, p, dpi = 300, width = 14, height = 10)
+        ggsave(plot_name, p, dpi = dots$dpi, width = dots$width, height = dots$height)
         message("\n Plot created in: ", plot_name, "\n")
         
       }
