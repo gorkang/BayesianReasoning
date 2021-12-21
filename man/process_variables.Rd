@@ -12,12 +12,13 @@ process_variables(
   Specificity = NULL,
   limits_Sensitivity = NULL,
   limits_Specificity = NULL,
+  overlay_labels = NULL,
   overlay_position_FP = NULL,
   overlay_position_FN = NULL,
   overlay_prevalence_1 = NULL,
   overlay_prevalence_2 = NULL,
   PPV_NPV = "PPV",
-  one_out_of = one_out_of,
+  one_out_of = NULL,
   overlay = "",
   steps_matrix = 100
 )
@@ -34,6 +35,8 @@ process_variables(
 \item{limits_Sensitivity}{c(min Sensitivity, max Sensitivity)}
 
 \item{limits_Specificity}{c(min Specificity, max Specificity)}
+
+\item{overlay_labels}{vector with labels for each overlay point}
 
 \item{overlay_position_FP}{FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)}
 

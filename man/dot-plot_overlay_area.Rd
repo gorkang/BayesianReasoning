@@ -80,7 +80,7 @@
 
 \item{overlay_position_FN}{.}
 
-\item{overlay_labels}{.}
+\item{overlay_labels}{vector with labels for each overlay point}
 
 \item{overlay_extra_info}{show extra info in overlay? [TRUE/FALSE]}
 

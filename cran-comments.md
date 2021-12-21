@@ -8,14 +8,12 @@
   
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-Maintainer: ‘Gorka Navarrete <gorkang@gmail.com>’
-
-Size of tarball: 6242682 bytes
+0 errors | 0 warnings | 0 note
 
 
 ## New major version
+
+Resending to reduce the tarball size below 5 MB as requestes by CRAN. Sorry!
 
 This is a new version refactoring the way we calculate the PPV and NPV matrices.
 
