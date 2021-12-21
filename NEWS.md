@@ -1,3 +1,5 @@
+# BayesianReasoning (development version)
+
 # BayesianReasoning 0.4.0
 
 Major updates
