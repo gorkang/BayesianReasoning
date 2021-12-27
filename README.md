@@ -1,15 +1,18 @@
 # Bayesian reasoning
 
 <!-- badges: start -->
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master) -->
+<!-- [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
+<!-- [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662) -->
 
 [![CRAN
-status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
-[![Codecov test
-coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)
-[![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
+status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)[![Codecov
+test
+coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)[![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
+
 <!-- badges: end -->
 
 ------------------------------------------------------------------------
@@ -109,6 +112,7 @@ prevalence and FP or FN:
                 overlay_position_FP = 4.8,
                 overlay_prevalence_1 = 1,
                 overlay_prevalence_2 = 68)
+    #> Using limits_Specificity as is
 
 ![](man/figures/README_files/figure-markdown_strict/area-1.png)
 
@@ -126,6 +130,7 @@ PPV/NPV is performed:
                 overlay_position_FP = 4.8,
                 overlay_prevalence_1 = 1,
                 overlay_prevalence_2 = 68)
+    #> Using limits_Specificity as is
 
 ![](man/figures/README_files/figure-markdown_strict/area2-1.png)
 
@@ -145,6 +150,9 @@ with age:
                 overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
                 overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1),
                 overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
+    #> Using limits_Specificity as is
+    #> Warning in if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value
+    #> 0-100"): the condition has length > 1 and only the first element will be used
 
 ![](man/figures/README_files/figure-markdown_strict/line-1.png)
 
@@ -161,6 +169,9 @@ Another example. In this case, the FP is constant across age:
                 overlay_position_FP = c(4.8, 4.8, 4.8),
                 overlay_prevalence_1 = c(1, 1, 1),
                 overlay_prevalence_2 = c(68, 626, 1068))
+    #> Using limits_Specificity as is
+    #> Warning in if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value
+    #> 0-100"): the condition has length > 1 and only the first element will be used
 
 ![](man/figures/README_files/figure-markdown_strict/line-2-1.png)
 

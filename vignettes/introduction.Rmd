@@ -23,17 +23,51 @@ knitr::opts_chunk$set(
 
 ```{r, echo = FALSE, message = FALSE, results = 'hide'}
 library(BayesianReasoning)
+
+safely_show_image_Rmd <- function(IMAGE, name_image) {
+  
+  if (curl::has_internet()) {
+    
+    if (httr::http_error(IMAGE)) { # network down
+      message("Data source not responding")
+      return(NULL)
+    } else { # network up
+      paste0("![", name_image, "](", IMAGE, ")")
+    }
+    
+  } else {
+    message("No internet")
+    return(NULL)
+  }
+  
+}
+
 ```
 
 # Bayesian reasoning
 
  
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
-[![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)
-[![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662)
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master) -->
+<!-- [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
+<!-- [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662) -->
+
+```{r echo=FALSE, results='asis'}
+cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://www.r-pkg.org/badges/version/BayesianReasoning", name_image = "CRAN status"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
+cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg", name_image = "Codecov test coverage"), "]", "(https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)"))
+cat(paste0("[", safely_show_image_Rmd(IMAGE = "http://cranlogs.r-pkg.org/badges/BayesianReasoning", name_image = "downloads"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
+
+
+cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://img.shields.io/badge/lifecycle-experimental-orange.svg", name_image = "Lifecycle: experimental"), "]", "(https://lifecycle.r-lib.org/articles/stages.html#experimental)"))
+cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://zenodo.org/badge/93097662.svg", name_image = "DOI"), "]", "(https://zenodo.org/badge/latestdoi/93097662)"))
+
+```
+
+
+
+
 <!-- badges: end -->
 
 ---  

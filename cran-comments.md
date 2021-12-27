@@ -11,10 +11,8 @@
 0 errors | 0 warnings | 0 note
 
 
-## New major version
+## Re-submission
 
-Resending to reduce the tarball size below 5 MB as requestes by CRAN. Sorry!
+Fixing issues with URL's (https://cran.r-project.org/web/checks/check_results_BayesianReasoning.html)
 
-This is a new version refactoring the way we calculate the PPV and NPV matrices.
-
-I also added parameters to control the scales, and multiple checks and tests.
+- Added function so the internet resources in the introduction vignette have a fallback condition with an informative message. 
