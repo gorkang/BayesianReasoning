@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,13 @@
 </h1>
 </div>
 <!-- badges: start -->
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master) -->
+<!-- [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
+<!-- [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662) -->
 
+<!-- badges: end -->
 <hr>
 <div class="section level2">
 <h2 id="bayesian-reasoning-in-medical-contexts">Bayesian reasoning in medical contexts<a class="anchor" aria-label="anchor" href="#bayesian-reasoning-in-medical-contexts"></a>
@@ -149,7 +155,8 @@
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_labels =</span> <span class="st">"40 y.o."</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_position_FP =</span> <span class="fl">4.8</span>,</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_1 =</span> <span class="dv">1</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="dv">68</span>)</span></code></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="dv">68</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using limits_Specificity as is</span></span></code></pre></div>
 <p><img src="reference/figures/README_files/figure-markdown_strict/area-1.png"></p>
 <p>The area plot overlay can show more details about how the calculation of PPV/NPV is performed:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">PPV_heatmap</span>(<span class="at">min_Prevalence =</span> <span class="dv">1</span>, <span class="at">max_Prevalence =</span> <span class="dv">1200</span>, </span>
@@ -161,7 +168,8 @@
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_labels =</span> <span class="st">"40 y.o."</span>,</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_position_FP =</span> <span class="fl">4.8</span>,</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_1 =</span> <span class="dv">1</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="dv">68</span>)</span></code></pre></div>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="dv">68</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using limits_Specificity as is</span></span></code></pre></div>
 <p><img src="reference/figures/README_files/figure-markdown_strict/area2-1.png"></p>
 </div>
 <div class="section level3">
@@ -176,7 +184,10 @@
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_labels =</span> <span class="fu">c</span>(<span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span>),</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_position_FP =</span> <span class="fu">c</span>(<span class="fl">6.5</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">14</span>, <span class="dv">14</span>),</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">44</span>, <span class="dv">69</span>, <span class="dv">227</span>, <span class="dv">1667</span>))</span></code></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">26</span>, <span class="dv">29</span>, <span class="dv">44</span>, <span class="dv">69</span>, <span class="dv">227</span>, <span class="dv">1667</span>))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using limits_Specificity as is</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in if (Specificity &gt; 100 | Specificity &lt; 0) stop("* Specificity should be a value</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0-100"): the condition has length &gt; 1 and only the first element will be used</span></span></code></pre></div>
 <p><img src="reference/figures/README_files/figure-markdown_strict/line-1.png"></p>
 <hr>
 <p>Another example. In this case, the FP is constant across age:</p>
@@ -187,7 +198,10 @@
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_labels =</span> <span class="fu">c</span>(<span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20 y.o."</span>),</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_position_FP =</span> <span class="fu">c</span>(<span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span>),</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">626</span>, <span class="dv">1068</span>))</span></code></pre></div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">overlay_prevalence_2 =</span> <span class="fu">c</span>(<span class="dv">68</span>, <span class="dv">626</span>, <span class="dv">1068</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Using limits_Specificity as is</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in if (Specificity &gt; 100 | Specificity &lt; 0) stop("* Specificity should be a value</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0-100"): the condition has length &gt; 1 and only the first element will be used</span></span></code></pre></div>
 <p><img src="reference/figures/README_files/figure-markdown_strict/line-2-1.png"></p>
 <hr>
 </div>

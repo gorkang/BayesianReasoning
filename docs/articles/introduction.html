@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -79,7 +79,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Introduction to BayesianReasoning</h1>
                         <h4 data-toc-skip class="author">Gorka Navarrete</h4>
             
-            <h4 data-toc-skip class="date">2021-12-21</h4>
+            <h4 data-toc-skip class="date">2021-12-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="d-none name"><code>introduction.Rmd</code></div>
@@ -91,7 +91,13 @@
 <h1 id="bayesian-reasoning">Bayesian reasoning<a class="anchor" aria-label="anchor" href="#bayesian-reasoning"></a>
 </h1>
 <!-- badges: start -->
-<p><a href="https://cran.r-project.org/package=BayesianReasoning" class="external-link"><img src="https://www.r-pkg.org/badges/version/BayesianReasoning" alt="CRAN status"></a> <a href="https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master" class="external-link"><img src="https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg" alt="Codecov test coverage"></a> <a href="https://cran.r-project.org/package=BayesianReasoning" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/BayesianReasoning" alt="downloads"></a> <a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://zenodo.org/badge/latestdoi/93097662" class="external-link"><img src="https://zenodo.org/badge/93097662.svg" alt="DOI"></a> <!-- badges: end --></p>
+<!-- [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master) -->
+<!-- [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
+<!-- [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662) -->
+<p><a href="https://cran.r-project.org/package=BayesianReasoning" class="external-link"><img src="https://www.r-pkg.org/badges/version/BayesianReasoning" alt="CRAN status"></a><a href="https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master" class="external-link"><img src="https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg" alt="Codecov test coverage"></a><a href="https://cran.r-project.org/package=BayesianReasoning" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/BayesianReasoning" alt="downloads"></a><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental" class="external-link"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a><a href="https://zenodo.org/badge/latestdoi/93097662" class="external-link"><img src="https://zenodo.org/badge/93097662.svg" alt="DOI"></a></p>
+<!-- badges: end -->
 <hr>
 <div class="section level2">
 <h2 id="bayesian-reasoning-in-medical-contexts">Bayesian reasoning in medical contexts<a class="anchor" aria-label="anchor" href="#bayesian-reasoning-in-medical-contexts"></a>
@@ -166,7 +172,8 @@
             overlay_labels <span class="op">=</span> <span class="st">"40 y.o."</span>,
             overlay_position_FP <span class="op">=</span> <span class="fl">4.8</span>,
             overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
-            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
+            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span>
+<span class="co">#&gt; Using limits_Specificity as is</span></code></pre></div>
 <p><img src="introduction_files/figure-html/area-1.png" width="840"></p>
 <p>The area plot overlay can show more details about how the calculation of PPV/NPV is performed:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -180,7 +187,8 @@
             overlay_labels <span class="op">=</span> <span class="st">"40 y.o."</span>,
             overlay_position_FP <span class="op">=</span> <span class="fl">4.8</span>,
             overlay_prevalence_1 <span class="op">=</span> <span class="fl">1</span>,
-            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span></code></pre></div>
+            overlay_prevalence_2 <span class="op">=</span> <span class="fl">68</span><span class="op">)</span>
+<span class="co">#&gt; Using limits_Specificity as is</span></code></pre></div>
 <p><img src="introduction_files/figure-html/area2-1.png" width="840"></p>
 </div>
 <div class="section level3">
@@ -197,7 +205,11 @@
             overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"80 y.o."</span>, <span class="st">"70 y.o."</span>, <span class="st">"60 y.o."</span>, <span class="st">"50 y.o."</span>, <span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20  y.o."</span><span class="op">)</span>,
             overlay_position_FP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">6.5</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">14</span>, <span class="fl">14</span><span class="op">)</span>,
             overlay_prevalence_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
-            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">22</span>, <span class="fl">26</span>, <span class="fl">29</span>, <span class="fl">44</span>, <span class="fl">69</span>, <span class="fl">227</span>, <span class="fl">1667</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Using limits_Specificity as is</span>
+<span class="co">#&gt; Warning in if (Specificity &gt; 100 | Specificity &lt; 0) stop("* Specificity should</span>
+<span class="co">#&gt; be a value 0-100"): the condition has length &gt; 1 and only the first element will</span>
+<span class="co">#&gt; be used</span></code></pre></div>
 <p><img src="introduction_files/figure-html/line-1.png" width="840"></p>
 <hr>
 <p>Another example. In this case, the FP is constant across age:</p>
@@ -210,7 +222,11 @@
             overlay_labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"40 y.o."</span>, <span class="st">"30 y.o."</span>, <span class="st">"20 y.o."</span><span class="op">)</span>,
             overlay_position_FP <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4.8</span>, <span class="fl">4.8</span>, <span class="fl">4.8</span><span class="op">)</span>,
             overlay_prevalence_1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,
-            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">68</span>, <span class="fl">626</span>, <span class="fl">1068</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+            overlay_prevalence_2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">68</span>, <span class="fl">626</span>, <span class="fl">1068</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; Using limits_Specificity as is</span>
+<span class="co">#&gt; Warning in if (Specificity &gt; 100 | Specificity &lt; 0) stop("* Specificity should</span>
+<span class="co">#&gt; be a value 0-100"): the condition has length &gt; 1 and only the first element will</span>
+<span class="co">#&gt; be used</span></code></pre></div>
 <p><img src="introduction_files/figure-html/line-2-1.png" width="840"></p>
 <hr>
 </div>
