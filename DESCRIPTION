@@ -1,7 +1,7 @@
 Package: BayesianReasoning
 Type: Package
 Title: Plot Positive and Negative Predictive Values for Medical Tests
-Version: 0.4.0.9000
+Version: 0.4.0
 Date: 2021-12-20
 Authors@R: c(person("Gorka", "Navarrete", email = "gorkang@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0001-7678-8656")))
 Maintainer: Gorka Navarrete <gorkang@gmail.com>

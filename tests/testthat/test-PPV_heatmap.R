@@ -571,8 +571,23 @@ testthat::test_that("all parameters", {
 
 # Line overlay ------------------------------------------------------------
 
+
 testthat::test_that("Plot with line overlay", {
   
+  p <- testthat::evaluate_promise(
+    BayesianReasoning::PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800,
+                                   Sensitivity = 90,
+                                   limits_Specificity = c(84, 100),
+                                   overlay = "line",
+                                   overlay_labels = c("80 y.o.", "70 y.o."),
+                                   overlay_position_FP = c(6.5, 7),
+                                   overlay_prevalence_1 = c(1, 1),
+                                   overlay_prevalence_2 = c(22, 26)
+    )
+  )
+  
+  testthat::expect_length(p$warnings, 0)
+    
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1800,
@@ -663,7 +678,8 @@ testthat::test_that("Unequal overlay number of parameters", {
       PPV_NPV = "PPV")
   )
   
-  testthat::expect_length(p$warnings, 2)
+  testthat::expect_length(p$warnings, 1)
+  # "\n[WARNING]: Some of the overlay_prevalence_1 (1) are > min_Prevalence (1).\n[EXPECTED]: overlay_prevalence_1 should be >= min_Prevalence.\n[CHANGED]: overlay_prevalence_1 and overlay_prevalence_2 to 1, 1, 25 and 8, 55, 880"
   
   # TODO: accept NULL values in overlay line?
   testthat::expect_error(

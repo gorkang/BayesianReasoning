@@ -325,8 +325,8 @@ process_variables <- function(min_Prevalence = NULL,
   
   
   # General CHECKS
-  if (!is.null(Sensitivity)) { if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity should be a value 0-100") }
-  if (!is.null(Specificity)) { if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value 0-100") }
+  if (!is.null(Sensitivity) & overlay != c("line")) { if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity should be a value 0-100") }
+  if (!is.null(Specificity) & overlay != c("line")) { if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value 0-100") }
   
   
   
