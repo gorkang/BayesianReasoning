@@ -50,33 +50,50 @@ process_variables <- function(min_Prevalence = NULL,
       if (length(limits_Specificity) != 2) stop("\n* limits_Specificity should be a vector of length 2, now is (", paste(limits_Specificity, collapse = ", "), "). e.g.: limits_Specificity = c(90, 95)")
       if (limits_Specificity[1] < 0 | limits_Specificity[2] > 100) stop("\n* limits_Specificity should be between 0 and 100, now are (", paste(limits_Specificity, collapse = ", "), "). e.g.: limits_Specificity = c(90, 95)")
       }
-    
 
     # Specificity
-    if (!is.null(Specificity) & !is.null(limits_Specificity)) {
+    if (is.null(overlay_position_FP) & !is.null(Specificity) & !is.null(limits_Specificity)) {
       if (var(limits_Specificity) == 0) stop("\n* limits_Specificity need two different numbers: limits_Specificity = c(min, max)")
-      Specificity = mean(limits_Specificity)
+        Specificity = mean(limits_Specificity) # Only if we don't have overlay_position_FP
+        warning("* Both Specificity (", Specificity, ") and limits_Specificity (", paste(limits_Specificity, collapse = ", "), ") have values. Ignoring Specificity and using limits_Specificity")
       default_plus_minus = limits_Specificity[2] - Specificity
-      warning("* Both Specificity (", Specificity, ") and limits_Specificity (", paste(limits_Specificity, collapse = ", "), ") have values. Ignoring Specificity and using limits_Specificity")
+      
+    } else if (!is.null(overlay_position_FP) & !is.null(Specificity) & !is.null(limits_Specificity)) {
+      
+      # If we have overlay_position_FP, that IS the Sensitivity (will be needed for the extra info in overlay)
+      Specificity = 100-overlay_position_FP
+      warning("* overlay_position_FP, Specificity (", Specificity, ") and limits_Specificity (", paste(limits_Specificity, collapse = ", "), ") have values. Using overlay_position_FP as Sensitivity and using limits_Sensitivity")
+      
     } else if (is.null(Specificity) & is.null(limits_Specificity)) {
+      
       Specificity = 95
       warning("* Specificity and limits_Specificity are NULL. Setting Specificity = ", Specificity, " and limits_Specificity = c(", Specificity - default_plus_minus, ", ", Specificity + default_plus_minus, ")")
+      
     } else if (is.null(Specificity) & !is.null(limits_Specificity)) {
+      
       if (var(limits_Specificity) == 0) stop("\n* limits_Specificity need two different numbers: limits_Specificity = c(min, max)")
       Specificity = mean(limits_Specificity)
       default_plus_minus = limits_Specificity[2] - Specificity
+      
     } else if (!is.null(Specificity) & is.null(limits_Specificity)) {
       warning("* limits_Specificity is NULL. Setting limits_Specificity = c(", Specificity - default_plus_minus, ", ", Specificity + default_plus_minus, ")")
     }
+    
+    # If we have overlay_position_FP, that IS the Specificity (will be needed for the extra info in overlay)
+    if (!is.null(overlay_position_FP)) Specificity = 100-overlay_position_FP
+    
     
     # If after the typical processing is null, assign dummy values (will be overwritten latter)
     if (is.null(limits_Specificity)) limits_Specificity = c(0, 0)
 
     # Set final limits_Specificity
-    # By default we show a range of Specificity of 10% (+-5%)
-    if (Specificity + default_plus_minus <= 100) limits_Specificity[2] = c(Specificity + default_plus_minus)
-    if (Specificity - default_plus_minus >= 0) limits_Specificity[1] = c(Specificity - default_plus_minus)
-    
+    if (!is.null(overlay_position_FP) & !is.null(limits_Specificity) ) {
+      # message("Using limits_Specificity as is")
+    } else {
+      # By default we show a range of Specificity of 10% (+-5%)
+      if (Specificity + default_plus_minus <= 100) limits_Specificity[2] = c(Specificity + default_plus_minus)
+      if (Specificity - default_plus_minus >= 0) limits_Specificity[1] = c(Specificity - default_plus_minus)
+    }
     
     if (overlay == "area" | overlay == "line") {
       if (is.null(overlay_position_FP)) stop("\n* overlay_position_FP needs a value")
@@ -94,32 +111,50 @@ process_variables <- function(min_Prevalence = NULL,
       if (limits_Sensitivity[1] < 0 | limits_Sensitivity[2] > 100) stop("\n* limits_Sensitivity should be between 0 and 100, now are (", paste(limits_Sensitivity, collapse = ", "), "). e.g.: limits_Sensitivity = c(90, 95)")
     }
     
-    
     # Sensitivity
-    if (!is.null(Sensitivity) & !is.null(limits_Sensitivity)) {
+    if (is.null(overlay_position_FN) & !is.null(Sensitivity) & !is.null(limits_Sensitivity)) {
+      
       if (stats::var(limits_Sensitivity) == 0) stop("\n* limits_Sensitivity need two different numbers: limits_Sensitivity = c(min, max)")
-      Sensitivity = mean(limits_Sensitivity)
-      default_plus_minus = limits_Sensitivity[2] - Sensitivity
-      warning("* Both Sensitivity (", Sensitivity, ") and limits_Sensitivity (", paste(limits_Sensitivity, collapse = ", "), ") have values. Ignoring Sensitivity and using limits_Sensitivity")
+      
+        Sensitivity = mean(limits_Sensitivity) # Only if we don't have overlay_position_FN
+        warning("* Both Sensitivity (", Sensitivity, ") and limits_Sensitivity (", paste(limits_Sensitivity, collapse = ", "), ") have values. Ignoring Sensitivity and using limits_Sensitivity")
+        default_plus_minus = limits_Sensitivity[2] - Sensitivity
+      
+    } else if (!is.null(overlay_position_FN) & !is.null(Sensitivity) & !is.null(limits_Sensitivity)) {
+      
+      # If we have overlay_position_FN, that IS the Sensitivity (will be needed for the extra info in overlay)
+      Sensitivity = 100-overlay_position_FN
+      warning("* overlay_position_FN, Sensitivity (", Sensitivity, ") and limits_Sensitivity (", paste(limits_Sensitivity, collapse = ", "), ") have values. Using overlay_position_FN as Sensitivity and using limits_Sensitivity")
+      
     } else if (is.null(Sensitivity) & is.null(limits_Sensitivity)) {
+      
       Sensitivity = 95
       warning("* Sensitivity and limits_Specificity are NULL. Setting Sensitivity = ", Sensitivity, " and limits_Sensitivity = c(", Sensitivity - default_plus_minus, ", ", Sensitivity + default_plus_minus, ")")
+      
     } else if (is.null(Sensitivity) & !is.null(limits_Sensitivity)) {
+      
       if (stats::var(limits_Sensitivity) == 0) stop("\n* limits_Sensitivity need two different numbers: limits_Sensitivity = c(min, max)")
       Sensitivity = mean(limits_Sensitivity)
       default_plus_minus = limits_Sensitivity[2] - Sensitivity
+      
     } else if (!is.null(Sensitivity) & is.null(limits_Sensitivity)) {
       warning("* limits_Sensitivity is NULL. Setting limits_Sensitivity = c(", Sensitivity - default_plus_minus, ", ", Sensitivity + default_plus_minus, ")")
     }
+    
+    # If we have overlay_position_FN, that IS the Sensitivity (will be needed for the extra info in overlay)
+    if (!is.null(overlay_position_FN)) Sensitivity = 100-overlay_position_FN
     
     # limits_Sensitivity
     if (is.null(limits_Sensitivity)) limits_Sensitivity = c(0, 0)
     
     # Set final limits_Sensitivity
-    # By default we show a range of Sensitivities of 10% (+-5%)
-    if (Sensitivity + default_plus_minus <= 100) limits_Sensitivity[2] = c(Sensitivity + default_plus_minus)
-    if (Sensitivity - default_plus_minus >= 0) limits_Sensitivity[1] = c(Sensitivity - default_plus_minus)
-
+    if (!is.null(overlay_position_FN) & !is.null(limits_Sensitivity) ) {
+      # message("Using limits_Sensitivity as is")
+    } else {
+      # By default we show a range of Sensitivities of 10% (+-5%)
+      if (Sensitivity + default_plus_minus <= 100) limits_Sensitivity[2] = c(Sensitivity + default_plus_minus)
+      if (Sensitivity - default_plus_minus >= 0) limits_Sensitivity[1] = c(Sensitivity - default_plus_minus)
+    } 
         
     if (overlay == "area" | overlay == "line") {
       if (is.null(overlay_position_FN)) stop("\n* overlay_position_FN needs a value")
@@ -129,12 +164,6 @@ process_variables <- function(min_Prevalence = NULL,
     
   }
 
-  
-  # General CHECKS
-  if (!is.null(Sensitivity)) { if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity should be a value 0-100") }
-  if (!is.null(Specificity)) { if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value 0-100") }
-  
-  
 
   # Translate ---------------------------------------------------------------
   
@@ -293,6 +322,12 @@ process_variables <- function(min_Prevalence = NULL,
     }
     
   }
+  
+  
+  # General CHECKS
+  if (!is.null(Sensitivity)) { if (Sensitivity > 100 | Sensitivity < 0) stop("* Sensitivity should be a value 0-100") }
+  if (!is.null(Specificity)) { if (Specificity > 100 | Specificity < 0) stop("* Specificity should be a value 0-100") }
+  
   
   
   # Output -------------------------------------------
@@ -521,7 +556,7 @@ process_variables <- function(min_Prevalence = NULL,
 
   
   # Common vars
-  TRUE_positives = (overlay_prevalence_1 * Sensitivity) /100
+  TRUE_positives = (overlay_prevalence_1 * Sensitivity) / 100
   healthy_n = (overlay_prevalence_2 - overlay_prevalence_1)
   PCT_prevalence_overlay = overlay_prevalence_1/overlay_prevalence_2
   decimals_overlay = 2
@@ -979,7 +1014,7 @@ process_variables <- function(min_Prevalence = NULL,
       point_Prevalence <- point_Prevalence_DF %>% dplyr::pull(prevalence_pct) 
     }
     
-    
+
     # Get PPV or NPV value ---
 
     list_point_PPV = .get_point_ppv_npv(

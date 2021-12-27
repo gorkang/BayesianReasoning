@@ -216,9 +216,9 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
-      Specificity = 95,
+      limits_Specificity = c(90, 95),
       overlay = "area",
-      overlay_position_FP = 4.8,
+      overlay_position_FP = 4,
       overlay_prevalence_1 = 1,
       overlay_prevalence_2 = 1000)
   )
@@ -229,7 +229,7 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
                   if(grepl("WARNING", res$warnings[.x])) {
                     testthat::expect_match(
                       res$warnings[.x], 
-                      "min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2|max_Prevalence == overlay_prevalence_2")
+                      "min_Prevalence/max_Prevalence > overlay_prevalence_1/overlay_prevalence_2|max_Prevalence == overlay_prevalence_2|overlay_position_FP \\(4\\) is < min_FP \\(5\\)")
                   }
     )
 })
@@ -241,7 +241,7 @@ testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
-      Specificity = 95,
+      limits_Specificity = c(89, 99),
       overlay = "area",
       overlay_position_FP = 6,
       overlay_prevalence_1 = 1110,
@@ -267,7 +267,7 @@ testthat::test_that("WARNINGS - NPV", {
       DEBUG = 1,
       min_Prevalence = 2,
       max_Prevalence = 1000,
-      Sensitivity = 90,
+      limits_Sensitivity = c(85, 95),
       Specificity = 95,
       overlay = "area",
       overlay_position_FN = 20,
@@ -365,6 +365,10 @@ testthat::test_that("NPV Plot", {
   
 })
 
+
+
+
+# Area plot ---------------------------------------------------------------
 
 
 testthat::test_that("Spanish translation", {
@@ -500,7 +504,9 @@ testthat::test_that("Range of data is the same as the x axis range", {
 
 # TODO: Should check uncertainty_prevalence consequences
 testthat::test_that("NPV calculation with area overlay and low uncertainty", {
+  
   p <- testthat::evaluate_promise(
+    
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1200,
       limits_Sensitivity = c(76, 86),
@@ -512,13 +518,54 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
       overlay_prevalence_1 = 67, overlay_prevalence_2 = 68,
       uncertainty_prevalence = "low",
       PPV_NPV = "NPV", DEBUG = TRUE)
+    
     )
   
   testthat::expect_identical(
     p$result$layers[[3]]$computed_geom_params$description,
-    "40 y.o.\nPrevalence: 67 out of 68\nSpecificity: 95%\nFalse -: 4.8%\n ---------------------------------------------\n67 sick: 54.27 (+) 12.73 (-)\n1 healthy: 0.95 (-) 0.05 (+) ")
+    "40 y.o.\nPrevalence: 67 out of 68\nSpecificity: 95%\nFalse -: 4.8%\n ---------------------------------------------\n67 sick: 63.78 (+) 3.22 (-)\n1 healthy: 0.95 (-) 0.05 (+) ")
   
 })
+
+
+
+#   
+# } else if (!is.null(overlay_position_FN) & !is.null(Sensitivity) & !is.null(limits_Sensitivity)) {
+#   
+
+
+testthat::test_that("all parameters", {
+  
+  testthat::expect_warning(
+    
+    BayesianReasoning::PPV_heatmap(
+      min_Prevalence = 1, max_Prevalence = 2,
+      Sensitivity = 3,
+      Specificity = 99,
+      limits_Specificity = c(90, 99),
+      overlay = "area",
+      overlay_position_FP = 3,
+      overlay_prevalence_1 = 1, overlay_prevalence_2 = 2,
+      PPV_NPV = "PPV",
+      one_out_of = TRUE)
+  )
+  
+  testthat::expect_warning(
+    
+    BayesianReasoning::PPV_heatmap(
+      min_Prevalence = 1, max_Prevalence = 100,
+      Specificity = 3,
+      Sensitivity = 90,
+      limits_Sensitivity = c(90, 100),
+      overlay = "area",
+      overlay_position_FN = 3,
+      overlay_prevalence_1 = 1, overlay_prevalence_2 = 8,
+      PPV_NPV = "NPV",
+      one_out_of = TRUE)
+  )
+  
+})
+
 
 
 
@@ -566,6 +613,7 @@ testthat::test_that("Plot with line overlay", {
 
 
 testthat::test_that("Unequal overlay number of parameters", {
+  
   testthat::expect_error(
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
@@ -605,7 +653,7 @@ testthat::test_that("Unequal overlay number of parameters", {
   p = testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1200,
-      limits_Specificity = c(75, 85),
+      limits_Specificity = c(80, 100),
       Sensitivity = 95,
       overlay = "line",
       overlay_labels = c("tag 1", "", "tag 3"),
