@@ -1,8 +1,8 @@
 #' process_variables
 #' Checks and process main variables, checks for errors, creates defaults
 #'
-#' @param min_Prevalence x in the "x out of y" prevalence (y-axis): [1-Inf]
-#' @param max_Prevalence y in the "x out of y" prevalence (y-axis): [1-Inf]
+#' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
+#' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
 #' @param Sensitivity Sensitivity of the test: [0-100]
 #' @param Specificity Specificity of the test: [0-100]
 #' @param limits_Sensitivity c(min Sensitivity, max Sensitivity) 
@@ -14,9 +14,10 @@
 #' @param overlay_prevalence_2 Prevalence value (position in the y-axis) for each point in the overlay. For example: c(26, 29, 44, 69, 227, 1667)
 #' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
 #' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
-#' @param steps_matrix with of PPV/NPV matrix. 100 by default
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
 #' @param overlay Type of overlay: ["line", "area"]
 #'
+#' @noRd
 #' @importFrom stats var
 
 process_variables <- function(min_Prevalence = NULL,
@@ -362,20 +363,21 @@ process_variables <- function(min_Prevalence = NULL,
 
 #' .createPPVmatrix
 #'
-#' Create a PPV matrix helper function
+#' Helper function to create a PPV or NPV matrix
 #' 
-#' @param min_Prevalence [x] out of y prevalence of disease
-#' @param max_Prevalence x out of [y] prevalence of disease
-#' @param Sensitivity Sensitivity of test
-#' @param Specificity Specificity of test
-#' @param max_FP Maximum False Positive ratio
-#' @param min_FP Minimum False Positive ratio
-#' @param steps_matrix How big the matrix should be (probably better to leave as it is: 100)
-#' @param one_out_of .
-#' @param max_FN .
-#' @param min_FN .
+#' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
+#' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
+#' @param Sensitivity Sensitivity of test: [0-100]
+#' @param Specificity Specificity of test: [0-100]
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
+#' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
+#' @param min_FP Minimum False Positive rate: [0-100]
+#' @param max_FP Maximum False Positive rate: [0-100]
+#' @param min_FN Minimum False Negative rate: [0-100]
+#' @param max_FN Maximum False Negative rate: [0-100]
 #' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
 #'
+#' @noRd
 #' @return A DF called PPV_melted
 #' @importFrom reshape2 melt
 #'
@@ -395,19 +397,6 @@ process_variables <- function(min_Prevalence = NULL,
            
            steps_matrix = 100) {
 
-    
-    # message("\n | min_Prevalence = ", min_Prevalence,
-    # " | max_Prevalence = ", max_Prevalence,
-    # " | Sensitivity = ", Sensitivity,
-    # " | Specificity = ", Specificity,
-    # " | one_out_of = ", one_out_of,
-    # " | PPV_NPV = ", PPV_NPV,
-    # " | min_FP = ", min_FP,
-    # " | max_FP = ", max_FP,
-    # " | max_FN = ", max_FN,
-    # " | min_FN = ", min_FN,
-    # " | steps_matrix = ", steps_matrix,
-    # "\n")
 
     # Parameters ---
 
@@ -514,20 +503,21 @@ process_variables <- function(min_Prevalence = NULL,
 #' Get PPV or NPV for the overlay
 #'
 #' @param PPV_melted DF out of .createPPVmatrix()
-#' @param PPV_NPV Should calculate PPV or NPV?
-#' @param Language ["en" / "es"]
-#' @param Sensitivity Sensitivity of the test
-#' @param Specificity Specificity of the test
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
+#' @param Language Language for the plot labels: ["sp", "en"]
+#' @param Sensitivity Sensitivity of test: [0-100]
+#' @param Specificity Specificity of test: [0-100]
 #' @param overlay_prevalence_1 [x] out of y prevalence of disease
 #' @param overlay_prevalence_2 x out of [y] prevalence of disease
-#' @param overlay_position_FP .
-#' @param overlay_position_FN .
+#' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
 #' @param overlay_labels vector with labels for each overlay point
 #' @param overlay_extra_info show extra info in overlay? [TRUE/FALSE]
-#' @param point_Prevalence .
-#' @param decimals_x .
-#' @param translated_labels .
-#' @param decimals_y .
+#' @param decimals_x Number of decimals to show in x axis [0-2]
+#' @param decimals_y Number of decimals to show in x axis [0-2]
+#' @param translated_labels Translated labels for plot. Output of .translate_labels()
+#' 
+#' @noRd
 
 .get_point_ppv_npv <- function(
   PPV_melted, 
@@ -543,8 +533,6 @@ process_variables <- function(min_Prevalence = NULL,
   
   overlay_position_FP,
   overlay_position_FN,
-  
-  point_Prevalence, 
   
   translated_labels,
   
@@ -657,10 +645,7 @@ process_variables <- function(min_Prevalence = NULL,
       "\n", translated_labels$label_caption_name, ": ", Sensitivity, "%", 
       "\n", translated_labels$label_x_axis, ": ", paste0(round((100 - Specificity), decimals_overlay), "% "),
       extra_info_overlay
-      # "\n ---------------------------------------------",
-      # "\n", overlay_prevalence_1, " ", translated_labels$label_sick, ": ", round(TRUE_positives, decimals_overlay), " (+) ", round(overlay_prevalence_1 - TRUE_positives, decimals_overlay), " (-)",
-      # "\n", healthy_n, " ", translated_labels$label_healthy, ": ", round((healthy_n) - ((healthy_n) * (100 - Specificity))/100, decimals_overlay), " (-) ", round(((healthy_n) * (100 - Specificity))/100, decimals_overlay), " (+) "
-      )
+     )
     
 
     # point_PPV_NPV = DF_point_PPV_NPV %>% dplyr::mutate(PPV = round(PPV * 100, 2))  %>% dplyr::pull(PPV)
@@ -682,13 +667,15 @@ process_variables <- function(min_Prevalence = NULL,
 #' 
 #' The number of decimal places in the x and y axis label depends on how wide the range is.
 #'
-#' @param PPV_NPV .
-#' @param min_FP .
-#' @param max_FP .
-#' @param min_FN .
-#' @param max_FN .
-#' @param min_Prevalence [x] out of y prevalence of disease
-#' @param max_Prevalence x out of [y] prevalence of disease
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
+#' @param min_FP Minimum False Positive rate: [0-100]
+#' @param max_FP Maximum False Positive rate: [0-100]
+#' @param min_FN Minimum False Negative rate: [0-100]
+#' @param max_FN Maximum False Negative rate: [0-100]
+#' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
+#' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
+#' 
+#' @noRd
 
 .number_decimals_plot_axis <- function(PPV_NPV = "PPV", min_FP = 0, max_FP, min_FN, max_FN, min_Prevalence, max_Prevalence) {
   
@@ -733,22 +720,23 @@ process_variables <- function(min_Prevalence = NULL,
 #' 
 #' Function to create the main heatmap plot
 #' 
-#' @param PPV_melted .
-#' @param PPV_NPV .
-#' @param min_Prevalence .
-#' @param min_FP .
-#' @param max_FP .
-#' @param steps_matrix .
-#' @param decimals_x .
-#' @param decimals_y .
-#' @param label_title .
-#' @param label_subtitle .
-#' @param translated_labels .
-#' @param max_Prevalence .
-#' @param max_FN .
-#' @param min_FN .
-#' @param one_out_of .
+#' @param PPV_melted DF out of .createPPVmatrix()
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
+#' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
+#' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
+#' @param min_FP Minimum False Positive rate: [0-100]
+#' @param max_FP Maximum False Positive rate: [0-100]
+#' @param min_FN Minimum False Negative rate: [0-100]
+#' @param max_FN Maximum False Negative rate: [0-100]
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
+#' @param decimals_x Number of decimals to show in x axis [0-2]
+#' @param decimals_y Number of decimals to show in y axis [0-2]
+#' @param label_title Title for the plot
+#' @param label_subtitle Subtitle for the plot
+#' @param translated_labels Translated labels for plot. Output of .translate_labels()
+#' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
 #'
+#' @noRd
 #' @importFrom ggplot2 ggplot aes geom_tile scale_x_continuous scale_y_continuous scale_fill_gradientn labs margin element_text
 #'
 .plot_creation <-
@@ -926,33 +914,34 @@ process_variables <- function(min_Prevalence = NULL,
 #'
 #' Add area overlay to PPV_heatmap plot 
 #'
-#' @param PPV_melted .
+#' @param PPV_melted DF out of .createPPVmatrix()
 #' @param uncertainty_prevalence .
 #' @param min_Prevalence [x] out of y prevalence of disease
 #' @param max_Prevalence x out of [y] prevalence of disease
-#' @param Sensitivity .
-#' @param min_FP .
-#' @param max_FP .
+#' @param Sensitivity Sensitivity of test: [0-100]
+#' @param Specificity Specificity of test: [0-100]
+#' @param min_FP Minimum False Positive rate: [0-100]
+#' @param max_FP Maximum False Positive rate: [0-100]
+#' @param min_FN Minimum False Negative rate: [0-100]
+#' @param max_FN Maximum False Negative rate: [0-100]
 #' @param overlay_labels vector with labels for each overlay point
 #' @param overlay_extra_info show extra info in overlay? [TRUE/FALSE]
-#' @param PPV_NPV .
-#' @param Language .
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
+#' @param Language Language for the plot labels: ["sp", "en"]
 #' @param overlay_prevalence_1 [x] out of y prevalence of disease for the overlay
 #' @param overlay_prevalence_2 x out of [y] prevalence of disease for the overlay
-#' @param decimals_x .
-#' @param decimals_y .
-#' @param label_title .
-#' @param label_subtitle .
-#' @param translated_labels .
-#' @param overlay_position_FP .
-#' @param overlay_position_FN .
-#' @param Specificity .
-#' @param max_FN .
-#' @param min_FN .
-#' @param one_out_of .
-#' @param steps_matrix .
-#' @param ... .
+#' @param decimals_x Number of decimals to show in x axis [0-2]
+#' @param decimals_y Number of decimals to show in y axis [0-2]
+#' @param label_title Title for the plot
+#' @param label_subtitle Subtitle for the plot
+#' @param translated_labels Translated labels for plot. Output of .translate_labels()
+#' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
+#' @param ... Other parameters. Now used to pass DEBUG in plot_overlay_area() call inside PPV_heatmap()
 #' 
+#' @noRd
 #' @importFrom ggplot2 annotate
 
 .plot_overlay_area <-
@@ -1008,6 +997,7 @@ process_variables <- function(min_Prevalence = NULL,
       dplyr::filter(abs(prevalence_pct - PCT_prevalence_overlay) == min(abs(prevalence_pct - PCT_prevalence_overlay))) %>%
       dplyr::sample_n(1)
     
+    # Y axis position for overlay
     if (one_out_of == TRUE) {
       point_Prevalence <- point_Prevalence_DF %>% dplyr::pull(prevalence_2) 
     } else {
@@ -1033,8 +1023,7 @@ process_variables <- function(min_Prevalence = NULL,
       
       overlay_position_FP = overlay_position_FP,
       overlay_position_FN = overlay_position_FN,
-      
-      point_Prevalence = point_Prevalence,
+
       decimals_x = decimals_x,
       decimals_y = decimals_y,
       
@@ -1125,30 +1114,31 @@ process_variables <- function(min_Prevalence = NULL,
 
 #' .plot_overlay_line
 #' 
-#' Add line overlay to PPV_heatmap plot
+#' Add line overlay to a PPV_heatmap plot
 #'
-#' @param PPV_melted DF 
+#' @param PPV_melted DF out of .createPPVmatrix() 
 #' @param min_Prevalence [x] out of y prevalence of disease
 #' @param max_Prevalence x out of [y] prevalence of disease
 #' @param overlay_prevalence_1 vector with [x] out of y prevalence of disease
 #' @param overlay_prevalence_2 vector with x out of [y] prevalence of disease
 #' @param overlay_labels vector with labels for each overlay point
-#' @param max_FP .
-#' @param decimals_x .
-#' @param decimals_y .
-#' @param label_title .
-#' @param label_subtitle .
-#' @param translated_labels .
-#' @param overlay_position_FP .
-#' @param overlay_position_FN .
-#' @param PPV_NPV .
+#' @param min_FP Minimum False Positive rate: [0-100]
+#' @param max_FP Maximum False Positive rate: [0-100]
+#' @param min_FN Minimum False Negative rate: [0-100]
+#' @param max_FN Maximum False Negative rate: [0-100]
+#' @param decimals_x Number of decimals to show in x axis [0-2]
+#' @param decimals_y Number of decimals to show in y axis [0-2]
+#' @param label_title Title for the plot
+#' @param label_subtitle Subtitle for the plot
+#' @param translated_labels Translated labels for plot. Output of .translate_labels()
+#' @param overlay_position_FP FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param overlay_position_FN FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
 #' @param uncertainty_prevalence How big the uncertainty area should be: ["low" or "high"]
-#' @param min_FP .
-#' @param max_FN .
-#' @param min_FN .
-#' @param one_out_of .
-#' @param steps_matrix .
+#' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
 #'
+#' @noRd
 #' @importFrom ggplot2 annotate
 
 .plot_overlay_line <-
@@ -1270,11 +1260,12 @@ process_variables <- function(min_Prevalence = NULL,
 #' 
 #' Supports showing plot labels in Spanish (sp) or English (default)
 #'
-#' @param Language Can be Spanish "sp" or English (default)
-#' @param Sensitivity . 
-#' @param Specificity .
-#' @param PPV_NPV .
+#' @param Language Language for the plot labels: ["sp", "en"]
+#' @param Sensitivity Sensitivity of test: [0-100]
+#' @param Specificity Specificity of test: [0-100]
+#' @param PPV_NPV Should show PPV or NPV ["PPV", "NPV"]
 #'
+#' @noRd
 #' @return A list with labels
 
 .translate_labels <- function(Language, Sensitivity, Specificity, PPV_NPV = "PPV") {

@@ -1,4 +1,11 @@
-# BayesianReasoning (development version)
+# BayesianReasoning 0.4.1
+
+Minor updates
+
+* safely_show_image_Rmd() function to fail gracefully when URL not found in Rmd's
+* Add and fix checks in process_variables() 
+* Add tests to cover corner cases and new checks
+
 
 # BayesianReasoning 0.4.0
 

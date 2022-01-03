@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,13 +88,13 @@
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>min_Prevalence</dt>
-<dd><p>x in the "x out of y" prevalence (y-axis): [1-Inf]</p></dd>
+<dd><p>[x] out of y prevalence of disease: [1-Inf]</p></dd>
 <dt>max_Prevalence</dt>
-<dd><p>y in the "x out of y" prevalence (y-axis): [1-Inf]</p></dd>
+<dd><p>x out of [y] prevalence of disease: [1-Inf]</p></dd>
 <dt>Sensitivity</dt>
-<dd><p>Sensitivity of the test: [0-100]</p></dd>
+<dd><p>Sensitivity of test: [0-100]</p></dd>
 <dt>Specificity</dt>
-<dd><p>Specificity of the test: [0-100]</p></dd>
+<dd><p>Specificity of test: [0-100]</p></dd>
 <dt>limits_Sensitivity</dt>
 <dd><p>c(min Sensitivity, max Sensitivity)</p></dd>
 <dt>limits_Specificity</dt>
@@ -128,11 +128,11 @@
 <dt>PPV_NPV</dt>
 <dd><p>Should show PPV or NPV ["PPV", "NPV"]</p></dd>
 <dt>steps_matrix</dt>
-<dd><p>with of PPV/NPV matrix. 100 by default</p></dd>
+<dd><p>width of PPV/NPV matrix. 100 by default</p></dd>
 <dt>DEBUG</dt>
 <dd><p>Shows debug warnings [TRUE/FALSE]</p></dd>
 <dt>...</dt>
-<dd><p>.</p></dd>
+<dd><p>Other parameters. Now used to pass dpi, height and width in the Show and Save plot section</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

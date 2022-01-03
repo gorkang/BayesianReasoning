@@ -9,6 +9,8 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
   chunk_output_type: console
+params:
+  package_creation: FALSE
 ---
 
 ```{r setup, include = FALSE}
@@ -24,22 +26,38 @@ knitr::opts_chunk$set(
 ```{r, echo = FALSE, message = FALSE, results = 'hide'}
 library(BayesianReasoning)
 
-safely_show_image_Rmd <- function(IMAGE, name_image) {
-  
-  if (curl::has_internet()) {
-    
-    if (httr::http_error(IMAGE)) { # network down
-      message("Data source not responding")
-      return(NULL)
-    } else { # network up
-      paste0("![", name_image, "](", IMAGE, ")")
-    }
-    
-  } else {
-    message("No internet")
-    return(NULL)
+# FROM: https://community.rstudio.com/t/internet-resources-should-fail-gracefully/49199/12
+safely_show_image_Rmd <- function(remote_file, name_image) {
+  try_GET <- function(x, ...) {
+    tryCatch(
+      httr::GET(url = x, httr::timeout(1), ...),
+      error = function(e) conditionMessage(e),
+      warning = function(w) conditionMessage(w)
+    )
+  }
+  is_response <- function(x) {
+    class(x) == "response"
   }
   
+  # First check internet connection
+  if (!curl::has_internet()) {
+    message("No internet connection.")
+    return(invisible(NULL))
+  }
+  # Then try for timeout problems
+  resp <- try_GET(remote_file)
+  if (!is_response(resp)) {
+    message(resp)
+    return(invisible(NULL))
+  }
+  # Then stop if status > 400
+  if (httr::http_error(resp)) { 
+    httr::message_for_status(resp)
+    return(invisible(NULL))
+  }
+  
+  # Output
+  paste0("![", name_image, "](", remote_file, ")")
 }
 
 ```
@@ -48,25 +66,20 @@ safely_show_image_Rmd <- function(IMAGE, name_image) {
 
  
 <!-- badges: start -->
-<!-- [![CRAN status](https://www.r-pkg.org/badges/version/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
-<!-- [![Codecov test coverage](https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master) -->
-<!-- [![downloads](http://cranlogs.r-pkg.org/badges/BayesianReasoning)](https://cran.r-project.org/package=BayesianReasoning) -->
-<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
-<!-- [![DOI](https://zenodo.org/badge/93097662.svg)](https://zenodo.org/badge/latestdoi/93097662) -->
 
 ```{r echo=FALSE, results='asis'}
-cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://www.r-pkg.org/badges/version/BayesianReasoning", name_image = "CRAN status"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
-cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg", name_image = "Codecov test coverage"), "]", "(https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)"))
-cat(paste0("[", safely_show_image_Rmd(IMAGE = "http://cranlogs.r-pkg.org/badges/BayesianReasoning", name_image = "downloads"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
 
+# If we are creating the README params$package_creation will be TRUE 
+if (params$package_creation) {
 
-cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://img.shields.io/badge/lifecycle-experimental-orange.svg", name_image = "Lifecycle: experimental"), "]", "(https://lifecycle.r-lib.org/articles/stages.html#experimental)"))
-cat(paste0("[", safely_show_image_Rmd(IMAGE = "https://zenodo.org/badge/93097662.svg", name_image = "DOI"), "]", "(https://zenodo.org/badge/latestdoi/93097662)"))
+  cat(paste0("[", safely_show_image_Rmd(remote_file = "https://www.r-pkg.org/badges/version/BayesianReasoning", name_image = "CRAN status"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
+  cat(paste0("[", safely_show_image_Rmd(remote_file = "https://codecov.io/gh/gorkang/BayesianReasoning/branch/master/graph/badge.svg", name_image = "Codecov test coverage"), "]", "(https://app.codecov.io/gh/gorkang/BayesianReasoning?branch=master)"))
+  cat(paste0("[", safely_show_image_Rmd(remote_file = "http://cranlogs.r-pkg.org/badges/BayesianReasoning", name_image = "downloads"), "]", "(https://cran.r-project.org/package=BayesianReasoning)"))
+  cat(paste0("[", safely_show_image_Rmd(remote_file = "https://img.shields.io/badge/lifecycle-experimental-orange.svg", name_image = "Lifecycle: experimental"), "]", "(https://lifecycle.r-lib.org/articles/stages.html#experimental)"))
+  cat(paste0("[", safely_show_image_Rmd(remote_file = "https://zenodo.org/badge/93097662.svg", name_image = "DOI"), "]", "(https://zenodo.org/badge/latestdoi/93097662)"))
 
+}
 ```
-
-
-
 
 <!-- badges: end -->
 

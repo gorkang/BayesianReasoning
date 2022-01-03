@@ -2,10 +2,10 @@
 #' 
 #' Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 #' 
-#' @param min_Prevalence x in the "x out of y" prevalence (y-axis): [1-Inf]
-#' @param max_Prevalence y in the "x out of y" prevalence (y-axis): [1-Inf]
-#' @param Sensitivity Sensitivity of the test: [0-100]
-#' @param Specificity Specificity of the test: [0-100]
+#' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
+#' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
+#' @param Sensitivity Sensitivity of test: [0-100]
+#' @param Specificity Specificity of test: [0-100]
 #' @param limits_Sensitivity c(min Sensitivity, max Sensitivity) 
 #' @param limits_Specificity c(min Specificity, max Specificity)
 #' @param overlay Type of overlay: ["line", "area"]
@@ -23,8 +23,8 @@
 #' @param DEBUG Shows debug warnings [TRUE/FALSE]
 #' @param folder Where to save the plot (the filename would be automatically created using the plot parameters)
 #' @param one_out_of Show y scale as 1 out of x [TRUE, FALSE] FALSE by default
-#' @param steps_matrix with of PPV/NPV matrix. 100 by default
-#' @param ... .
+#' @param steps_matrix width of PPV/NPV matrix. 100 by default
+#' @param ... Other parameters. Now used to pass dpi, height and width in the Show and Save plot section
 #'
 #' @return Shows a plot or, if given a folder argument, saves a .png version of the plot
 #' @export
@@ -70,7 +70,7 @@ PPV_heatmap <-
            ...) {
 
     
-    # PROCESS VARIABLES -------------------------------------------------------
+    # Process variables -------------------------------------------------------
     
     # Get ... vars    
     dots <- list(...)
@@ -102,7 +102,7 @@ PPV_heatmap <-
         
  
 
-  # SYSTEM parameters -------------------------------------------------------
+  # System parameters -------------------------------------------------------
 
     if (overlay != "no") {
       overlay_tag =  paste0("_", overlay)
@@ -134,7 +134,7 @@ PPV_heatmap <-
       )
 
 
-  # PLOT --------------------------------------------------------------------
+  # Plot --------------------------------------------------------------------
 
     # Create plot labels in Language
       translated_labels = .translate_labels(Language = Language,
@@ -154,7 +154,6 @@ PPV_heatmap <-
 
       
     # Choose function depending on the type of overlay
-
      if (overlay == "line") {
 
        p = .plot_overlay_line(

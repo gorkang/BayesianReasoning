@@ -11,8 +11,10 @@
 0 errors | 0 warnings | 0 note
 
 
-## Re-submission
+## Minor fixes
 
-Fixing issues with URL's (https://cran.r-project.org/web/checks/check_results_BayesianReasoning.html)
+* Fixing issues with URL's (https://cran.r-project.org/web/checks/check_results_BayesianReasoning.html)
 
-- Added function so the internet resources in the introduction vignette have a fallback condition with an informative message. 
+  + Added function so the internet resources in the introduction vignette have a fallback condition with an informative message. 
+
+* Add more checks and tests to catch corner cases

@@ -31,13 +31,13 @@ PPV_heatmap(
 )
 }
 \arguments{
-\item{min_Prevalence}{x in the "x out of y" prevalence (y-axis): [1-Inf]}
+\item{min_Prevalence}{[x] out of y prevalence of disease: [1-Inf]}
 
-\item{max_Prevalence}{y in the "x out of y" prevalence (y-axis): [1-Inf]}
+\item{max_Prevalence}{x out of [y] prevalence of disease: [1-Inf]}
 
-\item{Sensitivity}{Sensitivity of the test: [0-100]}
+\item{Sensitivity}{Sensitivity of test: [0-100]}
 
-\item{Specificity}{Specificity of the test: [0-100]}
+\item{Specificity}{Specificity of test: [0-100]}
 
 \item{limits_Sensitivity}{c(min Sensitivity, max Sensitivity)}
 
@@ -71,11 +71,11 @@ PPV_heatmap(
 
 \item{PPV_NPV}{Should show PPV or NPV ["PPV", "NPV"]}
 
-\item{steps_matrix}{with of PPV/NPV matrix. 100 by default}
+\item{steps_matrix}{width of PPV/NPV matrix. 100 by default}
 
 \item{DEBUG}{Shows debug warnings [TRUE/FALSE]}
 
-\item{...}{.}
+\item{...}{Other parameters. Now used to pass dpi, height and width in the Show and Save plot section}
 }
 \value{
 Shows a plot or, if given a folder argument, saves a .png version of the plot

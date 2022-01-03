@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BayesianReasoning</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,6 @@
   overlay_extra_info <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">overlay_position_FP</span>,
   <span class="va">overlay_position_FN</span>,
-  <span class="va">point_Prevalence</span>,
   <span class="va">translated_labels</span>,
   <span class="va">decimals_x</span>,
   <span class="va">decimals_y</span>
@@ -82,13 +81,13 @@
     <dl><dt>PPV_melted</dt>
 <dd><p>DF out of .createPPVmatrix()</p></dd>
 <dt>PPV_NPV</dt>
-<dd><p>Should calculate PPV or NPV?</p></dd>
+<dd><p>Should show PPV or NPV ["PPV", "NPV"]</p></dd>
 <dt>Language</dt>
-<dd><p>["en" / "es"]</p></dd>
+<dd><p>Language for the plot labels: ["sp", "en"]</p></dd>
 <dt>Sensitivity</dt>
-<dd><p>Sensitivity of the test</p></dd>
+<dd><p>Sensitivity of test: [0-100]</p></dd>
 <dt>Specificity</dt>
-<dd><p>Specificity of the test</p></dd>
+<dd><p>Specificity of test: [0-100]</p></dd>
 <dt>overlay_prevalence_1</dt>
 <dd><p>[x] out of y prevalence of disease</p></dd>
 <dt>overlay_prevalence_2</dt>
@@ -98,17 +97,15 @@
 <dt>overlay_extra_info</dt>
 <dd><p>show extra info in overlay? [TRUE/FALSE]</p></dd>
 <dt>overlay_position_FP</dt>
-<dd><p>.</p></dd>
+<dd><p>FP value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)</p></dd>
 <dt>overlay_position_FN</dt>
-<dd><p>.</p></dd>
-<dt>point_Prevalence</dt>
-<dd><p>.</p></dd>
+<dd><p>FN value (position in the x-axis) for each point in the overlay. For example: c(7, 8, 9, 12, 14, 14)</p></dd>
 <dt>translated_labels</dt>
-<dd><p>.</p></dd>
+<dd><p>Translated labels for plot. Output of .translate_labels()</p></dd>
 <dt>decimals_x</dt>
-<dd><p>.</p></dd>
+<dd><p>Number of decimals to show in x axis [0-2]</p></dd>
 <dt>decimals_y</dt>
-<dd><p>.</p></dd>
+<dd><p>Number of decimals to show in x axis [0-2]</p></dd>
 </dl></div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
