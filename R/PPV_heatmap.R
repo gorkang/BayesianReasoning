@@ -1,12 +1,12 @@
 #' Plot PPV and NPV heatmaps
-#' 
+#'
 #' Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
-#' 
+#'
 #' @param min_Prevalence [x] out of y prevalence of disease: [1-Inf]
 #' @param max_Prevalence x out of [y] prevalence of disease: [1-Inf]
 #' @param Sensitivity Sensitivity of test: [0-100]
 #' @param Specificity Specificity of test: [0-100]
-#' @param limits_Sensitivity c(min Sensitivity, max Sensitivity) 
+#' @param limits_Sensitivity c(min Sensitivity, max Sensitivity)
 #' @param limits_Specificity c(min Specificity, max Specificity)
 #' @param overlay Type of overlay: ["line", "area"]
 #' @param overlay_labels Labels for each point in the overlay. For example: c("80", "70", "60", "50", "40", "30", "20  y.o.")
@@ -34,23 +34,21 @@
 #' @importFrom magrittr %>%
 #'
 #' @examples
-#' PPV_heatmap(min_Prevalence = 1, 
-#' max_Prevalence = 1000, 
-#' Sensitivity = 100, 
-#' Specificity = 98, 
-#' Language = "en")
+#' PPV_heatmap(
+#'   min_Prevalence = 1,
+#'   max_Prevalence = 1000,
+#'   Sensitivity = 100,
+#'   Specificity = 98,
+#'   Language = "en"
+#' )
 PPV_heatmap <-
   function(min_Prevalence = 1,
            max_Prevalence = 1000,
-           
            Sensitivity = NULL,
            Specificity = NULL,
-
-           limits_Sensitivity = NULL, 
-           limits_Specificity = NULL, 
-           
-           one_out_of = FALSE, 
-
+           limits_Sensitivity = NULL,
+           limits_Specificity = NULL,
+           one_out_of = FALSE,
            overlay = "no",
            overlay_labels = "",
            overlay_extra_info = FALSE,
@@ -64,19 +62,18 @@ PPV_heatmap <-
            Language = "en",
            folder = "",
            PPV_NPV = "PPV",
-           
            steps_matrix = 100,
            DEBUG = FALSE,
            ...) {
 
-    
+
     # Process variables -------------------------------------------------------
-    
-    # Get ... vars    
+
+    # Get ... vars
     dots <- list(...)
-    
+
     # CHECKS variables and sets defaults
-    main_variables = process_variables(
+    main_variables <- process_variables(
       min_Prevalence = min_Prevalence,
       max_Prevalence = max_Prevalence,
       Sensitivity = Sensitivity,
@@ -91,198 +88,171 @@ PPV_heatmap <-
       PPV_NPV = PPV_NPV,
       one_out_of = one_out_of,
       overlay = overlay,
-      steps_matrix = steps_matrix)
-    
-    
-    if (DEBUG == TRUE) {
-      message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ",  main_variables$min_FN)
-      message("DEBUG: ", "min_Specificity: ", main_variables$min_Specificity, " max_FP: ", main_variables$max_FP, " | max_Specificity: ", main_variables$max_Specificity, " min_FP: ",  main_variables$min_FP)
-    }
-    
-        
- 
+      steps_matrix = steps_matrix
+    )
 
-  # System parameters -------------------------------------------------------
+
+    if (DEBUG == TRUE) {
+      message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ", main_variables$min_FN)
+      message("DEBUG: ", "min_Specificity: ", main_variables$min_Specificity, " max_FP: ", main_variables$max_FP, " | max_Specificity: ", main_variables$max_Specificity, " min_FP: ", main_variables$min_FP)
+    }
+
+
+
+
+    # System parameters -------------------------------------------------------
 
     if (overlay != "no") {
-      overlay_tag =  paste0("_", overlay)
+      overlay_tag <- paste0("_", overlay)
     } else {
-      overlay_tag = ""
+      overlay_tag <- ""
     }
 
     if (overlay_extra_info == TRUE) {
-      overlay_extra_info_tag = paste0(overlay_extra_info, "_")
+      overlay_extra_info_tag <- paste0(overlay_extra_info, "_")
     } else {
-      overlay_extra_info_tag = ""
+      overlay_extra_info_tag <- ""
     }
-    
 
-  # Create PPV matrix -------------------------------------------------------
 
-      PPV_melted <- .createPPVmatrix(
+    # Create PPV matrix -------------------------------------------------------
+
+    PPV_melted <- .createPPVmatrix(
+      min_Prevalence = main_variables$min_Prevalence,
+      max_Prevalence = main_variables$max_Prevalence,
+      Sensitivity = main_variables$Sensitivity,
+      Specificity = main_variables$Specificity,
+      min_FP = main_variables$min_FP,
+      max_FP = main_variables$max_FP,
+      max_FN = main_variables$max_FN,
+      min_FN = main_variables$min_FN,
+      one_out_of = one_out_of,
+      PPV_NPV = PPV_NPV
+    )
+
+
+    # Plot --------------------------------------------------------------------
+
+    # Create plot labels in Language
+    translated_labels <- .translate_labels(
+      Language = Language,
+      Sensitivity = main_variables$Sensitivity,
+      Specificity = main_variables$Specificity,
+      PPV_NPV = PPV_NPV
+    )
+
+
+    # Number of decimals depends on the range
+    decimals <- .number_decimals_plot_axis(
+      PPV_NPV = PPV_NPV,
+      min_FP = main_variables$min_FP,
+      max_FP = main_variables$max_FP,
+      min_FN = main_variables$min_FN,
+      max_FN = main_variables$max_FN,
+      min_Prevalence = main_variables$min_Prevalence,
+      max_Prevalence = main_variables$max_Prevalence
+    )
+
+
+    # Choose function depending on the type of overlay
+    if (overlay == "line") {
+      p <- .plot_overlay_line(
+        PPV_melted = PPV_melted,
+        uncertainty_prevalence = uncertainty_prevalence,
         min_Prevalence = main_variables$min_Prevalence,
         max_Prevalence = main_variables$max_Prevalence,
-        Sensitivity = main_variables$Sensitivity,
-        Specificity = main_variables$Specificity,
         min_FP = main_variables$min_FP,
         max_FP = main_variables$max_FP,
         max_FN = main_variables$max_FN,
         min_FN = main_variables$min_FN,
-        
         one_out_of = one_out_of,
+        overlay_prevalence_1 = main_variables$overlay_prevalence_1,
+        overlay_prevalence_2 = main_variables$overlay_prevalence_2,
+        overlay_position_FP = overlay_position_FP,
+        overlay_position_FN = overlay_position_FN,
+        overlay_labels = overlay_labels,
+        decimals_x = decimals$decimals_x,
+        decimals_y = decimals$decimals_y,
+        label_title = label_title,
+        label_subtitle = label_subtitle,
+        translated_labels = translated_labels,
         PPV_NPV = PPV_NPV
       )
+    } else if (overlay == "area") {
+      p <- .plot_overlay_area(
+        PPV_NPV = PPV_NPV,
+        one_out_of = one_out_of,
+        min_Prevalence = main_variables$min_Prevalence,
+        max_Prevalence = main_variables$max_Prevalence,
+        min_FP = main_variables$min_FP,
+        max_FP = main_variables$max_FP,
+        max_FN = main_variables$max_FN,
+        min_FN = main_variables$min_FN,
+        PPV_melted = PPV_melted,
+        steps_matrix = steps_matrix,
+        decimals_x = decimals$decimals_x,
+        decimals_y = decimals$decimals_y,
+        label_title = label_title,
+        label_subtitle = label_subtitle,
+        translated_labels = translated_labels,
 
+        # Overlay area specific parameters
+        Language = Language,
+        Sensitivity = main_variables$Sensitivity,
+        Specificity = main_variables$Specificity,
+        uncertainty_prevalence = uncertainty_prevalence,
+        overlay_prevalence_1 = main_variables$overlay_prevalence_1,
+        overlay_prevalence_2 = main_variables$overlay_prevalence_2,
+        overlay_position_FP = overlay_position_FP,
+        overlay_position_FN = overlay_position_FN,
+        overlay_labels = overlay_labels,
+        overlay_extra_info = overlay_extra_info,
 
-  # Plot --------------------------------------------------------------------
-
-    # Create plot labels in Language
-      translated_labels = .translate_labels(Language = Language,
-                                            Sensitivity = main_variables$Sensitivity,
-                                            Specificity = main_variables$Specificity,
-                                            PPV_NPV = PPV_NPV)
-  
-
-    # Number of decimals depends on the range
-      decimals = .number_decimals_plot_axis(PPV_NPV = PPV_NPV,
-                                            min_FP = main_variables$min_FP,
-                                            max_FP = main_variables$max_FP,
-                                            min_FN = main_variables$min_FN,
-                                            max_FN = main_variables$max_FN,
-                                            min_Prevalence = main_variables$min_Prevalence,
-                                            max_Prevalence = main_variables$max_Prevalence)
-
-      
-    # Choose function depending on the type of overlay
-     if (overlay == "line") {
-
-       p = .plot_overlay_line(
-          PPV_melted = PPV_melted,
-          uncertainty_prevalence = uncertainty_prevalence,
-          min_Prevalence = main_variables$min_Prevalence,
-          max_Prevalence = main_variables$max_Prevalence,
-          min_FP = main_variables$min_FP,
-          max_FP = main_variables$max_FP,
-          max_FN = main_variables$max_FN,
-          min_FN = main_variables$min_FN,
-          
-          one_out_of = one_out_of, 
-          
-          overlay_prevalence_1 = main_variables$overlay_prevalence_1,
-          overlay_prevalence_2 = main_variables$overlay_prevalence_2,
-          
-          overlay_position_FP = overlay_position_FP,
-          overlay_position_FN = overlay_position_FN,
-          
-          overlay_labels = overlay_labels,
-          
-          decimals_x = decimals$decimals_x,
-          decimals_y = decimals$decimals_y,
-          
-          label_title = label_title,
-          label_subtitle = label_subtitle,
-          
-          translated_labels = translated_labels,
-
-          PPV_NPV = PPV_NPV)
-
-
-      } else if (overlay == "area") {
-        
-        p = .plot_overlay_area(
-          
-          PPV_NPV = PPV_NPV,
-          one_out_of = one_out_of,
-          
-          min_Prevalence = main_variables$min_Prevalence,
-          max_Prevalence = main_variables$max_Prevalence,
-          
-          min_FP = main_variables$min_FP,
-          max_FP = main_variables$max_FP,
-          max_FN = main_variables$max_FN,
-          min_FN = main_variables$min_FN,
-          
-          PPV_melted = PPV_melted,
-          steps_matrix = steps_matrix,
-          decimals_x = decimals$decimals_x,
-          decimals_y = decimals$decimals_y,
-          
-          label_title = label_title,
-          label_subtitle = label_subtitle,
-          translated_labels = translated_labels,
-          
-          # Overlay area specific parameters
-          Language = Language,
-          
-          Sensitivity = main_variables$Sensitivity,
-          Specificity = main_variables$Specificity,
-          
-          uncertainty_prevalence = uncertainty_prevalence,
-          overlay_prevalence_1 = main_variables$overlay_prevalence_1,
-          overlay_prevalence_2 = main_variables$overlay_prevalence_2,
-          overlay_position_FP = overlay_position_FP,
-          overlay_position_FN = overlay_position_FN,
-          overlay_labels = overlay_labels,
-          overlay_extra_info = overlay_extra_info,
-          
-          # Ellipsis
-          DEBUG = DEBUG
-          )
-
-      } else {
-        
-          p = .plot_creation(
-            PPV_melted = PPV_melted,
-            min_Prevalence = main_variables$min_Prevalence,
-            max_Prevalence = main_variables$max_Prevalence,
-            
-            min_FP = main_variables$min_FP,
-            max_FP = main_variables$max_FP,
-            max_FN = main_variables$max_FN,
-            min_FN = main_variables$min_FN,
-            
-            one_out_of = one_out_of, 
-            
-            decimals_x = decimals$decimals_x,
-            decimals_y = decimals$decimals_y,
-
-            label_title = label_title,
-            label_subtitle = label_subtitle,
-
-            translated_labels = translated_labels,
-
-            PPV_NPV = PPV_NPV
-          )
-
-      }
+        # Ellipsis
+        DEBUG = DEBUG
+      )
+    } else {
+      p <- .plot_creation(
+        PPV_melted = PPV_melted,
+        min_Prevalence = main_variables$min_Prevalence,
+        max_Prevalence = main_variables$max_Prevalence,
+        min_FP = main_variables$min_FP,
+        max_FP = main_variables$max_FP,
+        max_FN = main_variables$max_FN,
+        min_FN = main_variables$min_FN,
+        one_out_of = one_out_of,
+        decimals_x = decimals$decimals_x,
+        decimals_y = decimals$decimals_y,
+        label_title = label_title,
+        label_subtitle = label_subtitle,
+        translated_labels = translated_labels,
+        PPV_NPV = PPV_NPV
+      )
+    }
 
 
     # Show and Save plot -----------------------------------------------------
 
-      if (folder != "") {
-        
-        if (is.null(dots$dpi)) dots$dpi = 150
-        if (is.null(dots$width)) dots$width = 14
-        if (is.null(dots$height)) dots$height = 10
-          
-        
-        # PPV/NPV defines what we use for filename
-        if (PPV_NPV == "PPV") {
-          Sensitivity_Specificity_tag = main_variables$Sensitivity
-          range_tag <- paste(c(main_variables$min_FP, main_variables$max_FP), collapse = "_")
-        } else if (PPV_NPV == "NPV") {
-          Sensitivity_Specificity_tag = main_variables$Specificity
-          range_tag <- paste(c(main_variables$min_FN, main_variables$max_FN), collapse = "_")
-        }
+    if (folder != "") {
+      if (is.null(dots$dpi)) dots$dpi <- 150
+      if (is.null(dots$width)) dots$width <- 14
+      if (is.null(dots$height)) dots$height <- 10
 
-        # Name and save
-        plot_name = paste0(folder, "/", PPV_NPV, "_", main_variables$min_Prevalence, "_", main_variables$max_Prevalence, "_", Sensitivity_Specificity_tag, "_", range_tag, overlay_tag, "_", overlay_extra_info_tag, Language, ".png")
-        ggsave(plot_name, p, dpi = dots$dpi, width = dots$width, height = dots$height)
-        message("\n Plot created in: ", plot_name, "\n")
-        
+
+      # PPV/NPV defines what we use for filename
+      if (PPV_NPV == "PPV") {
+        Sensitivity_Specificity_tag <- main_variables$Sensitivity
+        range_tag <- paste(c(main_variables$min_FP, main_variables$max_FP), collapse = "_")
+      } else if (PPV_NPV == "NPV") {
+        Sensitivity_Specificity_tag <- main_variables$Specificity
+        range_tag <- paste(c(main_variables$min_FN, main_variables$max_FN), collapse = "_")
       }
-      
-      print(p)
-      
 
-}
+      # Name and save
+      plot_name <- paste0(folder, "/", PPV_NPV, "_", main_variables$min_Prevalence, "_", main_variables$max_Prevalence, "_", Sensitivity_Specificity_tag, "_", range_tag, overlay_tag, "_", overlay_extra_info_tag, Language, ".png")
+      ggsave(plot_name, p, dpi = dots$dpi, width = dots$width, height = dots$height)
+      message("\n Plot created in: ", plot_name, "\n")
+    }
+
+    print(p)
+  }

@@ -11,7 +11,6 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
   testthat::expect_true(ggplot2::is.ggplot(p))
   testthat::expect_identical(p$labels$y, "PPV")
   testthat::expect_identical(p$labels$x, "False Positive rate")
-
 })
 
 
@@ -24,10 +23,10 @@ testthat::test_that("Plot is type GeomLine", {
       prevalence_diagnostic_group = 44,
       labels_prevalence = c("20 y.o.", "50 y.o.")
     )
-  
-  testthat::expect_identical(sapply(p$layers, function(x)
-    class(x$geom)[1]), "GeomLine")
-  
+
+  testthat::expect_identical(sapply(p$layers, function(x) {
+    class(x$geom)[1]
+  }), "GeomLine")
 })
 
 
@@ -39,12 +38,11 @@ testthat::test_that("Plot saved", {
       Sensitivity = 100,
       prevalence_screening_group = 1667,
       prevalence_diagnostic_group = 44,
-      labels_prevalence = c("20 y.o.", "50 y.o."), 
+      labels_prevalence = c("20 y.o.", "50 y.o."),
       folder = "."
     )
-  
-  file_name_test = "FP_10_sens_100_screening_1667_diagnostic_44.png"
+
+  file_name_test <- "FP_10_sens_100_screening_1667_diagnostic_44.png"
   expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
-
 })
