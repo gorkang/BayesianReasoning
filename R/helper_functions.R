@@ -1036,7 +1036,8 @@ process_variables <- function(min_Prevalence = NULL,
         aes(
           label = paste0(translated_labels$label_PPV_NPV, ": ", list_point_PPV$point_PPV_NPV, "%"), # BOLD title white rectangle
           x = x_axis_position,
-          y = point_Prevalence
+          y = point_Prevalence,
+          # x0 = x_axis_position - 1
         ),
         alpha = .04,
         expand = uncertainty_prevalence_num,
@@ -1088,7 +1089,7 @@ process_variables <- function(min_Prevalence = NULL,
 #' @param steps_matrix width of PPV/NPV matrix. 100 by default
 #'
 #' @noRd
-#' @importFrom ggplot2 annotate
+#' @importFrom ggplot2 annotate layer_scales
 
 .plot_overlay_line <-
   function(PPV_NPV = "PPV",
@@ -1142,8 +1143,8 @@ process_variables <- function(min_Prevalence = NULL,
       label_title = label_title,
       PPV_NPV = PPV_NPV
     )
-
-
+    
+    
     # X The variable that defines axis position depends on PPV_NPV
     if (PPV_NPV == "PPV") {
       x_axis_position <- overlay_position_FP
@@ -1158,11 +1159,11 @@ process_variables <- function(min_Prevalence = NULL,
       overlay_prevalence_2 <- overlay_prevalence_1 / overlay_prevalence_2
     }
 
+    # TODO: Not sure what is this. Repeats the first element twice and deletes last element
     overlay_position_x_end <- c(x_axis_position[1], x_axis_position[-length(x_axis_position)])
     overlay_position_y_end <- c(overlay_prevalence_2[1], overlay_prevalence_2[-length(overlay_prevalence_2)])
 
-
-
+    
     # Plot Overlay ---
 
     # DF for ggforce::geom_mark_rect()
@@ -1171,7 +1172,20 @@ process_variables <- function(min_Prevalence = NULL,
       overlay_prevalence_2 = overlay_prevalence_2,
       overlay_labels = overlay_labels
     )
+    
+    # https://github.com/thomasp85/ggforce/issues/209
+    # Calculate x0 values to anchor ggforce label
+    bias_x = 15
+    range_x_plot = ggplot2::layer_scales(p)$x$range$range
+    width_range_x_plot = range_x_plot[2] - range_x_plot[1]
+    x0_anchor = x_axis_position - (width_range_x_plot / bias_x)
+    if (any(x0_anchor < 0)) {
+      cli::cli_alert_info("Label/s outside range, will anchor right")
+      x0_anchor = x_axis_position + (width_range_x_plot / bias_x) 
+    }
 
+
+    # Add segment
     p <- p + ggplot2::annotate("segment",
       x = x_axis_position,
       xend = overlay_position_x_end,
@@ -1180,12 +1194,14 @@ process_variables <- function(min_Prevalence = NULL,
       color = "red", alpha = .1, size = 3
     ) +
 
+      # Add point
       ggplot2::annotate("point",
         color = "red", alpha = .5, size = .8,
         x = x_axis_position,
         y = overlay_prevalence_2
       ) +
 
+      # Add rectangle
       ggforce::geom_mark_rect(
         data = DF_X,
         label.colour = "black",
@@ -1195,7 +1211,13 @@ process_variables <- function(min_Prevalence = NULL,
           x = x_axis_position,
           y = overlay_prevalence_2,
           group = overlay_labels,
-          label = overlay_labels
+          label = overlay_labels,
+          x0 = x0_anchor # Anchor position
+          
+          # Leave y0 free to avoid overlaps
+          # Also, y scale changes with one_out_of parameter
+          # y0 = y0_anchor 
+          
         ),
         fill = "red",
         # con.border = "none",
