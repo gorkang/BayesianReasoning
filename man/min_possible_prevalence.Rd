@@ -23,11 +23,11 @@ Given a FP and a desired PPV, what is the Minimum Prevalence of a Condition
 
 # Example 1
 min_possible_prevalence(Sensitivity = 99.9, FP_test = .1, min_PPV_desired = 70)
-"To reach a PPV of 70 when using a test with 99.9 \% Sensitivity and 0.1 \% False Positive Rate, 
+"To reach a PPV of 70 when using a test with 99.9 \% Sensitivity and 0.1 \% False Positive Rate,
 you need a prevalence of at least 1 out of 429"
 
 # Example 2
 min_possible_prevalence(100, 0.1, 98)
-"To reach a PPV of 98 when using a test with 100 \% Sensitivity and 0.1 \% False Positive Rate, 
+"To reach a PPV of 98 when using a test with 100 \% Sensitivity and 0.1 \% False Positive Rate,
 you need a prevalence of at least 1 out of 21"
 }

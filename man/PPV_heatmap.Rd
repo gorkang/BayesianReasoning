@@ -84,9 +84,11 @@ Shows a plot or, if given a folder argument, saves a .png version of the plot
 Plot heatmaps showing the PPV for a given Sensitivity and a range of Prevalences and False Positive values or NPV values for a given Specificity and a range of Prevalences and True Positive values
 }
 \examples{
-PPV_heatmap(min_Prevalence = 1, 
-max_Prevalence = 1000, 
-Sensitivity = 100, 
-Specificity = 98, 
-Language = "en")
+PPV_heatmap(
+  min_Prevalence = 1,
+  max_Prevalence = 1000,
+  Sensitivity = 100,
+  Specificity = 98,
+  Language = "en"
+)
 }

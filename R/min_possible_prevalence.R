@@ -41,7 +41,7 @@ min_possible_prevalence <- function(Sensitivity = 95, FP_test = 1, min_PPV_desir
   # Long format
   PPV_melted <- PPV %>%
     as.data.frame() %>%
-    mutate(Prevalence = 1:length(.))
+    mutate(Prevalence = seq_along(.))
 
   # Rename columns
   names(PPV_melted) <- c("melted_PPV", "melted_Prevalence")

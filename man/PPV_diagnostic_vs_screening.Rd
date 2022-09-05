@@ -35,13 +35,17 @@ Plot PPV associated to different levels of FP and a specific Sensitivity, for tw
 \examples{
 
 # Example 1
-PPV_diagnostic_vs_screening(max_FP = 10, Sensitivity = 100, 
-                            prevalence_screening_group = 1500, 
-                            prevalence_diagnostic_group = 3)
+PPV_diagnostic_vs_screening(
+  max_FP = 10, Sensitivity = 100,
+  prevalence_screening_group = 1500,
+  prevalence_diagnostic_group = 3
+)
 
 # Example 2. QWith custom labels
-PPV_diagnostic_vs_screening(max_FP = 10, Sensitivity = 100, 
-                            prevalence_screening_group = 1667, 
-                            prevalence_diagnostic_group = 44, 
-                           labels_prevalence = c("20 y.o.", "50 y.o."))
+PPV_diagnostic_vs_screening(
+  max_FP = 10, Sensitivity = 100,
+  prevalence_screening_group = 1667,
+  prevalence_diagnostic_group = 44,
+  labels_prevalence = c("20 y.o.", "50 y.o.")
+)
 }
