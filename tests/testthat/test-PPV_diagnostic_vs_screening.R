@@ -24,9 +24,9 @@ testthat::test_that("Plot is type GeomLine", {
       labels_prevalence = c("20 y.o.", "50 y.o.")
     )
 
-  testthat::expect_identical(sapply(p$layers, function(x) {
-    class(x$geom)[1]
-  }), "GeomLine")
+  testthat::expect_identical(
+    vapply(p$layers, function(x) {class(x$geom)[1]}, ""),
+    "GeomLine")
 })
 
 
