@@ -1090,6 +1090,7 @@ process_variables <- function(min_Prevalence = NULL,
 #'
 #' @noRd
 #' @importFrom ggplot2 annotate layer_scales
+#' @importFrom cli cli_alert_info
 
 .plot_overlay_line <-
   function(PPV_NPV = "PPV",

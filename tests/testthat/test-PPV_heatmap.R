@@ -31,7 +31,7 @@ testthat::test_that("Clasical breast cancer problem, hardcoded results", {
 
   testthat::expect_equal(PPV_PLOT, 0.08)
   testthat::expect_equal(PPV_tibble$PPV, 0.08)
-  testthat::expect_equal(PPV_tibble$PPV_calc, 0.07732454)
+  testthat::expect_equal(PPV_tibble$PPV_calc, 0.07732454, tolerance = 0.0001)
 })
 
 
@@ -1018,7 +1018,7 @@ p <- testthat::evaluate_promise(
                                  overlay_prevalence_2 = c(68, 249))
 )
 
-testthat::expect_equivalent(p$messages, expected = "ℹ Label outside range, will anchor right\n")
+testthat::expect_equal(p$messages, expected = "ℹ Label/s outside range, will anchor right\n")
 
 
 
