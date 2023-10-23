@@ -1192,7 +1192,7 @@ process_variables <- function(min_Prevalence = NULL,
       xend = overlay_position_x_end,
       y = overlay_prevalence_2,
       yend = overlay_position_y_end,
-      color = "red", alpha = .1, size = 3
+      color = "red", alpha = .1, linewidth = 3
     ) +
 
       # Add point

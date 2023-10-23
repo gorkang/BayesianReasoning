@@ -78,7 +78,7 @@ PPV_diagnostic_vs_screening <- function(max_FP = 10, Sensitivity = 100, prevalen
   Labels_plot <- c(paste0(labels_prevalence[1], " prevalence: 1 out of ", prevalence_screening_group), paste0(labels_prevalence[2], " prevalence: 1 out of ", prevalence_diagnostic_group))
 
   p <- ggplot(data = FINAL, aes(x = FP, y = PPV, colour = prevalence)) +
-    geom_line(size = 1.5) +
+    geom_line(linewidth = 1.5) +
     scale_colour_hue(l = 50, labels = Labels_plot) +
     theme_minimal() +
     theme(text = ggplot2::element_text(size = 20)) +
