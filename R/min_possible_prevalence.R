@@ -39,12 +39,8 @@ min_possible_prevalence <- function(Sensitivity = 95, FP_test = 1, min_PPV_desir
   PPV <- (Sensitivity * Min_Prevalence) / ((Sensitivity * Min_Prevalence) + ((Prevalence - 1) * FP_test))
 
   # Long format
-  PPV_melted <- PPV %>%
-    as.data.frame() %>%
-    mutate(Prevalence = seq_along(.))
-
-  # Rename columns
-  names(PPV_melted) <- c("melted_PPV", "melted_Prevalence")
+  PPV_melted <- data.frame(melted_PPV = PPV, melted_Prevalence = seq_along(PPV))
+  
 
   # Calculate prevalence
   output_prevalence <- max(PPV_melted$melted_Prevalence[PPV_melted$melted_PPV > (min_PPV_desired / 100)])
