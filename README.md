@@ -214,3 +214,50 @@ Another example, with a very good test, and lower expectations:
 > % False Positive Rate, you need a prevalence of at least 1 out of 429
 
 ------------------------------------------------------------------------
+
+## plot\_cutoff()
+
+Since v0.4.2 you can also plot the distributions of sick and healthy
+individuals and learn about how a cutoff point changes the True
+Positives, False Positives, True Negatives, False Negatives,
+Sensitivity, Specificity, PPV and NPV.
+
+
+    PLOTS = plot_cutoff(prevalence = 0.2,
+                        cutoff_point = 33, 
+                        mean_sick = 35, 
+                        mean_healthy = 20, 
+                        sd_sick = 3, 
+                        sd_healthy = 5
+                        )
+
+    PLOTS$final_plot
+
+![](man/figures/README_files/figure-markdown_strict/cutoff-1.png)
+
+Then, with `remove_layers_cutoff_plot()` you can remove specific layers,
+to help you understand some of these concepts.
+
+
+    # Sensitivity
+    remove_layers_cutoff_plot(PLOTS$final_plot, delete_what = c("FP", "TN")) + ggplot2::labs(subtitle = "Sensitivity = TP/(TP+FN)")
+
+![](man/figures/README_files/figure-markdown_strict/remove-cutoff-1.png)
+
+
+    # Specificity
+    remove_layers_cutoff_plot(PLOTS$final_plot, delete_what = c("FN", "TP")) + ggplot2::labs(subtitle = "Specificity = TN/(TN+FP)")
+
+![](man/figures/README_files/figure-markdown_strict/remove-cutoff-2.png)
+
+
+    # PPV
+    remove_layers_cutoff_plot(PLOTS$final_plot, delete_what = c("TN", "FN")) + ggplot2::labs(subtitle = "PPV = TP/(TP+FP)")
+
+![](man/figures/README_files/figure-markdown_strict/remove-cutoff-3.png)
+
+
+    # NPV
+    remove_layers_cutoff_plot(PLOTS$final_plot, delete_what = c("TP", "FP")) + ggplot2::labs(subtitle = "NPV = TN/(TN+FN)")
+
+![](man/figures/README_files/figure-markdown_strict/remove-cutoff-4.png)

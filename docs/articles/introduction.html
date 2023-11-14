@@ -83,7 +83,7 @@
                         <h4 data-toc-skip class="author">Gorka
 Navarrete</h4>
             
-            <h4 data-toc-skip class="date">2023-10-23</h4>
+            <h4 data-toc-skip class="date">2023-11-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/gorkang/BayesianReasoning/blob/HEAD/vignettes/introduction.Rmd" class="external-link"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="d-none name"><code>introduction.Rmd</code></div>
@@ -292,6 +292,48 @@ would like a 98% certainty that it is a true positive.</p>
 429</p>
 </blockquote>
 <hr>
+</div>
+<div class="section level3">
+<h3 id="plot_cutoff">plot_cutoff()<a class="anchor" aria-label="anchor" href="#plot_cutoff"></a>
+</h3>
+<p>Since v0.4.2 you can also plot the distributions of sick and healthy
+individuals and learn about how a cutoff point changes the True
+Positives, False Positives, True Negatives, False Negatives,
+Sensitivity, Specificity, PPV and NPV.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="va">PLOTS</span> <span class="op">=</span> <span class="fu"><a href="../reference/plot_cutoff.html">plot_cutoff</a></span><span class="op">(</span>prevalence <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>                    cutoff_point <span class="op">=</span> <span class="fl">33</span>, </span>
+<span>                    mean_sick <span class="op">=</span> <span class="fl">35</span>, </span>
+<span>                    mean_healthy <span class="op">=</span> <span class="fl">20</span>, </span>
+<span>                    sd_sick <span class="op">=</span> <span class="fl">3</span>, </span>
+<span>                    sd_healthy <span class="op">=</span> <span class="fl">5</span></span>
+<span>                    <span class="op">)</span></span>
+<span></span>
+<span><span class="va">PLOTS</span><span class="op">$</span><span class="va">final_plot</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/cutoff-1.png" width="840"></p>
+<p>Then, with <code><a href="../reference/remove_layers_cutoff_plot.html">remove_layers_cutoff_plot()</a></code> you can remove
+specific layers, to help you understand some of these concepts.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Sensitivity</span></span>
+<span><span class="fu"><a href="../reference/remove_layers_cutoff_plot.html">remove_layers_cutoff_plot</a></span><span class="op">(</span><span class="va">PLOTS</span><span class="op">$</span><span class="va">final_plot</span>, delete_what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FP"</span>, <span class="st">"TN"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Sensitivity = TP/(TP+FN)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/remove-cutoff-1.png" width="840"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Specificity</span></span>
+<span><span class="fu"><a href="../reference/remove_layers_cutoff_plot.html">remove_layers_cutoff_plot</a></span><span class="op">(</span><span class="va">PLOTS</span><span class="op">$</span><span class="va">final_plot</span>, delete_what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"FN"</span>, <span class="st">"TP"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"Specificity = TN/(TN+FP)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/remove-cutoff-2.png" width="840"></p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># PPV</span></span>
+<span><span class="fu"><a href="../reference/remove_layers_cutoff_plot.html">remove_layers_cutoff_plot</a></span><span class="op">(</span><span class="va">PLOTS</span><span class="op">$</span><span class="va">final_plot</span>, delete_what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TN"</span>, <span class="st">"FN"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"PPV = TP/(TP+FP)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/remove-cutoff-3.png" width="840"></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
+<span><span class="co"># NPV</span></span>
+<span><span class="fu"><a href="../reference/remove_layers_cutoff_plot.html">remove_layers_cutoff_plot</a></span><span class="op">(</span><span class="va">PLOTS</span><span class="op">$</span><span class="va">final_plot</span>, delete_what <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"TP"</span>, <span class="st">"FP"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="st">"NPV = TN/(TN+FN)"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="introduction_files/figure-html/remove-cutoff-4.png" width="840"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

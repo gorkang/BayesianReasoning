@@ -2,7 +2,7 @@ Type: Package
 Package: BayesianReasoning
 Title: Plot Positive and Negative Predictive Values for Medical Tests
 Version: 0.4.2
-Date: 2022-09-06
+Date: 2023-11-13
 Authors@R: 
     person("Gorka", "Navarrete", , "gorkang@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7678-8656"))
@@ -22,10 +22,14 @@ Depends:
 Imports: 
     cli,
     dplyr,
-    ggforce,
+    ggforce (>= 0.4.0),
     ggplot2,
+    ggtext, 
+    gt,
     magrittr,
+    png,
     reshape2,
+    scales,
     stats,
     tibble,
     tidyr
@@ -37,10 +41,11 @@ Suggests:
     purrr,
     rmarkdown,
     testthat (>= 3.0.0),
-    vdiffr
+    vdiffr,
+    webshot2
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 LazyData: FALSE
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Config/testthat/edition: 3

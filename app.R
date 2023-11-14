@@ -17,7 +17,7 @@ ui <-
   function(request) {
     
     fluidPage(
-      tags$head(includeHTML(("google-analytics.html"))),
+      # tags$head(includeHTML(("google-analytics.html"))),
       useShinyjs(),
   
       theme = shinythemes::shinytheme("flatly"),

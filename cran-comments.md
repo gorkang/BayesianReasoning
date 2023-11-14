@@ -1,5 +1,5 @@
 ## Test environments
-* local Ubuntu 20.04, R 4.1.2
+* local Ubuntu 22.04, R 4.3.2
 * win-builder (devel and release)
 * R-hub
   + Windows Server 2022, R-devel, 64 bit
@@ -11,10 +11,15 @@
 0 errors | 0 warnings | 0 note
 
 
-## Minor fixes
+## Major updates  
 
-* Fixing issues with URL's (https://cran.r-project.org/web/checks/check_results_BayesianReasoning.html)
+* New plot_cutoff()  
+  + Shows healthy and sick distributions and shows FP, FN, TP and TN depending on a cutoff point  
+* New remove_layers_cutoff_plot() functions  
+  + Get's rid of layers of a cutoff_plot: FP, FN, TP or TN  
 
-  + Added function so the internet resources in the introduction vignette have a fallback condition with an informative message. 
+## Minor updates
 
-* Add more checks and tests to catch corner cases
+* Fix for CRAN change in docType
+* Use linewidth instead of size
+* Faster implementation of a step in min_possible_prevalence

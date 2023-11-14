@@ -1,3 +1,19 @@
+# BayesianReasoning 0.4.2
+
+Major updates  
+
+* New plot_cutoff()  
+  + Shows healthy and sick distributions and shows FP, FN, TP and TN depending on a cutoff point  
+* New remove_layers_cutoff_plot() functions  
+  + Get's rid of layers of a cutoff_plot: FP, FN, TP or TN  
+
+Minor updates
+
+* Fix for CRAN change in docType
+* Use linewidth instead of size
+* Faster implementation of a step in min_possible_prevalence
+
+
 # BayesianReasoning 0.4.1
 
 Minor updates
