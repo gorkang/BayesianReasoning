@@ -5,13 +5,14 @@ library(shiny)
 library(shinythemes)
 library(shinyjs)
 library(devtools)
+library(ggplot2)
 
+source("R/helper_functions_exp.R")
 # REMEMBER: If deploying the app to shinyapps.io FAILS, add devtools and utf8 to the Imports field in the DESCRIPTION file -------------------
 devtools::load_all()
 # library(BayesianReasoning)
 
 
-# UI ----------------------------------------------------------------------
 
 ui <- 
   function(request) {
@@ -19,15 +20,21 @@ ui <-
     fluidPage(
       # tags$head(includeHTML(("google-analytics.html"))),
       useShinyjs(),
-  
       theme = shinythemes::shinytheme("flatly"),
       title = "BayesianReasoning",
       
-      # * side panel --------------------------------------------------------------
+      
+# side panel --------------------------------------------------------------
       
       sidebarLayout(
         sidebarPanel(
           width = 2,
+          
+        # Panel 1  --------------------------------------------------------------
+        
+          conditionalPanel(condition="input.tabselected==1",
+          
+          
           
           div(
             
@@ -66,11 +73,11 @@ ui <-
                       value = 90,
                       step = .1),
           
-          sliderInput("FP_shinny",
-                      "False Positive rate (1-Spec; %)",
+          sliderInput("Specificity",
+                      "Specificity (%)",
                       min = 0,
                       max = 100,
-                      value = 2,
+                      value = 98,
                       step = .1),
           
           hr(),
@@ -120,47 +127,108 @@ ui <-
               downloadButton('downloadPlot', 'Plot')
           ),
           
+          ),
+          
+          
+
+  # Panel 2 -----------------------------------------------------------------
+        
+      conditionalPanel(condition="input.tabselected==2",
+                       
+                       HTML("Medical professionals"),
+                       
+                       selectInput("Disease_E1", 
+                                   "Cancer or Stroke", 
+                                   c("Cancer", "Stroke")), 
+                       selectInput("PPV_NPV_E1", 
+                                   "PPV or NPV", 
+                                   c("PPV", "NPV")), # linea
+                       HTML("&nbsp;&nbsp;"),
+                       div(style="display:inline-block;30%;text-align: center;",
+                           downloadButton('downloadPlot_E1', 'Plot'))
+                           
+          ),
+  
+  # Panel 3 -----------------------------------------------------------------
+  conditionalPanel(condition="input.tabselected==3",
+                   
+                   HTML("Patients"),
+                   
+                   selectInput("Disease_E2", 
+                               "Cancer or Stroke", 
+                               c("Cancer", "Stroke")), 
+                   selectInput("PPV_NPV_E2", 
+                               "PPV or NPV", 
+                               c("PPV", "NPV")), # linea
+                   HTML("&nbsp;&nbsp;"),
+                   div(style="display:inline-block;30%;text-align: center;",
+                       downloadButton('downloadPlot_E2', 'Plot'))
+                   
+                   
+                   
+                   
+  )
         ),
       
         
     
-        # * main panel --------------------------------------------------------------
-    
-        mainPanel(width = 10,
-                  
-                  p(
-                    HTML(
-                      paste(
-                        h3(HTML("<a href='https://gorkang.shinyapps.io/BayesianReasoning/'>BayesianReasoning</a>")),
-                        p("Plot Positive Predictive Values (PPV) or Negative Predictive Values (NPV), and their relationship with Sensitivity, Specificity and Prevalence.")
-                        # "<a href='https://github.com/gorkang/BayesianReasoning'>GITHUB: gorkang/BayesianReasoning</a> - <a href='https://github.com/gorkang/BayesianReasoning/issues'>Issues</a>"
-                        )
-                      )
-                    ),
-                  
-                  hr(),
-                  
-                  plotOutput("outplot", height = "800px", width = "100%"),
-                  
-                  # plotOutput("outplot"),
-                  
-                  hr(),
-                  span(
-                    div(
-                      HTML(
-                        paste0(
-                          "Positive Predictive Value (PPV) = True Positives / All Positives", br(),
-                          "Negative Predictive Value (NPV) = True Negatives / All Negatives", br(),br(),
-                          "False Negative rate = 1 - Sensitivity", br(),
-                          "False Positive rate = 1 - Specificity", br(),
-                          hr(),
-                          "BayesianReasoning v.0.3. By ", a("@gorkang", href="https://twitter.com/gorkang", target = "_blank"))),
-                      align = "center",
-                      style = "color:darkgrey")),
-                  hr())
+  # * main panel --------------------------------------------------------------
+
+  mainPanel(width = 10,
+            
+            tabsetPanel(
+              tabPanel("Plot", value=1,
+                       
+        p(
+              HTML(
+                paste(
+                  h3(HTML("<a href='https://gorkang.shinyapps.io/BayesianReasoning/'>BayesianReasoning</a>")),
+                  p("Plot Positive Predictive Values (PPV) or Negative Predictive Values (NPV), and their relationship with Sensitivity, Specificity and Prevalence.")
+                  # "<a href='https://github.com/gorkang/BayesianReasoning'>GITHUB: gorkang/BayesianReasoning</a> - <a href='https://github.com/gorkang/BayesianReasoning/issues'>Issues</a>"
+                  )
+                )
+              ),
+            
+            hr(),
+            
+            plotOutput("outplot", height = "800px", width = "100%"),
+            
+            # plotOutput("outplot"),
+            
+            hr(),
+            span(
+              div(
+                HTML(
+                  paste0(
+                    "Positive Predictive Value (PPV) = True Positives / All Positives", br(),
+                    "Negative Predictive Value (NPV) = True Negatives / All Negatives", br(),br(),
+                    "False Negative rate = 1 - Sensitivity", br(),
+                    "False Positive rate = 1 - Specificity", br(),
+                    hr(),
+                    "BayesianReasoning v.0.3. By ", a("@gorkang", href="https://twitter.com/gorkang", target = "_blank"))),
+                align = "center",
+                style = "color:darkgrey")),
+            hr()
+       
+              ),
+        tabPanel("Medical professionals", value = 2,
+                 h4("Tab 2 content"),
+                 plotOutput("outplot2", height = "800px", width = "100%")
+                 ),
+
+        tabPanel("Patients", value = 3,
+                 h4("Tab 3 content"),
+                 plotOutput("outplot3", height = "800px", width = "100%")
+                 ),
+        id = "tabselected"
+            )
         
-      )
-    )
+        
+        )# Mainpanel
+  
+  ) # sidebarLayout
+    
+    ) #fluidPage
 }
 
 # Server ------------------------------------------------------------------
@@ -179,15 +247,17 @@ server <- function(input, output, session) {
     val_min_prevalence <- input$min_Prevalence
     val_max_prevalence <- input$max_Prevalence
     val_sensitivity <- input$Sensitivity
-    val_FP <- input$FP_shinny
-    val_FP <- input$FP_shinny
+    val_specificity <- input$Specificity
+    # val_FP <- input$Specificity
+    # val_FP <- input$Specificity
     val_overlay_prevalence_1 <- input$overlay_prevalence_1
     val_overlay_prevalence_2 <- input$overlay_prevalence_2
 
     updateSliderInput(session, "min_Prevalence", max = val_max_prevalence)
     updateSliderInput(session, "overlay_prevalence_1", min = val_min_prevalence, max = val_overlay_prevalence_2) #value = val_min_prevalence, 
     updateSliderInput(session, "overlay_prevalence_2", min = val_overlay_prevalence_1, max = val_max_prevalence) #value = val_max_prevalence/2, 
-    updateSliderInput(session, "FP_overlay", min = 0, max = val_FP) #value = val_FP/2, 
+    # updateSliderInput(session, "FP_overlay", min = 0, max = val_FP) #value = val_FP/2, 
+    updateSliderInput(session, "FP_overlay", min = 0, max = (100-val_specificity)) #value = (100-val_sensitivity)/2, 
     updateSliderInput(session, "FN_overlay", min = 0, max = (100-val_sensitivity)) #value = (100-val_sensitivity)/2, 
     
   })
@@ -235,25 +305,88 @@ server <- function(input, output, session) {
   # Create plot
   final_plot <- reactive({
   
-    # message(input$PPV_NPV)
-    
     BayesianReasoning::PPV_heatmap(
       PPV_NPV = input$PPV_NPV,
       label_title = input$plot_title,
-      max_FP = input$FP_shinny,
       min_Prevalence = input$min_Prevalence,
       max_Prevalence = input$max_Prevalence,
       Sensitivity = input$Sensitivity,
+      Specificity = input$Specificity,
       overlay = input$tipo_overlay,
       # min_Prevalence = 1,
       overlay_prevalence_1 = input$overlay_prevalence_1,
       overlay_prevalence_2 = input$overlay_prevalence_2,
       # overlay_position_FP_FN = input$FP_overlay
       overlay_position_FP = input$FP_overlay,
-      overlay_position_FN = input$FN_overlay
+      overlay_position_FN = input$FN_overlay, DEBUG = TRUE
     )
     
   })
+  
+  
+  # Create plot E1 --------------------------------------------------------
+  
+  final_plot_E1 <- reactive({
+
+    if (input$Disease_E1 == "Cancer") {
+      data = create_table_BC()
+      
+    } else {
+      data = create_table_Stroke()
+    }
+    
+    plot_E1(DF = data, PPV_NPV = input$PPV_NPV_E1)
+
+  })
+
+  output$outplot2 <- renderPlot({
+
+    final_plot_E1()
+
+  })
+
+  output$downloadPlot_E1 <- downloadHandler(
+    filename = function() { 
+      # browser()
+      
+      # NEED TO output a plot. Now it's a table
+      # XX = BayesianReasoning::PPV_heatmap(Sensitivity = 22)
+      
+      paste0(input$Disease_E1, "_", input$PPV_NPV_E1, ".png") 
+    },
+    content = function(file) { ggsave("Cancer_PPV.png", plot = final_plot_E1(), device = "png", width = 14, height = 10) }
+  )
+  
+  
+  
+# Create plot Experiment 2  --------------------------------------------------
+  final_plot_E2 <- reactive({
+    if (input$Disease_E2 == "Cancer") {
+      data = create_table_BC()
+    } else {
+      data = create_table_Stroke()
+    }
+    plot_E2(DF = data, PPV_NPV = input$PPV_NPV_E2)
+  })
+  
+  
+  output$outplot3 <- renderPlot({
+    final_plot_E2()
+  })
+  
+
+  output$downloadPlot_E2 <- downloadHandler(
+    filename = function() { 
+        paste0(input$Disease_E2, "_", input$PPV_NPV_E2, ".png") 
+      },
+    content = function(file) { ggsave(file, plot = final_plot_E2(), device = "png", width = 14, height = 10) }
+  )
+  
+  
+
+# PLOT --------------------------------------------------------------------
+
+  
   
   output$outplot <- renderPlot({
     
@@ -266,9 +399,9 @@ server <- function(input, output, session) {
     filename = function() { 
       # input$plot_title, "_",
       if (input$tipo_overlay == "none") {
-        paste0(input$Prevalence, "_", input$Sensitivity, "_", input$FP_shinny, ".png") 
+        paste0(input$Prevalence, "_", input$Sensitivity, "_", input$Specificity, ".png") 
       } else {
-        paste0(input$Prevalence, "_", input$Sensitivity, "_", input$FP_shinny, "_", input$tipo_overlay, "_", 1, "_", input$overlay_prevalence_1, "_", input$overlay_prevalence_2, "_", input$FP_overlay, ".png") 
+        paste0(input$Prevalence, "_", input$Sensitivity, "_", input$Specificity, "_", input$tipo_overlay, "_", 1, "_", input$overlay_prevalence_1, "_", input$overlay_prevalence_2, "_", input$FP_overlay, ".png") 
       }
       
       },
