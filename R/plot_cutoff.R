@@ -38,19 +38,20 @@ plot_cutoff <- function(prevalence = 0.1,
   
   # DEBUG
   # prevalence = 0.1
-  # cutoff_point = 40
+  # cutoff_point = 30
   # mean_sick = 35
   # mean_healthy = 20
   # sd_sick = 3
   # sd_healthy = 5
   # n_people = 100000
   # output_filename = NULL
+  # add_table = TRUE
   
   SEED = 10
   
   # How many sick & healthy
-  n_healthy = (1 - prevalence) * n_people
-  n_sick = prevalence * n_people
+  n_healthy = round((1 - prevalence) * n_people, 0)
+  n_sick = round(prevalence * n_people, 0)
   
   # Checks
   if (n_people >= 10^7) cli::cli_alert_warning("Lots of observations. Will take a few seconds to create the plot. Lower the n_people ({n_people})")
@@ -185,10 +186,9 @@ plot_cutoff <- function(prevalence = 0.1,
     ggplot2::stat_bin(data = subset(DF, classification %in% c('FN')), geom = "step", direction = "mid", ggplot2::aes(linetype = type), binwidth = binwidth, show.legend = FALSE) +
     ggplot2::stat_bin(data = subset(DF, classification %in% c('FP')), geom = "step", direction = "mid", ggplot2::aes(linetype = type), binwidth = binwidth, show.legend = FALSE) +
     
-    
     ggplot2::geom_vline(xintercept = cutoff_point - 0.5, linetype = "dashed") +
     ggplot2::theme_minimal(base_size = 14) +
-    ggplot2::labs(caption = paste0(format(n_people, big.mark = ",", scientific = FALSE), " people, ", "prevalence 1 out of ", 1/DF_table$Prevalence, "\n",
+    ggplot2::labs(caption = paste0(format(n_people, big.mark = ",", scientific = FALSE), " people, ", "prevalence 1 out of ", round(1/DF_table$Prevalence, 0), "\n",
                                    format(n_sick, big.mark = ",", scientific = FALSE), " sick (M = ", mean_sick, ", SD = ", sd_sick, ")\n",
                                    format(n_healthy, big.mark = ",", scientific = FALSE) , " healthy (M = ", mean_healthy, ", SD = ", sd_healthy, ")"
                                    # "Sensitivity = ", round(DF_table$Sensitivity * 100, 0), "% Specificity = ", round(DF_table$Specificity * 100, 0), "% \n",
@@ -223,8 +223,15 @@ plot_cutoff <- function(prevalence = 0.1,
   TP_x = max(max_counts[max_counts$classification %in% c("TP"), "x"])
   
   
-  if (FP_x == TP_x) TP_x = TP_x * 1.05
-  if (FN_x == TN_x) TN_x = TN_x * .95
+  if (FP_x == TP_x) {
+    TP_x = TP_x * 1.05
+    FP_x = FP_x * .95
+  }
+  if (FN_x == TN_x) {
+    TN_x = TN_x * .95
+    FN_x = FN_x * 1.05
+  }
+  
   
   
   # Plot annotations --------------------------------------------------------
