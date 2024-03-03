@@ -72,6 +72,9 @@ PPV_heatmap <-
     # Get ... vars
     dots <- list(...)
 
+    
+    if (DEBUG == TRUE) cli::cli_h1("process_variables pre")
+
     # CHECKS variables and sets defaults
     main_variables <- process_variables(
       min_Prevalence = min_Prevalence,
@@ -91,6 +94,7 @@ PPV_heatmap <-
       steps_matrix = steps_matrix
     )
 
+    if (DEBUG == TRUE) cli::cli_h1("process_variables post max_FP {main_variables$max_FP}")
 
     if (DEBUG == TRUE) {
       message("\nDEBUG: ", "min_Sensitivity: ", main_variables$min_Sensitivity, " max_FN: ", main_variables$max_FN, " | max_Sensitivity: ", main_variables$max_Sensitivity, " min_FN: ", main_variables$min_FN)
@@ -116,7 +120,23 @@ PPV_heatmap <-
 
 
     # Create PPV matrix -------------------------------------------------------
-
+    
+    if (DEBUG == TRUE) cli::cli_h1(".createPPVmatrix pre max_FP {main_variables$max_FP}")
+    
+    cli::cli_alert_info("
+      min_Prevalence = {main_variables$min_Prevalence},
+      max_Prevalence = {main_variables$max_Prevalence},
+      Sensitivity = {main_variables$Sensitivity},
+      Specificity = {main_variables$Specificity},
+      min_FP = {main_variables$min_FP},
+      max_FP = {main_variables$max_FP},
+      max_FN = {main_variables$max_FN},
+      min_FN = {main_variables$min_FN},
+      one_out_of = {one_out_of},
+      PPV_NPV = {PPV_NPV}
+      "
+    )
+    
     PPV_melted <- .createPPVmatrix(
       min_Prevalence = main_variables$min_Prevalence,
       max_Prevalence = main_variables$max_Prevalence,
@@ -152,7 +172,9 @@ PPV_heatmap <-
       min_Prevalence = main_variables$min_Prevalence,
       max_Prevalence = main_variables$max_Prevalence
     )
-
+    
+    if (DEBUG == TRUE) cli::cli_h1("plot pre max_FP {main_variables$max_FP}")
+    
 
     # Choose function depending on the type of overlay
     if (overlay == "line") {
@@ -255,4 +277,9 @@ PPV_heatmap <-
     }
 
     print(p)
+    
+    OUTPUT = list(PPV_melted = PPV_melted,
+                  p = p)
+
+    return(OUTPUT)    
   }

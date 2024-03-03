@@ -243,7 +243,7 @@ plot_E1 <- function(DF, PPV_NPV) {
       overlay_labels = overlay_labels,
       label_title = label_title,
       label_subtitle = item_label, 
-      Language = "sp")
+      Language = "sp")$p
   
   plot
   

@@ -34,8 +34,6 @@ ui <-
         
           conditionalPanel(condition="input.tabselected==1",
           
-          
-          
           div(
             
             HTML(paste0(
@@ -46,9 +44,6 @@ ui <-
               "<BR><BR>")),
             align = "center"
           ),
-          
-          # h1(),
-          
           
           selectInput("PPV_NPV", 
                       "PPV or NPV", 
@@ -93,14 +88,12 @@ ui <-
                       value = 1,
                       step = 0.1),
           
-          
           sliderInput("FN_overlay",
                       "False Negative rate overlay (%)",
                       min = 0,
                       max = 100,
                       value = 1,
                       step = 0.1),
-          
           
           # HTML("<B>Prevalence of overlay:</B>"),
           sliderInput("overlay_prevalence_1",
@@ -135,7 +128,7 @@ ui <-
         
       conditionalPanel(condition="input.tabselected==2",
                        
-                       HTML("Medical professionals"),
+                       h4("Health professionals"),
                        
                        selectInput("Disease_E1", 
                                    "Cancer or Stroke", 
@@ -146,13 +139,13 @@ ui <-
                        HTML("&nbsp;&nbsp;"),
                        div(style="display:inline-block;30%;text-align: center;",
                            downloadButton('downloadPlot_E1', 'Plot'))
-                           
-          ),
+                       ),
   
   # Panel 3 -----------------------------------------------------------------
-  conditionalPanel(condition="input.tabselected==3",
+  
+    conditionalPanel(condition="input.tabselected==3",
                    
-                   HTML("Patients"),
+                   h4("Patients"),
                    
                    selectInput("Disease_E2", 
                                "Cancer or Stroke", 
@@ -163,23 +156,16 @@ ui <-
                    HTML("&nbsp;&nbsp;"),
                    div(style="display:inline-block;30%;text-align: center;",
                        downloadButton('downloadPlot_E2', 'Plot'))
-                   
-                   
-                   
-                   
-  )
+                   )
         ),
       
         
     
   # * main panel --------------------------------------------------------------
 
-  mainPanel(width = 10,
-            
-            tabsetPanel(
-              tabPanel("Plot", value=1,
-                       
-        p(
+  mainPanel(width = 10, tabsetPanel(
+    tabPanel("Plot", value=1,
+             p(
               HTML(
                 paste(
                   h3(HTML("<a href='https://gorkang.shinyapps.io/BayesianReasoning/'>BayesianReasoning</a>")),
@@ -212,23 +198,22 @@ ui <-
        
               ),
         tabPanel("Medical professionals", value = 2,
-                 h4("Tab 2 content"),
+                 h4("Health professionals visual aid"),
+                 br(),
                  plotOutput("outplot2", height = "800px", width = "100%")
                  ),
 
         tabPanel("Patients", value = 3,
-                 h4("Tab 3 content"),
+                 h4("Patient's visual aid"),
+                 br(),
                  plotOutput("outplot3", height = "800px", width = "100%")
                  ),
         id = "tabselected"
             )
         
-        
-        )# Mainpanel
-  
-  ) # sidebarLayout
-    
-    ) #fluidPage
+        ) # Mainpanel
+    ) # sidebarLayout
+  ) #fluidPage
 }
 
 # Server ------------------------------------------------------------------
@@ -319,7 +304,7 @@ server <- function(input, output, session) {
       # overlay_position_FP_FN = input$FP_overlay
       overlay_position_FP = input$FP_overlay,
       overlay_position_FN = input$FN_overlay, DEBUG = TRUE
-    )
+    )$p
     
   })
   
@@ -327,34 +312,23 @@ server <- function(input, output, session) {
   # Create plot E1 --------------------------------------------------------
   
   final_plot_E1 <- reactive({
-
     if (input$Disease_E1 == "Cancer") {
       data = create_table_BC()
-      
     } else {
       data = create_table_Stroke()
     }
-    
     plot_E1(DF = data, PPV_NPV = input$PPV_NPV_E1)
-
   })
 
   output$outplot2 <- renderPlot({
-
     final_plot_E1()
-
   })
 
   output$downloadPlot_E1 <- downloadHandler(
     filename = function() { 
-      # browser()
-      
-      # NEED TO output a plot. Now it's a table
-      # XX = BayesianReasoning::PPV_heatmap(Sensitivity = 22)
-      
       paste0(input$Disease_E1, "_", input$PPV_NPV_E1, ".png") 
     },
-    content = function(file) { ggsave("Cancer_PPV.png", plot = final_plot_E1(), device = "png", width = 14, height = 10) }
+    content = function(file) { ggsave(file, plot = final_plot_E1(), device = "png", width = 14, height = 10, bg = "white") }
   )
   
   
@@ -369,35 +343,27 @@ server <- function(input, output, session) {
     plot_E2(DF = data, PPV_NPV = input$PPV_NPV_E2)
   })
   
-  
   output$outplot3 <- renderPlot({
     final_plot_E2()
   })
-  
 
   output$downloadPlot_E2 <- downloadHandler(
     filename = function() { 
         paste0(input$Disease_E2, "_", input$PPV_NPV_E2, ".png") 
       },
-    content = function(file) { ggsave(file, plot = final_plot_E2(), device = "png", width = 14, height = 10) }
+    content = function(file) { ggsave(file, plot = final_plot_E2(), device = "png", width = 14, height = 10, bg = "white") }
   )
   
   
 
 # PLOT --------------------------------------------------------------------
 
-  
-  
   output$outplot <- renderPlot({
-    
     final_plot()
-    
-  # }, height = 800)
   })
   
   output$downloadPlot <- downloadHandler(
     filename = function() { 
-      # input$plot_title, "_",
       if (input$tipo_overlay == "none") {
         paste0(input$Prevalence, "_", input$Sensitivity, "_", input$Specificity, ".png") 
       } else {

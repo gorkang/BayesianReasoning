@@ -1,7 +1,7 @@
 Type: Package
 Package: BayesianReasoning
 Title: Plot Positive and Negative Predictive Values for Medical Tests
-Version: 0.4.2
+Version: 0.4.2.9000
 Date: 2023-11-13
 Authors@R: 
     person("Gorka", "Navarrete", , "gorkang@gmail.com", role = c("aut", "cre"),
@@ -47,5 +47,5 @@ VignetteBuilder:
     knitr
 Encoding: UTF-8
 LazyData: FALSE
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
