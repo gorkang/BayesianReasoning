@@ -74,7 +74,7 @@ The PPV of Mammography at 50 years old in the general population is relatively l
     overlay_position_FP = 12.1,
     label_title = "PPV",
     label_subtitle = "Screening test"
-  )    
+  )$p
 
 
 ```
@@ -96,7 +96,7 @@ The NPV of Mammography at 50 years old in the general population is very high.
     overlay_position_FN = 5,
     label_title = "NPV",
     label_subtitle = "Screening test"
-  )
+  )$p
 
 ```
 
