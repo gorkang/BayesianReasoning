@@ -24,13 +24,13 @@ ui <-
       title = "BayesianReasoning",
       
       
-# side panel --------------------------------------------------------------
+# SIDE panel --------------------------------------------------------------
       
       sidebarLayout(
         sidebarPanel(
           width = 2,
           
-        # Panel 1  --------------------------------------------------------------
+        ## 1: plot  --------------------------------------------------------------
         
           conditionalPanel(condition="input.tabselected==1",
           
@@ -39,8 +39,8 @@ ui <-
             HTML(paste0(
               a(img(src = "github_small.png", title = "Github repository"), href="https://github.com/gorkang/BayesianReasoning", target = "_blank"), "&nbsp;&nbsp;",
               a(img(src = "issue_small.png", title = "Report an issue!"), href="https://github.com/gorkang/BayesianReasoning/issues", target = "_blank"), "&nbsp;&nbsp;",
-              a(img(src = "twitter_small.png", title = "@gorkang"), href="https://twitter.com/gorkang", target = "_blank"), "&nbsp;&nbsp;", 
-              a(img(src = "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg", title = "Buy me a coffee", height = "26px"), href="https://www.buymeacoffee.com/I0rkAbM", target = "_blank"), "&nbsp;", 
+              a(img(src = "mastodon_small.png", title = "@gorkang"), href="https://fosstodon.org/@gorkang", target = "_blank"), "&nbsp;&nbsp;", 
+              # a(img(src = "https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg", title = "Buy me a coffee", height = "26px"), href="https://www.buymeacoffee.com/I0rkAbM", target = "_blank"), "&nbsp;", 
               "<BR><BR>")),
             align = "center"
           ),
@@ -124,7 +124,7 @@ ui <-
           
           
 
-  # Panel 2 -----------------------------------------------------------------
+  ## 2: professionals -----------------------------------------------------------------
         
       conditionalPanel(condition="input.tabselected==2",
                        
@@ -141,7 +141,7 @@ ui <-
                            downloadButton('downloadPlot_E1', 'Plot'))
                        ),
   
-  # Panel 3 -----------------------------------------------------------------
+  ## 3: patients -----------------------------------------------------------------
   
     conditionalPanel(condition="input.tabselected==3",
                    
@@ -161,9 +161,14 @@ ui <-
       
         
     
-  # * main panel --------------------------------------------------------------
+  # MAIN panel --------------------------------------------------------------
 
   mainPanel(width = 10, tabsetPanel(
+    
+
+  ## 1: plot -----------------------------------------------------------------
+
+    
     tabPanel("Plot", value=1,
              p(
               HTML(
@@ -197,16 +202,43 @@ ui <-
             hr()
        
               ),
+  
+    ## 2: professionals -----------------------------------------------------------------
         tabPanel("Medical professionals", value = 2,
                  h4("Health professionals visual aid"),
                  br(),
-                 plotOutput("outplot2", height = "800px", width = "100%")
+                 plotOutput("outplot2", height = "800px", width = "100%"),
+                 br(),
+                 div(
+                   HTML(
+                     "<H4>Cancer</H4>",
+                     "<U>Prevalence</U>: Giaquinto, A.N., Sung, H., Miller, K.D., Kramer, J.L., Newman, L.A., Minihan, A., Jemal, A. and Siegel, R.L. (2022), Breast Cancer Statistics, 2022. CA A Cancer J Clin, 72: 524-541. <a href='https://doi.org/10.3322/caac.21754'>doi: 10.3322/caac.21754</a><BR>",
+                     "<U>Sensitivity and Specificity:</U> Influence of personal characteristics of individual women on sensitivity and specificity of mammography in the Million Women Study: cohort study. <a href='https://doi.org/10.1136/bmj.329.7464.477'>doi: 10.1136/bmj.329.7464.477</a>",
+                     
+                     "<H4>Stroke</H4>",
+                     "<U>Prevalence</U>: Brunser, A. M., Cavada, G., Venturelli, P. M., Olavarría, V., Rojo, A., Almeida, J., Díaz, V., Hoppe, A., & Lavados, P. (2018). Diffusion-weighted imaging determinants for acute ischemic stroke diagnosis in the emergency room. Neuroradiology, 60(7), 687–692. <a href='https://pubmed.ncbi.nlm.nih.gov/29789895/'>pubmed: 29789895</a><BR>",
+                     "<U>Sensitivity and Specificity</U>: Oppenheim et al. 2000 False-negative Diffusion-weighted MR Findings in Acute Ischemic Stroke. <a href='https://pubmed.ncbi.nlm.nih.gov/11003275/'>pubmed: 11003275</a>"),
+                     style = "color:darkgrey; font-size: 0.9em !important;"
+                   ),
                  ),
 
+    ## 3: patients -----------------------------------------------------------------
         tabPanel("Patients", value = 3,
                  h4("Patient's visual aid"),
                  br(),
-                 plotOutput("outplot3", height = "800px", width = "100%")
+                 plotOutput("outplot3", height = "800px", width = "100%"),
+                 br(),
+                 div(
+                   HTML(
+                     "<H4>Cancer</H4>",
+                     "<U>Prevalence</U>: Giaquinto, A.N., Sung, H., Miller, K.D., Kramer, J.L., Newman, L.A., Minihan, A., Jemal, A. and Siegel, R.L. (2022), Breast Cancer Statistics, 2022. CA A Cancer J Clin, 72: 524-541. <a href='https://doi.org/10.3322/caac.21754'>doi: 10.3322/caac.21754</a><BR>",
+                     "<U>Sensitivity and Specificity:</U> Influence of personal characteristics of individual women on sensitivity and specificity of mammography in the Million Women Study: cohort study. <a href='https://doi.org/10.1136/bmj.329.7464.477'>doi: 10.1136/bmj.329.7464.477</a>",
+                     
+                     "<H4>Stroke</H4>",
+                     "<U>Prevalence</U>: Brunser, A. M., Cavada, G., Venturelli, P. M., Olavarría, V., Rojo, A., Almeida, J., Díaz, V., Hoppe, A., & Lavados, P. (2018). Diffusion-weighted imaging determinants for acute ischemic stroke diagnosis in the emergency room. Neuroradiology, 60(7), 687–692. <a href='https://pubmed.ncbi.nlm.nih.gov/29789895/'>pubmed: 29789895</a><BR>",
+                     "<U>Sensitivity and Specificity</U>: Oppenheim et al. 2000 False-negative Diffusion-weighted MR Findings in Acute Ischemic Stroke. <a href='https://pubmed.ncbi.nlm.nih.gov/11003275/'>pubmed: 11003275</a>"),
+                   style = "color:darkgrey; font-size: 0.9em !important;"
+                 ),
                  ),
         id = "tabselected"
             )
