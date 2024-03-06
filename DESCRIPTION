@@ -32,9 +32,7 @@ Imports:
     scales,
     stats,
     tibble,
-    tidyr,
-    devtools,
-    utf8
+    tidyr
 Suggests: 
     curl,
     httr,
