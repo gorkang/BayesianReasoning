@@ -1,6 +1,5 @@
 # Deploy app
-# rsconnect::deployApp(appFiles = c("app.R"), appName = "BayesianReasoning_test")
-#, "R/helper_functions_exp.R", "DESCRIPTION"
+# rsconnect::deployApp(appFiles = c("app.R", "www/"), appName = "BayesianReasoning")
 
 # Libraries ---------------------------------------------------------------
 
