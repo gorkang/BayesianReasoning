@@ -122,11 +122,14 @@ Plot heatmaps with PPV or NPV values for a given specificity and a range of Prev
 
 ```{r heatmap}
 
-PPV_heatmap(min_Prevalence = 1,
-            max_Prevalence = 1000, 
-            Sensitivity = 100, limits_Specificity = c(90, 100),
-            Language = "en")
-            
+plot = PPV_heatmap(
+  min_Prevalence = 1,
+  max_Prevalence = 1000,
+  Sensitivity = 100,
+  limits_Specificity = c(90, 100),
+  Language = "en"
+)
+
 ```  
 
 
@@ -140,10 +143,14 @@ You can also plot an NPV heatmap with PPV_NPV = "NPV".
 
 ```{r NPV-heatmap}
 
-PPV_heatmap(PPV_NPV = "NPV",
-            min_Prevalence = 800, max_Prevalence = 1000, 
-            Specificity = 95, limits_Sensitivity = c(90, 100),
-            Language = "en")
+plot = PPV_heatmap(
+  PPV_NPV = "NPV",
+  min_Prevalence = 800,
+  max_Prevalence = 1000,
+  Specificity = 95,
+  limits_Sensitivity = c(90, 100),
+  Language = "en"
+)
 
 ```
 
@@ -161,15 +168,18 @@ For example, an area overlay showing the point PPV for a given prevalence and FP
 
 ```{r area}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, 
-            Sensitivity = 81, 
-            limits_Specificity = c(94, 100),
-            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            overlay = "area",
-            overlay_labels = "40 y.o.",
-            overlay_position_FP = 4.8,
-            overlay_prevalence_1 = 1,
-            overlay_prevalence_2 = 68)
+plot = PPV_heatmap(
+  min_Prevalence = 1,
+  max_Prevalence = 1200,
+  Sensitivity = 81,
+  limits_Specificity = c(94, 100),
+  label_subtitle = "Prenatal screening for Down Syndrome by Age",
+  overlay = "area",
+  overlay_labels = "40 y.o.",
+  overlay_position_FP = 4.8,
+  overlay_prevalence_1 = 1,
+  overlay_prevalence_2 = 68
+)
 
 ```
 
@@ -177,16 +187,19 @@ The area plot overlay can show more details about how the calculation of PPV/NPV
 
 ```{r area2}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1200, 
-            Sensitivity = 81, 
-            limits_Specificity = c(94, 100),
-            label_subtitle = "Prenatal screening for Down Syndrome by Age", 
-            overlay_extra_info = TRUE,
-            overlay = "area",
-            overlay_labels = "40 y.o.",
-            overlay_position_FP = 4.8,
-            overlay_prevalence_1 = 1,
-            overlay_prevalence_2 = 68)
+plot = PPV_heatmap(
+  min_Prevalence = 1,
+  max_Prevalence = 1200,
+  Sensitivity = 81,
+  limits_Specificity = c(94, 100),
+  label_subtitle = "Prenatal screening for Down Syndrome by Age",
+  overlay_extra_info = TRUE,
+  overlay = "area",
+  overlay_labels = "40 y.o.",
+  overlay_position_FP = 4.8,
+  overlay_prevalence_1 = 1,
+  overlay_prevalence_2 = 68
+)
 
 ```
 
@@ -200,15 +213,17 @@ Also, you can add a line overlay highlighting a range of prevalences and FP. Thi
 
 ```{r line}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 1800, 
-            Sensitivity = 90, 
-            limits_Specificity = c(84, 100),
-            label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
-            overlay = "line", 
-            overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
-            overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
-            overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1),
-            overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667))
+plot = PPV_heatmap(
+  min_Prevalence = 1, max_Prevalence = 1800, 
+  Sensitivity = 90, 
+  limits_Specificity = c(84, 100),
+  label_subtitle = "PPV of Mammogram for Breast Cancer by Age",
+  overlay = "line", 
+  overlay_labels = c("80 y.o.", "70 y.o.", "60 y.o.", "50 y.o.", "40 y.o.", "30 y.o.", "20  y.o."),
+  overlay_position_FP = c(6.5, 7, 8, 9, 12, 14, 14),
+  overlay_prevalence_1 = c(1, 1, 1, 1, 1, 1, 1),
+  overlay_prevalence_2 = c(22, 26, 29, 44, 69, 227, 1667)
+  )
                 
 ```
 
@@ -219,14 +234,16 @@ Another example. In this case, the FP is constant across age:
 
 ```{r line-2}
 
-PPV_heatmap(min_Prevalence = 1, max_Prevalence = 2000, Sensitivity = 81, 
-            limits_Specificity = c(94, 100),
-            label_subtitle = "Prenatal screening for Down Syndrome by Age",
-            overlay = "line",
-            overlay_labels = c("40 y.o.", "30 y.o.", "20 y.o."),
-            overlay_position_FP = c(4.8, 4.8, 4.8),
-            overlay_prevalence_1 = c(1, 1, 1),
-            overlay_prevalence_2 = c(68, 626, 1068))
+plot = PPV_heatmap(
+  min_Prevalence = 1, max_Prevalence = 2000, Sensitivity = 81, 
+  limits_Specificity = c(94, 100),
+  label_subtitle = "Prenatal screening for Down Syndrome by Age",
+  overlay = "line",
+  overlay_labels = c("40 y.o.", "30 y.o.", "20 y.o."),
+  overlay_position_FP = c(4.8, 4.8, 4.8),
+  overlay_prevalence_1 = c(1, 1, 1),
+  overlay_prevalence_2 = c(68, 626, 1068)
+  )
                 
 ```
 

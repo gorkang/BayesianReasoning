@@ -8,8 +8,8 @@ testthat::test_that("Scale is labelled 'Prevalence'", {
     prevalence_diagnostic_group = 44,
     labels_prevalence = c("20 y.o.", "50 y.o.")
   )
-  testthat::expect_true(ggplot2::is.ggplot(p))
-  testthat::expect_identical(p$labels$y, "PPV")
+  testthat::expect_true(ggplot2::is_ggplot(p))
+  testthat::expect_identical(p$labels$y, NULL)
   testthat::expect_identical(p$labels$x, "False Positive rate")
 })
 
@@ -26,7 +26,7 @@ testthat::test_that("Plot is type GeomLine", {
 
   testthat::expect_identical(
     vapply(p$layers, function(x) {class(x$geom)[1]}, ""),
-    "GeomLine")
+    c("geom_line" = "GeomLine"))
 })
 
 

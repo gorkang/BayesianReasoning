@@ -105,7 +105,6 @@ process_variables <- function(min_Prevalence = NULL,
     if (!is.null(overlay_position_FP) & !is.null(limits_Specificity)) {
       # message("Using limits_Specificity as is")
     } else {
-      cli::cli_h1("ALL IS WELL?")
       # By default we show a range of Specificity of 10% (+-5%)
       if (Specificity + default_plus_minus <= 100) limits_Specificity[2] <- c(Specificity + default_plus_minus)
       if (Specificity - default_plus_minus >= 0) limits_Specificity[1] <- c(Specificity - default_plus_minus)
@@ -1056,6 +1055,7 @@ process_variables <- function(min_Prevalence = NULL,
 
       # Text + rectangle
       ggforce::geom_mark_rect(
+        data = tibble::tibble(NULL),
 
         # Uncertainty square
         aes(

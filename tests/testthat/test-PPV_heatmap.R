@@ -1,5 +1,5 @@
 library(ggplot2)
-library(dplyr)
+suppressPackageStartupMessages(library(dplyr))
 
 
 # PPV / NPV calculation ---------------------------------------------------
@@ -15,11 +15,11 @@ testthat::test_that("Clasical breast cancer problem, hardcoded results", {
     )
   )
 
-  p_build <- ggplot2::ggplot_build(p$result)
+  p_build <- ggplot2::ggplot_build(p$result$p)
   PPV_PLOT <-
     as.numeric(gsub(".*: ([0-9]{1,2})%", "\\1", p_build$data[[3]]$label)) / 100
   
-  PPV_tibble <- p$result$data %>%
+  PPV_tibble <- p$result$PPV_melted %>%
     filter(sensitivity == 80 / 100) %>%
     filter(FP == 9.6) %>%
     filter(abs(prevalence_2 - 100) == min(abs(prevalence_2 - 100)))
@@ -56,11 +56,11 @@ testthat::test_that("calculated PPV in area plot", {
     )
   )
 
-  p_build <- ggplot2::ggplot_build(p$result)
+  p_build <- ggplot2::ggplot_build(p$result$p)
   PPV_PLOT <-
     as.numeric(gsub(".*: ([0-9]{1,2})%", "\\1", p_build$data[[3]]$label)) / 100
   
-  PPV_tibble <- p$result$data %>%
+  PPV_tibble <- p$result$PPV_melted %>%
     filter(sensitivity == Sensitivity / 100) %>%
     filter(FP == overlay_position_FP) %>% 
     # Closest prevalence_2
@@ -270,7 +270,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   )
   
   # * limits_Specificity is NULL. Setting limits_Specificity = c(-4, 6)
-  testthat::expect_warning(
+  testthat::expect_message(
     BayesianReasoning::PPV_heatmap(
       Sensitivity = 2,
       Specificity = 1,
@@ -279,10 +279,10 @@ testthat::test_that("ERRORS because of Wrong parameters", {
     )
   ) 
   
-  # * limits_Sensitivity is NULL. Setting limits_Sensitivity = c(-3, 7)
-  testthat::expect_warning(
+  # No message expected
+  testthat::expect_no_message(
     BayesianReasoning::PPV_heatmap(
-      Sensitivity = 2,
+      Sensitivity = 2, 
       Specificity = 1,
       limits_Specificity = c(5, 8),
       PPV_NPV = "NPV"
@@ -590,7 +590,7 @@ testthat::test_that("Extra decimals when axis are tight", {
   )
 
   testthat::expect_equal(
-    p$result$plot_env$breaks_x,
+    p$result$p$plot_env$breaks_x,
     c(0.00, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10)
   )
 })
@@ -610,14 +610,14 @@ testthat::test_that("PPV Plot", {
     )
   )
 
-  testthat::expect_true(ggplot2::is.ggplot(p$result))
-  testthat::expect_identical(p$result$labels$x, "False + (1 - Specificity)")
-  testthat::expect_identical(p$result$labels$y, "Prevalence")
-  testthat::expect_identical(p$result$labels$title, "Title plot")
-  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
-  testthat::expect_identical(p$result$labels$caption, "Sensitivity = 100%")
+  testthat::expect_true(ggplot2::is_ggplot(p$result$p))
+  testthat::expect_identical(p$result$p$labels$x, "False + (1 - Specificity)")
+  testthat::expect_identical(p$result$p$labels$y, "Prevalence")
+  testthat::expect_identical(p$result$p$labels$title, "Title plot")
+  testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
+  testthat::expect_identical(p$result$p$labels$caption, "Sensitivity = 100%")
   testthat::expect_equal(
-    p$result$plot_env$breaks_y,
+    p$result$p$plot_env$breaks_y,
     c(
       0.001000000,
       0.002154435,
@@ -632,10 +632,10 @@ testthat::test_that("PPV Plot", {
     )
   )
   testthat::expect_equal(
-    p$result$plot_env$breaks_x,
+    p$result$p$plot_env$breaks_x,
     c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0))
   testthat::expect_equal(
-    p$result$plot_env$labels_x,
+    p$result$p$plot_env$labels_x,
     c(
       "0%",
       "0.5%",
@@ -651,7 +651,7 @@ testthat::test_that("PPV Plot", {
     )
   )
   testthat::expect_equal(
-    p$result$plot_env$labels_y,
+    p$result$p$plot_env$labels_y,
     c(
       "1 out of 1000",
       "2 out of 1000",
@@ -665,12 +665,12 @@ testthat::test_that("PPV Plot", {
       "1000 out of 1000"
     )
   )
-  testthat::expect_equal(p$result$plot_env$breaks_legend,
+  testthat::expect_equal(p$result$p$plot_env$breaks_legend,
                          c(0.00, 0.25, 0.50, 0.75, 1.00))
-  testthat::expect_identical(p$result$labels$fill, "PPV")
-  testthat::expect_equal(length(p$result$plot_env$max_FP), 1)
-  testthat::expect_equal(p$result$plot_env$max_FP, 5)
-  testthat::expect_equal(length(p$result$plot_env$max_FN), 0)
+  testthat::expect_identical(p$result$p$labels$fill, NULL)
+  testthat::expect_equal(length(p$result$p$plot_env$max_FP), 1)
+  testthat::expect_equal(p$result$p$plot_env$max_FP, 5)
+  testthat::expect_equal(length(p$result$p$plot_env$max_FN), 0)
 })
 
 
@@ -687,14 +687,14 @@ testthat::test_that("NPV Plot", {
       PPV_NPV = "NPV"
     )
   )
-  testthat::expect_true(ggplot2::is.ggplot(p$result))
-  testthat::expect_identical(p$result$labels$x, "False - (1 - Sensitivity)")
-  testthat::expect_identical(p$result$labels$y, "Prevalence")
-  testthat::expect_identical(p$result$labels$title, "Title plot")
-  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
-  testthat::expect_identical(p$result$labels$caption, "Specificity = 100%")
+  testthat::expect_true(ggplot2::is_ggplot(p$result$p))
+  testthat::expect_identical(p$result$p$labels$x, "False - (1 - Sensitivity)")
+  testthat::expect_identical(p$result$p$labels$y, "Prevalence")
+  testthat::expect_identical(p$result$p$labels$title, "Title plot")
+  testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
+  testthat::expect_identical(p$result$p$labels$caption, "Specificity = 100%")
   testthat::expect_equal(
-    p$result$plot_env$breaks_y,
+    p$result$p$plot_env$breaks_y,
     c(
       0.001000000,
       0.002154435,
@@ -709,11 +709,11 @@ testthat::test_that("NPV Plot", {
     )
   )
   testthat::expect_equal(
-    p$result$plot_env$breaks_x,
+    p$result$p$plot_env$breaks_x,
     c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0)
     )
   testthat::expect_equal(
-    p$result$plot_env$labels_x,
+    p$result$p$plot_env$labels_x,
     c(
       "0%",
       "0.5%",
@@ -729,7 +729,7 @@ testthat::test_that("NPV Plot", {
     )
   )
   testthat::expect_equal(
-    p$result$plot_env$labels_y,
+    p$result$p$plot_env$labels_y,
     c(
       "1 out of 1000",
       "2 out of 1000",
@@ -743,12 +743,12 @@ testthat::test_that("NPV Plot", {
       "1000 out of 1000"
     )
   )
-  testthat::expect_equal(p$result$plot_env$breaks_legend,
+  testthat::expect_equal(p$result$p$plot_env$breaks_legend,
                          c(0.00, 0.25, 0.50, 0.75, 1.00))
-  testthat::expect_identical(p$result$labels$fill, "NPV")
-  testthat::expect_equal(length(p$result$plot_env$max_FP), 0)
-  testthat::expect_equal(length(p$result$plot_env$max_FN), 1)
-  testthat::expect_equal(p$result$plot_env$max_FN, 5)
+  testthat::expect_identical(p$result$p$labels$fill, NULL)
+  testthat::expect_equal(length(p$result$p$plot_env$max_FP), 0)
+  testthat::expect_equal(length(p$result$p$plot_env$max_FN), 1)
+  testthat::expect_equal(p$result$p$plot_env$max_FN, 5)
 })
 
 
@@ -764,8 +764,8 @@ testthat::test_that("Spanish translation", {
     Language = "sp"
   )
 
-  testthat::expect_identical(p$labels$y, "Prevalencia")
-  testthat::expect_identical(p$labels$x, "Falsos + (1 - Especificidad)")
+  testthat::expect_identical(p$p$labels$y, "Prevalencia")
+  testthat::expect_identical(p$p$labels$x, "Falsos + (1 - Especificidad)")
 
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
@@ -784,12 +784,12 @@ testthat::test_that("Spanish translation", {
   )
 
   testthat::expect_identical(
-    vapply(p$result$layers, function(x)
+    vapply(p$result$p$layers, function(x)
       class(x$geom)[1], ""),
-    c("GeomTile", "GeomPoint", "GeomMarkRect")
+    c("geom_tile" = "GeomTile", "annotate" = "GeomPoint", "geom_mark_rect" = "GeomMarkRect")
   )
-  testthat::expect_identical(p$result$labels$title, "Title plot")
-  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
+  testthat::expect_identical(p$result$p$labels$title, "Title plot")
+  testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
   
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
@@ -806,12 +806,12 @@ testthat::test_that("Spanish translation", {
     )
   )
   testthat::expect_identical(
-    vapply(p$result$layers, function(x)
+    vapply(p$result$p$layers, function(x)
       class(x$geom)[1], ""),
-    c("GeomTile", "GeomPoint", "GeomMarkRect")
+    c("geom_tile" = "GeomTile", "annotate" = "GeomPoint", "geom_mark_rect" = "GeomMarkRect")
   )
-  testthat::expect_identical(p$result$labels$y, "Prevalencia")
-  testthat::expect_identical(p$result$labels$x, "Falsos - (1 - Sensibilidad)")
+  testthat::expect_identical(p$result$p$labels$y, "Prevalencia")
+  testthat::expect_identical(p$result$p$labels$x, "Falsos - (1 - Sensibilidad)")
 })
 
 
@@ -829,8 +829,8 @@ testthat::test_that("one_out_of PPV", {
     )
   )
 
-  testthat::expect_true(p$result$plot_env$one_out_of)
-  testthat::expect_equal(range(p$result$plot_env$breaks_x), c(0, 100))
+  testthat::expect_true(p$result$p$plot_env$one_out_of)
+  testthat::expect_equal(range(p$result$p$plot_env$breaks_x), c(0, 100))
 
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
@@ -845,7 +845,7 @@ testthat::test_that("one_out_of PPV", {
     )
   )
 
-  testthat::expect_true(p$result$plot_env$one_out_of)
+  testthat::expect_true(p$result$p$plot_env$one_out_of)
 })
 
 
@@ -863,13 +863,13 @@ testthat::test_that("Area overlay, low uncertainty, and decimals in y axis. over
 
   # Overlay description
   testthat::expect_identical(
-    p$layers[[3]]$computed_geom_params$description,
+    p$p$layers[[3]]$computed_geom_params$description,
     "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% \n ---------------------------------------------\n2 sick: 1.62 (+) 0.38 (-)\n6 healthy: 5.71 (-) 0.29 (+) "
   )
   
   # Decimal breaks y axis
   testthat::expect_equal(
-    p$plot_env$breaks_y,
+    p$p$plot_env$breaks_y,
     c(
       0.1250000,
       0.1450162,
@@ -902,13 +902,13 @@ testthat::test_that("Area overlay, low uncertainty, and decimals in y axis. over
 
   # Overlay description
   testthat::expect_identical(
-    p$layers[[3]]$computed_geom_params$description,
+    p$p$layers[[3]]$computed_geom_params$description,
     "40 y.o.\nPrevalence: 2 out of 8\nSensitivity: 81%\nFalse +: 4.8% "
   )
   
   # Decimal breaks y axis
   testthat::expect_equal(
-    p$plot_env$breaks_y,
+    p$p$plot_env$breaks_y,
     c(
       0.1250000,
       0.1450162,
@@ -942,7 +942,7 @@ testthat::test_that("Range of data is the same as the x axis range", {
 
   # Decimal breaks y axis
   testthat::expect_identical(
-    c(p$plot_env$min_FN, p$plot_env$max_FN), range(p$data$FN)
+    c(p$p$plot_env$min_FN, p$p$plot_env$max_FN), range(p$PPV_melted$FN)
     )
 })
 
@@ -965,7 +965,7 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
   )
 
   testthat::expect_identical(
-    p$result$layers[[3]]$computed_geom_params$description,
+    p$result$p$layers[[3]]$computed_geom_params$description,
     "40 y.o.\nPrevalence: 67 out of 68\nSpecificity: 95%\nFalse -: 4.8%\n ---------------------------------------------\n67 sick: 63.78 (+) 3.22 (-)\n1 healthy: 0.95 (-) 0.05 (+) "
   )
 })
@@ -1060,12 +1060,12 @@ testthat::test_that("Plot with line overlay", {
     )
   )
   testthat::expect_identical(
-    vapply(p$result$layers, function(x)
+    vapply(p$result$p$layers, function(x)
       class(x$geom)[1], ""),
-    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect")
+    c("geom_tile" = "GeomTile", "annotate" = "GeomSegment",  "annotate...3" = "GeomPoint", "geom_mark_rect" = "GeomMarkRect")
   )
-  testthat::expect_identical(p$result$labels$title, "Title plot")
-  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
+  testthat::expect_identical(p$result$p$labels$title, "Title plot")
+  testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
 
   p <- testthat::evaluate_promise(
     BayesianReasoning::PPV_heatmap(
@@ -1095,12 +1095,12 @@ testthat::test_that("Plot with line overlay", {
   )
 
   testthat::expect_identical(
-    vapply(p$result$layers, function(x)
+    vapply(p$result$p$layers, function(x)
       class(x$geom)[1], ""),
-    c("GeomTile", "GeomSegment", "GeomPoint", "GeomMarkRect")
+    c("geom_tile" = "GeomTile", "annotate" = "GeomSegment",  "annotate...3" = "GeomPoint", "geom_mark_rect" = "GeomMarkRect")
   )
-  testthat::expect_identical(p$result$labels$title, "Title plot")
-  testthat::expect_identical(p$result$labels$subtitle, "Subtitle plot")
+  testthat::expect_identical(p$result$p$labels$title, "Title plot")
+  testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
 })
 
 

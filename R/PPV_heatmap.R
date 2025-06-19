@@ -121,21 +121,24 @@ PPV_heatmap <-
 
     # Create PPV matrix -------------------------------------------------------
     
-    if (DEBUG == TRUE) cli::cli_h1(".createPPVmatrix pre max_FP {main_variables$max_FP}")
+    if (DEBUG == TRUE) {
+      
+      cli::cli_h1(".createPPVmatrix pre max_FP {main_variables$max_FP}")
     
-    cli::cli_alert_info("
-      min_Prevalence = {main_variables$min_Prevalence},
-      max_Prevalence = {main_variables$max_Prevalence},
-      Sensitivity = {main_variables$Sensitivity},
-      Specificity = {main_variables$Specificity},
-      min_FP = {main_variables$min_FP},
-      max_FP = {main_variables$max_FP},
-      max_FN = {main_variables$max_FN},
-      min_FN = {main_variables$min_FN},
-      one_out_of = {one_out_of},
-      PPV_NPV = {PPV_NPV}
-      "
-    )
+      cli::cli_alert_info("
+        min_Prevalence = {main_variables$min_Prevalence},
+        max_Prevalence = {main_variables$max_Prevalence},
+        Sensitivity = {main_variables$Sensitivity},
+        Specificity = {main_variables$Specificity},
+        min_FP = {main_variables$min_FP},
+        max_FP = {main_variables$max_FP},
+        max_FN = {main_variables$max_FN},
+        min_FN = {main_variables$min_FN},
+        one_out_of = {one_out_of},
+        PPV_NPV = {PPV_NPV}
+        "
+      )
+    }
     
     PPV_melted <- .createPPVmatrix(
       min_Prevalence = main_variables$min_Prevalence,

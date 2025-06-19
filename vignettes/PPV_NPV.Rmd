@@ -74,7 +74,7 @@ The PPV of Mammography at 50 years old in the general population is relatively l
     overlay_position_FP = 12.1,
     label_title = "PPV",
     label_subtitle = "Screening test"
-  )$p
+  )
 
 
 ```
@@ -90,13 +90,14 @@ The NPV of Mammography at 50 years old in the general population is very high.
     min_Prevalence = 1,
     max_Prevalence = 80,
     Specificity = 87.9,
+    Sensitivity = 90,
     overlay = "area",
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 69,
     overlay_position_FN = 5,
     label_title = "NPV",
     label_subtitle = "Screening test"
-  )$p
+  ) 
 
 ```
 
@@ -109,7 +110,7 @@ We can plot the PPV and NPV plots side by side using `{patchwork}`:
 
 ```{r, fig.height = 14, fig.width = 12}
 
-  (PPV_plot / NPV_plot) +  plot_layout(guides = 'collect')
+  (PPV_plot$p | NPV_plot$p +  ggplot2::labs(y = "")) +  plot_layout(guides = 'collect')
 
 ```
 

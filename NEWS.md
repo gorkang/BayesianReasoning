@@ -2,13 +2,11 @@
 
 # BayesianReasoning 0.4.3
 
-Major updates  
-
-
 Minor updates
 
 * PPV_heatmap() prints plot and outputs a DF and the plot
 * shinyapp includes now panels to create materials for BC and stroke problems
+* Updated tests to work with the new ggplot2 release
 
 # BayesianReasoning 0.4.2
 
