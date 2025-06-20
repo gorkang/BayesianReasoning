@@ -32,7 +32,7 @@ testthat::test_that("Plot is type GeomLine", {
 
 
 testthat::test_that("Plot saved", {
-  p <-
+  suppressMessages(p <-
     BayesianReasoning::PPV_diagnostic_vs_screening(
       max_FP = 10,
       Sensitivity = 100,
@@ -40,7 +40,7 @@ testthat::test_that("Plot saved", {
       prevalence_diagnostic_group = 44,
       labels_prevalence = c("20 y.o.", "50 y.o."),
       folder = "."
-    )
+    ))
 
   file_name_test <- "FP_10_sens_100_screening_1667_diagnostic_44.png"
   expect_true(file.exists(file_name_test))

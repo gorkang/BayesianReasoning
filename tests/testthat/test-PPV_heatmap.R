@@ -6,7 +6,7 @@ suppressPackageStartupMessages(library(dplyr))
 
 testthat::test_that("Clasical breast cancer problem, hardcoded results", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 200,
       Sensitivity = 80, limits_Specificity = c(80, 100),
       overlay = "area",
@@ -82,7 +82,7 @@ testthat::test_that("calculated PPV in area plot", {
 
 testthat::test_that("* limits_Specificity needs two different numbers: limits_Specificity = c(min, max)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Sensitivity = 100, limits_Specificity = c(100, 100),
       PPV_NPV = "PPV"
@@ -92,7 +92,7 @@ testthat::test_that("* limits_Specificity needs two different numbers: limits_Sp
 
 testthat::test_that("* limits_Specificity need two different numbers: limits_Specificity = c(min, max)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Sensitivity = 100, Specificity = 100, limits_Specificity = c(100, 100),
       PPV_NPV = "PPV"
@@ -102,7 +102,7 @@ testthat::test_that("* limits_Specificity need two different numbers: limits_Spe
 
 testthat::test_that("* limits_Sensitivity need two different numbers: limits_Sensitivity = c(min, max)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Specificity = 100, limits_Sensitivity = c(100, 100),
       PPV_NPV = "NPV"
@@ -112,7 +112,7 @@ testthat::test_that("* limits_Sensitivity need two different numbers: limits_Sen
 
 testthat::test_that("* limits_Sensitivity need two different numbers: limits_Sensitivity = c(min, max)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Specificity = 100, Sensitivity = 100, limits_Sensitivity = c(100, 100),
       PPV_NPV = "NPV"
@@ -122,7 +122,7 @@ testthat::test_that("* limits_Sensitivity need two different numbers: limits_Sen
 
 testthat::test_that("* limits_Specificity sould be a vector of length 2, now is (90, 90, 100). e.g.: limits_Specificity = c(90, 95)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Sensitivity = 90, limits_Specificity = c(80, 90, 100),
       PPV_NPV = "PPV"
@@ -132,7 +132,7 @@ testthat::test_that("* limits_Specificity sould be a vector of length 2, now is 
 
 testthat::test_that("* limits_Sensitivity sould be a vector of length 2, now is (90, 90, 100). e.g.: limits_Sensitivity = c(90, 95)", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1000,
       Specificity = 90, limits_Sensitivity = c(80, 90, 100),
       PPV_NPV = "NPV"
@@ -143,16 +143,16 @@ testthat::test_that("* limits_Sensitivity sould be a vector of length 2, now is 
 
 testthat::test_that("ERRORS because of Wrong parameters", {
   testthat::expect_error(testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(Sensitivity = 200, PPV_NPV = "PPV")
+    p <- BayesianReasoning::PPV_heatmap(Sensitivity = 200, PPV_NPV = "PPV")
   )) # * Sensitivity should be a value 0-100
   testthat::expect_error(testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(Specificity = 200, PPV_NPV = "NPV")
+    p <- BayesianReasoning::PPV_heatmap(Specificity = 200, PPV_NPV = "NPV")
   )) # * Specificity should be a value 0-100
   
   # * limits_Specificity sould be a vector of length 2, now is (200). e.g.:
   # limits_Specificity = c(90, 95)
   testthat::expect_error(testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 95,
       limits_Specificity = 200,
       PPV_NPV = "PPV"
@@ -162,7 +162,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * limits_Sensitivity sould be a vector of length 2, now is (200). e.g.:
   # limits_Sensitivity = c(90, 95)
   testthat::expect_error(testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 95,
       limits_Sensitivity = 200,
       PPV_NPV = "NPV"
@@ -172,7 +172,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * limits_Specificity should be between 0 and 100, now are (0, 200). e.g.:
   # limits_Specificity = c(90, 95)
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 95,
       limits_Specificity = c(0, 200),
       PPV_NPV = "PPV"
@@ -182,7 +182,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * limits_Sensitivity should be between 0 and 100, now are (0, 200). e.g.:
   # limits_Sensitivity = c(90, 95)
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 95,
       limits_Sensitivity = c(0, 200),
       PPV_NPV = "NPV"
@@ -190,17 +190,17 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   ) 
   
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(overlay = "area", PPV_NPV = "PPV")
+    p <- BayesianReasoning::PPV_heatmap(overlay = "area", PPV_NPV = "PPV")
     ) # * Sensitivity is needed in PPV_NPV == 'PPV'
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(overlay = "area", PPV_NPV = "NPV")
+    p <- BayesianReasoning::PPV_heatmap(overlay = "area", PPV_NPV = "NPV")
     ) # * Specificity is needed in PPV_NPV == 'NPV'
   
   # Missing overlay_prevalence_ parameters
   # * Missing the overlay_prevalence_1 parameter for the overlay's prevalence
   # (overlay_prevalence_1 out of overlay_prevalence_2)
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -214,7 +214,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * Missing the overlay_prevalence_2 parameter for the overlay's prevalence
   # (overlay_prevalence_1 out of overlay_prevalence_2)
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -229,7 +229,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # overlay_prevalence_2 parameters (overlay_prevalence_1 out of
   # overlay_prevalence_2)
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -238,7 +238,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   )
   
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -249,7 +249,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   
   # * overlay_position_FN needs a value
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 99,
       limits_Sensitivity = c(90, 100),
       overlay = "area",
@@ -261,7 +261,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * Both Specificity (6.5) and limits_Specificity (5, 8) have values. Ignoring
   # Sensitivity and using limits_Specificity
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 2,
       Specificity = 1,
       limits_Specificity = c(5, 8),
@@ -271,7 +271,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   
   # * limits_Specificity is NULL. Setting limits_Specificity = c(-4, 6)
   testthat::expect_message(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 2,
       Specificity = 1,
       limits_Sensitivity = c(5, 8),
@@ -281,7 +281,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   
   # No message expected
   testthat::expect_no_message(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 2, 
       Specificity = 1,
       limits_Specificity = c(5, 8),
@@ -292,7 +292,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * Both Sensitivity (2) and limits_Sensitivity (5, 8) have values. Ignoring
   # Sensitivity and using limits_Sensitivity
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 2,
       Specificity = 1,
       limits_Sensitivity = c(5, 8),
@@ -303,7 +303,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * overlay_prevalence_1 has > 1 value. Not allowed in overlay = 'area'. Did
   # you meant overlay = 'line'?
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -316,7 +316,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * overlay_position_FP has > 1 value. Not allowed in overlay = 'area'. Did
   # you meant overlay = 'line'?
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -330,7 +330,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
   # * overlay_position_FN has > 1 value. Not allowed in overlay = 'area'. Did
   # you meant overlay = 'line'?
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 99,
       limits_Sensitivity = c(90, 100),
       overlay = "area",
@@ -346,7 +346,7 @@ testthat::test_that("ERRORS because of Wrong parameters", {
 
 testthat::test_that("WARNINGS because of Wrong parameters", {
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Sensitivity = 99,
       limits_Specificity = c(90, 100),
       overlay = "area",
@@ -357,7 +357,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
     )
   ) # [WARNING]: overlay_position_FP (90) is > than max_FP (10).
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 99,
       limits_Sensitivity = c(90, 100),
       overlay = "area",
@@ -369,7 +369,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
   ) # [WARNING]: overlay_position_FN (90) is > max_FN (10)
   
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       Specificity = 99,
       limits_Sensitivity = c(90, 100),
       overlay = "area",
@@ -384,7 +384,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
   
   res1 <-
     testthat::evaluate_promise(
-      BayesianReasoning::PPV_heatmap(
+      p <- BayesianReasoning::PPV_heatmap(
         Sensitivity = 99,
         limits_Specificity = c(90, 100),
         overlay = "area",
@@ -401,7 +401,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
   
   res2 <-
     testthat::evaluate_promise(
-      BayesianReasoning::PPV_heatmap(
+      p <- BayesianReasoning::PPV_heatmap(
         Specificity = 99,
         limits_Sensitivity = c(90, 100),
         overlay = "area",
@@ -432,7 +432,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
   
   res4 <-
     testthat::evaluate_promise(
-      BayesianReasoning::PPV_heatmap(
+      p <- BayesianReasoning::PPV_heatmap(
         Sensitivity = 99,
         limits_Specificity = c(90, 100),
         overlay = "line",
@@ -460,7 +460,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
   
   res5 <-
     testthat::evaluate_promise(
-      BayesianReasoning::PPV_heatmap(
+      p <- BayesianReasoning::PPV_heatmap(
         Sensitivity = 99,
         limits_Specificity = c(90, 100),
         overlay = "area",
@@ -482,7 +482,7 @@ testthat::test_that("WARNINGS because of Wrong parameters", {
 
 testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
   res <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2000,
       max_Prevalence = 1000,
       Sensitivity = 81,
@@ -503,7 +503,7 @@ testthat::test_that("WARNING min_Prevalence > max_Prevalence", {
 
 testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
   res <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
@@ -528,7 +528,7 @@ testthat::test_that("WARNING overlay_prevalence_1/overlay_prevalence_2", {
 
 testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
   res <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 2,
       max_Prevalence = 1000,
       Sensitivity = 81,
@@ -553,7 +553,7 @@ testthat::test_that("WARNINGS overlay_position_FP, overlay_prevalence_2", {
 
 testthat::test_that("WARNINGS - NPV", {
   res <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       DEBUG = 1,
       min_Prevalence = 2,
@@ -583,7 +583,7 @@ testthat::test_that("WARNINGS - NPV", {
 
 testthat::test_that("Extra decimals when axis are tight", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1.1,
       Sensitivity = 100, limits_Specificity = c(99.9, 100)
     )
@@ -598,7 +598,7 @@ testthat::test_that("Extra decimals when axis are tight", {
 
 testthat::test_that("PPV Plot", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1,
       max_Prevalence = 1000,
       Sensitivity = 100,
@@ -676,7 +676,7 @@ testthat::test_that("PPV Plot", {
 
 testthat::test_that("NPV Plot", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1,
       max_Prevalence = 1000,
       Specificity = 100,
@@ -768,7 +768,7 @@ testthat::test_that("Spanish translation", {
   testthat::expect_identical(p$p$labels$x, "Falsos + (1 - Especificidad)")
 
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1,
       max_Prevalence = 1000,
       Sensitivity = 100,
@@ -792,7 +792,7 @@ testthat::test_that("Spanish translation", {
   testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
   
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       min_Prevalence = 1,
       max_Prevalence = 1000,
@@ -817,7 +817,7 @@ testthat::test_that("Spanish translation", {
 
 testthat::test_that("one_out_of PPV", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 2,
       Sensitivity = 3,
       Specificity = 1,
@@ -950,7 +950,7 @@ testthat::test_that("Range of data is the same as the x axis range", {
 # TODO: Should check uncertainty_prevalence consequences
 testthat::test_that("NPV calculation with area overlay and low uncertainty", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1200,
       limits_Sensitivity = c(76, 86),
       Specificity = 95,
@@ -973,7 +973,7 @@ testthat::test_that("NPV calculation with area overlay and low uncertainty", {
 
 testthat::test_that("all parameters", {
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 2,
       Sensitivity = 3,
       Specificity = 99,
@@ -987,7 +987,7 @@ testthat::test_that("all parameters", {
   )
 
   testthat::expect_warning(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 100,
       Specificity = 3,
       Sensitivity = 90,
@@ -1009,7 +1009,7 @@ testthat::test_that("all parameters", {
 # ggforce anchor x0
 # https://github.com/thomasp85/ggforce/issues/209
 p <- testthat::evaluate_promise(
-  BayesianReasoning::PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, limits_Specificity = c(0, 100),
+  p <- BayesianReasoning::PPV_heatmap(Min_Prevalence = 1, Max_Prevalence = 1200, Sensitivity = 81, limits_Specificity = c(0, 100),
                                  label_subtitle = "Prenatal screening for Down Syndrome by Age",
                                  overlay = "line",
                                  overlay_labels = c("40 y.o.", "35 y.o."),
@@ -1025,7 +1025,7 @@ testthat::expect_equal(p$messages, expected = "ℹ Label/s outside range, will a
 
 testthat::test_that("Plot with line overlay", {
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1800,
       Sensitivity = 90,
       limits_Specificity = c(84, 100),
@@ -1040,7 +1040,7 @@ testthat::test_that("Plot with line overlay", {
   testthat::expect_length(p$warnings, 0)
 
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1800,
       Sensitivity = 90, limits_Specificity = c(80, 90),
       label_title = "Title plot",
@@ -1068,7 +1068,7 @@ testthat::test_that("Plot with line overlay", {
   testthat::expect_identical(p$result$p$labels$subtitle, "Subtitle plot")
 
   p <- testthat::evaluate_promise(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       uncertainty_prevalence = "high",
       min_Prevalence = 1,
@@ -1106,7 +1106,7 @@ testthat::test_that("Plot with line overlay", {
 
 testthat::test_that("Unequal overlay number of parameters", {
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       min_Prevalence = 1, max_Prevalence = 1800,
       Specificity = 85, limits_Sensitivity = c(85, 95),
@@ -1119,7 +1119,7 @@ testthat::test_that("Unequal overlay number of parameters", {
   )
 
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "PPV",
       min_Prevalence = 1, max_Prevalence = 1800,
       Sensitivity = 85, limits_Specificity = c(85, 95),
@@ -1132,7 +1132,7 @@ testthat::test_that("Unequal overlay number of parameters", {
   )
 
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       PPV_NPV = "NPV",
       min_Prevalence = 1, max_Prevalence = 1800,
       Specificity = 85, limits_Sensitivity = c(85, 95),
@@ -1166,7 +1166,7 @@ testthat::test_that("Unequal overlay number of parameters", {
 
   # TODO: accept NULL values in overlay line?
   testthat::expect_error(
-    BayesianReasoning::PPV_heatmap(
+    p <- BayesianReasoning::PPV_heatmap(
       min_Prevalence = 1, max_Prevalence = 1200,
       limits_Specificity = c(76, 86),
       Sensitivity = 95,
@@ -1186,30 +1186,30 @@ testthat::test_that("Unequal overlay number of parameters", {
 # Save plot ---------------------------------------------------------------
 
 testthat::test_that("Save plots", {
-  p <- BayesianReasoning::PPV_heatmap(
+  suppressMessages(p <- BayesianReasoning::PPV_heatmap(
     min_Prevalence = 1, max_Prevalence = 1000,
     Sensitivity = 100,
     limits_Specificity = c(90, 100),
     folder = "."
-  )
+  ))
 
   file_name_test <- "PPV_1_1000_100_0_10_en.png"
   testthat::expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
 
-  p <- BayesianReasoning::PPV_heatmap(
+  suppressMessages(p <- BayesianReasoning::PPV_heatmap(
     PPV_NPV = "NPV",
     min_Prevalence = 1, max_Prevalence = 1000,
     Specificity = 100,
     limits_Sensitivity = c(90, 100),
     folder = "."
-  )
+  ))
 
   file_name_test <- "NPV_1_1000_100_0_10_en.png"
   testthat::expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
 
-  p <- BayesianReasoning::PPV_heatmap(
+  suppressMessages(p <- BayesianReasoning::PPV_heatmap(
     PPV_NPV = "NPV",
     min_Prevalence = 1, max_Prevalence = 1000,
     Specificity = 100,
@@ -1220,9 +1220,10 @@ testthat::test_that("Save plots", {
     overlay_prevalence_1 = 1,
     overlay_prevalence_2 = 10,
     folder = "."
-  )
+  ))
 
   file_name_test <- "NPV_1_1000_100_0_10_area_TRUE_en.png"
   testthat::expect_true(file.exists(file_name_test))
   file.remove(file_name_test)
 })
+

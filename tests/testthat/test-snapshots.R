@@ -6,7 +6,7 @@ test_that("simple plot PPV", {
       Sensitivity = 92,
       limits_Specificity = c(90, 100)
     )
-  vdiffr::expect_doppelganger("simple plot PPV", p)
+  vdiffr::expect_doppelganger("simple plot PPV", p$p)
 })
 
 
@@ -19,11 +19,11 @@ test_that("simple plot NPV", {
       limits_Sensitivity = c(90, 100),
       PPV_NPV = "NPV"
     )
-  vdiffr::expect_doppelganger("simple plot NPV", p)
+  vdiffr::expect_doppelganger("simple plot NPV", p$p)
 })
 
 test_that("line plot", {
-  p <-
+  suppressMessages( p <-
     BayesianReasoning::PPV_heatmap(
       Min_Prevalence = 1,
       Max_Prevalence = 1200,
@@ -35,9 +35,9 @@ test_that("line plot", {
       overlay_position_FP = c(4.8, 4.8),
       overlay_prevalence_1 = c(1, 1),
       overlay_prevalence_2 = c(68, 249)
-    )
+    ))
   
-      vdiffr::expect_doppelganger("line plot", p)
+      vdiffr::expect_doppelganger("line plot", p$p)
 })
 
 
@@ -57,9 +57,5 @@ test_that("area plot", {
       overlay_prevalence_2 = 100
     )
   
-  vdiffr::expect_doppelganger("area plot", p)
+  vdiffr::expect_doppelganger("area plot", p$p)
 })
-
-
-
-

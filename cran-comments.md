@@ -1,5 +1,5 @@
 ## Test environments
-* local Ubuntu 22.04, R 4.3.2
+* local Ubuntu 24.04, R 4.5.1
 * win-builder (devel and release)
 * R-hub
   + Windows Server 2022, R-devel, 64 bit
@@ -13,13 +13,10 @@
 
 ## Major updates  
 
-* New plot_cutoff()  
-  + Shows healthy and sick distributions and shows FP, FN, TP and TN depending on a cutoff point  
-* New remove_layers_cutoff_plot() functions  
-  + Get's rid of layers of a cutoff_plot: FP, FN, TP or TN  
+* No major updates
 
 ## Minor updates
 
-* Fix for CRAN change in docType
-* Use linewidth instead of size
-* Faster implementation of a step in min_possible_prevalence
+* Updated tests to work with the new ggplot2 release
+* PPV_heatmap() prints plot and outputs a DF and the plot
+* shinyapp includes now panels to create materials for BC and stroke problems
