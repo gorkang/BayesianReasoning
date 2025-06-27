@@ -5,6 +5,7 @@
 DEV/
 ^\.httr-oauth$
 presentation/
+.github/
 .binder/
 docs/
 www/
@@ -21,3 +22,4 @@ cran-comments.md
 ^docs$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+TODO.R

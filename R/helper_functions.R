@@ -838,7 +838,8 @@ process_variables <- function(min_Prevalence = NULL,
         plot.caption = ggplot2::element_text(size = 16, color = "darkgrey"),
         axis.title.y = ggplot2::element_text(margin = ggplot2::margin(0, 10, 0, 0)),
         axis.title.x = ggplot2::element_text(margin = ggplot2::margin(10, 0, 0, 0)),
-        legend.position = c(0.94, 0.85), # horizontal, vertical
+        legend.position = "inside",
+        legend.position.inside = c(0.94, 0.85), # horizontal, vertical
         legend.direction = "vertical",
         # legend.direction = 'horizontal',
         legend.margin = margin(5, 5, 10, 5)

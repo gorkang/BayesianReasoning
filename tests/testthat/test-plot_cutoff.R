@@ -60,8 +60,8 @@ test_that("Remove FN not silent", {
 #   testthat::expect_true(file.exists(file_name_test))
 #   file.remove(file_name_test)
 # })
-# 
-# 
+
+
 testthat::test_that("Save plots", {
   suppressMessages(p <- plot_cutoff(output_filename = "temp.png"))
 
