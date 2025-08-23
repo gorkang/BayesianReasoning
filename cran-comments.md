@@ -2,9 +2,12 @@
 * local Ubuntu 24.04, R 4.5.1
 * win-builder (devel and release)
 * R-hub
-  + Windows Server 2022, R-devel, 64 bit
-  + Ubuntu Linux 20.04.1 LTS, R-release, GCC
-  + Fedora Linux, R-devel, clang, gfortran
+  + linux
+  + m1-san
+  + macos
+  + macos-arm64
+  + windows
+  
   
 ## R CMD check results
 

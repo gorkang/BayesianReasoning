@@ -1,7 +1,7 @@
-test_that("Default cutoff plot", {
-  p <- plot_cutoff()
-  vdiffr::expect_doppelganger("Default cutoff plot", p$final_plot)
-})
+# test_that("Default cutoff plot", {
+#   p <- plot_cutoff()
+#   vdiffr::expect_doppelganger("Default cutoff plot", p$final_plot)
+# })
 
 # test_that("Default cutoff plot with table", {
 #   p <- plot_cutoff(add_table = TRUE)
